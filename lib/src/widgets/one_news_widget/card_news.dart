@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/one_card.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_image.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_no_image.dart';
 import 'package:flutter_application_1/ui/pages/news_screen/detail_news_screen.dart';
@@ -50,6 +51,7 @@ class CardNews extends StatelessWidget {
                               builder: ((context) => DetailNewsScreen(argument: records)),
                             ))),
                         child: OneCard(
+                          color: OneColors.black.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(7),
                           child: (records["content"][0]["images"]["imageUrl"] != null && records["content"][0]["images"]["imageUrl"] != "") ? OneCardNewsImage(records: records, dateFormat: dateFormat) : OneCardNewsNoImage(records: records, dateFormat: dateFormat),
                         ),
@@ -58,7 +60,7 @@ class CardNews extends StatelessWidget {
                   },
                 );
               }
-              return const Center(child: CircularProgressIndicator(color: Colors.blue));
+              return const Center(child: CircularProgressIndicator(color: OneColors.brandVNP));
             }),
           ),
           const SizedBox(

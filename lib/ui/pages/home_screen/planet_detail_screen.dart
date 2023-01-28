@@ -7,6 +7,7 @@ import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/components/one_thick_ness.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
+import 'package:flutter_application_1/src/widgets/example2.dart';
 import 'package:flutter_application_1/src/widgets/planet_3D_view.dart';
 import 'package:flutter_application_1/src/widgets/video_player/video_player.dart';
 import 'package:readmore/readmore.dart';
@@ -249,25 +250,42 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Planet3DView(
+                      builder: (context) => LocalAndWebObjectsWidget(
                             argument: widget,
-                          )));
+                          )
+                      // Planet3DView(
+                      //       argument: widget,
+                      //     )
+
+                      ));
             },
             child: Container(
               margin: const EdgeInsets.only(top: 320),
               height: 60,
-              width: 60,
+              width: 80,
               decoration: BoxDecoration(color: Colors.black.withOpacity(0.6), borderRadius: BorderRadius.circular(15), boxShadow: [
                 BoxShadow(
                   color: Colors.white.withOpacity(0.4),
                   blurRadius: 10,
                 )
               ]),
-              child: const Center(
-                  child: Icon(
-                Icons.view_in_ar,
-                color: Colors.white,
-                size: 40,
+              child: Center(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Icon(
+                      Icons.view_in_ar,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                    Text(
+                      "AR",
+                      style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+                    )
+                  ],
+                ),
               )),
             ),
           ),

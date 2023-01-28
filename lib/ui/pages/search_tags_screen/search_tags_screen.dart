@@ -19,68 +19,77 @@ class MySearch extends StatelessWidget {
   Widget build(BuildContext context) {
     final CollectionReference homedata = FirebaseFirestore.instance.collection("homedata");
     return AppScaffold(
-        body: Scrollbar(
-            child: CustomScrollView(
-      //physics: const BouncingScrollPhysics(parent: ),
-      slivers: <Widget>[
-        SliverPersistentHeader(
-          pinned: true,
-          floating: false,
-          delegate: SliverAppBarDelegate(
-            child: OneCard(
-              margin: EdgeInsets.zero,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 40.0, left: 20, right: 24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.blue,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Row(
-                            children: [
-                              Text(
-                                "Tìm kiếm với từ khoá :  ",
-                                style: OneTheme.of(context).title1,
+        body: Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/bg/bg.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scrollbar(
+          child: CustomScrollView(
+        //physics: const BouncingScrollPhysics(parent: ),
+        slivers: <Widget>[
+          SliverPersistentHeader(
+            pinned: true,
+            floating: false,
+            delegate: SliverAppBarDelegate(
+              child: Container(
+                color: Colors.transparent,
+                margin: EdgeInsets.zero,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 40.0, left: 20, right: 24),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.blue,
                               ),
-                              Container(
-                                decoration: BoxDecoration(color: Colors.blue.shade100, borderRadius: BorderRadius.circular(5)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    "${list[0]}",
-                                    style: OneTheme.of(context).title2.copyWith(color: OneColors.brandVNP),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.clip,
+                            ),
+                            const SizedBox(width: 10),
+                            Row(
+                              children: [
+                                Text(
+                                  "Tìm kiếm với từ khoá :  ",
+                                  style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(color: Colors.blue.shade100, borderRadius: BorderRadius.circular(5)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      "${list[0]}",
+                                      style: OneTheme.of(context).title2.copyWith(color: OneColors.brandVNP),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.clip,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )
-                        ],
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
+              minHeight: MediaQuery.of(context).padding.top + 70,
+              maxHeight: MediaQuery.of(context).padding.top + 70,
             ),
-            minHeight: MediaQuery.of(context).padding.top + 70,
-            maxHeight: MediaQuery.of(context).padding.top + 70,
           ),
-        ),
-        CardNewsWithTags(data: homedata, tagsButton: list[0])
-      ],
-    )));
+          CardNewsWithTags(data: homedata, tagsButton: list[0])
+        ],
+      )),
+    ));
   }
 }

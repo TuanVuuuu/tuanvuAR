@@ -46,93 +46,102 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
     Timestamp time = widget.argument["date"];
     var dateFormat = DateFormat.yMMMMd('en_US').add_jm().format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
     return AppScaffold(
-      body: Scrollbar(
-          child: CustomScrollView(
-        slivers: [
-          //Build Header
-          SliverPersistentHeader(
-            pinned: false,
-            floating: false,
-            delegate: SliverAppBarDelegate(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 40.0, left: 20, right: 24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Icon(Icons.arrow_back_ios, color: Colors.blue),
-                            const SizedBox(width: 10),
-                            Text("Back", style: OneTheme.of(context).body1.copyWith(color: OneColors.brandVNP)),
-                          ],
+      backgroundColor: OneColors.black,
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/bg/bg.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+        child: Scrollbar(
+            child: CustomScrollView(
+          slivers: [
+            //Build Header
+            SliverPersistentHeader(
+              pinned: false,
+              floating: false,
+              delegate: SliverAppBarDelegate(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 40.0, left: 20, right: 24),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Icon(Icons.arrow_back_ios, color: Colors.blue),
+                              const SizedBox(width: 10),
+                              Text("Back", style: OneTheme.of(context).body1.copyWith(color: OneColors.brandVNP)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(flex: 1, child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const []))
-                  ],
-                ),
-              ),
-              minHeight: MediaQuery.of(context).padding.top + 70,
-              maxHeight: MediaQuery.of(context).padding.top + 70,
-            ),
-          ),
-          //Content
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                // Build title
-                _buildTitle(context),
-                // Build Tags
-                _buildTags(),
-                // Build date
-                _buildDate(dateFormat, context),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20, bottom: 10),
-                  child: Text(
-                    widget.argument["title"],
-                    style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.textGrey3),
+                      Expanded(flex: 1, child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const []))
+                    ],
                   ),
                 ),
-                //setState  Nội dung
-                Padding(
-                    padding: EdgeInsets.zero,
-                    child: (() {
-                      for (int i = 0; i < widget.argument["content"].length; i++) {
-                        String caption = contentList[i]["caption"];
-                        String contents = contentList[i]["contents"];
-                        String contentsMore = contentList[i]["contentsMore"];
-                        var images = contentList[i]["images"];
-                        String imageUrl = contentList[i]["images"]["imageUrl"];
-                        String imageNotes = contentList[i]["images"]["imageNotes"];
-                        String imageCredit = contentList[i]["images"]["imageCredit"];
-
-                        setState(() {
-                          contentListContents.add(contents);
-                          contentListCaption.add(caption);
-                          contentsListMore.add(contentsMore);
-                          contentsListImage.add(images);
-                        });
-                      }
-                    })()),
-                //NỘI DUNG
-                _buildContents(contentList),
-                // Nguồn
-                _buildAuthor(context, dateFormat),
-                //Có thể bạn sẽ thích nó
-                _buildLikes(context),
-              ],
+                minHeight: MediaQuery.of(context).padding.top + 70,
+                maxHeight: MediaQuery.of(context).padding.top + 70,
+              ),
             ),
-          ),
-          CardNews(data: homedata, cardLength: 2),
-          const SliverToBoxAdapter(child: BuildFooter())
-        ],
-      )),
+            //Content
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  // Build title
+                  _buildTitle(context),
+                  // Build Tags
+                  _buildTags(),
+                  // Build date
+                  _buildDate(dateFormat, context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20, bottom: 10),
+                    child: Text(
+                      widget.argument["title"],
+                      style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.textGrey3),
+                    ),
+                  ),
+                  //setState  Nội dung
+                  Padding(
+                      padding: EdgeInsets.zero,
+                      child: (() {
+                        for (int i = 0; i < widget.argument["content"].length; i++) {
+                          String caption = contentList[i]["caption"];
+                          String contents = contentList[i]["contents"];
+                          String contentsMore = contentList[i]["contentsMore"];
+                          var images = contentList[i]["images"];
+                          String imageUrl = contentList[i]["images"]["imageUrl"];
+                          String imageNotes = contentList[i]["images"]["imageNotes"];
+                          String imageCredit = contentList[i]["images"]["imageCredit"];
+
+                          setState(() {
+                            contentListContents.add(contents);
+                            contentListCaption.add(caption);
+                            contentsListMore.add(contentsMore);
+                            contentsListImage.add(images);
+                          });
+                        }
+                      })()),
+                  //NỘI DUNG
+                  _buildContents(contentList),
+                  // Nguồn
+                  _buildAuthor(context, dateFormat),
+                  //Có thể bạn sẽ thích nó
+                  _buildLikes(context),
+                ],
+              ),
+            ),
+            CardNews(data: homedata, cardLength: 2),
+            const SliverToBoxAdapter(child: BuildFooter())
+          ],
+        )),
+      ),
     );
   }
 
@@ -214,7 +223,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   contentListCaption[index] ?? "",
-                                  style: OneTheme.of(context).caption1.copyWith(fontSize: 18),
+                                  style: OneTheme.of(context).caption1.copyWith(fontSize: 18, color: OneColors.white),
                                   textAlign: TextAlign.justify,
                                 ),
                               ),
@@ -228,7 +237,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   contentListContents[index] ?? "",
-                                  style: OneTheme.of(context).body2.copyWith(fontSize: 15),
+                                  style: OneTheme.of(context).body2.copyWith(fontSize: 15, color: OneColors.white),
                                   textAlign: TextAlign.justify,
                                 ),
                               ),
@@ -244,18 +253,23 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                   child: (contentsListImage[index]["imageUrl"] != null && contentsListImage[index]["imageUrl"] != "")
                                       ? Column(
                                           children: [
-                                            Image.network(contentsListImage[index]["imageUrl"],
-                                                fit: BoxFit.fill,
-                                                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                                  if (loadingProgress == null) return child;
-                                                  return Center(
-                                                    child: CircularProgressIndicator(
-                                                      color: Colors.blue,
-                                                      value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-                                                    ),
-                                                  );
-                                                },
-                                                errorBuilder: (context, error, stackTrace) => Image.asset("assets/images/not_found.png")),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                boxShadow: [BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)]
+                                              ),
+                                              child: Image.network(contentsListImage[index]["imageUrl"],
+                                                  fit: BoxFit.fill,
+                                                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                                    if (loadingProgress == null) return child;
+                                                    return Center(
+                                                      child: CircularProgressIndicator(
+                                                        color: Colors.blue,
+                                                        value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
+                                                      ),
+                                                    );
+                                                  },
+                                                  errorBuilder: (context, error, stackTrace) => Image.asset("assets/images/not_found.png")),
+                                            ),
                                             const SizedBox(height: 5),
                                             Align(
                                               alignment: Alignment.centerLeft,
@@ -287,7 +301,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   contentsListMore[index] ?? "",
-                                  style: OneTheme.of(context).body2.copyWith(fontSize: 15),
+                                  style: OneTheme.of(context).body2.copyWith(fontSize: 15, color: OneColors.white),
                                   textAlign: TextAlign.justify,
                                 ),
                               ),
@@ -359,7 +373,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
       padding: const EdgeInsets.only(top: 0, left: 23, right: 23),
       child: Text(
         widget.argument["title"],
-        style: OneTheme.of(context).header.copyWith(fontSize: 26),
+        style: OneTheme.of(context).header.copyWith(fontSize: 26, color: OneColors.white),
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
       ),
