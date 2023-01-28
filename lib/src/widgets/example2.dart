@@ -100,7 +100,6 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
   @override
   Widget build(BuildContext context) {
     String imageARUrl = widget.argument["image3D"]["imageARUrl"];
-    print(imageARUrl);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: OneColors.transparent,
@@ -109,7 +108,29 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
         extendBodyBehindAppBar: true,
         body: Stack(children: [
           ARView(
-            onARViewCreated: onARViewCreated,
+            onARViewCreated: ((arSessionManager, arObjectManager, arAnchorManager, arLocationManager) {
+              this.arSessionManager = arSessionManager;
+              this.arObjectManager = arObjectManager;
+
+              this.arSessionManager!.onInitialize(
+                    showFeaturePoints: false,
+                    showPlanes: true,
+                    customPlaneTexturePath: "assets/triangle.png",
+                    showWorldOrigin: false,
+                    handleTaps: false,
+                  );
+              this.arObjectManager!.onInitialize();
+
+              //Download model to file system
+              httpClient = new HttpClient();
+              (imageARUrl != "" && imageARUrl.isNotEmpty) ?
+              _downloadFile("https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-01/assets/3D_model/earth.glb?raw=true", "LocalDuck.glb"): 
+              _downloadFile(imageARUrl, "LocalDuck.glb");
+
+              setState(() {
+                onFileSystemObjectAtOriginButtonPressed();
+              });
+            }),
             planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
           ),
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -131,7 +152,6 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                 _buildButtonRotation(),
               ],
             ),
-            
           ]),
           _buildButtonTrans(),
         ]));
@@ -313,7 +333,7 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
     );
   }
 
-  Column _buildButtonRotation() {
+  Widget _buildButtonRotation() {
     return Column(
       children: [
         //_build Button Rotation
@@ -566,31 +586,31 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
     );
   }
 
-  void onARViewCreated(ARSessionManager arSessionManager, ARObjectManager arObjectManager, ARAnchorManager arAnchorManager, ARLocationManager arLocationManager) {
-    this.arSessionManager = arSessionManager;
-    this.arObjectManager = arObjectManager;
+  // void onARViewCreated(ARSessionManager arSessionManager, ARObjectManager arObjectManager, ARAnchorManager arAnchorManager, ARLocationManager arLocationManager) {
+  //   this.arSessionManager = arSessionManager;
+  //   this.arObjectManager = arObjectManager;
 
-    this.arSessionManager!.onInitialize(
-          showFeaturePoints: false,
-          showPlanes: true,
-          customPlaneTexturePath: "assets/triangle.png",
-          showWorldOrigin: false,
-          handleTaps: false,
-        );
-    this.arObjectManager!.onInitialize();
+  //   this.arSessionManager!.onInitialize(
+  //         showFeaturePoints: false,
+  //         showPlanes: true,
+  //         customPlaneTexturePath: "assets/triangle.png",
+  //         showWorldOrigin: false,
+  //         handleTaps: false,
+  //       );
+  //   this.arObjectManager!.onInitialize();
 
-    //Download model to file system
-    httpClient = new HttpClient();
-    _downloadFile("https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-01/assets/3D_model/earth.glb?raw=true", "LocalDuck.glb");
+  //   //Download model to file system
+  //   httpClient = new HttpClient();
+  //   _downloadFile("https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-01/assets/3D_model/earth.glb?raw=true", "LocalDuck.glb");
 
-    setState(() {
-      onFileSystemObjectAtOriginButtonPressed();
-    });
-    // Alternative to use type fileSystemAppFolderGLTF2:
-    //_downloadAndUnpack(
-    //    "https://drive.google.com/uc?export=download&id=1fng7yiK0DIR0uem7XkV2nlPSGH9PysUs",
-    //    "Chicken_01.zip");
-  }
+  //   setState(() {
+  //     onFileSystemObjectAtOriginButtonPressed();
+  //   });
+  //   // Alternative to use type fileSystemAppFolderGLTF2:
+  //   //_downloadAndUnpack(
+  //   //    "https://drive.google.com/uc?export=download&id=1fng7yiK0DIR0uem7XkV2nlPSGH9PysUs",
+  //   //    "Chicken_01.zip");
+  // }
 
   Future<void> onTakeScreenshot() async {
     var image = await arSessionManager!.snapshot();
