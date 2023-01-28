@@ -12,6 +12,7 @@ import 'package:ar_flutter_plugin/datatypes/config_planedetection.dart';
 import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/components/button/one_triangle_shape.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -44,6 +45,9 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
 
   double scale = 0.2;
   double newRotationAmount = 0;
+  double newTransX = 0;
+  double newTransY = 0;
+  double newTransZ = 0;
 
   @override
   void dispose() {
@@ -69,6 +73,30 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
     newRotationAmount = newRotationAmount + 0.2;
   }
 
+  void _subTransAmountX() {
+    newTransX = newTransX - 0.02;
+  }
+
+  void _subTransAmountY() {
+    newTransY = newTransY - 0.02;
+  }
+
+  void _subTransAmountZ() {
+    newTransZ = newTransZ - 0.02;
+  }
+
+  void _addTransAmountX() {
+    newTransX = newTransX + 0.02;
+  }
+
+  void _addTransAmountY() {
+    newTransY = newTransY + 0.02;
+  }
+
+  void _addTransAmountZ() {
+    newTransZ = newTransZ + 0.02;
+  }
+
   @override
   Widget build(BuildContext context) {
     String imageARUrl = widget.argument["image3D"]["imageARUrl"];
@@ -79,106 +107,463 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
           elevation: 0,
         ),
         extendBodyBehindAppBar: true,
-        body: Container(
-            child: Stack(children: [
+        body: Stack(children: [
           ARView(
             onARViewCreated: onARViewCreated,
             planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
           ),
-          Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    //ElevatedButton(onPressed: onFileSystemObjectAtOriginButtonPressed, child: Text("Add/Remove Filesystem\nObject at Origin")),
-                    ElevatedButton(onPressed: onTakeScreenshot, child: const Text("Take Screenshot"))
-                  ],
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                //ElevatedButton(onPressed: onLocalObjectAtOriginButtonPressed, child: Text("Add/Remove Local\nObject at Origin")),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       onWebButton(imageARUrl);
+                //     },
+                //     child: const Text("Add/Remove Web\nObject at Origin")),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildButtonScale(),
+                _buildButtonRotation(),
+              ],
+            ),
+            
+          ]),
+          _buildButtonTrans(),
+        ]));
+  }
+
+  Widget _buildButtonTrans() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: OneColors.transparent,
+                elevation: 0,
+              ),
+              onPressed: () {
+                if (fileSystemNode != null) {
+                  setState(() {
+                    _subTransAmountY();
+                  });
+                  var newRotationAxis = Vector3(0, 0, 0);
+                  newRotationAxis[1] = 1.0;
+                  final newTransform = Matrix4.identity();
+                  var newTranslation = Vector3(0, 0, 0);
+                  newTranslation[0] = newTransZ;
+                  newTranslation[1] = newTransX;
+                  newTranslation[2] = newTransY;
+
+                  newTransform.setTranslation(newTranslation);
+                  newTransform.rotate(newRotationAxis, newRotationAmount);
+                  newTransform.scale(scale);
+
+                  fileSystemNode!.transform = newTransform;
+                }
+              },
+              child: Transform.rotate(
+                angle: -45 * pi / 180,
+                child: ClipPath(
+                  clipper: CustomTriangleClipper(),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: OneColors.grey.withOpacity(0.4),
+                    ),
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    //ElevatedButton(onPressed: onLocalObjectAtOriginButtonPressed, child: Text("Add/Remove Local\nObject at Origin")),
-                    ElevatedButton(
-                        onPressed: () {
-                          onWebButton(imageARUrl);
-                        },
-                        child: const Text("Add/Remove Web\nObject at Origin")),
-                  ],
+              )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: OneColors.transparent,
+                    elevation: 0,
+                  ),
+                  onPressed: () {
+                    if (fileSystemNode != null) {
+                      setState(() {
+                        _subTransAmountZ();
+                      });
+                      var newRotationAxis = Vector3(0, 0, 0);
+                      newRotationAxis[1] = 1.0;
+                      final newTransform = Matrix4.identity();
+                      var newTranslation = Vector3(0, 0, 0);
+                      newTranslation[0] = newTransZ;
+                      newTranslation[1] = newTransX;
+                      newTranslation[2] = newTransY;
+
+                      newTransform.setTranslation(newTranslation);
+                      newTransform.rotate(newRotationAxis, newRotationAmount);
+                      newTransform.scale(scale);
+
+                      fileSystemNode!.transform = newTransform;
+                    }
+                  },
+                  child: Transform.rotate(
+                    angle: -135 * pi / 180,
+                    child: ClipPath(
+                      clipper: CustomTriangleClipper(),
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: OneColors.grey.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                  )),
+              Container(
+                height: 70,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: OneColors.grey.withOpacity(0.4),
+                  shape: BoxShape.circle,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    //ElevatedButton(onPressed: onLocalObjectShuffleButtonPressed, child: Text("Shuffle Local\nobject at Origin")),
-                    ElevatedButton(
-                        onPressed: () {
-                          if (webObjectNode != null) {
-                            setState(() {
-                              _subScale();
-                            });
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: OneColors.transparent,
+                    elevation: 0,
+                  ),
+                  onPressed: () {
+                    if (fileSystemNode != null) {
+                      setState(() {
+                        _addTransAmountZ();
+                      });
+                      var newRotationAxis = Vector3(0, 0, 0);
+                      newRotationAxis[1] = 1.0;
+                      final newTransform = Matrix4.identity();
+                      var newTranslation = Vector3(0, 0, 0);
+                      newTranslation[0] = newTransZ;
+                      newTranslation[1] = newTransX;
+                      newTranslation[2] = newTransY;
 
-                            final newTransform = Matrix4.identity();
-                            newTransform.scale(scale);
-                            webObjectNode!.transform = newTransform;
-                          }
-                        },
-                        child: const Text("Scale - 0.2")),
-                    ElevatedButton(
-                        onPressed: () {
-                          if (webObjectNode != null) {
-                            setState(() {
-                              _addScale();
-                            });
-                            final newTransform = Matrix4.identity();
-                            newTransform.scale(scale);
-                            webObjectNode!.transform = newTransform;
-                          }
-                        },
-                        child: const Text("Scale + 0.2")),
-                  ],
+                      newTransform.setTranslation(newTranslation);
+                      newTransform.rotate(newRotationAxis, newRotationAmount);
+                      newTransform.scale(scale);
+
+                      fileSystemNode!.transform = newTransform;
+                    }
+                  },
+                  child: Transform.rotate(
+                    angle: 45 * pi / 180,
+                    child: ClipPath(
+                      clipper: CustomTriangleClipper(),
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: OneColors.grey.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                  ))
+            ],
+          ),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: OneColors.transparent,
+                elevation: 0,
+              ),
+              onPressed: () {
+                if (fileSystemNode != null) {
+                  setState(() {
+                    _addTransAmountY();
+                  });
+                  var newRotationAxis = Vector3(0, 0, 0);
+                  newRotationAxis[1] = 1.0;
+                  final newTransform = Matrix4.identity();
+                  var newTranslation = Vector3(0, 0, 0);
+                  newTranslation[0] = newTransZ;
+                  newTranslation[1] = newTransX;
+                  newTranslation[2] = newTransY;
+
+                  newTransform.setTranslation(newTranslation);
+                  newTransform.rotate(newRotationAxis, newRotationAmount);
+                  newTransform.scale(scale);
+
+                  fileSystemNode!.transform = newTransform;
+                }
+              },
+              child: Transform.rotate(
+                angle: 135 * pi / 180,
+                child: ClipPath(
+                  clipper: CustomTriangleClipper(),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: OneColors.grey.withOpacity(0.4),
+                    ),
+                  ),
                 ),
-                Column(
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          if (webObjectNode != null) {
-                            setState(() {
-                              _subAmount();
-                            });
-                            //var newRotationAxisIndex = Random().nextInt(3);
-                            //var newRotationAmount = Random().nextDouble();
-                            var newRotationAxis = Vector3(0, 0, 0);
-                            newRotationAxis[1] = 1.0;
-                            final newTransform = Matrix4.identity();
+              )),
+        ],
+      ),
+    );
+  }
 
-                            newTransform.rotate(newRotationAxis, newRotationAmount);
-                            newTransform.scale(scale);
+  Column _buildButtonRotation() {
+    return Column(
+      children: [
+        //_build Button Rotation
+        Column(
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: OneColors.transparent,
+                elevation: 0,
+              ),
+              onPressed: (() {
+                if (fileSystemNode != null) {
+                  setState(() {
+                    _addAmount();
+                  });
 
-                            webObjectNode!.transform = newTransform;
-                          }
-                        },
-                        child: const Text("newRotationAmount - 0.2")),
-                    ElevatedButton(
-                        onPressed: () {
-                          if (webObjectNode != null) {
-                            setState(() {
-                              _addAmount();
-                            });
-                            var newRotationAxis = Vector3(0, 0, 0);
-                            newRotationAxis[1] = 1.0;
-                            final newTransform = Matrix4.identity();
+                  //var newRotationAxisIndex = Random().nextInt(3);
+                  //var newRotationAmount = Random().nextDouble();
+                  var newRotationAxis = Vector3(0, 0, 0);
+                  newRotationAxis[1] = 1.0;
+                  var newTranslation = Vector3(0, 0, 0);
+                  newTranslation[0] = newTransZ;
+                  newTranslation[1] = newTransX;
+                  newTranslation[2] = newTransY;
 
-                            newTransform.rotate(newRotationAxis, newRotationAmount);
-                            newTransform.scale(scale);
+                  final newTransform = Matrix4.identity();
+                  newTransform.setTranslation(newTranslation);
+                  newTransform.rotate(newRotationAxis, newRotationAmount);
+                  newTransform.scale(scale);
 
-                            webObjectNode!.transform = newTransform;
-                          }
-                        },
-                        child: const Text("newRotationAmount + 0.2")),
-                  ],
-                )
-              ]))
-        ])));
+                  fileSystemNode!.transform = newTransform;
+                }
+              }),
+              child: Container(
+                decoration: BoxDecoration(color: OneColors.grey.withOpacity(0.4), shape: BoxShape.circle),
+                height: 60,
+                width: 60,
+                child: const Icon(
+                  Icons.settings_backup_restore,
+                  size: 30,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: OneColors.transparent,
+                elevation: 0,
+              ),
+              onPressed: (() {
+                if (fileSystemNode != null) {
+                  setState(() {
+                    _subAmount();
+                  });
+
+                  //var newRotationAxisIndex = Random().nextInt(3);
+                  //var newRotationAmount = Random().nextDouble();
+                  var newRotationAxis = Vector3(0, 0, 0);
+                  newRotationAxis[1] = 1.0;
+                  var newTranslation = Vector3(0, 0, 0);
+                  newTranslation[0] = newTransZ;
+                  newTranslation[1] = newTransX;
+                  newTranslation[2] = newTransY;
+
+                  final newTransform = Matrix4.identity();
+                  newTransform.setTranslation(newTranslation);
+                  newTransform.rotate(newRotationAxis, newRotationAmount);
+                  newTransform.scale(scale);
+
+                  fileSystemNode!.transform = newTransform;
+                }
+              }),
+              child: Container(
+                decoration: BoxDecoration(color: OneColors.grey.withOpacity(0.4), shape: BoxShape.circle),
+                height: 60,
+                width: 60,
+                child: const RotatedBox(
+                  quarterTurns: 2,
+                  child: Icon(
+                    Icons.settings_backup_restore,
+                    size: 30,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        // _build Button Trans X
+        SizedBox(height: 30),
+        Column(
+          children: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: OneColors.transparent,
+                  elevation: 0,
+                ),
+                onPressed: () {
+                  if (fileSystemNode != null) {
+                    setState(() {
+                      _addTransAmountX();
+                    });
+                    var newRotationAxis = Vector3(0, 0, 0);
+                    newRotationAxis[1] = 1.0;
+
+                    final newTransform = Matrix4.identity();
+                    var newTranslation = Vector3(0, 0, 0);
+                    newTranslation[0] = newTransZ;
+                    newTranslation[1] = newTransX;
+                    newTranslation[2] = newTransY;
+
+                    newTransform.setTranslation(newTranslation);
+                    newTransform.rotate(newRotationAxis, newRotationAmount);
+                    newTransform.scale(scale);
+
+                    fileSystemNode!.transform = newTransform;
+                  }
+                },
+                child: Transform.rotate(
+                  angle: -45 * pi / 180,
+                  child: ClipPath(
+                    clipper: CustomTriangleClipper(),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: OneColors.grey.withOpacity(0.4),
+                      ),
+                    ),
+                  ),
+                )),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: OneColors.transparent,
+                  elevation: 0,
+                ),
+                onPressed: () {
+                  if (fileSystemNode != null) {
+                    setState(() {
+                      _subTransAmountX();
+                    });
+                    var newRotationAxis = Vector3(0, 0, 0);
+                    newRotationAxis[1] = 1.0;
+
+                    final newTransform = Matrix4.identity();
+                    var newTranslation = Vector3(0, 0, 0);
+                    newTranslation[0] = newTransZ;
+                    newTranslation[1] = newTransX;
+                    newTranslation[2] = newTransY;
+
+                    newTransform.setTranslation(newTranslation);
+                    newTransform.rotate(newRotationAxis, newRotationAmount);
+                    newTransform.scale(scale);
+
+                    fileSystemNode!.transform = newTransform;
+                  }
+                },
+                child: Transform.rotate(
+                  angle: 135 * pi / 180,
+                  child: ClipPath(
+                    clipper: CustomTriangleClipper(),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: OneColors.grey.withOpacity(0.4),
+                      ),
+                    ),
+                  ),
+                )),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildButtonScale() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        //ElevatedButton(onPressed: onLocalObjectShuffleButtonPressed, child: Text("Shuffle Local\nobject at Origin")),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: OneColors.transparent,
+            elevation: 0,
+          ),
+          onPressed: () {
+            if (fileSystemNode != null) {
+              setState(() {
+                _subScale();
+              });
+
+              var newRotationAxis = Vector3(0, 0, 0);
+              newRotationAxis[1] = 1.0;
+              final newTransform = Matrix4.identity();
+              var newTranslation = Vector3(0, 0, 0);
+              newTranslation[0] = newTransZ;
+              newTranslation[1] = newTransX;
+              newTranslation[2] = newTransY;
+
+              newTransform.setTranslation(newTranslation);
+              newTransform.rotate(newRotationAxis, newRotationAmount);
+              newTransform.scale(scale);
+              fileSystemNode!.transform = newTransform;
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(color: OneColors.grey.withOpacity(0.4), shape: BoxShape.circle),
+            height: 60,
+            width: 60,
+            child: const Icon(
+              Icons.zoom_out,
+              size: 30,
+            ),
+          ),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: OneColors.transparent,
+            elevation: 0,
+          ),
+          onPressed: () {
+            if (fileSystemNode != null) {
+              setState(() {
+                _addScale();
+              });
+              var newRotationAxis = Vector3(0, 0, 0);
+              newRotationAxis[1] = 1.0;
+              final newTransform = Matrix4.identity();
+              var newTranslation = Vector3(0, 0, 0);
+              newTranslation[0] = newTransZ;
+              newTranslation[1] = newTransX;
+              newTranslation[2] = newTransY;
+
+              newTransform.setTranslation(newTranslation);
+              newTransform.rotate(newRotationAxis, newRotationAmount);
+              newTransform.scale(scale);
+              fileSystemNode!.transform = newTransform;
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(color: OneColors.grey.withOpacity(0.4), shape: BoxShape.circle),
+            height: 60,
+            width: 60,
+            child: const Icon(
+              Icons.zoom_in,
+              size: 30,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   void onARViewCreated(ARSessionManager arSessionManager, ARObjectManager arObjectManager, ARAnchorManager arAnchorManager, ARLocationManager arLocationManager) {
@@ -189,15 +574,18 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
           showFeaturePoints: false,
           showPlanes: true,
           customPlaneTexturePath: "assets/triangle.png",
-          showWorldOrigin: true,
+          showWorldOrigin: false,
           handleTaps: false,
         );
     this.arObjectManager!.onInitialize();
 
     //Download model to file system
-    // httpClient = new HttpClient();
-    // _downloadFile(widget.argument["image3D"]["imageARUrl"], "LocalDuck.glb");
+    httpClient = new HttpClient();
+    _downloadFile("https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-01/assets/3D_model/earth.glb?raw=true", "LocalDuck.glb");
 
+    setState(() {
+      onFileSystemObjectAtOriginButtonPressed();
+    });
     // Alternative to use type fileSystemAppFolderGLTF2:
     //_downloadAndUnpack(
     //    "https://drive.google.com/uc?export=download&id=1fng7yiK0DIR0uem7XkV2nlPSGH9PysUs",
@@ -218,16 +606,16 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
             ));
   }
 
-  // Future<File> _downloadFile(String url, String filename) async {
-  //   var request = await httpClient!.getUrl(Uri.parse(url));
-  //   var response = await request.close();
-  //   var bytes = await consolidateHttpClientResponseBytes(response);
-  //   String dir = (await getApplicationDocumentsDirectory()).path;
-  //   File file = new File('$dir/$filename');
-  //   await file.writeAsBytes(bytes);
-  //   print("Downloading finished, path: " + '$dir/$filename');
-  //   return file;
-  // }
+  Future<File> _downloadFile(String url, String filename) async {
+    var request = await httpClient!.getUrl(Uri.parse(url));
+    var response = await request.close();
+    var bytes = await consolidateHttpClientResponseBytes(response);
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    File file = new File('$dir/$filename');
+    await file.writeAsBytes(bytes);
+    print("Downloading finished, path: " + '$dir/$filename');
+    return file;
+  }
 
   Future<void> _downloadAndUnpack(String url, String filename) async {
     var request = await httpClient!.getUrl(Uri.parse(url));
@@ -263,8 +651,7 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
       arObjectManager!.removeNode(webObjectNode!);
       webObjectNode = null;
     } else {
-      httpClient = new HttpClient();
-      var newNode = ARNode(type: NodeType.webGLB, uri: "https://github.com/KhronosGroup/glTF-Sample-Models/blob/master/2.0/Duck/glTF-Binary/Duck.glb?raw=true", scale: Vector3(0.2, 0.2, 0.2));
+      var newNode = ARNode(type: NodeType.webGLB, uri: "https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-01/assets/3D_model/earth.glb?raw=true", scale: Vector3(0.02, 0.02, 0.02));
       bool? didAddWebNode = await arObjectManager!.addNode(newNode);
       webObjectNode = (didAddWebNode!) ? newNode : null;
     }

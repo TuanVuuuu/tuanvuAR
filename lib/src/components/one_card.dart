@@ -46,7 +46,7 @@ class OneCard extends StatelessWidget {
                 borderRadius: borderRadius,
                 boxShadow: [
                   BoxShadow(
-                    color: shadow != true ? OneColors.shadow.withOpacity(0.2) : OneColors.shadow.withOpacity(0.0),
+                    color: shadow != true ? OneColors.shadow.withOpacity(0.7) : OneColors.shadow.withOpacity(0.0),
                     blurRadius: 20.0,
                   ),
                 ],
