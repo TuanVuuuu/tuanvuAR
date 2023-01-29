@@ -12,8 +12,6 @@ import 'package:flutter_application_1/ui/pages/home_screen/planet_detail_screen.
 import 'package:flutter_application_1/ui/views/home_header.dart';
 import 'dart:math' as math;
 
-import 'package:html_builder/elements.dart';
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,

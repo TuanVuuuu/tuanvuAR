@@ -9,7 +9,7 @@ import cloud_firestore
 import firebase_core
 import flutter_archive
 import geolocator_apple
-import path_provider_macos
+import path_provider_foundation
 import wakelock_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {

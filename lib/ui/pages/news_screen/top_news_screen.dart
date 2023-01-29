@@ -9,8 +9,6 @@ import 'package:flutter_application_1/src/widgets/one_news_widget/card_news.dart
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
 import 'dart:math' as math;
 
-import 'package:html_builder/elements.dart';
-
 class TopNewsScreen extends StatefulWidget {
   const TopNewsScreen({
     Key? key,
