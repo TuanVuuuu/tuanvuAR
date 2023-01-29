@@ -7,7 +7,7 @@ import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/components/one_thick_ness.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:flutter_application_1/src/widgets/example2.dart';
+import 'package:flutter_application_1/src/widgets/ar_screen.dart';
 import 'package:flutter_application_1/src/widgets/planet_3D_view.dart';
 import 'package:flutter_application_1/src/widgets/video_player/video_player.dart';
 import 'package:readmore/readmore.dart';
@@ -71,6 +71,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     String imageDetail = widget.argument["imageDetail"];
     String nameModel = widget.argument["name"];
     String infoModel = widget.argument["info"];
+    String satelliteNumber = infoOther["satelliteNumber"];
     return AppScaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -108,6 +109,23 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                       ),
                     ),
                   ]),
+                ),
+
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0, top: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Vệ tinh của $nameModel",
+                          style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+                        ),
+                        const SizedBox(height: 10),
+                        Text("$nameModel có $satelliteNumber vệ tinh", style: OneTheme.of(context).body1.copyWith(color: OneColors.white),)
+                      ],
+                    ),
+                  ),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 50)),
               ],
