@@ -61,6 +61,11 @@ dependencies:
   permission_handler: ^10.2.0
   fluttertoast: ^8.1.2
   dio: ^4.0.6
+  simple_shadow: ^0.3.0
+  native_ar_viewer: ^0.0.2
+  flutter_downloader: ^1.10.1+2
+  path_provider: ^2.0.12
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -88,8 +93,9 @@ flutter:
   assets:
     - assets/images/
     - assets/images/planets_animate/
+    - assets/images/planets_animate/2x/
     - assets/images/bg/
-    - assets/videos/
+    - assets/2D_model/
     - assets/triangle.png
     - assets/localModel/
     

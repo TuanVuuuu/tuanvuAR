@@ -1,26 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
+import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
+import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
-import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
-import 'package:flutter/foundation.dart';
+import 'package:ar_flutter_plugin/models/ar_anchor.dart';
+import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
 import 'package:flutter/material.dart';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 import 'package:ar_flutter_plugin/datatypes/config_planedetection.dart';
 import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/button/one_triangle_shape.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:vector_math/vector_math_64.dart';
+import 'package:vector_math/vector_math_64.dart' as vector;
 import 'dart:math';
-import 'package:path_provider/path_provider.dart';
-import 'package:flutter_archive/flutter_archive.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class LocalAndWebObjectsWidget extends StatefulWidget {
   LocalAndWebObjectsWidget({
@@ -34,8 +28,11 @@ class LocalAndWebObjectsWidget extends StatefulWidget {
 }
 
 class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
+  // https://github.com/topics/augmented-reality?q=ar+dart
+  // https://cdn2.f-cdn.com/files/download/137739228/animation-.jpg?image-optimizer=force&width=806
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
+  late ARAnchorManager arAnchorManager;
   //String localObjectReference;
   ARNode? localObjectNode;
   //String webObjectReference;
@@ -43,7 +40,10 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
   ARNode? fileSystemNode;
   HttpClient? httpClient;
 
-  double scale = 0.2;
+  List<ARNode> nodes = [];
+  List<ARAnchor> anchors = [];
+
+  double scale = 2;
   double newRotationAmount = 0;
   double newTransX = 0;
   double newTransY = 0;
@@ -112,10 +112,12 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                       showFeaturePoints: false,
                       showPlanes: true,
                       customPlaneTexturePath: "Images/triangle.png",
-                      showWorldOrigin: true,
+                      showWorldOrigin: false,
                       handleTaps: false,
                     );
                 this.arObjectManager!.onInitialize();
+
+                this.arSessionManager!.onPlaneOrPointTap = onPlaneOrPointTapped;
                 //Download model to file system
                 httpClient = new HttpClient();
                 // _downloadFile("https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb", "LocalDuck.glb");
@@ -154,10 +156,10 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                   setState(() {
                     _subTransAmountY();
                   });
-                  var newRotationAxis = Vector3(0, 0, 0);
+                  var newRotationAxis = vector.Vector3(0, 0, 0);
                   newRotationAxis[1] = 1.0;
                   final newTransform = Matrix4.identity();
-                  var newTranslation = Vector3(0, 0, 0);
+                  var newTranslation = vector.Vector3(0, 0, 0);
                   newTranslation[0] = newTransZ;
                   newTranslation[1] = newTransX;
                   newTranslation[2] = newTransY;
@@ -195,10 +197,10 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                       setState(() {
                         _subTransAmountZ();
                       });
-                      var newRotationAxis = Vector3(0, 0, 0);
+                      var newRotationAxis = vector.Vector3(0, 0, 0);
                       newRotationAxis[1] = 1.0;
                       final newTransform = Matrix4.identity();
-                      var newTranslation = Vector3(0, 0, 0);
+                      var newTranslation = vector.Vector3(0, 0, 0);
                       newTranslation[0] = newTransZ;
                       newTranslation[1] = newTransX;
                       newTranslation[2] = newTransY;
@@ -241,10 +243,10 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                       setState(() {
                         _addTransAmountZ();
                       });
-                      var newRotationAxis = Vector3(0, 0, 0);
+                      var newRotationAxis = vector.Vector3(0, 0, 0);
                       newRotationAxis[1] = 1.0;
                       final newTransform = Matrix4.identity();
-                      var newTranslation = Vector3(0, 0, 0);
+                      var newTranslation = vector.Vector3(0, 0, 0);
                       newTranslation[0] = newTransZ;
                       newTranslation[1] = newTransX;
                       newTranslation[2] = newTransY;
@@ -281,10 +283,10 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                   setState(() {
                     _addTransAmountY();
                   });
-                  var newRotationAxis = Vector3(0, 0, 0);
+                  var newRotationAxis = vector.Vector3(0, 0, 0);
                   newRotationAxis[1] = 1.0;
                   final newTransform = Matrix4.identity();
-                  var newTranslation = Vector3(0, 0, 0);
+                  var newTranslation = vector.Vector3(0, 0, 0);
                   newTranslation[0] = newTransZ;
                   newTranslation[1] = newTransX;
                   newTranslation[2] = newTransY;
@@ -331,9 +333,9 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                     _addAmount();
                   });
 
-                  var newRotationAxis = Vector3(0, 0, 0);
+                  var newRotationAxis = vector.Vector3(0, 0, 0);
                   newRotationAxis[1] = 1.0;
-                  var newTranslation = Vector3(0, 0, 0);
+                  var newTranslation = vector.Vector3(0, 0, 0);
                   newTranslation[0] = newTransZ;
                   newTranslation[1] = newTransX;
                   newTranslation[2] = newTransY;
@@ -366,9 +368,9 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                   setState(() {
                     _subAmount();
                   });
-                  var newRotationAxis = Vector3(0, 0, 0);
+                  var newRotationAxis = vector.Vector3(0, 0, 0);
                   newRotationAxis[1] = 1.0;
-                  var newTranslation = Vector3(0, 0, 0);
+                  var newTranslation = vector.Vector3(0, 0, 0);
                   newTranslation[0] = newTransZ;
                   newTranslation[1] = newTransX;
                   newTranslation[2] = newTransY;
@@ -410,11 +412,11 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                     setState(() {
                       _addTransAmountX();
                     });
-                    var newRotationAxis = Vector3(0, 0, 0);
+                    var newRotationAxis = vector.Vector3(0, 0, 0);
                     newRotationAxis[1] = 1.0;
 
                     final newTransform = Matrix4.identity();
-                    var newTranslation = Vector3(0, 0, 0);
+                    var newTranslation = vector.Vector3(0, 0, 0);
                     newTranslation[0] = newTransZ;
                     newTranslation[1] = newTransX;
                     newTranslation[2] = newTransY;
@@ -449,11 +451,11 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                     setState(() {
                       _subTransAmountX();
                     });
-                    var newRotationAxis = Vector3(0, 0, 0);
+                    var newRotationAxis = vector.Vector3(0, 0, 0);
                     newRotationAxis[1] = 1.0;
 
                     final newTransform = Matrix4.identity();
-                    var newTranslation = Vector3(0, 0, 0);
+                    var newTranslation = vector.Vector3(0, 0, 0);
                     newTranslation[0] = newTransZ;
                     newTranslation[1] = newTransX;
                     newTranslation[2] = newTransY;
@@ -500,10 +502,10 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                 _subScale();
               });
 
-              var newRotationAxis = Vector3(0, 0, 0);
+              var newRotationAxis = vector.Vector3(0, 0, 0);
               newRotationAxis[1] = 1.0;
               final newTransform = Matrix4.identity();
-              var newTranslation = Vector3(0, 0, 0);
+              var newTranslation = vector.Vector3(0, 0, 0);
               newTranslation[0] = newTransZ;
               newTranslation[1] = newTransX;
               newTranslation[2] = newTransY;
@@ -531,10 +533,10 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
               setState(() {
                 _addScale();
               });
-              var newRotationAxis = Vector3(0, 0, 0);
+              var newRotationAxis = vector.Vector3(0, 0, 0);
               newRotationAxis[1] = 1.0;
               final newTransform = Matrix4.identity();
-              var newTranslation = Vector3(0, 0, 0);
+              var newTranslation = vector.Vector3(0, 0, 0);
               newTranslation[0] = newTransZ;
               newTranslation[1] = newTransX;
               newTranslation[2] = newTransY;
@@ -551,12 +553,22 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
     );
   }
 
+  Future<void> onPlaneOrPointTapped(List<ARHitTestResult> hitTestResults) async {
+    var singleHitTestResult = hitTestResults.firstWhere((hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
+    var newAnchor = ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
+    bool didAddAnchor = await arAnchorManager.addAnchor(newAnchor) ?? false;
+    if (didAddAnchor) {
+      anchors.add(newAnchor);
+      // Add note to anchor
+    }
+  }
+
   Future<void>? onWebButton(String imageARUrl) async {
     if (webObjectNode != null) {
       arObjectManager!.removeNode(webObjectNode!);
       webObjectNode = null;
     } else {
-      var newNode = ARNode(type: NodeType.webGLB, uri: "https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-01/assets/3D_model/earth.glb?raw=true", scale: Vector3(0.02, 0.02, 0.02));
+      var newNode = ARNode(type: NodeType.webGLB, uri: imageARUrl, scale: vector.Vector3(0.02, 0.02, 0.02));
       bool? didAddWebNode = await arObjectManager!.addNode(newNode);
       webObjectNode = (didAddWebNode!) ? newNode : null;
     }

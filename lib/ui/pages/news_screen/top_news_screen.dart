@@ -89,7 +89,10 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
                                   stream: data.snapshots(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState == ConnectionState.waiting) {
-                                      const Center(child: CircularProgressIndicator(color: Colors.blue));
+                                      const Center(
+                                          child: OneLoadingShimmer(
+                                        itemCount: 5,
+                                      ));
                                     }
                                     if (snapshot.hasData) {
                                       return ListView.builder(
@@ -182,18 +185,18 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
                 ),
               ),
 
-              if (_delayCheck != true)
-                const SliverToBoxAdapter(
-                  child: OneLoadingShimmer(
-                    itemCount: 5,
-                  ),
-                )
-              else
-                tagsButton != "Tất cả"
-                    ? CardNewsWithTags(data: data, tagsButton: tagsButton)
-                    : CardNews(
-                        data: data,
-                      )
+              // if (_delayCheck != true)
+              //   const SliverToBoxAdapter(
+              //     child: OneLoadingShimmer(
+              //       itemCount: 5,
+              //     ),
+              //   )
+              // else
+              tagsButton != "Tất cả"
+                  ? CardNewsWithTags(data: data, tagsButton: tagsButton)
+                  : CardNews(
+                      data: data,
+                    )
             ],
           )),
         ));

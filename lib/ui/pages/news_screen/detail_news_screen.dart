@@ -49,47 +49,16 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
       backgroundColor: OneColors.black,
       body: Container(
         decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/bg/bg.png"),
-              fit: BoxFit.cover,
-            ),
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg/bg.png"),
+            fit: BoxFit.cover,
           ),
+        ),
         child: Scrollbar(
             child: CustomScrollView(
           slivers: [
             //Build Header
-            SliverPersistentHeader(
-              pinned: false,
-              floating: false,
-              delegate: SliverAppBarDelegate(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 40.0, left: 20, right: 24),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Icon(Icons.arrow_back_ios, color: Colors.blue),
-                              const SizedBox(width: 10),
-                              Text("Back", style: OneTheme.of(context).body1.copyWith(color: OneColors.brandVNP)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(flex: 1, child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const []))
-                    ],
-                  ),
-                ),
-                minHeight: MediaQuery.of(context).padding.top + 70,
-                maxHeight: MediaQuery.of(context).padding.top + 70,
-              ),
-            ),
+            _buildHeader(context),
             //Content
             SliverToBoxAdapter(
               child: Column(
@@ -104,7 +73,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                     padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20, bottom: 10),
                     child: Text(
                       widget.argument["title"],
-                      style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.textGrey3),
+                      style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
                     ),
                   ),
                   //setState  Nội dung
@@ -116,9 +85,6 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                           String contents = contentList[i]["contents"];
                           String contentsMore = contentList[i]["contentsMore"];
                           var images = contentList[i]["images"];
-                          String imageUrl = contentList[i]["images"]["imageUrl"];
-                          String imageNotes = contentList[i]["images"]["imageNotes"];
-                          String imageCredit = contentList[i]["images"]["imageCredit"];
 
                           setState(() {
                             contentListContents.add(contents);
@@ -141,6 +107,41 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
             const SliverToBoxAdapter(child: BuildFooter())
           ],
         )),
+      ),
+    );
+  }
+
+  SliverPersistentHeader _buildHeader(BuildContext context) {
+    return SliverPersistentHeader(
+      pinned: false,
+      floating: false,
+      delegate: SliverAppBarDelegate(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 40.0, left: 20, right: 24),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.arrow_back_ios, color: Colors.blue),
+                      const SizedBox(width: 10),
+                      Text("Back", style: OneTheme.of(context).body1.copyWith(color: OneColors.brandVNP)),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(flex: 1, child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const []))
+            ],
+          ),
+        ),
+        minHeight: MediaQuery.of(context).padding.top + 70,
+        maxHeight: MediaQuery.of(context).padding.top + 70,
       ),
     );
   }
@@ -254,9 +255,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                       ? Column(
                                           children: [
                                             Container(
-                                              decoration: BoxDecoration(
-                                                boxShadow: [BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)]
-                                              ),
+                                              decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)]),
                                               child: Image.network(contentsListImage[index]["imageUrl"],
                                                   fit: BoxFit.fill,
                                                   loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
