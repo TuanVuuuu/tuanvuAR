@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,7 @@ import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_news.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
+import 'package:flutter_application_1/ui/pages/discovery_screen/discovery.dart';
 import 'package:flutter_application_1/ui/pages/home_screen/planet_detail_screen.dart';
 import 'package:flutter_application_1/ui/views/home_header.dart';
 import 'dart:math' as math;
@@ -78,69 +82,281 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   SliverToBoxAdapter _buildPlanetsAnimate(BuildContext context) {
+    double sizeHeight = MediaQuery.of(context).size.height;
+    double sizeWidth = MediaQuery.of(context).size.width;
     return SliverToBoxAdapter(
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.only(left: 0, right: 10, top: 20, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Các hành tinh trong hệ mặt trời", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: Colors.white)),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text("Khám phá", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: Colors.white)),
+              ),
               const SizedBox(height: 20),
               Center(
-                  child: Container(
-                height: 300,
-                width: 300,
-                color: Colors.transparent,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Earth.png"))],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 60, right: 40),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Stack(children: [
+                  Container(
+                    width: sizeWidth * 0.9,
+                    color: OneColors.transparent,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
                         children: [
-                          SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Mercury.png", fit: BoxFit.fitHeight)),
-                          SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Mars.png", fit: BoxFit.fitHeight)),
+                          SizedBox(
+                            height: sizeHeight * 0.11,
+                          ),
+                          Container(
+                            height: sizeHeight * 0.2,
+                            width: sizeWidth * 0.9,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color(0xff00B2FF),
+                                  Color(0xff0AA9FA),
+                                  Color(0xff4670DA),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 30.0, left: 20, right: 20),
+                                        child: Text(
+                                          "Ngoài vũ trụ rộng lớn luôn có những điều mới lạ!",
+                                          style: OneTheme.of(context).title1.copyWith(
+                                                color: OneColors.white,
+                                                fontSize: 18,
+                                              ),
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              // Các vì sao
+                              _buillStarsDiscovery(sizeHeight, context),
+                              const SizedBox(width: 20),
+                              // Nhân tạo
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(
+                                  height: sizeHeight * 0.15,
+                                  child: Stack(children: [
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                        height: sizeHeight * 0.12,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(17),
+                                          gradient: const LinearGradient(
+                                            colors: [
+                                              Color(0xFF081C2D),
+                                              Color(0xFF0A3A5C),
+                                              Color(0xFF0C5B8D),
+                                            ],
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.centerRight,
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "Nhân tạo",
+                                            style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        color: OneColors.transparent,
+                                        height: sizeHeight * 0.08,
+                                        child: Image.asset("assets/images/rocket1.png"),
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: sizeHeight * 0.10,
+                            child: Stack(children: [
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  height: sizeHeight * 0.07,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Color(0xFF081C2D),
+                                        Color(0xFF0A3A5C),
+                                        Color(0xFF0C5B8D),
+                                      ],
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Khám phá ngay thôi nào!",
+                                            textAlign: TextAlign.start,
+                                            style: OneTheme.of(context).body1.copyWith(color: OneColors.textGrey1, fontSize: 14),
+                                          ),
+                                          Text(
+                                            "Let's go!",
+                                            textAlign: TextAlign.start,
+                                            style: OneTheme.of(context).body1.copyWith(color: OneColors.brandVNP, fontSize: 14),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        SizedBox(height: 40, width: 85, child: Image.asset("assets/images/planets_animate/saturn.png", fit: BoxFit.fitHeight)),
-                        const SizedBox(width: 15),
-                        SizedBox(height: 120, width: 120, child: Image.asset("assets/images/planets_animate/Sun.png", fit: BoxFit.fitHeight)),
-                        const SizedBox(width: 35),
-                        SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Mars.png", fit: BoxFit.fitHeight)),
-                      ],
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    height: sizeHeight * 0.2,
+                    width: sizeWidth * 0.9,
+                    child: Image.asset(
+                      "assets/images/khampha.png",
+                      fit: BoxFit.fitWidth,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 60, right: 40),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Venus.png", fit: BoxFit.fitHeight)),
-                          SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Neptune.png", fit: BoxFit.fitHeight)),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Uranus.png"))],
-                      ),
-                    ),
-                  ],
-                ),
-              ))
+                  ),
+                ]),
+              ),
             ],
           )),
+    );
+  }
+
+  Widget _buillStarsDiscovery(double sizeHeight, BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: SizedBox(
+        height: sizeHeight * 0.15,
+        child: Stack(children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DiscoveryScreen()));
+              },
+              child: Container(
+                height: sizeHeight * 0.12,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(17),
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xFF081C2D),
+                      Color(0xFF0A3A5C),
+                      Color(0xFF0C5B8D),
+                    ],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    "Các vì sao",
+                    style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              color: OneColors.transparent,
+              height: sizeHeight * 0.08,
+              child: Image.asset("assets/images/saochoi.png"),
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  Widget _buildCirclePlanets() {
+    return Container(
+      height: 300,
+      width: 300,
+      color: Colors.transparent,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Earth.png"))],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 60, right: 40),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Mercury.png", fit: BoxFit.fitHeight)),
+                SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Mars.png", fit: BoxFit.fitHeight)),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              SizedBox(height: 40, width: 85, child: Image.asset("assets/images/planets_animate/saturn.png", fit: BoxFit.fitHeight)),
+              const SizedBox(width: 15),
+              SizedBox(height: 120, width: 120, child: Image.asset("assets/images/planets_animate/Sun.png", fit: BoxFit.fitHeight)),
+              const SizedBox(width: 35),
+              SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Neptune-1.png", fit: BoxFit.fitHeight)),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 60, right: 40),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Venus.png", fit: BoxFit.fitHeight)),
+                SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Neptune.png", fit: BoxFit.fitHeight)),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Uranus.png"))],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -150,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Container(
             color: Colors.transparent,
-            height: 300,
+            height: 320,
             width: MediaQuery.of(context).size.width,
             child: StreamBuilder(
                 stream: data.snapshots(),
@@ -159,13 +375,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Center(child: CircularProgressIndicator(color: Colors.blue));
                   }
                   if (snapshot.hasData) {
-                    return ListView.builder(
-                      physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
+                    return CarouselSlider.builder(
+                      options: CarouselOptions(
+                        height: 350,
+                        autoPlay: false,
+                        reverse: true,
+                        viewportFraction: 0.5,
+                        enlargeCenterPage: true,
+                      ),
+                      // physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
+                      // padding: EdgeInsets.zero,
+                      // scrollDirection: Axis.horizontal,
+                      // shrinkWrap: true,
                       itemCount: snapshot.data?.docs.length,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, index, realIndex) {
                         final DocumentSnapshot records = snapshot.data!.docs[index];
 
                         // Image colors
@@ -175,143 +398,141 @@ class _HomeScreenState extends State<HomeScreen> {
                         String colorGradientBottom = colors["colorGradient"]["bottom"];
 
                         return Padding(
-                          padding: const EdgeInsets.only(top: 10.0, right: 10, left: 10),
+                          padding: const EdgeInsets.only(top: 10.0, right: 10, left: 10, bottom: 10),
                           child: SizedBox(
-                              width: 188,
                               child: Stack(
-                                children: [
-                                  // Tên + giới thiệu vắn tắt
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 48.0, left: 17),
-                                    // INFO IMAGE
+                            children: [
+                              // Tên + giới thiệu vắn tắt
+                              Padding(
+                                padding: const EdgeInsets.only(top: 48.0, left: 17),
+                                // INFO IMAGE
+                                child: Container(
+                                  height: 250,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    borderRadius: const BorderRadius.all(Radius.circular(40)),
+                                    boxShadow: [
+                                      BoxShadow(color: Colors.grey.withOpacity(0.2), offset: const Offset(5.0, 5.0), blurRadius: 10.0, spreadRadius: 2.0), //BoxShadow
+                                      BoxShadow(color: Colors.grey.withOpacity(0.2), offset: const Offset(0.0, 0.0), blurRadius: 0.0, spreadRadius: 0.0), //BoxShadow
+                                    ],
+                                  ),
+
+                                  // Card với màu gradient
+                                  child: Opacity(
+                                    opacity: 0.8,
                                     child: Container(
-                                      height: 230,
+                                      height: 252,
                                       width: 171,
                                       decoration: BoxDecoration(
-                                        color: Colors.transparent,
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color(int.parse(colorGradientBottom)),
+                                            Color(
+                                              int.parse(colorGradientTop),
+                                            )
+                                          ],
+                                          begin: Alignment.bottomRight,
+                                          end: Alignment.topLeft,
+                                        ),
                                         borderRadius: const BorderRadius.all(Radius.circular(40)),
-                                        boxShadow: [
-                                          BoxShadow(color: Colors.grey.withOpacity(0.2), offset: const Offset(5.0, 5.0), blurRadius: 10.0, spreadRadius: 2.0), //BoxShadow
-                                          BoxShadow(color: Colors.grey.withOpacity(0.2), offset: const Offset(0.0, 0.0), blurRadius: 0.0, spreadRadius: 0.0), //BoxShadow
-                                        ],
                                       ),
 
-                                      // Card với màu gradient
-                                      child: Opacity(
-                                        opacity: 0.8,
-                                        child: Container(
-                                          height: 252,
-                                          width: 171,
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(int.parse(colorGradientBottom)),
-                                                Color(
-                                                  int.parse(colorGradientTop),
+                                      // Info Planets + "Xem thêm" Button
+                                      child: Stack(children: [
+                                        Container(
+                                          margin: const EdgeInsets.only(left: 10, right: 10, top: 90, bottom: 30),
+                                          decoration: const BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20),
+                                                bottomLeft: Radius.circular(30),
+                                                bottomRight: Radius.circular(30),
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black,
+                                                  offset: Offset(0.0, 3.0),
+                                                  blurRadius: 5.0,
+                                                  spreadRadius: 0.5,
                                                 )
-                                              ],
-                                              begin: Alignment.bottomRight,
-                                              end: Alignment.topLeft,
-                                            ),
-                                            borderRadius: const BorderRadius.all(Radius.circular(40)),
-                                          ),
-
-                                          // Info Planets + "Xem thêm" Button
-                                          child: Stack(children: [
-                                            Container(
-                                              margin: const EdgeInsets.only(left: 10, right: 10, top: 90, bottom: 30),
-                                              decoration: const BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(20),
-                                                    topRight: Radius.circular(20),
-                                                    bottomLeft: Radius.circular(30),
-                                                    bottomRight: Radius.circular(30),
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black,
-                                                      offset: Offset(0.0, 3.0),
-                                                      blurRadius: 5.0,
-                                                      spreadRadius: 0.5,
-                                                    )
-                                                  ]),
-                                              // Name and Info planets
-                                              child: Align(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text(
-                                                          records["name"] ?? "Trái đất",
-                                                          style: OneTheme.of(context).body1,
-                                                        ),
-                                                        const SizedBox(height: 5),
-                                                        Text(
-                                                          records["info"] ?? "Trái đất, hay còn được gọi là Địa cầu (Tiếng Anh : Earth, Tiếng Hán : ...",
-                                                          textAlign: TextAlign.justify,
-                                                          maxLines: 3,
-                                                          overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                        const SizedBox(height: 20),
-                                                      ],
+                                              ]),
+                                          // Name and Info planets
+                                          child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      records["name"] ?? "Trái đất",
+                                                      style: OneTheme.of(context).body1,
                                                     ),
-                                                  )),
-                                            ),
-                                            //Button "Xem thêm"
-                                            Padding(
-                                                padding: const EdgeInsets.only(top: 170),
-                                                child: Center(
+                                                    const SizedBox(height: 5),
+                                                    Text(
+                                                      records["info"] ?? "Trái đất, hay còn được gọi là Địa cầu (Tiếng Anh : Earth, Tiếng Hán : ...",
+                                                      textAlign: TextAlign.justify,
+                                                      maxLines: 3,
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                    const SizedBox(height: 20),
+                                                  ],
+                                                ),
+                                              )),
+                                        ),
+                                        //Button "Xem thêm"
+                                        Padding(
+                                            padding: const EdgeInsets.only(top: 170),
+                                            child: Center(
+                                              child: Container(
+                                                decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white, boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black,
+                                                    offset: Offset(0.0, 5.0),
+                                                    blurRadius: 5.0,
+                                                    spreadRadius: 0.5,
+                                                  )
+                                                ]),
+                                                height: 40,
+                                                width: 40,
+                                                child: InkWell(
+                                                  onTap: (() {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                //const LocalAndWebObjectsView()
+                                                                PlanetDetailScreen(
+                                                                  argument: records,
+                                                                )));
+                                                  }),
                                                   child: Container(
-                                                    decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white, boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.black,
-                                                        offset: Offset(0.0, 5.0),
-                                                        blurRadius: 5.0,
-                                                        spreadRadius: 0.5,
-                                                      )
-                                                    ]),
-                                                    height: 40,
-                                                    width: 40,
-                                                    child: InkWell(
-                                                      onTap: (() {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    //const LocalAndWebObjectsView()
-                                                                    PlanetDetailScreen(
-                                                                      argument: records,
-                                                                    )));
-                                                      }),
-                                                      child: Container(
-                                                        margin: const EdgeInsets.all(3),
-                                                        decoration: const BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color: Colors.amber,
-                                                        ),
-                                                        child: const Center(
-                                                          child: Icon(
-                                                            Icons.arrow_forward,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
+                                                    margin: const EdgeInsets.all(3),
+                                                    decoration: const BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Colors.amber,
+                                                    ),
+                                                    child: const Center(
+                                                      child: Icon(
+                                                        Icons.arrow_forward,
+                                                        color: Colors.white,
                                                       ),
                                                     ),
                                                   ),
-                                                )),
-                                          ]),
-                                        ),
-                                      ),
+                                                ),
+                                              ),
+                                            )),
+                                      ]),
                                     ),
                                   ),
+                                ),
+                              ),
 
-                                  // IMAGE 2D của các hành tinh
-                                  _buildImagePlanets2D(colorModel, records, records["image2D"]["imageUrl"])
-                                ],
-                              )),
+                              // IMAGE 2D của các hành tinh
+                              _buildImagePlanets2D(colorModel, records, records["image2D"]["imageUrl"])
+                            ],
+                          )),
                         );
                       },
                     );

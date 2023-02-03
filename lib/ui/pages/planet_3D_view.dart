@@ -6,7 +6,7 @@ import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/components/one_thick_ness.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:flutter_application_1/src/widgets/ar_screen.dart';
+import 'package:flutter_application_1/ui/pages/ar_screen.dart';
 import 'package:flutter_application_1/src/widgets/local_ar_web_view.dart';
 import 'package:readmore/readmore.dart';
 import 'package:webview_flutter/webview_flutter.dart';

@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/home_main.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FlutterDownloader.initialize();
+  FlutterDownloader.registerCallback(downloadCallback);
   runApp(const MyApp());
 }
 
@@ -20,4 +23,9 @@ class MyApp extends StatelessWidget {
       home: HomeMain(),
     );
   }
+}
+
+void downloadCallback(
+    String id, DownloadTaskStatus status, int progress) async {
+  print('callback: ID = $id || status = $status || progress = $progress');
 }

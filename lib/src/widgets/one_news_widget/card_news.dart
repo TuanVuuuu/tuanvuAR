@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/loading/one_loading_shimer.dart';
 import 'package:flutter_application_1/src/components/one_card.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_image.dart';
@@ -27,7 +28,9 @@ class CardNews extends StatelessWidget {
             builder: ((context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 const Center(
-                  child: CircularProgressIndicator(color: Colors.transparent),
+                  child: OneLoadingShimmer(
+                    itemCount: 5,
+                  ),
                 );
               }
 
@@ -38,7 +41,7 @@ class CardNews extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: cardLength ?? snapshot.data?.docs.length,
                   itemBuilder: (context, index) {
-                    final DocumentSnapshot records = snapshot.data.docs[snapshot.data?.docs.length - index -1];
+                    final DocumentSnapshot records = snapshot.data.docs[snapshot.data?.docs.length - index - 1];
                     Timestamp time = records["date"];
                     var dateFormat = DateFormat.yMMMMd('en_US').add_jm().format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
                     var dateFormatNoJM = DateFormat.yMMMMd('en_US').format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
@@ -53,14 +56,18 @@ class CardNews extends StatelessWidget {
                         child: OneCard(
                           color: OneColors.black.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(7),
-                          child: (records["content"][0]["images"]["imageUrl"] != null && records["content"][0]["images"]["imageUrl"] != "") ? OneCardNewsImage(records: records, dateFormat: dateFormat) : OneCardNewsNoImage(records: records, dateFormat: dateFormat),
+                          child: (records["content"][0]["images"]["imageUrl"] != null && records["content"][0]["images"]["imageUrl"] != "")
+                              ? OneCardNewsImage(records: records, dateFormat: dateFormat)
+                              : OneCardNewsNoImage(records: records, dateFormat: dateFormat),
                         ),
                       ),
                     );
                   },
                 );
               }
-              return const Center(child: CircularProgressIndicator(color: OneColors.brandVNP));
+              return const Center(child: OneLoadingShimmer(
+                                        itemCount: 5,
+                                      ));
             }),
           ),
           const SizedBox(

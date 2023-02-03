@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/loading/one_loading_shimer.dart';
 import 'package:flutter_application_1/src/components/one_card.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_image.dart';
@@ -24,7 +25,10 @@ class CardNewsWithTags extends StatelessWidget {
         stream: data.snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            const Center(child: CircularProgressIndicator(color: Colors.blue));
+            const Center(
+                child: OneLoadingShimmer(
+              itemCount: 5,
+            ));
           }
           if (snapshot.hasData) {
             return ListView.builder(
@@ -54,7 +58,9 @@ class CardNewsWithTags extends StatelessWidget {
                               child: OneCard(
                                 color: OneColors.black.withOpacity(0.5),
                                 borderRadius: BorderRadius.circular(7),
-                                child: (records["content"][0]["images"]["imageUrl"] != null && records["content"][0]["images"]["imageUrl"] != "") ? OneCardNewsImage(records: records, dateFormat: dateFormat) : OneCardNewsNoImage(records: records, dateFormat: dateFormat),
+                                child: (records["content"][0]["images"]["imageUrl"] != null && records["content"][0]["images"]["imageUrl"] != "")
+                                    ? OneCardNewsImage(records: records, dateFormat: dateFormat)
+                                    : OneCardNewsNoImage(records: records, dateFormat: dateFormat),
                               ),
                             ),
                           );
@@ -65,7 +71,10 @@ class CardNewsWithTags extends StatelessWidget {
               },
             );
           }
-          return const Center(child: CircularProgressIndicator(color: Colors.blue));
+          return const Center(
+              child: OneLoadingShimmer(
+            itemCount: 5,
+          ));
         },
       ),
     );

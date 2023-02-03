@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  carousel_slider:
+    dependency: "direct main"
+    description:
+      name: carousel_slider
+      sha256: "9c695cc963bf1d04a47bd6021f68befce8970bcd61d24938e1fb0918cf5d9c42"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.1"
   characters:
     dependency: transitive
     description:
@@ -230,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  flutter_downloader:
+    dependency: "direct main"
+    description:
+      name: flutter_downloader
+      sha256: "496a47b9952bd7d72384ee014fd847ceb3a88d49f339ab4e939a808804a79ceb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.1+2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -424,6 +440,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.0"
+  native_ar_viewer:
+    dependency: "direct main"
+    description:
+      name: native_ar_viewer
+      sha256: "083e2c02bf79fd2322b593eb46e0a59866a261d8cea507c06a8cfab5d95d3691"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   nested:
     dependency: transitive
     description:
@@ -457,7 +481,7 @@ packages:
     source: hosted
     version: "1.0.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: dcea5feb97d8abf90cab9e9030b497fb7c3cbf26b7a1fe9e3ef7dcb0a1ddec95
@@ -600,6 +624,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  simple_shadow:
+    dependency: "direct main"
+    description:
+      name: simple_shadow
+      sha256: "8f44e25b80e14df04092373a72945b57d0190841698123c54ebf62d7f1ac26bb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   sky_engine:
     dependency: transitive
     description: flutter
