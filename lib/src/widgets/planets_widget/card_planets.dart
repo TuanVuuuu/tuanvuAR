@@ -55,7 +55,7 @@ class CardPlanets extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Container(
-                                      decoration: BoxDecoration(color: OneColors.black, borderRadius: BorderRadius.circular(10)),
+                                      decoration: BoxDecoration(color: OneColors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(10)),
                                       height: 75,
                                       width: 75,
                                       child: Padding(

@@ -66,7 +66,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/bg/bg.png"),
+              image: AssetImage("assets/images/bg/bg3.png"),
               fit: BoxFit.cover,
             ),
           ),

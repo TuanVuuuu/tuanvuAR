@@ -1,20 +1,13 @@
-import 'dart:ui';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:drop_shadow_image/drop_shadow_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/src/components/button/one_button.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:flutter_application_1/src/widgets/one_news_widget/card_news.dart';
-import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
-import 'package:flutter_application_1/ui/pages/discovery_screen/discovery.dart';
+import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_screen.dart';
 import 'package:flutter_application_1/ui/pages/home_screen/planet_detail_screen.dart';
 import 'package:flutter_application_1/ui/views/home_header.dart';
-import 'dart:math' as math;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -53,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg/bg.png"),
+          image: AssetImage("assets/images/bg/bg2.png"),
           fit: BoxFit.cover,
         ),
       ),
@@ -112,11 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: sizeWidth * 0.9,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              gradient: const LinearGradient(
+                              gradient: LinearGradient(
                                 colors: [
-                                  Color(0xff00B2FF),
-                                  Color(0xff0AA9FA),
-                                  Color(0xff4670DA),
+                                  const Color(0xff00B2FF).withOpacity(0.8),
+                                  const Color(0xff0AA9FA).withOpacity(0.8),
+                                  const Color(0xff4670DA).withOpacity(0.8),
                                 ],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
@@ -163,11 +156,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: sizeHeight * 0.12,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(17),
-                                          gradient: const LinearGradient(
+                                          gradient: LinearGradient(
                                             colors: [
-                                              Color(0xFF081C2D),
-                                              Color(0xFF0A3A5C),
-                                              Color(0xFF0C5B8D),
+                                              const Color(0xff00B2FF).withOpacity(0.4),
+                                              const Color(0xff0AA9FA).withOpacity(0.4),
+                                              const Color(0xff4670DA).withOpacity(0.4),
                                             ],
                                             begin: Alignment.centerLeft,
                                             end: Alignment.centerRight,
@@ -203,11 +196,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: sizeHeight * 0.07,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
-                                    gradient: const LinearGradient(
+                                    gradient: LinearGradient(
                                       colors: [
-                                        Color(0xFF081C2D),
-                                        Color(0xFF0A3A5C),
-                                        Color(0xFF0C5B8D),
+                                        const Color(0xFF081C2D).withOpacity(0.4),
+                                        const Color(0xFF0A3A5C).withOpacity(0.4),
+                                        const Color(0xFF0C5B8D).withOpacity(0.4),
                                       ],
                                       begin: Alignment.bottomCenter,
                                       end: Alignment.topCenter,
@@ -273,11 +266,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: sizeHeight * 0.12,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(17),
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [
-                      Color(0xFF081C2D),
-                      Color(0xFF0A3A5C),
-                      Color(0xFF0C5B8D),
+                      const Color(0xff00B2FF).withOpacity(0.4),
+                      const Color(0xff0AA9FA).withOpacity(0.4),
+                      const Color(0xff4670DA).withOpacity(0.4),
                     ],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
@@ -409,7 +402,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Container(
                                   height: 250,
                                   decoration: BoxDecoration(
-                                    color: Colors.transparent,
+                                    color: Colors.blue.withOpacity(0.8),
                                     borderRadius: const BorderRadius.all(Radius.circular(40)),
                                     boxShadow: [
                                       BoxShadow(color: Colors.grey.withOpacity(0.2), offset: const Offset(5.0, 5.0), blurRadius: 10.0, spreadRadius: 2.0), //BoxShadow

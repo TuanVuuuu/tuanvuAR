@@ -1,14 +1,9 @@
-import 'package:babylonjs_viewer/babylonjs_viewer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_application_1/src/components/one_thick_ness.dart';
-import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/ui/pages/ar_screen.dart';
-import 'package:flutter_application_1/src/widgets/local_ar_web_view.dart';
-import 'package:readmore/readmore.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Planet3DView extends StatefulWidget {
@@ -50,7 +45,6 @@ class _Planet3DViewState extends State<Planet3DView> {
     );
 
     String nameModel = (widget.argument["name"]);
-    String infoModel = widget.argument["info"];
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -67,7 +61,10 @@ class _Planet3DViewState extends State<Planet3DView> {
                 onTap: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LocalAndWebObjectsWidget(argument: widget.argument,)
+                      MaterialPageRoute(
+                          builder: (context) => LocalAndWebObjectsWidget(
+                                argument: widget.argument,
+                              )
                           //LocalAndWebObjectsView(argument: widget.argument),
                           ));
                 },
@@ -82,55 +79,6 @@ class _Planet3DViewState extends State<Planet3DView> {
             _build3DModel(nameModel),
           ],
         ));
-  }
-
-  Widget _buildBody(String nameModel, BuildContext context, String infoModel) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 30.0),
-      child: Column(
-        children: [
-          // Name Model Planet
-          // _buildNamePlanet(nameModel, context),
-          // INFO Model Planet
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 20.0,
-              right: 20,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: const [
-                  BoxShadow(
-                    color: OneColors.grey,
-                    blurRadius: 10.0,
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  children: [
-                    // info Model
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Text(
-                        infoModel,
-                        style: OneTheme.of(context).body2.copyWith(fontSize: 16),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   Padding _build3DModel(String nameModel) {

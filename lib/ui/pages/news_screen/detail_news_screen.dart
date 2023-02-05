@@ -50,7 +50,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/bg/bg.png"),
+            image: AssetImage("assets/images/bg/bg4.png"),
             fit: BoxFit.cover,
           ),
         ),

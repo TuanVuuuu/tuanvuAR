@@ -107,7 +107,17 @@ class _P3DViewState extends State<P3DView> {
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-                color: Color(0xFF202124),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue,
+                    blurRadius: 10,
+                  )
+                ],
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/images/bg/bg3.png",
+                    ),
+                    fit: BoxFit.fitWidth),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
