@@ -1,28 +1,17 @@
-import 'dart:math';
-import 'dart:ui';
 import 'dart:io' as io;
-import 'package:babylonjs_viewer/babylonjs_viewer.dart';
 import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:drop_shadow_image/drop_shadow_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/components/one_thick_ness.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:flutter_application_1/ui/pages/ar_screen.dart';
 import 'package:flutter_application_1/src/widgets/example/3d_view.dart';
-import 'package:flutter_application_1/ui/pages/planet_3D_view.dart';
-import 'package:flutter_application_1/src/widgets/video_player/video_player.dart';
 import 'package:readmore/readmore.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'package:video_player/video_player.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
-
-import 'package:path_provider/path_provider.dart';
 
 class PlanetDetailScreen extends StatefulWidget {
   const PlanetDetailScreen({
@@ -49,7 +38,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       loadingProgressCheck;
@@ -112,7 +100,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/bg/bg.png"),
+              image: AssetImage("assets/images/bg/bg3.png"),
               fit: BoxFit.cover,
             ),
           ),
@@ -145,91 +133,91 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
 
   SliverToBoxAdapter _buildListInfo(infoOther, BuildContext context) {
     return SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 024.0, bottom: 20),
-                  child: Column(
-                    children: [
-                      (infoOther["density"] != "")
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                children: [
-                                  Text("Mật độ: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                  Text(" ${infoOther["density"]}\u00B3", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(),
-                      (infoOther["radius"] != "")
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                children: [
-                                  Text("Bán kính: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                  Text(" ${infoOther["radius"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(),
-                      (infoOther["acreage"] != "")
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                children: [
-                                  Text("Diện tích: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                  Text(" ${infoOther["acreage"]}\u00B2", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(),
-                      (infoOther["cycle"] != "")
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                children: [
-                                  Text("Chu kỳ quay: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                  Text(" ${infoOther["cycle"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(),
-                      (infoOther["gravitation"] != "")
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                children: [
-                                  Text("Trọng lực: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                  Text(" ${infoOther["gravitation"]}\u00B2", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(),
-                      (infoOther["distance"] != "")
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                children: [
-                                  Text("Khoảng cách từ ${infoOther["trajectory"]} : ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                  Text(" ${infoOther["distance"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(),
-                      (infoOther["trajectory"] != "")
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                children: [
-                                  Text("Quỹ đạo: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                  Text(" ${infoOther["trajectory"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(),
-                    ],
-                  ),
-                ),
-              );
+      child: Padding(
+        padding: const EdgeInsets.only(left: 024.0, bottom: 20),
+        child: Column(
+          children: [
+            (infoOther["density"] != "")
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      children: [
+                        Text("Mật độ: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                        Text(" ${infoOther["density"]}\u00B3", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
+            (infoOther["radius"] != "")
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      children: [
+                        Text("Bán kính: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                        Text(" ${infoOther["radius"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
+            (infoOther["acreage"] != "")
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      children: [
+                        Text("Diện tích: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                        Text(" ${infoOther["acreage"]}\u00B2", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
+            (infoOther["cycle"] != "")
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      children: [
+                        Text("Chu kỳ quay: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                        Text(" ${infoOther["cycle"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
+            (infoOther["gravitation"] != "")
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      children: [
+                        Text("Trọng lực: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                        Text(" ${infoOther["gravitation"]}\u00B2", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
+            (infoOther["distance"] != "")
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      children: [
+                        Text("Khoảng cách từ ${infoOther["trajectory"]} : ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                        Text(" ${infoOther["distance"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
+            (infoOther["trajectory"] != "")
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      children: [
+                        Text("Quỹ đạo: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                        Text(" ${infoOther["trajectory"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
+          ],
+        ),
+      ),
+    );
   }
 
   SliverToBoxAdapter _buildSatellite(String nameModel, BuildContext context, String satelliteNumber, String idname) {
@@ -440,7 +428,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     );
   }
 
-  SliverToBoxAdapter _buildInfoExpanded(infoOther, BuildContext context) {
+  Widget _buildInfoExpanded(infoOther, BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(top: 24.0),
