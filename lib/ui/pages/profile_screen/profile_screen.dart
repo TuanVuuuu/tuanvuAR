@@ -18,8 +18,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double sizeHeight = MediaQuery.of(context).size.height;
-    double sizeWidth = MediaQuery.of(context).size.width;
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -30,72 +28,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
     return AppScaffold(
-        body: Scrollbar(
-            child: CustomScrollView(
-      //physics: const BouncingScrollPhysics(parent: ),
-      slivers: <Widget>[
-        BuildHeader(
-          context: context,
-          title_header: "Profile",
-          icon_header: const Icon(
-            Icons.person,
-            color: Colors.blue,
-          ),
+        body: Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/bg/bg3.png"),
+          fit: BoxFit.cover,
         ),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 100,
-          ),
-        ),
-        SliverToBoxAdapter(
-            child: // Figma Flutter Generator Group92Widget - GROUP
-                cardImages(sizeHeight: sizeHeight, sizeWidth: sizeWidth))
-      ],
-    )));
-  }
-}
-
-class cardImages extends StatelessWidget {
-  const cardImages({
-    super.key,
-    required this.sizeHeight,
-    required this.sizeWidth,
-  });
-
-  final double sizeHeight;
-  final double sizeWidth;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        //color: OneColors.red,
-        height: sizeHeight * 0.12,
-        child: Stack(children: <Widget>[
-          SizedBox(
-              width: sizeWidth,
-              child: Stack(children: <Widget>[
-                Container(
-                    decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFF081C2D),
-                      Color(0xFF0A3A5C),
-                      Color(0xFF0C5B8D),
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                )),
-                Padding(
-                  padding: const EdgeInsets.only(top : 0.0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        image: const DecorationImage(image: AssetImage('assets/images/robot.png'), fit: BoxFit.fitWidth),
-                      )),
-                ),
-              ])),
-        ]));
+      ),
+      child: Scrollbar(
+          child: CustomScrollView(
+        //physics: const BouncingScrollPhysics(parent: ),
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: Container(),
+          )
+        ],
+      )),
+    ));
   }
 }

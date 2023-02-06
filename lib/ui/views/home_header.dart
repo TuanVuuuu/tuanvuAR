@@ -25,7 +25,7 @@ class BuildHomeHeader extends StatelessWidget {
                   "",
                   style: OneTheme.of(context).header.copyWith(letterSpacing: 3, color: Colors.white),
                 ),
-                const Icon(Icons.segment, color: Colors.white,),
+                // const Icon(Icons.segment, color: Colors.white,),
               ],
             )),
       ),

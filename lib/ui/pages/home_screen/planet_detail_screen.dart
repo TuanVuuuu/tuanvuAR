@@ -8,6 +8,7 @@ import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/components/one_thick_ness.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/widgets/example/3d_view.dart';
+import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_detail_screen.dart';
 import 'package:readmore/readmore.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'package:video_player/video_player.dart';
@@ -26,7 +27,7 @@ class PlanetDetailScreen extends StatefulWidget {
 }
 
 class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
-  final CollectionReference homedata = FirebaseFirestore.instance.collection("modeldata");
+  final CollectionReference discoverydata = FirebaseFirestore.instance.collection("discoverdata");
 
   VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
@@ -35,6 +36,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
   String iosAssetPath = '';
   String taskId = '';
   String documentDirectoryPath = "";
+  String? idmain;
 
   @override
   void initState() {
@@ -69,7 +71,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String modelURL = widget.argument["image3D"]["imageARUrl"];
+    double sizeHeight = MediaQuery.of(context).size.height;
+    double sizeWidth = MediaQuery.of(context).size.width;
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -81,11 +84,15 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     );
     var infoOther = widget.argument["infoOther"];
     String idname = widget.argument["idName"] ?? "";
-    String imageDetail = widget.argument["imageDetail"];
+    String image2DUrl = widget.argument["image2D"]["imageUrl"];
     String nameModel = widget.argument["name"];
     String infoModel = widget.argument["info"];
     String satelliteNumber = infoOther["satelliteNumber"];
-    print(infoOther["density"]);
+    String modelURL = widget.argument["image3D"]["imageARUrl"];
+    var colors = widget.argument["image2D"]["colors"];
+    String colorModel = colors["colorModel"];
+
+    idmain = idname;
     return AppScaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -100,7 +107,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/bg/bg3.png"),
+              image: AssetImage("assets/images/bg/bg4.png"),
               fit: BoxFit.cover,
             ),
           ),
@@ -108,18 +115,20 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
               slivers: [
-                _buildImage2DDetail(imageDetail, nameModel, context, widget.argument, modelURL),
+                _buildImage2DDetail(nameModel, context, widget.argument, modelURL, sizeHeight, sizeWidth, image2DUrl, colorModel),
+
+                _buildNamePlanets(nameModel, context, modelURL),
                 // Thông tin về số vệ tinh, tuổi, nhiệt độ
                 _buildInfoExpanded(infoOther, context),
                 // Thông tin chi tiết của hành tinh
                 _buildInfoPlanets(infoModel, context),
                 // Thông tin về mật độ, Bán Kính , chu kì quay, trọng lực, khoảng cách với mặt trời, quỹ đạo
                 _buildListInfo(infoOther, context),
-
                 // Trình phát video giới thiệu
                 _buildVideoPlayer(),
-                // Thông tin vệ tinh của hành tinh
                 _buildSatellite(nameModel, context, satelliteNumber, idname),
+                // Thông tin vệ tinh của hành tinh
+                satelliteNumber != "0" ? _buildDiscovery(sizeHeight, sizeWidth) : _buildNotifiNotSatellite(nameModel, context),
                 const SliverToBoxAdapter(
                   child: SizedBox(
                     height: 50,
@@ -129,6 +138,191 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             ),
           ),
         ));
+  }
+
+  SliverToBoxAdapter _buildNamePlanets(String nameModel, BuildContext context, String modelURL) {
+    return SliverToBoxAdapter(
+      child: // Tên Hành tinh
+          Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 30, left: 24),
+            child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  nameModel.toUpperCase(),
+                  style: OneTheme.of(context).header.copyWith(color: OneColors.white, letterSpacing: 5),
+                )),
+          ),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _launchAR(modelURL);
+              });
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(color: OneColors.white.withOpacity(0.4), borderRadius: BorderRadius.circular(15)),
+              height: 50,
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.view_in_ar,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                    Text(
+                      "AR",
+                      style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNotifiNotSatellite(String nameModel, BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Row(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                  height: 200,
+                  child: SimpleShadow(
+                    opacity: 0.6, // Default: 0.5
+                    color: Colors.blue, // Default: Black
+                    offset: const Offset(5, 5), // Default: Offset(2, 2)
+                    sigma: 7,
+                    child: Image.asset('assets/images/novetinh.png'), // Default: 2
+                  )),
+              Text(
+                "$nameModel không có vệ tinh nha!",
+                style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  SliverToBoxAdapter _buildDiscovery(double sizeHeight, double sizeWidth) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 0, bottom: 15),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Column(
+              children: [
+                SizedBox(
+                  child: StreamBuilder(
+                      stream: discoverydata.snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {}
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data?.docs.length,
+                            itemBuilder: (context, index) {
+                              final DocumentSnapshot records = snapshot.data!.docs[index];
+                              String? name = records["name"];
+                              String? image2DUrl = records["images"]["image2DUrl"];
+                              String? info = records["info"];
+                              List tags = records["tags"];
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 10, right: 10),
+                                child: Column(
+                                    children: tags.map((i) {
+                                  if (i == idmain) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => DiscoveryDetailScreen(argument: records, color: const Color.fromARGB(255, 197, 165, 247))));
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            width: sizeWidth - 20,
+                                            height: sizeHeight * 0.1,
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: SizedBox(
+                                                      height: sizeHeight * 0.1,
+                                                      child: SimpleShadow(
+                                                        opacity: 0.6, // Default: 0.5
+                                                        color: Colors.white, // Default: Black
+                                                        offset: const Offset(0, 0), // Default: Offset(2, 2)
+                                                        sigma: 7,
+                                                        child: Image.network(image2DUrl ?? ""), // Default: 2
+                                                      )),
+                                                ),
+                                                Expanded(
+                                                  flex: 3,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(left: 20),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: [
+                                                        Container(
+                                                          margin: const EdgeInsets.only(bottom: 10),
+                                                          child: Text(
+                                                            name ?? "",
+                                                            style: OneTheme.of(context).body1.copyWith(color: OneColors.white, fontSize: 12),
+                                                            maxLines: 3,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          info ?? "",
+                                                          style: OneTheme.of(context).body1.copyWith(color: OneColors.textGrey1, fontSize: 10),
+                                                          maxLines: 4,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          textAlign: TextAlign.justify,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.only(bottom: 30.0),
+                                            child: OneThickNess(),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                  return Container();
+                                }).toList()),
+                              );
+                            },
+                          );
+                        }
+
+                        return Container();
+                      }),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
   }
 
   SliverToBoxAdapter _buildListInfo(infoOther, BuildContext context) {
@@ -262,95 +456,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             const SizedBox(
               height: 50,
             ),
-            Row(
-              children: [
-                widget.argument["infoOther"]["satelliteNumber"] != "0"
-                    ? Column(
-                        children: [
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: ListView.builder(
-                                physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                itemCount: widget.argument["infoOther"]["satelliteInfo"].length,
-                                itemBuilder: (context, index) {
-                                  String name = widget.argument["infoOther"]["satelliteInfo"][index]["name"];
-                                  String imageUrl = widget.argument["infoOther"]["satelliteInfo"][index]["imageUrl"];
-                                  String introduction = widget.argument["infoOther"]["satelliteInfo"][index]["introduction"];
-                                  return Padding(
-                                      padding: EdgeInsets.zero,
-                                      child: Container(
-                                          color: Colors.transparent,
-                                          width: 200,
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                children: [
-                                                  Container(
-                                                    height: 100,
-                                                    width: MediaQuery.of(context).size.width * 0.2,
-                                                    color: Colors.transparent,
-                                                    child: SimpleShadow(
-                                                      opacity: 0.6, // Default: 0.5
-                                                      color: Colors.white, // Default: Black
-                                                      offset: const Offset(0, 0), // Default: Offset(2, 2)
-                                                      sigma: 7, child: Image.network(imageUrl),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 100,
-                                                    width: MediaQuery.of(context).size.width * 0.7,
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text(
-                                                          name,
-                                                          style: OneTheme.of(context).caption1.copyWith(color: OneColors.white, fontWeight: FontWeight.w500),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Text(
-                                                          introduction,
-                                                          style: OneTheme.of(context).caption1.copyWith(color: OneColors.textGrey1, fontWeight: FontWeight.w500),
-                                                          maxLines: 4,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              const Padding(
-                                                padding: EdgeInsets.only(bottom: 30.0),
-                                                child: OneThickNess(),
-                                              ),
-                                            ],
-                                          )));
-                                },
-                              )),
-                        ],
-                      )
-                    : Row(
-                        children: [
-                          SizedBox(
-                              height: 200,
-                              child: SimpleShadow(
-                                opacity: 0.6, // Default: 0.5
-                                color: Colors.blue, // Default: Black
-                                offset: const Offset(5, 5), // Default: Offset(2, 2)
-                                sigma: 7,
-                                child: Image.asset('assets/images/novetinh.png'), // Default: 2
-                              )),
-                          Text(
-                            "$nameModel không có vệ tinh nha!",
-                            style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                          )
-                        ],
-                      ),
-              ],
-            )
           ],
         ),
       ),
@@ -488,116 +593,53 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
           );
   }
 
-  SliverToBoxAdapter _buildImage2DDetail(String imageDetail, String nameModel, BuildContext context, dynamic widget, String modelURL) {
+  SliverToBoxAdapter _buildImage2DDetail(String nameModel, BuildContext context, dynamic widget, String modelURL, double sizeHeight, double sizeWidth, String image2DUrl, String colorModel) {
     return SliverToBoxAdapter(
-      child: Stack(children: [
-        // Hình ảnh 2D của hành tinh
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(100),
-              bottomRight: Radius.circular(100),
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-            color: Colors.transparent,
-            boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.4), blurRadius: 15)],
-          ),
-          height: 370,
-          width: MediaQuery.of(context).size.width,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(100), bottomRight: Radius.circular(100), topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-            child:
-                // Image.asset(
-                //   "assets/2D_model/Mars.jpg",
-                //   fit: BoxFit.fitWidth,
-                // )
-                Image.network(imageDetail,
-                    fit: BoxFit.fitWidth,
-                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.blue,
-                          value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-                        ),
-                      );
-                    },
-                    errorBuilder: (context, error, stackTrace) => Image.asset("assets/images/not_found.png")),
-          ),
-        ),
-
-        // Tên Hành tinh
-        Padding(
-          padding: const EdgeInsets.only(top: 320),
-          child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                nameModel.toUpperCase(),
-                style: OneTheme.of(context).header.copyWith(color: OneColors.white, letterSpacing: 5),
-              )),
-        ),
-        // Button Xem ở chế độ 3D
-        Align(
-          alignment: Alignment.bottomLeft,
-          child: InkWell(
-            onTap: () {
-              setState(() {
-                _launchAR(modelURL);
-              });
-              //   Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) => LocalAndWebObjectsWidget(
-              //                 argument: widget,
-              //               )
-              //           // Planet3DView(
-              //           //       argument: widget,
-              //           //     )
-              //           ));
-            },
-            child: Container(
-              margin: const EdgeInsets.only(top: 320),
-              height: 60,
-              width: 80,
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.6), borderRadius: BorderRadius.circular(15), boxShadow: [
+      child: Stack(clipBehavior: Clip.none, children: [
+        Positioned(
+          top: -sizeHeight * 0.4,
+          right: -sizeWidth * 0.4,
+          child: Container(
+            height: sizeHeight,
+            width: sizeWidth,
+            decoration: BoxDecoration(
+              boxShadow: [
                 BoxShadow(
-                  color: Colors.white.withOpacity(0.4),
-                  blurRadius: 10,
-                )
-              ]),
-              child: Center(
-                  child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Icon(
-                      Icons.view_in_ar,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                    Text(
-                      "AR",
-                      style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                    ),
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     setState(() {
-                    //       _launchAR(modelURL);
-                    //     });
-                    //   },
-                    //   child: const Text(
-                    //     'Launch AR',
-                    //   ),
-                    // ),
-                  ],
-                ),
-              )),
+                    color: Color(
+                      int.parse(colorModel),
+                    ).withOpacity(0.4),
+                    blurRadius: 100,
+                    spreadRadius: 50)
+              ],
+              shape: BoxShape.circle,
             ),
           ),
-        )
+        ),
+        Positioned(
+          top: 0,
+          right: -sizeWidth * 0.2,
+          child: Container(
+            height: sizeHeight * 0.35,
+            color: Colors.transparent,
+            child: Image.network(
+              image2DUrl,
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+        ),
+        Positioned(
+          top: sizeHeight * 0.25,
+          right: 0,
+          child: Container(
+            height: sizeHeight * 0.25,
+            color: Colors.transparent,
+            child: Image.asset(
+              "assets/images/rocket2.png",
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+        ),
+        SizedBox(height: sizeHeight * 0.4),
       ]),
     );
   }

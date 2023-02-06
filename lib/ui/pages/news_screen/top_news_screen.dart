@@ -76,111 +76,109 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
             slivers: <Widget>[
               // _buildTopNews(context, result),
               SliverToBoxAdapter(
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20, top: 80, bottom: 15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              child: StreamBuilder(
-                                  stream: data.snapshots(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState == ConnectionState.waiting) {
-                                      const Center(
-                                          child: OneLoadingShimmer(
-                                        itemCount: 5,
-                                      ));
-                                    }
-                                    if (snapshot.hasData) {
-                                      return ListView.builder(
-                                        physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        itemCount: snapshot.data?.docs.length,
-                                        itemBuilder: (context, index) {
-                                          final DocumentSnapshot records = snapshot.data!.docs[index];
-                                          return Padding(
-                                              padding: EdgeInsets.zero,
-                                              child: (() {
-                                                for (int i = 0; i < records["tags"].length; i++) {
-                                                  if (result.isEmpty && dataList != []) {
-                                                    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
-                                                          tagsButtonList.add(records["tags"][i]);
-                                                          dataList.add(records["title"]);
-                                                        }));
-                                                  }
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 100, bottom: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(
+                            child: StreamBuilder(
+                                stream: data.snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    const Center(
+                                        child: OneLoadingShimmer(
+                                      itemCount: 5,
+                                    ));
+                                  }
+                                  if (snapshot.hasData) {
+                                    return ListView.builder(
+                                      physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.data?.docs.length,
+                                      itemBuilder: (context, index) {
+                                        final DocumentSnapshot records = snapshot.data!.docs[index];
+                                        return Padding(
+                                            padding: EdgeInsets.zero,
+                                            child: (() {
+                                              for (int i = 0; i < records["tags"].length; i++) {
+                                                if (result.isEmpty && dataList != []) {
+                                                  WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
+                                                        tagsButtonList.add(records["tags"][i]);
+                                                        dataList.add(records["title"]);
+                                                      }));
                                                 }
+                                              }
 
-                                                return Container();
-                                              })());
-                                        },
-                                      );
-                                    }
+                                              return Container();
+                                            })());
+                                      },
+                                    );
+                                  }
 
-                                    return Container();
-                                  }),
-                            ),
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Có thể bạn chưa biết!",
-                            style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+                                  return Container();
+                                }),
                           ),
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Có thể bạn chưa biết!",
+                          style: OneTheme.of(context).header.copyWith(color: OneColors.white),
                         ),
-                        const SizedBox(height: 10),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          child: Row(
-                            children: [
-                              tagsButtonView("Tất cả"),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: SizedBox(
-                                  //width: MediaQuery.of(context).size.height -40,
-                                  height: 40,
-                                  child: ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    scrollDirection: Axis.horizontal,
-                                    physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-                                    itemCount: result.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return Column(
-                                        children: [
-                                          tagsButtonView(result[index]),
-                                        ],
-                                      );
-                                    },
-                                  ),
+                      ),
+                      const SizedBox(height: 10),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        child: Row(
+                          children: [
+                            tagsButtonView("Tất cả"),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: SizedBox(
+                                //width: MediaQuery.of(context).size.height -40,
+                                height: 40,
+                                child: ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
+                                  itemCount: result.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      children: [
+                                        tagsButtonView(result[index]),
+                                      ],
+                                    );
+                                  },
                                 ),
                               ),
-                              const SizedBox(width: 20),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(width: 20),
+                          ],
                         ),
+                      ),
 
-                        //Text(textHolder),
-                        tagsButton != "Tất cả"
-                            ? Align(
-                                alignment: Alignment.centerLeft,
-                                child: RichText(
-                                  text: TextSpan(
-                                    text: 'Bạn đang tìm kiếm với từ khoá : ',
-                                    style: DefaultTextStyle.of(context).style.copyWith(color: OneColors.white),
-                                    children: <TextSpan>[
-                                      TextSpan(text: tagsButton, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
-                                    ],
-                                  ),
-                                ))
-                            : const SizedBox(),
-                      ],
-                    ),
+                      //Text(textHolder),
+                      tagsButton != "Tất cả"
+                          ? Align(
+                              alignment: Alignment.centerLeft,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'Bạn đang tìm kiếm với từ khoá : ',
+                                  style: DefaultTextStyle.of(context).style.copyWith(color: OneColors.white),
+                                  children: <TextSpan>[
+                                    TextSpan(text: tagsButton, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+                                  ],
+                                ),
+                              ))
+                          : const SizedBox(),
+                    ],
                   ),
                 ),
               ),

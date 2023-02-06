@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double sizeWidth = MediaQuery.of(context).size.width;
     return SliverToBoxAdapter(
       child: Padding(
-          padding: const EdgeInsets.only(left: 0, right: 10, top: 20, bottom: 20),
+          padding: const EdgeInsets.only(left: 0, right: 10, top: 20, bottom: 70),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

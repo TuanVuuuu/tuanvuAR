@@ -129,9 +129,9 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Icon(Icons.arrow_back_ios, color: Colors.blue),
+                      const Icon(Icons.arrow_back_ios, color: OneColors.white),
                       const SizedBox(width: 10),
-                      Text("Back", style: OneTheme.of(context).body1.copyWith(color: OneColors.brandVNP)),
+                      Text("Trở về", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
                     ],
                   ),
                 ),
