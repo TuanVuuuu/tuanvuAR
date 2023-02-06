@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/ui/entryPoint/models/menu.dart';
-import 'package:flutter_application_1/ui/pages/home_screen/home_screen.dart';
 import 'package:flutter_application_1/ui/pages/news_screen/top_news_screen.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/profile_screen.dart';
 import 'package:flutter_application_1/ui/utils/river_utils.dart';
@@ -159,7 +159,6 @@ class _EntryPointState extends State<EntryPoint> with SingleTickerProviderStateM
                   bottomNavItems.length,
                   (index) {
                     Menu navBar = bottomNavItems[index];
-                    print(selectedBottonNav);
                     return BtmNavItem(
                       navBar: navBar,
                       press: () {

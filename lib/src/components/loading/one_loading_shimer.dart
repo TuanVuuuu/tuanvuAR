@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class OneLoadingShimmer extends StatelessWidget {
@@ -21,7 +22,7 @@ class OneLoadingShimmer extends StatelessWidget {
   final EdgeInsets padding;
   final int itemCount;
   final Color? color;
-  Color get _color => color ?? Colors.white.withOpacity(0.8);
+  Color get _color => color ?? OneColors.white.withOpacity(0.8);
 
   @override
   Widget build(BuildContext context) {

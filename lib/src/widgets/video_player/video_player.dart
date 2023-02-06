@@ -1,7 +1,8 @@
+// ignore_for_file: unnecessary_string_escapes
+
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayer extends StatefulWidget {
@@ -17,12 +18,14 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     super.initState();
     _videoPlayerController = VideoPlayerController.network("https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4");
     _videoPlayerController!.initialize().then((_) {
       _chewieController = ChewieController(videoPlayerController: _videoPlayerController!);
       setState(() {
+        // ignore: avoid_print
         print("Video Player\'s Good to Go");
       });
     });
@@ -40,7 +43,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Container(
+        child: SizedBox(
           height: 230,
           width: MediaQuery.of(context).size.width - 40,
           child: _chewieVideoPlayer(),
@@ -52,7 +55,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
   Widget _chewieVideoPlayer() {
     return _chewieController != null && _videoPlayerController != null
         ? Container(
-            decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(30)),
+            decoration: BoxDecoration(color: OneColors.black, borderRadius: BorderRadius.circular(30)),
             child: ClipRRect(borderRadius: BorderRadius.circular(30), child: Chewie(controller: _chewieController!)),
           )
         : const Center(child: CircularProgressIndicator());

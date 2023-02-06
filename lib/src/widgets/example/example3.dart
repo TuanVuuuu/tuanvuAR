@@ -1,22 +1,14 @@
-import 'dart:io';
-import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
-import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
-import 'package:flutter/material.dart';
-import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
-import 'package:ar_flutter_plugin/datatypes/config_planedetection.dart';
-import 'package:ar_flutter_plugin/datatypes/node_types.dart';
-import 'package:ar_flutter_plugin/models/ar_node.dart';
-import 'package:flutter_application_1/src/components/button/one_triangle_shape.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:vector_math/vector_math_64.dart';
-import 'dart:math';
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
+
+part of '../../../libary/one_libary.dart';
 
 class LocalAndWebObjectsWidget extends StatefulWidget {
-  LocalAndWebObjectsWidget({
+  const LocalAndWebObjectsWidget({
     Key? key,
     required this.argument,
   }) : super(key: key);
 
+  // ignore: prefer_typing_uninitialized_variables
   final argument;
   @override
   _LocalAndWebObjectsWidgetState createState() => _LocalAndWebObjectsWidgetState();

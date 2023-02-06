@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:flutter_application_1/src/components/one_colors.dart';
+
 class WelcomeHeader extends StatelessWidget {
   const WelcomeHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: OneColors.transparent,
       pinned: false,
       floating: true,
       snap: false,
@@ -29,7 +31,7 @@ class _MyWelcomingHeader extends StatelessWidget {
       final opacity = 1.0 - Interval(fadeStart, fadeEnd).transform(t);
 
       return Container(
-        color: Colors.transparent,
+        color: OneColors.transparent,
         child: Padding(
           padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 30),
           child: Opacity(
@@ -44,11 +46,11 @@ class _MyWelcomingHeader extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     'Astronomy',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: OneColors.black,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),

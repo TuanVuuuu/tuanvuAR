@@ -1,16 +1,6 @@
-import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
-import 'package:ar_flutter_plugin/datatypes/node_types.dart';
-import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
-import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
-import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
-import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
-import 'package:ar_flutter_plugin/models/ar_node.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/button/one_button.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:vector_math/vector_math_64.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables
+
+part of '../../../libary/one_libary.dart';
 
 class LocalAndWebObjectsView extends StatefulWidget {
   const LocalAndWebObjectsView({
@@ -52,7 +42,6 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.argument["name"]);
     return AppScaffold(
       body: Scrollbar(
         child: CustomScrollView(
@@ -189,14 +178,14 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
 
   Future<void> onLocalObjectButtonPressed(String uri) async {
     List<String> url = [
-      "assets/localModel2/scene.gltf",//y
-      "assets/Chicken_01/3D_Planets/earth_day/scene.gltf",//n
-      "assets/Chicken_01/3D_Planets/mars/scene.gltf",//n
-      "assets/Chicken_01/3D_Planets/jupiter/scene.gltf",//n
-      "assets/Chicken_01/3D_Planets/moon/scene.gltf",//n
-      "assets/Chicken_01/3D_Planets/saturn/scene.gltf",//n
-      "assets/Chicken_01/3D_Planets/solar_system/scene.gltf",//n
-      "assets/Chicken_01/3D_Planets/solar_system_animation/scene.gltf",//n
+      "assets/localModel2/scene.gltf", //y
+      "assets/Chicken_01/3D_Planets/earth_day/scene.gltf", //n
+      "assets/Chicken_01/3D_Planets/mars/scene.gltf", //n
+      "assets/Chicken_01/3D_Planets/jupiter/scene.gltf", //n
+      "assets/Chicken_01/3D_Planets/moon/scene.gltf", //n
+      "assets/Chicken_01/3D_Planets/saturn/scene.gltf", //n
+      "assets/Chicken_01/3D_Planets/solar_system/scene.gltf", //n
+      "assets/Chicken_01/3D_Planets/solar_system_animation/scene.gltf", //n
       "assets/Chicken_01/3D_Planets/venus_v1.1/scene.gltf",
     ];
     if (localObjectNode != null) {

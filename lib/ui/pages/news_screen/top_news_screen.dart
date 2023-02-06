@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,15 +56,15 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
     List result = Set.of(tagsButtonList).toList();
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: OneColors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.transparent, // Color for Android
+        systemNavigationBarColor: OneColors.transparent, // Color for Android
         statusBarBrightness: Brightness.light, // Dark == white status bar -- for IOS.
       ),
     );
     return AppScaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: OneColors.white,
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -173,7 +175,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
                                   text: 'Bạn đang tìm kiếm với từ khoá : ',
                                   style: DefaultTextStyle.of(context).style.copyWith(color: OneColors.white),
                                   children: <TextSpan>[
-                                    TextSpan(text: tagsButton, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+                                    TextSpan(text: tagsButton, style: const TextStyle(fontWeight: FontWeight.bold, color: OneColors.blue)),
                                   ],
                                 ),
                               ))
@@ -209,7 +211,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
       }),
       child: Container(
         margin: const EdgeInsets.only(right: 8),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.blue.shade100),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: OneColors.blue100),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Align(

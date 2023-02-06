@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
@@ -14,19 +15,19 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const CircleAvatar(
-        backgroundColor: Colors.white24,
+        backgroundColor: OneColors.white24,
         child: Icon(
           CupertinoIcons.person,
-          color: Colors.white,
+          color: OneColors.white,
         ),
       ),
       title: Text(
         name,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: OneColors.white),
       ),
       subtitle: Text(
         bio,
-        style: const TextStyle(color: Colors.white70),
+        style: const TextStyle(color: OneColors.white70),
       ),
     );
   }

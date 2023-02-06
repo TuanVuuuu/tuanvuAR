@@ -47,7 +47,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
 
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: OneColors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.transparent, // Color for Android
@@ -262,7 +262,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
             right: -sizeWidth! * 0.2,
             child: Container(
               height: sizeHeight! * 0.35,
-              color: Colors.transparent,
+              color: OneColors.transparent,
               child: Image.network(
                 image2DUrl ?? "",
                 fit: BoxFit.fitHeight,
@@ -274,7 +274,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
             right: 0,
             child: Container(
               height: sizeHeight! * 0.25,
-              color: Colors.transparent,
+              color: OneColors.transparent,
               child: Image.asset(
                 "assets/images/rocket2.png",
                 fit: BoxFit.fitHeight,

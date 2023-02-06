@@ -39,7 +39,7 @@ class OneCardNewsNoImage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           (dateFormat != "" && author != "")
-                              ? Container(
+                              ? SizedBox(
                                   width: MediaQuery.of(context).size.width - 70,
                                   child: Text(
                                     "$author - $dateFormat",

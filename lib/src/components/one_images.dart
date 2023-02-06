@@ -1,4 +1,6 @@
 
+// ignore_for_file: constant_identifier_names
+
 /*
  * File: one_images.dart
  * File Created: Monday, 1st March 2021 2:26:55 pm
@@ -8,8 +10,6 @@
  * Modified By: Hieu Tran
  */
 
-import 'dart:io' as dart_io;
-import 'package:flutter/services.dart';
 
 class OneImages {
   OneImages._();

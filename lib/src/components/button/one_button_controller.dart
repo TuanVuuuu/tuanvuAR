@@ -7,11 +7,7 @@
  * Modified By: Hieu Tran
  */
 
-
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/button/one_button.dart';
-import 'package:flutter_application_1/src/components/button/one_button_value.dart';
-import 'package:flutter_application_1/src/components/shared/constant.dart';
+part of '../../../libary/one_libary.dart';
 
 class OneButtonController extends ValueNotifier<OneButtonValue> {
   OneButtonController({

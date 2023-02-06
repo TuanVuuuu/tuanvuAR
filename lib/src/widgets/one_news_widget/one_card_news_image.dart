@@ -55,7 +55,7 @@ class OneCardNewsImage extends StatelessWidget {
                             if (loadingProgress == null) return child;
                             return Center(
                               child: CircularProgressIndicator(
-                                color: Colors.blue,
+                                color: OneColors.brandVNP,
                                 value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
                               ),
                             );
@@ -70,7 +70,7 @@ class OneCardNewsImage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               (dateFormat != "" && author != "")
-                  ? Container(
+                  ? SizedBox(
                       width: MediaQuery.of(context).size.width - 70,
                       child: Text(
                         "$author - $dateFormat",

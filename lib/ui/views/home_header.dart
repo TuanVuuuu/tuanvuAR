@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'dart:math' as math;
 
@@ -17,13 +18,13 @@ class BuildHomeHeader extends StatelessWidget {
         maxHeight: 100,
         child: Container(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-            color: Colors.transparent,
+            color: OneColors.transparent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "",
-                  style: OneTheme.of(context).header.copyWith(letterSpacing: 3, color: Colors.white),
+                  style: OneTheme.of(context).header.copyWith(letterSpacing: 3, color: OneColors.white),
                 ),
                 // const Icon(Icons.segment, color: Colors.white,),
               ],

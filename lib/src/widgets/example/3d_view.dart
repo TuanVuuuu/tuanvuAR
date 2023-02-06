@@ -1,16 +1,6 @@
-import 'package:babylonjs_viewer/babylonjs_viewer.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_application_1/src/components/one_thick_ness.dart';
-import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:flutter_application_1/ui/pages/ar_screen.dart';
-import 'package:flutter_application_1/src/widgets/local_ar_web_view.dart';
-import 'package:flutter_application_1/src/widgets/planets_widget/card_planets.dart';
-import 'package:readmore/readmore.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+// ignore_for_file: file_names, duplicate_ignore, prefer_typing_uninitialized_variables
+
+part of '../../../libary/one_libary.dart';
 
 class P3DView extends StatefulWidget {
   const P3DView({
@@ -61,10 +51,10 @@ class _P3DViewState extends State<P3DView> {
     print(imageUrl);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: OneColors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.transparent, // Color for Android
+        systemNavigationBarColor: OneColors.transparent, // Color for Android
         statusBarBrightness: Brightness.light, // Dark == white status bar -- for IOS.
       ),
     );
@@ -77,14 +67,14 @@ class _P3DViewState extends State<P3DView> {
             style: OneTheme.of(context).header.copyWith(color: OneColors.black),
           ),
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor: OneColors.white,
           elevation: 2,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+            icon: const Icon(Icons.arrow_back_ios, color: OneColors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: OneColors.white,
         body: Stack(
           children: [
             _build3DModel(imageUrl),
@@ -94,7 +84,7 @@ class _P3DViewState extends State<P3DView> {
                 margin: const EdgeInsets.only(top: 10, right: 15),
                 height: 70,
                 width: 70,
-                decoration: BoxDecoration(color: Colors.white.withOpacity(1), shape: BoxShape.circle),
+                decoration: BoxDecoration(color: OneColors.white.withOpacity(1), shape: BoxShape.circle),
                 child: const Icon(
                   Icons.view_in_ar,
                   size: 30,
@@ -109,7 +99,7 @@ class _P3DViewState extends State<P3DView> {
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.blue,
+                    color: OneColors.brandVNP,
                     blurRadius: 10,
                   )
                 ],
@@ -128,7 +118,7 @@ class _P3DViewState extends State<P3DView> {
                       padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 10),
                       child: Container(
                         height: 53,
-                        color: Colors.transparent,
+                        color: OneColors.transparent,
                         child: Row(
                           children: [
                             Expanded(
@@ -192,7 +182,7 @@ class _P3DViewState extends State<P3DView> {
                   child: WebView(
                     initialUrl: Uri.encodeFull(imageUrl),
                     debuggingEnabled: false,
-                    backgroundColor: Colors.white,
+                    backgroundColor: OneColors.white,
                     javascriptMode: JavascriptMode.unrestricted,
                     gestureNavigationEnabled: false,
                   ),
@@ -215,7 +205,7 @@ class _P3DViewState extends State<P3DView> {
                   child: WebView(
                     initialUrl: Uri.encodeFull(imageUrl),
                     debuggingEnabled: false,
-                    backgroundColor: Colors.white,
+                    backgroundColor: OneColors.white,
                     javascriptMode: JavascriptMode.unrestricted,
                     gestureNavigationEnabled: false,
                   ),

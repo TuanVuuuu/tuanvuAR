@@ -7,14 +7,7 @@
  * Modified By: Hieu Tran
  */
 
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/button/one_button_controller.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/shared/constant.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tuple/tuple.dart';
-
+part of '../../../libary/one_libary.dart';
 
 enum OneButtonState {
   primary,
@@ -106,7 +99,7 @@ class _OneButtonState extends State<OneButton> {
     return OneColors.gradient;
   }
 
-  Color get _background => widget.background ?? Colors.white;
+  Color get _background => widget.background ?? OneColors.white;
 
   BoxDecoration get _decoration {
     return BoxDecoration(
@@ -123,14 +116,14 @@ class _OneButtonState extends State<OneButton> {
     }
     switch (state) {
       case OneButtonState.primary:
-        return widget.textColor ?? Colors.white;
+        return widget.textColor ?? OneColors.white;
       case OneButtonState.borderless:
       case OneButtonState.outline:
         return widget.textColor ?? _color;
       case OneButtonState.disable:
         return OneColors.textGrey1;
       default:
-        return widget.textColor ?? Colors.white;
+        return widget.textColor ?? OneColors.white;
     }
   }
 
@@ -221,8 +214,8 @@ class _OneButtonState extends State<OneButton> {
         style: ButtonStyle(
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           overlayColor: MaterialStateProperty.resolveWith((states) => _textColor.withOpacity(0.3)),
-          backgroundColor: MaterialStateProperty.resolveWith((states) => Colors.transparent),
-          foregroundColor: MaterialStateProperty.resolveWith((states) => Colors.transparent),
+          backgroundColor: MaterialStateProperty.resolveWith((states) => OneColors.transparent),
+          foregroundColor: MaterialStateProperty.resolveWith((states) => OneColors.transparent),
           elevation: MaterialStateProperty.all(0),
           padding: MaterialStateProperty.resolveWith((states) => widget.padding),
           shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: widget.borderRadius ?? BorderRadius.circular(8.0))),
