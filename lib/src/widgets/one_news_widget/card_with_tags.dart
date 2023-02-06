@@ -41,7 +41,6 @@ class CardNewsWithTags extends StatelessWidget {
                 final DocumentSnapshot records = snapshot.data!.docs[indexRev];
                 Timestamp time = records["date"];
                 var dateFormat = DateFormat.yMMMMd('en_US').add_jm().format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
-                var dateFormatNoJM = DateFormat.yMMMMd('en_US').format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
                 return Padding(
                     padding: EdgeInsets.zero,
                     child: (() {

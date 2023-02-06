@@ -1,18 +1,6 @@
-import 'dart:io' as io;
-import 'package:chewie/chewie.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_application_1/src/components/one_thick_ness.dart';
-import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:flutter_application_1/src/widgets/example/3d_view.dart';
-import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_detail_screen.dart';
-import 'package:readmore/readmore.dart';
-import 'package:simple_shadow/simple_shadow.dart';
-import 'package:video_player/video_player.dart';
-import 'package:native_ar_viewer/native_ar_viewer.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_escapes, avoid_print
+
+part of '../../../libary/one_libary.dart';
 
 class PlanetDetailScreen extends StatefulWidget {
   const PlanetDetailScreen({
@@ -75,10 +63,10 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     double sizeWidth = MediaQuery.of(context).size.width;
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: OneColors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.transparent, // Color for Android
+        systemNavigationBarColor: OneColors.transparent, // Color for Android
         statusBarBrightness: Brightness.light, // Dark == white status bar -- for IOS.
       ),
     );
@@ -96,14 +84,14 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     return AppScaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: OneColors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+            icon: const Icon(Icons.arrow_back_ios, color: OneColors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: OneColors.white,
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -171,7 +159,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                   children: [
                     const Icon(
                       Icons.view_in_ar,
-                      color: Colors.white,
+                      color: OneColors.white,
                       size: 40,
                     ),
                     Text(
@@ -198,7 +186,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                   height: 200,
                   child: SimpleShadow(
                     opacity: 0.6, // Default: 0.5
-                    color: Colors.blue, // Default: Black
+                    color: OneColors.brandVNP, // Default: Black
                     offset: const Offset(5, 5), // Default: Offset(2, 2)
                     sigma: 7,
                     child: Image.asset('assets/images/novetinh.png'), // Default: 2
@@ -262,7 +250,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                                                       height: sizeHeight * 0.1,
                                                       child: SimpleShadow(
                                                         opacity: 0.6, // Default: 0.5
-                                                        color: Colors.white, // Default: Black
+                                                        color: OneColors.white, // Default: Black
                                                         offset: const Offset(0, 0), // Default: Offset(2, 2)
                                                         sigma: 7,
                                                         child: Image.network(image2DUrl ?? ""), // Default: 2
@@ -571,9 +559,9 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             height: MediaQuery.of(context).size.width * 0.45,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: BoxDecoration(
-              color: Colors.transparent,
+              color: OneColors.transparent,
               borderRadius: BorderRadius.circular(30),
-              boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 10)],
+              boxShadow: const [BoxShadow(color: OneColors.grey, blurRadius: 10)],
             ),
             child: ClipRRect(borderRadius: BorderRadius.circular(30), child: Chewie(controller: _chewieController!)))
         : Opacity(
@@ -584,7 +572,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                 height: MediaQuery.of(context).size.width * 0.45,
                 width: MediaQuery.of(context).size.width * 0.8,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: OneColors.white,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: const Center(child: CircularProgressIndicator()),
@@ -620,7 +608,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
           right: -sizeWidth * 0.2,
           child: Container(
             height: sizeHeight * 0.35,
-            color: Colors.transparent,
+            color: OneColors.transparent,
             child: Image.network(
               image2DUrl,
               fit: BoxFit.fitHeight,
@@ -632,7 +620,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
           right: 0,
           child: Container(
             height: sizeHeight * 0.25,
-            color: Colors.transparent,
+            color: OneColors.transparent,
             child: Image.asset(
               "assets/images/rocket2.png",
               fit: BoxFit.fitHeight,

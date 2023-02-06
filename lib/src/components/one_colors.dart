@@ -18,6 +18,12 @@ class OneColors {
 
   //Text Colors
   static const Color transparent = Color(0x00000000);
+  static const Color amber = Colors.amber;
+  static const Color blue = Colors.blue;
+  static const Color blue100 = Color(0xFFBBDEFB);
+  static const Color white24 = Color(0x3DFFFFFF);
+  static const Color white70 = Color(0xB3FFFFFF);
+  static const Color black12 = Color(0x1F000000);
   static const Color textGrey1 = Color(0xFF9E9E9E);
   static const Color textGrey2 = Color(0xFF6D6D6D);
   static const Color textGrey3 = Color(0xFF454545);

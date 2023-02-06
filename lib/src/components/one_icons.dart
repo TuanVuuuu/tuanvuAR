@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 /*
  * File: one_icons.dart
  * File Created: Monday, 1st March 2021 2:23:59 pm

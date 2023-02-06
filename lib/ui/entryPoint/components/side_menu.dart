@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/ui/entryPoint/models/menu.dart';
 import 'package:rive/rive.dart';
 
@@ -21,7 +22,7 @@ class SideMenu extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.only(left: 24),
-          child: Divider(color: Colors.white24, height: 1),
+          child: Divider(color: OneColors.white24, height: 1),
         ),
         Stack(
           children: [
@@ -51,7 +52,7 @@ class SideMenu extends StatelessWidget {
               ),
               title: Text(
                 menu.title,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: OneColors.white),
               ),
             ),
           ],

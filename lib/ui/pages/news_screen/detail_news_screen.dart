@@ -1,12 +1,12 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_card.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/components/one_thick_ness.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/widgets/build_footer.dart';
-import 'package:flutter_application_1/src/widgets/build_header.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_news.dart';
 import 'package:flutter_application_1/ui/pages/search_tags_screen/search_tags_screen.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
@@ -255,14 +255,14 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                       ? Column(
                                           children: [
                                             Container(
-                                              decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)]),
+                                              decoration: BoxDecoration(boxShadow: [BoxShadow(color: OneColors.white.withOpacity(0.4), blurRadius: 10)]),
                                               child: Image.network(contentsListImage[index]["imageUrl"],
                                                   fit: BoxFit.fill,
                                                   loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                                                     if (loadingProgress == null) return child;
                                                     return Center(
                                                       child: CircularProgressIndicator(
-                                                        color: Colors.blue,
+                                                        color: OneColors.blue,
                                                         value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
                                                       ),
                                                     );
@@ -347,7 +347,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                   }),
                   child: Container(
                     margin: const EdgeInsets.only(top: 8, bottom: 8, right: 8),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.blue.shade100),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: OneColors.blue100),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Align(

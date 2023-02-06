@@ -7,10 +7,7 @@
  * Modified By: Hieu Tran
  */
 
-
-import 'package:equatable/equatable.dart';
-import 'package:flutter_application_1/src/components/button/one_button.dart';
-import 'package:flutter_application_1/src/components/shared/constant.dart';
+part of '../../../libary/one_libary.dart';
 
 class OneButtonValue extends Equatable {
   const OneButtonValue({

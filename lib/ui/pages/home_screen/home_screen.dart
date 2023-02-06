@@ -1,13 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_screen.dart';
-import 'package:flutter_application_1/ui/pages/home_screen/planet_detail_screen.dart';
-import 'package:flutter_application_1/ui/views/home_header.dart';
+// ignore_for_file: unused_element
+
+part of '../../../libary/one_libary.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -35,10 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: OneColors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.transparent, // Color for Android
+        systemNavigationBarColor: OneColors.transparent, // Color for Android
         statusBarBrightness: Brightness.light, // Dark == white status bar -- for IOS.
       ),
     );
@@ -61,9 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Các hành tinh", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: Colors.white)),
+                    Text("Các hành tinh", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: OneColors.white)),
                     const SizedBox(height: 5),
-                    Text("Cùng Astronomy tìm hiểu về chúng nào !", style: OneTheme.of(context).title2.copyWith(fontSize: 16, color: Colors.white)),
+                    Text("Cùng Astronomy tìm hiểu về chúng nào !", style: OneTheme.of(context).title2.copyWith(fontSize: 16, color: OneColors.white)),
                   ],
                 )),
           ),
@@ -85,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
-                child: Text("Khám phá", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: Colors.white)),
+                child: Text("Khám phá", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: OneColors.white)),
               ),
               const SizedBox(height: 20),
               Center(
@@ -235,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Container(
-                    color: Colors.transparent,
+                    color: OneColors.transparent,
                     height: sizeHeight * 0.2,
                     width: sizeWidth * 0.9,
                     child: Image.asset(
@@ -302,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       height: 300,
       width: 300,
-      color: Colors.transparent,
+      color: OneColors.transparent,
       child: Column(
         children: [
           Padding(
@@ -358,14 +351,14 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           Container(
-            color: Colors.transparent,
+            color: OneColors.transparent,
             height: 320,
             width: MediaQuery.of(context).size.width,
             child: StreamBuilder(
                 stream: data.snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    const Center(child: CircularProgressIndicator(color: Colors.blue));
+                    const Center(child: CircularProgressIndicator(color: OneColors.brandVNP));
                   }
                   if (snapshot.hasData) {
                     return CarouselSlider.builder(
@@ -402,11 +395,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Container(
                                   height: 250,
                                   decoration: BoxDecoration(
-                                    color: Colors.blue.withOpacity(0.8),
+                                    color: OneColors.brandVNP.withOpacity(0.8),
                                     borderRadius: const BorderRadius.all(Radius.circular(40)),
                                     boxShadow: [
-                                      BoxShadow(color: Colors.grey.withOpacity(0.2), offset: const Offset(5.0, 5.0), blurRadius: 10.0, spreadRadius: 2.0), //BoxShadow
-                                      BoxShadow(color: Colors.grey.withOpacity(0.2), offset: const Offset(0.0, 0.0), blurRadius: 0.0, spreadRadius: 0.0), //BoxShadow
+                                      BoxShadow(color: OneColors.grey.withOpacity(0.2), offset: const Offset(5.0, 5.0), blurRadius: 10.0, spreadRadius: 2.0), //BoxShadow
+                                      BoxShadow(color: OneColors.grey.withOpacity(0.2), offset: const Offset(0.0, 0.0), blurRadius: 0.0, spreadRadius: 0.0), //BoxShadow
                                     ],
                                   ),
 
@@ -435,7 +428,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Container(
                                           margin: const EdgeInsets.only(left: 10, right: 10, top: 90, bottom: 30),
                                           decoration: const BoxDecoration(
-                                              color: Colors.white,
+                                              color: OneColors.white,
                                               borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(20),
                                                 topRight: Radius.circular(20),
@@ -444,7 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Colors.black,
+                                                  color: OneColors.black,
                                                   offset: Offset(0.0, 3.0),
                                                   blurRadius: 5.0,
                                                   spreadRadius: 0.5,
@@ -479,9 +472,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             padding: const EdgeInsets.only(top: 170),
                                             child: Center(
                                               child: Container(
-                                                decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white, boxShadow: [
+                                                decoration: const BoxDecoration(shape: BoxShape.circle, color: OneColors.white, boxShadow: [
                                                   BoxShadow(
-                                                    color: Colors.black,
+                                                    color: OneColors.black,
                                                     offset: Offset(0.0, 5.0),
                                                     blurRadius: 5.0,
                                                     spreadRadius: 0.5,
@@ -504,12 +497,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     margin: const EdgeInsets.all(3),
                                                     decoration: const BoxDecoration(
                                                       shape: BoxShape.circle,
-                                                      color: Colors.amber,
+                                                      color: OneColors.amber,
                                                     ),
                                                     child: const Center(
                                                       child: Icon(
                                                         Icons.arrow_forward,
-                                                        color: Colors.white,
+                                                        color: OneColors.white,
                                                       ),
                                                     ),
                                                   ),
@@ -554,7 +547,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       child: CircleAvatar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: OneColors.transparent,
         radius: 60,
         child: Image.network(imageUrl,
             loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
@@ -568,7 +561,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (loadingProgress == null) return child;
               return Center(
                 child: CircularProgressIndicator(
-                  color: Colors.blue,
+                  color: OneColors.brandVNP,
                   value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
                 ),
               );

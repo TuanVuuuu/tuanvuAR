@@ -1,23 +1,25 @@
-import 'dart:convert';
+// ignore_for_file: library_private_types_in_public_api, prefer_typing_uninitialized_variables, depend_on_referenced_packages
+
 import 'dart:io';
-import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
-import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
-import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
-import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
-import 'package:ar_flutter_plugin/models/ar_anchor.dart';
-import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
-import 'package:flutter/material.dart';
-import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
-import 'package:ar_flutter_plugin/datatypes/config_planedetection.dart';
-import 'package:ar_flutter_plugin/datatypes/node_types.dart';
-import 'package:ar_flutter_plugin/models/ar_node.dart';
-import 'package:flutter_application_1/src/components/button/one_triangle_shape.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:vector_math/vector_math_64.dart' as vector;
 import 'dart:math';
 
+import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
+import 'package:ar_flutter_plugin/datatypes/config_planedetection.dart';
+import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
+import 'package:ar_flutter_plugin/datatypes/node_types.dart';
+import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
+import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
+import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
+import 'package:ar_flutter_plugin/models/ar_anchor.dart';
+import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
+import 'package:ar_flutter_plugin/models/ar_node.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:vector_math/vector_math_64.dart' as vector;
+
 class LocalAndWebObjectsWidget extends StatefulWidget {
-  LocalAndWebObjectsWidget({
+  const LocalAndWebObjectsWidget({
     Key? key,
     required this.argument,
   }) : super(key: key);
@@ -119,7 +121,7 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
 
                 this.arSessionManager!.onPlaneOrPointTap = onPlaneOrPointTapped;
                 //Download model to file system
-                httpClient = new HttpClient();
+                httpClient = HttpClient();
                 // _downloadFile("https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb", "LocalDuck.glb");
                 //_downloadFile("https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-Assets/assets/3D_model/earth.glb", "LocalDuck.glb");
                 setState(() {
@@ -399,7 +401,7 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
           ],
         ),
         // _build Button Trans X
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         Column(
           children: [
             ElevatedButton(

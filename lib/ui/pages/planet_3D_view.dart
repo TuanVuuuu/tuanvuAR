@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_application_1/ui/pages/ar_screen.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+// ignore_for_file: file_names, prefer_typing_uninitialized_variables
+
+part of '../../../libary/one_libary.dart';
 
 class Planet3DView extends StatefulWidget {
   const Planet3DView({
@@ -36,10 +32,10 @@ class _Planet3DViewState extends State<Planet3DView> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: OneColors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.transparent, // Color for Android
+        systemNavigationBarColor: OneColors.transparent, // Color for Android
         statusBarBrightness: Brightness.light, // Dark == white status bar -- for IOS.
       ),
     );
@@ -48,10 +44,10 @@ class _Planet3DViewState extends State<Planet3DView> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: OneColors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+            icon: const Icon(Icons.arrow_back_ios, color: OneColors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
           actions: [
@@ -68,12 +64,12 @@ class _Planet3DViewState extends State<Planet3DView> {
                           //LocalAndWebObjectsView(argument: widget.argument),
                           ));
                 },
-                child: const Icon(Icons.add, color: Colors.transparent, size: 30),
+                child: const Icon(Icons.add, color: OneColors.transparent, size: 30),
               ),
             ),
           ],
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: OneColors.white,
         body: Column(
           children: [
             _build3DModel(nameModel),
@@ -92,7 +88,7 @@ class _Planet3DViewState extends State<Planet3DView> {
               constraints: const BoxConstraints(
                 maxHeight: 420,
               ),
-              decoration: BoxDecoration(color: Colors.transparent, borderRadius: BorderRadius.circular(30)),
+              decoration: BoxDecoration(color: OneColors.transparent, borderRadius: BorderRadius.circular(30)),
               padding: EdgeInsets.zero,
               child:
                   //  BabylonJSViewer(
@@ -103,7 +99,7 @@ class _Planet3DViewState extends State<Planet3DView> {
                 child: WebView(
                   initialUrl: Uri.encodeFull(widget.argument["image3D"]["imageUrl"]),
                   debuggingEnabled: false,
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: OneColors.transparent,
                   javascriptMode: JavascriptMode.unrestricted,
                 ),
               ),
@@ -126,7 +122,7 @@ class _Planet3DViewState extends State<Planet3DView> {
             height: 70,
             width: 70,
             margin: const EdgeInsets.only(top: 10, right: 10),
-            decoration: BoxDecoration(color: Colors.transparent, borderRadius: BorderRadius.circular(20)),
+            decoration: BoxDecoration(color: OneColors.transparent, borderRadius: BorderRadius.circular(20)),
             child: const Align(
                 alignment: Alignment.bottomLeft,
                 child: SizedBox(

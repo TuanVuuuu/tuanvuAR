@@ -5,7 +5,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading_shimer.dart';
-import 'package:flutter_application_1/src/components/one_card.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
@@ -23,7 +22,7 @@ class DiscoveryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: OneColors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.transparent, // Color for Android
@@ -119,7 +118,7 @@ class DiscoveryScreen extends StatelessWidget {
                                                   margin: const EdgeInsets.all(8),
                                                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
                                                   child: DottedBorder(
-                                                    color: Colors.transparent,
+                                                    color: OneColors.transparent,
                                                     strokeWidth: 1,
                                                     borderType: BorderType.RRect,
                                                     radius: const Radius.circular(15),
@@ -185,7 +184,7 @@ class DiscoveryScreen extends StatelessWidget {
                                                           child: Padding(
                                                             padding: const EdgeInsets.only(left: 8.0),
                                                             child: DottedBorder(
-                                                              color: Colors.black,
+                                                              color: OneColors.black,
                                                               strokeWidth: 0.05,
                                                               borderType: BorderType.RRect,
                                                               child: SizedBox(

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of '../../../libary/one_libary.dart';
 
 class CustomTriangleClipper extends CustomClipper<Path> {
   @override

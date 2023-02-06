@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'dart:math' as math;
 
@@ -16,7 +17,7 @@ class BuildDiscoveryHeader extends StatelessWidget {
         maxHeight: 100,
         child: Container(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-            color: Colors.transparent,
+            color: OneColors.transparent,
             child: Row(
               children: [
                 Expanded(
@@ -29,7 +30,7 @@ class BuildDiscoveryHeader extends StatelessWidget {
                       },
                       child: const Icon(
                         Icons.arrow_back_ios,
-                        color: Colors.white,
+                        color: OneColors.white,
                       ),
                     ),
                   ),
@@ -40,7 +41,7 @@ class BuildDiscoveryHeader extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       title ?? "",
-                      style: OneTheme.of(context).header.copyWith(letterSpacing: 3, color: Colors.white),
+                      style: OneTheme.of(context).header.copyWith(letterSpacing: 3, color: OneColors.white),
                     ),
                   ),
                 ),

@@ -44,7 +44,6 @@ class CardNews extends StatelessWidget {
                     final DocumentSnapshot records = snapshot.data.docs[snapshot.data?.docs.length - index - 1];
                     Timestamp time = records["date"];
                     var dateFormat = DateFormat.yMMMMd('en_US').add_jm().format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
-                    var dateFormatNoJM = DateFormat.yMMMMd('en_US').format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                       child: InkWell(

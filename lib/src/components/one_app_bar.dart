@@ -7,14 +7,7 @@
  * Modified By: Hieu Tran
  */
 
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_background_detail.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_icons.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:marquee/marquee.dart';
+part of '../../../libary/one_libary.dart';
 
 class OneAppBar extends StatelessWidget {
   const OneAppBar({
@@ -57,7 +50,7 @@ class OneAppBar extends StatelessWidget {
   }
 
   AppBar _appBar(BuildContext context) {
-    final _style = OneTheme.of(context).header.copyWith(color: color ?? Colors.black);
+    final style = OneTheme.of(context).header.copyWith(color: color ?? OneColors.black);
     return AppBar(
       title: title?.isNotEmpty ?? false
           ? Hero(
@@ -67,14 +60,14 @@ class OneAppBar extends StatelessWidget {
                   style: OneTheme.of(context).body2,
                   child: AutoSizeText(
                     title!,
-                    style: _style,
+                    style: style,
                     maxLines: 1,
                     minFontSize: 16,
-                    overflowReplacement: Container(
+                    overflowReplacement: SizedBox(
                       height: 50,
                       child: Marquee(
                         text: title!,
-                        style: _style,
+                        style: style,
                         blankSpace: 30,
                         startAfter: const Duration(seconds: 2),
                         pauseAfterRound: const Duration(seconds: 2),
@@ -84,7 +77,7 @@ class OneAppBar extends StatelessWidget {
             )
           : null,
       centerTitle: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: OneColors.transparent,
       elevation: 0.0,
       automaticallyImplyLeading: false,
       leading: automaticallyImplyLeading

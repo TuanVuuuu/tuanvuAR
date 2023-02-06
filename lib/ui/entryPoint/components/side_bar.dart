@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/ui/entryPoint/models/menu.dart';
 import 'package:flutter_application_1/ui/utils/river_utils.dart';
 import 'info_card.dart';
@@ -26,7 +27,7 @@ class _SideBarState extends State<SideBar> {
           ),
         ),
         child: DefaultTextStyle(
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: OneColors.white),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,7 +42,7 @@ class _SideBarState extends State<SideBar> {
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(color: Colors.white70),
+                      .copyWith(color: OneColors.white70),
                 ),
               ),
               ...sidebarMenus
@@ -67,7 +68,7 @@ class _SideBarState extends State<SideBar> {
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(color: Colors.white70),
+                      .copyWith(color: OneColors.white70),
                 ),
               ),
               ...sidebarMenus2

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:rive/rive.dart';
 
 class MenuBtn extends StatelessWidget {
@@ -17,11 +18,11 @@ class MenuBtn extends StatelessWidget {
           height: 40,
           width: 40,
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: OneColors.white,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.black12,
+                color: OneColors.black12,
                 offset: Offset(0, 3),
                 blurRadius: 8,
               ),

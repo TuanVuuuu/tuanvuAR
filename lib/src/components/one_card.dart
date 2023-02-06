@@ -16,7 +16,7 @@ class OneCard extends StatelessWidget {
   const OneCard({
     Key? key,
     required this.child,
-    this.color = Colors.white,
+    this.color = OneColors.white,
     this.gradient,
     this.borderRadius,
     this.padding,

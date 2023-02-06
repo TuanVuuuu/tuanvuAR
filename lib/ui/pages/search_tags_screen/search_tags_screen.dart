@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_card.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
@@ -35,7 +34,7 @@ class MySearch extends StatelessWidget {
             floating: false,
             delegate: SliverAppBarDelegate(
               child: Container(
-                color: Colors.transparent,
+                color: OneColors.transparent,
                 margin: EdgeInsets.zero,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 40.0, left: 20, right: 24),
@@ -52,7 +51,7 @@ class MySearch extends StatelessWidget {
                               },
                               child: const Icon(
                                 Icons.arrow_back_ios,
-                                color: Colors.blue,
+                                color: OneColors.blue,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -63,7 +62,7 @@ class MySearch extends StatelessWidget {
                                   style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
                                 ),
                                 Container(
-                                  decoration: BoxDecoration(color: Colors.blue.shade100, borderRadius: BorderRadius.circular(5)),
+                                  decoration: BoxDecoration(color: OneColors.blue100, borderRadius: BorderRadius.circular(5)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
                                     child: Text(
