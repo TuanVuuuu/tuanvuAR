@@ -67,6 +67,7 @@ dependencies:
   path_provider: ^2.0.12
   carousel_slider: ^4.2.1
   dotted_border: ^2.0.0+3
+  rive: ^0.10.1
 
 dev_dependencies:
   flutter_test:
@@ -99,6 +100,7 @@ flutter:
     - assets/2D_model/
     - assets/triangle.png
     - assets/localModel/
+    - assets/icons_river/
     
   #   - images/a_dot_ham.jpeg
 

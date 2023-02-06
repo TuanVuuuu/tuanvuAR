@@ -152,7 +152,7 @@ class DiscoveryScreen extends StatelessWidget {
                                                                           fontSize: 10,
                                                                           fontWeight: FontWeight.w400,
                                                                         ),
-                                                                    maxLines: 4,
+                                                                    maxLines: 5,
                                                                     textAlign: TextAlign.justify,
                                                                     overflow: TextOverflow.ellipsis,
                                                                   ),
@@ -162,7 +162,7 @@ class DiscoveryScreen extends StatelessWidget {
                                                               Row(
                                                                   children: tags.map((i) {
                                                                 return Container(
-                                                                  margin: const EdgeInsets.only(left: 10),
+                                                                  margin: const EdgeInsets.only(left: 5),
                                                                   height: 20,
                                                                   decoration: BoxDecoration(color: OneColors.brandVNP.withOpacity(0.4), borderRadius: BorderRadius.circular(5)),
                                                                   child: Align(
@@ -171,7 +171,7 @@ class DiscoveryScreen extends StatelessWidget {
                                                                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                                                                       child: Text(
                                                                         i,
-                                                                        style: OneTheme.of(context).body1.copyWith(color: OneColors.brandVNP, fontSize: 10),
+                                                                        style: OneTheme.of(context).body1.copyWith(color: OneColors.white, fontSize: 10),
                                                                       ),
                                                                     ),
                                                                   ),
