@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    setState(() {});
     super.initState();
   }
 
@@ -352,14 +353,12 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Container(
             color: OneColors.transparent,
-            height: 320,
+            height: 330,
             width: MediaQuery.of(context).size.width,
             child: StreamBuilder(
                 stream: data.snapshots(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    const Center(child: CircularProgressIndicator(color: OneColors.brandVNP));
-                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {}
                   if (snapshot.hasData) {
                     return CarouselSlider.builder(
                       options: CarouselOptions(
@@ -395,7 +394,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Container(
                                   height: 250,
                                   decoration: BoxDecoration(
-                                    color: OneColors.brandVNP.withOpacity(0.8),
                                     borderRadius: const BorderRadius.all(Radius.circular(40)),
                                     boxShadow: [
                                       BoxShadow(color: OneColors.grey.withOpacity(0.2), offset: const Offset(5.0, 5.0), blurRadius: 10.0, spreadRadius: 2.0), //BoxShadow

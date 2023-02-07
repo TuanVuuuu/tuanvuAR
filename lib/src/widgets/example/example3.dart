@@ -98,7 +98,7 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                     );
                 this.arObjectManager!.onInitialize();
                 //Download model to file system
-                httpClient = new HttpClient();
+                httpClient = HttpClient();
                 // _downloadFile("https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb", "LocalDuck.glb");
                 //_downloadFile("https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-Assets/assets/3D_model/earth.glb", "LocalDuck.glb");
                 setState(() {
@@ -384,7 +384,7 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
           ],
         ),
         // _build Button Trans X
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         Column(
           children: [
             ElevatedButton(

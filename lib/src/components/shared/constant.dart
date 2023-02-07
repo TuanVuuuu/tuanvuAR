@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 /*
  * File: constant.dart
  * File Created: Tuesday, 2nd March 2021 4:24:24 pm

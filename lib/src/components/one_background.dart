@@ -33,7 +33,7 @@ class OneBackground extends StatelessWidget {
   }
 
   Widget _buildBackground(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: height,
       child: ClipPath(

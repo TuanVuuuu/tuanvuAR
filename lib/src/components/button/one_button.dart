@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 /*
  * File: one_button.dart
  * File Created: Friday, 22nd January 2021 9:25:26 am
