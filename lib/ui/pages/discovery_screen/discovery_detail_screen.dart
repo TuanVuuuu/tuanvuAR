@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
@@ -72,7 +73,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/bg/bg4.png"),
+              image: AssetImage(OneImages.bg4),
               fit: BoxFit.cover,
             ),
           ),
@@ -276,7 +277,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
               height: sizeHeight! * 0.25,
               color: OneColors.transparent,
               child: Image.asset(
-                "assets/images/rocket2.png",
+                OneImages.rocket2,
                 fit: BoxFit.fitHeight,
               ),
             ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 
@@ -11,11 +10,11 @@ class OneThickNess extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-    padding: const EdgeInsets.only(top: 8.0, left: 8),
-    child: Container(
-      height: 1,
-      color: OneColors.textGrey2,
-    ),
+        padding: const EdgeInsets.only(top: 8.0, left: 8),
+        child: Container(
+          height: 1,
+          color: OneColors.textGrey2,
+        ),
       ),
     );
   }

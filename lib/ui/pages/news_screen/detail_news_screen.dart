@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/components/one_thick_ness.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
@@ -50,7 +51,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/bg/bg4.png"),
+            image: AssetImage(OneImages.bg4),
             fit: BoxFit.cover,
           ),
         ),
@@ -267,7 +268,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                                       ),
                                                     );
                                                   },
-                                                  errorBuilder: (context, error, stackTrace) => Image.asset("assets/images/not_found.png")),
+                                                  errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
                                             ),
                                             const SizedBox(height: 5),
                                             Align(

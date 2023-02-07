@@ -1,15 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatelessWidget {
+  ProfileScreen({super.key});
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
   String tagsButton = "";
 
   @override
@@ -27,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg/bg3.png"),
+          image: AssetImage(OneImages.bg3),
           fit: BoxFit.cover,
         ),
       ),

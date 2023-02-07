@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/splash/splash_bg.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/ui/entryPoint/entry_point.dart';
 import 'package:lottie/lottie.dart';
@@ -18,21 +19,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final CollectionReference data = FirebaseFirestore.instance.collection("modeldata");
-
-  @override
-  void initState() {
-    // ignore: todo
-    // TODO: implement initState
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // ignore: todo
-    // TODO: implement dispose
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Container(
                     height: sizeHeight * 0.2,
                     width: sizeWidth * 0.7,
-                    decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/Astronomy.png"))),
+                    decoration: const BoxDecoration(image: DecorationImage(image: AssetImage(OneImages.Astronomy))),
                   ),
                 ),
                 SizedBox(
@@ -66,30 +52,34 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Container(
                     height: sizeHeight * 0.3,
                     width: sizeWidth * 0.7,
-                    decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/telescope.png"))),
+                    decoration: const BoxDecoration(image: DecorationImage(image: AssetImage(OneImages.telescope))),
                   ),
                 ),
                 Center(
-                  child: Lottie.network(
-                    "https://assets2.lottiefiles.com/packages/lf20_qogkaqmb.json",
-                    onLoaded: (p0) {
-                      Future.delayed(const Duration(seconds: 10), (() {
-                        setState(() {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const EntryPoint()));
-                        });
-                      }));
-                    },
-                    errorBuilder: (context, error, stackTrace) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Text(
-                          "Không có kết nối Internet\nVui lòng kiểm tra lại kết nối mạng!",
-                          style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                        ),
-                      );
-                    },
+                  child: SizedBox(
+                    height: sizeHeight * 0.25,
+                    width: sizeWidth * 0.7,
+                    child: Lottie.network(
+                      "https://assets2.lottiefiles.com/packages/lf20_qogkaqmb.json",
+                      onLoaded: (p0) {
+                        Future.delayed(const Duration(seconds: 10), (() {
+                          setState(() {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const EntryPoint()));
+                          });
+                        }));
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Text(
+                            "Không có kết nối Internet\nVui lòng kiểm tra lại kết nối mạng!",
+                            style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Column(
@@ -151,7 +141,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             );
           },
-          errorBuilder: (context, error, stackTrace) => Image.asset("assets/images/not_found.png")),
+          errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
     );
   }
 }

@@ -1,12 +1,3 @@
-/*
- * File: one_app_bar.dart
- * File Created: Wednesday, 20th January 2021 10:46:31 am
- * Author: Hieu Tran
- * -----
- * Last Modified: Wednesday, 20th January 2021 11:00:02 am
- * Modified By: Hieu Tran
- */
-
 part of '../../../libary/one_libary.dart';
 
 class OneAppBar extends StatelessWidget {

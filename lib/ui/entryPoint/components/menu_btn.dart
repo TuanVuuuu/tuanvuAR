@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:rive/rive.dart';
 
 class MenuBtn extends StatelessWidget {
@@ -29,7 +30,7 @@ class MenuBtn extends StatelessWidget {
             ],
           ),
           child: RiveAnimation.asset(
-            "assets/icons_river/menu_button.riv",
+            OneImages.menu_button,
             onInit: riveOnInit,
           ),
         ),

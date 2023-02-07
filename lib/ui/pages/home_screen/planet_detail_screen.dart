@@ -95,7 +95,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/bg/bg4.png"),
+              image: AssetImage(OneImages.bg4),
               fit: BoxFit.cover,
             ),
           ),
@@ -184,7 +184,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             children: [
               SizedBox(
                 height: 200,
-                child: Image.asset('assets/images/novetinh.png'), // Default: 2
+                child: Image.asset(OneImages.novetinh), // Default: 2
               ),
               Text(
                 "$nameModel không có vệ tinh nha!",
@@ -613,7 +613,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             height: sizeHeight * 0.25,
             color: OneColors.transparent,
             child: Image.asset(
-              "assets/images/rocket2.png",
+             OneImages.rocket2,
               fit: BoxFit.fitHeight,
             ),
           ),

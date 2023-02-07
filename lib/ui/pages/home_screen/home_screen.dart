@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg/bg2.png"),
+          image: AssetImage(OneImages.bg2),
           fit: BoxFit.cover,
         ),
       ),
@@ -49,23 +49,27 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
           const BuildHomeHeader(),
-          SliverToBoxAdapter(
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Các hành tinh", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: OneColors.white)),
-                    const SizedBox(height: 5),
-                    Text("Cùng Astronomy tìm hiểu về chúng nào !", style: OneTheme.of(context).title2.copyWith(fontSize: 16, color: OneColors.white)),
-                  ],
-                )),
-          ),
+          _buildTitle(context),
           _buildListPlanets(context),
           _buildPlanetsAnimate(context),
         ],
       )),
     ));
+  }
+
+  SliverToBoxAdapter _buildTitle(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Các hành tinh", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: OneColors.white)),
+              const SizedBox(height: 5),
+              Text("Cùng Astronomy tìm hiểu về chúng nào !", style: OneTheme.of(context).title2.copyWith(fontSize: 16, color: OneColors.white)),
+            ],
+          )),
+    );
   }
 
   SliverToBoxAdapter _buildPlanetsAnimate(BuildContext context) {
@@ -173,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Container(
                                         color: OneColors.transparent,
                                         height: sizeHeight * 0.08,
-                                        child: Image.asset("assets/images/rocket1.png"),
+                                        child: Image.asset(OneImages.rocket1),
                                       ),
                                     ),
                                   ]),
@@ -233,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: sizeHeight * 0.2,
                     width: sizeWidth * 0.9,
                     child: Image.asset(
-                      "assets/images/khampha.png",
+                      OneImages.khampha,
                       fit: BoxFit.fitWidth,
                     ),
                   ),
@@ -284,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               color: OneColors.transparent,
               height: sizeHeight * 0.08,
-              child: Image.asset("assets/images/saochoi.png"),
+              child: Image.asset(OneImages.saochoi),
             ),
           ),
         ]),
@@ -303,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(left: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Earth.png"))],
+              children: [SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Earth))],
             ),
           ),
           Padding(
@@ -311,18 +315,18 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Mercury.png", fit: BoxFit.fitHeight)),
-                SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Mars.png", fit: BoxFit.fitHeight)),
+                SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Mercury, fit: BoxFit.fitHeight)),
+                SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Mars, fit: BoxFit.fitHeight)),
               ],
             ),
           ),
           Row(
             children: [
-              SizedBox(height: 40, width: 85, child: Image.asset("assets/images/planets_animate/saturn.png", fit: BoxFit.fitHeight)),
+              SizedBox(height: 40, width: 85, child: Image.asset(OneImages.saturn, fit: BoxFit.fitHeight)),
               const SizedBox(width: 15),
-              SizedBox(height: 120, width: 120, child: Image.asset("assets/images/planets_animate/Sun.png", fit: BoxFit.fitHeight)),
+              SizedBox(height: 120, width: 120, child: Image.asset(OneImages.Sun, fit: BoxFit.fitHeight)),
               const SizedBox(width: 35),
-              SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Neptune-1.png", fit: BoxFit.fitHeight)),
+              SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Neptune_1, fit: BoxFit.fitHeight)),
             ],
           ),
           Padding(
@@ -330,8 +334,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Venus.png", fit: BoxFit.fitHeight)),
-                SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Neptune.png", fit: BoxFit.fitHeight)),
+                SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Venus, fit: BoxFit.fitHeight)),
+                SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Neptune, fit: BoxFit.fitHeight)),
               ],
             ),
           ),
@@ -339,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(left: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [SizedBox(height: 40, width: 45, child: Image.asset("assets/images/planets_animate/Uranus.png"))],
+              children: [SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Uranus))],
             ),
           ),
         ],
@@ -351,8 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SliverToBoxAdapter(
       child: Column(
         children: [
-          Container(
-            color: OneColors.transparent,
+          SizedBox(
             height: 330,
             width: MediaQuery.of(context).size.width,
             child: StreamBuilder(
@@ -402,113 +405,109 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
 
                                   // Card với màu gradient
-                                  child: Opacity(
-                                    opacity: 0.8,
-                                    child: Container(
-                                      height: 252,
-                                      width: 171,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Color(int.parse(colorGradientBottom)),
-                                            Color(
-                                              int.parse(colorGradientTop),
-                                            )
-                                          ],
-                                          begin: Alignment.bottomRight,
-                                          end: Alignment.topLeft,
-                                        ),
-                                        borderRadius: const BorderRadius.all(Radius.circular(40)),
+                                  child: Container(
+                                    height: 252,
+                                    width: 171,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(int.parse(colorGradientBottom)),
+                                          Color(int.parse(colorGradientTop)),
+                                        ],
+                                        begin: Alignment.bottomRight,
+                                        end: Alignment.topLeft,
                                       ),
+                                      borderRadius: const BorderRadius.all(Radius.circular(40)),
+                                    ),
 
-                                      // Info Planets + "Xem thêm" Button
-                                      child: Stack(children: [
-                                        Container(
-                                          margin: const EdgeInsets.only(left: 10, right: 10, top: 90, bottom: 30),
-                                          decoration: const BoxDecoration(
-                                              color: OneColors.white,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20),
-                                                bottomLeft: Radius.circular(30),
-                                                bottomRight: Radius.circular(30),
+                                    // Info Planets + "Xem thêm" Button
+                                    child: Stack(children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(left: 10, right: 10, top: 90, bottom: 30),
+                                        decoration: const BoxDecoration(
+                                            color: OneColors.white,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                              bottomLeft: Radius.circular(30),
+                                              bottomRight: Radius.circular(30),
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: OneColors.black,
+                                                offset: Offset(0.0, 3.0),
+                                                blurRadius: 5.0,
+                                                spreadRadius: 0.5,
+                                              )
+                                            ]),
+                                        // Name and Info planets
+                                        child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    records["name"] ?? "Trái đất",
+                                                    style: OneTheme.of(context).body1,
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  Text(
+                                                    records["info"] ?? "Trái đất, hay còn được gọi là Địa cầu (Tiếng Anh : Earth, Tiếng Hán : ...",
+                                                    style: OneTheme.of(context).body1.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                                                    textAlign: TextAlign.justify,
+                                                    maxLines: 4,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                  const SizedBox(height: 20),
+                                                ],
                                               ),
-                                              boxShadow: [
+                                            )),
+                                      ),
+                                      //Button "Xem thêm"
+                                      Padding(
+                                          padding: const EdgeInsets.only(top: 170),
+                                          child: Center(
+                                            child: Container(
+                                              decoration: const BoxDecoration(shape: BoxShape.circle, color: OneColors.white, boxShadow: [
                                                 BoxShadow(
                                                   color: OneColors.black,
-                                                  offset: Offset(0.0, 3.0),
+                                                  offset: Offset(0.0, 5.0),
                                                   blurRadius: 5.0,
                                                   spreadRadius: 0.5,
                                                 )
                                               ]),
-                                          // Name and Info planets
-                                          child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      records["name"] ?? "Trái đất",
-                                                      style: OneTheme.of(context).body1,
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Text(
-                                                      records["info"] ?? "Trái đất, hay còn được gọi là Địa cầu (Tiếng Anh : Earth, Tiếng Hán : ...",
-                                                      textAlign: TextAlign.justify,
-                                                      maxLines: 3,
-                                                      overflow: TextOverflow.ellipsis,
-                                                    ),
-                                                    const SizedBox(height: 20),
-                                                  ],
-                                                ),
-                                              )),
-                                        ),
-                                        //Button "Xem thêm"
-                                        Padding(
-                                            padding: const EdgeInsets.only(top: 170),
-                                            child: Center(
-                                              child: Container(
-                                                decoration: const BoxDecoration(shape: BoxShape.circle, color: OneColors.white, boxShadow: [
-                                                  BoxShadow(
-                                                    color: OneColors.black,
-                                                    offset: Offset(0.0, 5.0),
-                                                    blurRadius: 5.0,
-                                                    spreadRadius: 0.5,
-                                                  )
-                                                ]),
-                                                height: 40,
-                                                width: 40,
-                                                child: InkWell(
-                                                  onTap: (() {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                //const LocalAndWebObjectsView()
-                                                                PlanetDetailScreen(
-                                                                  argument: records,
-                                                                )));
-                                                  }),
-                                                  child: Container(
-                                                    margin: const EdgeInsets.all(3),
-                                                    decoration: const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: OneColors.amber,
-                                                    ),
-                                                    child: const Center(
-                                                      child: Icon(
-                                                        Icons.arrow_forward,
-                                                        color: OneColors.white,
-                                                      ),
+                                              height: 40,
+                                              width: 40,
+                                              child: InkWell(
+                                                onTap: (() {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              //const LocalAndWebObjectsView()
+                                                              PlanetDetailScreen(
+                                                                argument: records,
+                                                              )));
+                                                }),
+                                                child: Container(
+                                                  margin: const EdgeInsets.all(3),
+                                                  decoration: const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: OneColors.amber,
+                                                  ),
+                                                  child: const Center(
+                                                    child: Icon(
+                                                      Icons.arrow_forward,
+                                                      color: OneColors.white,
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            )),
-                                      ]),
-                                    ),
+                                            ),
+                                          )),
+                                    ]),
                                   ),
                                 ),
                               ),
@@ -564,7 +563,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             },
-            errorBuilder: (context, error, stackTrace) => Image.asset("assets/images/not_found.png")),
+            errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
       ),
     );
   }

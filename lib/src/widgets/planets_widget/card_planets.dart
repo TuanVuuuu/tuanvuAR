@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 
@@ -41,7 +42,9 @@ class CardPlanets extends StatelessWidget {
                     String idname = records["idName"];
 
                     return InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => PlanetDetailScreen(argument: records)));
+                        },
                         child: currentPlanets != idname
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),

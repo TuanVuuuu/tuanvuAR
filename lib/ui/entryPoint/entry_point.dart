@@ -94,7 +94,7 @@ class _EntryPointState extends State<EntryPoint> with SingleTickerProviderStateM
                     } else if (selectedBottonNav == bottomNavItems[1]) {
                       return const TopNewsScreen();
                     } else if (selectedBottonNav == bottomNavItems[2]) {
-                      return const ProfileScreen();
+                      return  ProfileScreen();
                     }
                     return const HomeScreen();
                   })(),

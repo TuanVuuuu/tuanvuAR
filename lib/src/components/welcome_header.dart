@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-
 import 'package:flutter_application_1/src/components/one_colors.dart';
 
 class WelcomeHeader extends StatelessWidget {
