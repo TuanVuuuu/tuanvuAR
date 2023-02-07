@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides
+
 /*
  * File: one_button_controller.dart
  * File Created: Friday, 26th February 2021 12:24:41 am

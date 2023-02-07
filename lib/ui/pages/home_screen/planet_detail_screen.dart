@@ -183,14 +183,9 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
           Row(
             children: [
               SizedBox(
-                  height: 200,
-                  child: SimpleShadow(
-                    opacity: 0.6, // Default: 0.5
-                    color: OneColors.brandVNP, // Default: Black
-                    offset: const Offset(5, 5), // Default: Offset(2, 2)
-                    sigma: 7,
-                    child: Image.asset('assets/images/novetinh.png'), // Default: 2
-                  )),
+                height: 200,
+                child: Image.asset('assets/images/novetinh.png'), // Default: 2
+              ),
               Text(
                 "$nameModel không có vệ tinh nha!",
                 style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
@@ -247,14 +242,10 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                                                 Expanded(
                                                   flex: 1,
                                                   child: SizedBox(
-                                                      height: sizeHeight * 0.1,
-                                                      child: SimpleShadow(
-                                                        opacity: 0.6, // Default: 0.5
-                                                        color: OneColors.white, // Default: Black
-                                                        offset: const Offset(0, 0), // Default: Offset(2, 2)
-                                                        sigma: 7,
-                                                        child: Image.network(image2DUrl ?? ""), // Default: 2
-                                                      )),
+                                                    height: sizeHeight * 0.1,
+
+                                                    child: Image.network(image2DUrl ?? ""), // Default: 2
+                                                  ),
                                                 ),
                                                 Expanded(
                                                   flex: 3,
