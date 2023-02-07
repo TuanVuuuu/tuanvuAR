@@ -1,12 +1,3 @@
-/*
- * File: one_theme_data.dart
- * File Created: Friday, 8th January 2021 12:44:22 pm
- * Author: Hieu Tran
- * -----
- * Last Modified: Friday, 8th January 2021 12:50:23 pm
- * Modified By: Hieu Tran
- */
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';

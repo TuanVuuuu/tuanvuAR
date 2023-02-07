@@ -105,7 +105,7 @@ class _P3DViewState extends State<P3DView> {
                 ],
                 image: DecorationImage(
                     image: AssetImage(
-                      "assets/images/bg/bg3.png",
+                      OneImages.bg3,
                     ),
                     fit: BoxFit.fitWidth),
               ),

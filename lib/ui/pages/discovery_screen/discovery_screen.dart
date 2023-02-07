@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading_shimer.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_detail_screen.dart';
@@ -50,7 +51,7 @@ class DiscoveryScreen extends StatelessWidget {
         body: Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg/bg3.png"),
+          image: AssetImage(OneImages.bg3),
           fit: BoxFit.cover,
         ),
       ),

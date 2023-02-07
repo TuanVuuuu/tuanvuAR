@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
@@ -21,7 +22,7 @@ class MySearch extends StatelessWidget {
         body: Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg/bg.png"),
+          image: AssetImage(OneImages.bg),
           fit: BoxFit.cover,
         ),
       ),

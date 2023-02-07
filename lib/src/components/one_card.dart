@@ -1,14 +1,4 @@
-/*
- * File: one_card.dart
- * File Created: Monday, 28th June 2021 5:05:31 pm
- * Author: Hieu Tran
- * -----
- * Last Modified: Monday, 28th June 2021 5:06:00 pm
- * Modified By: Hieu Tran
- */
-
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 

@@ -1,21 +1,17 @@
-// ignore_for_file: file_names, prefer_typing_uninitialized_variables
+// ignore_for_file: file_names, prefer_typing_uninitialized_variables, must_be_immutable
 
 part of '../../../libary/one_libary.dart';
 
-class Planet3DView extends StatefulWidget {
-  const Planet3DView({
+class Planet3DView extends StatelessWidget {
+  Planet3DView({
     Key? key,
     required this.argument,
   }) : super(key: key);
 
   final argument;
 
-  @override
-  State<Planet3DView> createState() => _Planet3DViewState();
-}
-
-class _Planet3DViewState extends State<Planet3DView> {
   final CollectionReference homedata = FirebaseFirestore.instance.collection("modeldata");
+
   List<String> url = [
     "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/3D%20model%20Astronomy%2Fboombox.glb?alt=media&token=e907c5fb-dedf-4c0b-ae6f-501256de0683",
     "https://elegant-tanuki-0787ed.netlify.app/",
@@ -40,7 +36,7 @@ class _Planet3DViewState extends State<Planet3DView> {
       ),
     );
 
-    String nameModel = (widget.argument["name"]);
+    String nameModel = (argument["name"]);
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -59,7 +55,7 @@ class _Planet3DViewState extends State<Planet3DView> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => LocalAndWebObjectsWidget(
-                                argument: widget.argument,
+                                argument: argument,
                               )
                           //LocalAndWebObjectsView(argument: widget.argument),
                           ));
@@ -97,7 +93,7 @@ class _Planet3DViewState extends State<Planet3DView> {
                   ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: WebView(
-                  initialUrl: Uri.encodeFull(widget.argument["image3D"]["imageUrl"]),
+                  initialUrl: Uri.encodeFull(argument["image3D"]["imageUrl"]),
                   debuggingEnabled: false,
                   backgroundColor: OneColors.transparent,
                   javascriptMode: JavascriptMode.unrestricted,
@@ -116,7 +112,7 @@ class _Planet3DViewState extends State<Planet3DView> {
         alignment: Alignment.topRight,
         child: GestureDetector(
           onTap: (() {
-            Navigator.pop(context);
+            Navigator.pop;
           }),
           child: Container(
             height: 70,
@@ -128,7 +124,6 @@ class _Planet3DViewState extends State<Planet3DView> {
                 child: SizedBox(
                   height: 60,
                   width: 60,
-                  //child: Image.asset("assets/images/3d_logo.png"),
                 )),
           ),
         ));

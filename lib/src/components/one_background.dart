@@ -1,12 +1,3 @@
-/*
- * File: one_background.dart
- * File Created: Wednesday, 20th January 2021 10:58:32 am
- * Author: Hieu Tran
- * -----
- * Last Modified: Wednesday, 20th January 2021 11:00:06 am
- * Modified By: Hieu Tran
- */
-
 import 'dart:async';
 import 'dart:ui' as ui;
 

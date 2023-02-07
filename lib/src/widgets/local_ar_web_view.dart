@@ -139,7 +139,7 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Image.asset("assets/images/arkit.png"),
+                      Image.asset(OneImages.arkit),
                       Text(
                         "AR",
                         style: OneTheme.of(context).title1.copyWith(color: OneColors.black),

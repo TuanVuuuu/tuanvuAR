@@ -1,90 +1,42 @@
-
-// ignore_for_file: constant_identifier_names
-
-/*
- * File: one_images.dart
- * File Created: Monday, 1st March 2021 2:26:55 pm
- * Author: Hieu Tran
- * -----
- * Last Modified: Monday, 1st March 2021 2:31:24 pm
- * Modified By: Hieu Tran
- */
-
+// ignore_for_file: constant_identifier_names, prefer_typing_uninitialized_variables, non_constant_identifier_names, unused_field
 
 class OneImages {
   OneImages._();
 
-  static const String alert_failure =
-      'assets/images/alert_failure.png';
-  static const String alert_success =
-      'assets/images/alert_success.png';
+  static const String _3d_logo = "assets/images/3d_logo.png";
+  static const String arkit = "assets/images/arkit.png";
+  static const String Astronomy = "assets/images/Astronomy.png";
+  static const String khampha = "assets/images/khampha.png";
+  static const String no_search = "assets/images/no_search.png";
+  static const String not_found = "assets/images/not_found.png";
+  static const String novetinh = "assets/images/novetinh.png";
+  static const String robot = "assets/images/robot.png";
+  static const String Rocket = "assets/images/Rocket.png";
+  static const String rocket1 = "assets/images/rocket1.png";
+  static const String rocket2 = "assets/images/rocket2.png";
+  static const String saochoi = "assets/images/saochoi.png";
+  static const String shake_phone = "assets/images/shake_phone.png";
+  static const String telescope = "assets/images/telescope.png";
+  static const String triangle = "assets/images/triangle.png";
 
-  static const String avatar_placeholder =
-      'assets/images/avatar_placeholder.png';
-  static const String background =
-      'assets/images/background.png';
-  static const String powered_by_vnpt =
-      'assets/images/powered_by_vnpt.png';
+  static const String Earth = "assets/images/planets_animate/Earth.png";
+  static const String Mercury = "assets/images/planets_animate/Mercury.png";
+  static const String Mars = "assets/images/planets_animate/Mars.png";
+  static const String saturn = "assets/images/planets_animate/saturn.png";
+  static const String Sun = "assets/images/planets_animate/Sun.png";
+  static const String Neptune_1 = "assets/images/planets_animate/Neptune-1.png";
+  static const String Venus = "assets/images/planets_animate/Venus.png";
+  static const String Neptune = "assets/images/planets_animate/Neptune.png";
+  static const String Uranus = "assets/images/planets_animate/Uranus.png";
 
-  static const String disconnected =
-      'assets/images/disconnected.png';
-  static const String empty_data =
-      'assets/images/empty_data.png';
-  static const String no_permission =
-      'assets/images/no_permission.png';
-  static const String no_search =
-      'assets/images/no_search.png';
-  static const String not_found =
-      'assets/images/not_found.png';
-  static const String building_page =
-      'assets/images/building_page.png';
-  static const String logo_qr = 'assets/images/ic_logo_qr.png';
-  static const String nlml_red =
-      'assets/images/ic_nlml_red.png';
-  static const String nlml_blue =
-      'assets/images/ic_nlml_blue.png';
-  static const String nlml_yellow =
-      'assets/images/ic_nlml_yellow.png';
-  static const String ic_inhoadon_logo =
-      'assets/images/ic_inhoadon_logo.png';
-  static const String square_red =
-      'assets/images/square_red.png';
-  static const String square_yellow =
-      'assets/images/square_yellow.png';
-  static const String square_blue =
-      'assets/images/square_blue.png';
-  static const String circle_red =
-      'assets/images/circle_red.png';
-  static const String circle_yellow =
-      'assets/images/circle_yellow.png';
-  static const String circle_blue =
-      'assets/images/circle_blue.png';
-  static const String triangle_red =
-      'assets/images/triangle_red.png';
-  static const String triangle_yellow =
-      'assets/images/triangle_yellow.png';
-  static const String triangle_blue =
-      'assets/images/triangle_blue.png';
-  static const String ic_capnhat_db =
-      'assets/images/ic_capnhat_db.png';
-  static const String ic_chamsoc_db =
-      'assets/images/ic_chamsoc_db.png';
-  static const String ic_ghetham_db =
-      'assets/images/ic_ghetham_db.png';
-  static const String ic_ghetham_ussd =
-      'assets/images/ic_ghetham_ussd.png';
-  static const String ol_connect_ethernet =
-      'assets/images/ol_connect_ethernet.png';
-  static const String ol_huongdan_thietlap_02 =
-      'assets/images/ol_huongdan_thietlap_02.jpg';
-  static const String ol_huongdan_thietlap_01 =
-      'assets/images/ol_huongdan_thietlap_01.png';
-  static const String ol_vitri_lapdat_01 =
-      'assets/images/ol_vitri_lapdat_01.png';
-  static const String ol_vitri_lapdat_02 =
-      'assets/images/ol_vitri_lapdat_02.png';
-  static const String ol_capnguon =
-      'assets/images/ol_capnguon.png';
-  static const String ol_wifi =
-      'assets/images/ol_wifi.png';
+  static const String bg = "assets/images/bg/bg.png";
+  static const String bg1 = "assets/images/bg/bg1.png";
+  static const String bg2 = "assets/images/bg/bg2.png";
+  static const String bg3 = "assets/images/bg/bg3.png";
+  static const String bg4 = "assets/images/bg/bg4.png";
+
+  static const String menu_button = "assets/icons_river/menu_button.riv";
+  static const String icons = "assets/icons_river/icons.riv";
+
+  static const String background = 'assets/images/background.png';
 }

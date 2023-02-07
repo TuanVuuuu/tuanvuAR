@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 
 class OneCardNewsImage extends StatelessWidget {
@@ -34,7 +35,8 @@ class OneCardNewsImage extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                       const SizedBox(height: 10),
-                      Text("${records["content"][0]["contents"] ?? ""}", maxLines: 4, textAlign: TextAlign.left, style: OneTheme.of(context).body2.copyWith(overflow: TextOverflow.ellipsis, color: OneColors.white)),
+                      Text("${records["content"][0]["contents"] ?? ""}",
+                          maxLines: 4, textAlign: TextAlign.left, style: OneTheme.of(context).body2.copyWith(overflow: TextOverflow.ellipsis, color: OneColors.white)),
                       //Text("${records["content"] ?? ""}", maxLines: 4, textAlign: TextAlign.justify, style: OneTheme.of(context).body2.copyWith(overflow: TextOverflow.ellipsis)),
                     ],
                   ),
@@ -60,7 +62,7 @@ class OneCardNewsImage extends StatelessWidget {
                               ),
                             );
                           },
-                          errorBuilder: (context, error, stackTrace) => Image.asset("assets/images/not_found.png")),
+                          errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
                     ),
                   )),
             ],
@@ -74,12 +76,7 @@ class OneCardNewsImage extends StatelessWidget {
                       width: MediaQuery.of(context).size.width - 70,
                       child: Text(
                         "$author - $dateFormat",
-                        style: OneTheme.of(context).body2.copyWith(
-                              overflow: TextOverflow.clip,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
-                              color: OneColors.white
-                            ),
+                        style: OneTheme.of(context).body2.copyWith(overflow: TextOverflow.clip, fontSize: 12, fontWeight: FontWeight.w300, color: OneColors.white),
                         overflow: TextOverflow.ellipsis,
                       ),
                     )

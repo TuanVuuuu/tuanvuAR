@@ -1,14 +1,4 @@
 // ignore_for_file: constant_identifier_names
-
-/*
- * File: one_colors.dart
- * File Created: Friday, 8th January 2021 11:56:43 am
- * Author: Hieu Tran
- * -----
- * Last Modified: Friday, 8th January 2021 11:57:06 am
- * Modified By: Hieu Tran
- */
-
 import 'package:flutter/material.dart';
 
 class OneColors {
