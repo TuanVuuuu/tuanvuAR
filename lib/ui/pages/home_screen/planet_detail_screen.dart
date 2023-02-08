@@ -84,7 +84,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         appBar: AppBar(
           backgroundColor: OneColors.transparent,
           elevation: 0,
-          leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: OneColors.white), onPressed: () => Get.back()),
+          leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: OneColors.white), onPressed: () => Navigator.pop(context)),
         ),
         backgroundColor: OneColors.white,
         body: Container(
@@ -403,7 +403,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                   flex: 1,
                   child: SizedBox(
                     height: 100,
-                    child: (idname == "saohoa" || idname == "traidat" || idname == "saothuy") ? Image.asset("assets/images/planets_animate/2x/$idname.png") : const SizedBox(),
+                    child: (idname == "saohoa" || idname == "traidat" || idname == "saothuy" || idname == "saomoc") ? Image.asset("assets/images/planets_animate/2x/$idname.png") : const SizedBox(),
                   ),
                 )
               ],

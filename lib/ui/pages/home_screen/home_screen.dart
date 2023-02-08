@@ -228,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: Alignment.bottomCenter,
             child: InkWell(
               onTap: () {
-                Get.to(() => DiscoveryScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                Get.to(() => DiscoveryScreen(), transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
               },
               child: Container(
                 height: sizeHeight * 0.12,
@@ -514,7 +514,8 @@ class _HomeScreenState extends State<HomeScreen> {
       child: CircleAvatar(
         backgroundColor: OneColors.transparent,
         radius: 60,
-        child: Image.network(imageUrl,
+        child: 
+        Image.network(imageUrl,
             loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
               // if (loadingProgress?.cumulativeBytesLoaded != null) {
               //   WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {

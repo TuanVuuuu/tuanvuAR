@@ -73,7 +73,7 @@ class OneAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       leading: automaticallyImplyLeading
           ? InkWell(
-              onTap: onTapBack ?? () => Get.back(),
+              onTap: onTapBack ?? () => Navigator.pop(context),
               child: Center(
                 child: Icon(Icons.arrow_back_ios, color: color ?? OneColors.brandVNPT),
               ),
