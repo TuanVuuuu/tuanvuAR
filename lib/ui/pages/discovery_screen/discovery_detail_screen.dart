@@ -5,7 +5,6 @@ import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:get/get.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
 import 'dart:io' as io;
@@ -63,7 +62,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
           elevation: 0,
           leading: InkWell(
             onTap: () {
-              Get.back();
+              Navigator.pop(context);
             },
             child: const Icon(
               Icons.arrow_back_ios,

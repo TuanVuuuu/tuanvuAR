@@ -6,7 +6,6 @@ import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
-import 'package:get/get.dart';
 
 class MySearch extends StatelessWidget {
   const MySearch({
@@ -49,7 +48,7 @@ class MySearch extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: () {
-                                Get.back();
+                                Navigator.pop(context);
                               },
                               child: const Icon(
                                 Icons.arrow_back_ios,

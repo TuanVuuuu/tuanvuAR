@@ -126,7 +126,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                 flex: 1,
                 child: GestureDetector(
                   onTap: () {
-                    Get.back();
+                    Navigator.pop(context);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

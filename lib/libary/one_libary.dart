@@ -2,6 +2,7 @@
 // package:flutter_application_1/src/lib/src/components/libary/one_libary.dart
 // part 'one_libary.dart'
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/button/one_button_ar_view.dart';

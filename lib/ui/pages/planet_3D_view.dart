@@ -42,7 +42,7 @@ class Planet3DView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: OneColors.transparent,
           elevation: 0,
-          leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: OneColors.black), onPressed: () => Get.back()),
+          leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: OneColors.black), onPressed: () => Navigator.pop(context)),
           actions: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0, right: 40),
@@ -107,7 +107,7 @@ class Planet3DView extends StatelessWidget {
         alignment: Alignment.topRight,
         child: GestureDetector(
           onTap: (() {
-            Get.back();
+            Navigator.pop;
           }),
           child: Container(
             height: 70,
