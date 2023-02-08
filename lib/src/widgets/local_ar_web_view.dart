@@ -90,7 +90,7 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
         children: [
           InkWell(
               onTap: (() {
-                Navigator.pop(context);
+                Get.back();
               }),
               child: Row(
                 children: [

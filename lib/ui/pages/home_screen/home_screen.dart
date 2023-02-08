@@ -140,48 +140,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           Row(
                             children: [
                               // Các vì sao
-                              _buillStarsDiscovery(sizeHeight, context),
+                              _buillStarsDiscovery(
+                                sizeHeight,
+                                context,
+                                "Các vì sao",
+                                Image.asset(OneImages.saochoi),
+                              ),
                               const SizedBox(width: 20),
-                              // Nhân tạo
-                              Expanded(
-                                flex: 1,
-                                child: SizedBox(
-                                  height: sizeHeight * 0.15,
-                                  child: Stack(children: [
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        height: sizeHeight * 0.12,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(17),
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              const Color(0xff00B2FF).withOpacity(0.4),
-                                              const Color(0xff0AA9FA).withOpacity(0.4),
-                                              const Color(0xff4670DA).withOpacity(0.4),
-                                            ],
-                                            begin: Alignment.centerLeft,
-                                            end: Alignment.centerRight,
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "Nhân tạo",
-                                            style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                        color: OneColors.transparent,
-                                        height: sizeHeight * 0.08,
-                                        child: Image.asset(OneImages.rocket1),
-                                      ),
-                                    ),
-                                  ]),
-                                ),
+                              _buillStarsDiscovery(
+                                sizeHeight,
+                                context,
+                                "Nhân tạo",
+                                Image.asset(OneImages.rocket1),
                               ),
                             ],
                           ),
@@ -248,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buillStarsDiscovery(double sizeHeight, BuildContext context) {
+  Widget _buillStarsDiscovery(double sizeHeight, BuildContext context, String title, Image images) {
     return Expanded(
       flex: 1,
       child: SizedBox(
@@ -258,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: Alignment.bottomCenter,
             child: InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DiscoveryScreen()));
+                Get.to(() => DiscoveryScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
               },
               child: Container(
                 height: sizeHeight * 0.12,
@@ -276,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    "Các vì sao",
+                    title,
                     style: OneTheme.of(context).header.copyWith(color: OneColors.white),
                   ),
                 ),
@@ -288,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               color: OneColors.transparent,
               height: sizeHeight * 0.08,
-              child: Image.asset(OneImages.saochoi),
+              child: images,
             ),
           ),
         ]),
@@ -482,14 +452,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 40,
                                               child: InkWell(
                                                 onTap: (() {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              //const LocalAndWebObjectsView()
-                                                              PlanetDetailScreen(
-                                                                argument: records,
-                                                              )));
+                                                  Get.to(
+                                                      () => PlanetDetailScreen(
+                                                            argument: records,
+                                                          ),
+                                                      curve: Curves.linear,
+                                                      transition: Transition.rightToLeft);
                                                 }),
                                                 child: Container(
                                                   margin: const EdgeInsets.all(3),

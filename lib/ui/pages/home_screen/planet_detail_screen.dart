@@ -42,9 +42,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         showControlsOnInitialize: false,
         showControls: false,
       );
-      setState(() {
-        print("Video Player\'s Good to Go");
-      });
+      setState(() {});
     });
   }
 
@@ -86,10 +84,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         appBar: AppBar(
           backgroundColor: OneColors.transparent,
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: OneColors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+          leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: OneColors.white), onPressed: () => Get.back()),
         ),
         backgroundColor: OneColors.white,
         body: Container(
@@ -128,7 +123,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         ));
   }
 
-  SliverToBoxAdapter _buildNamePlanets(String nameModel, BuildContext context, String modelURL) {
+  Widget _buildNamePlanets(String nameModel, BuildContext context, String modelURL) {
     return SliverToBoxAdapter(
       child: // Tên Hành tinh
           Row(
@@ -149,28 +144,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                 _launchAR(modelURL);
               });
             },
-            child: Container(
-              margin: const EdgeInsets.only(right: 20),
-              decoration: BoxDecoration(color: OneColors.white.withOpacity(0.4), borderRadius: BorderRadius.circular(15)),
-              height: 50,
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.view_in_ar,
-                      color: OneColors.white,
-                      size: 40,
-                    ),
-                    Text(
-                      "AR",
-                      style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
+            child: const one_button_ar_view(),
+          ),
         ],
       ),
     );
@@ -230,7 +205,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                                   if (i == idmain) {
                                     return InkWell(
                                       onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => DiscoveryDetailScreen(argument: records, color: const Color.fromARGB(255, 197, 165, 247))));
+                                        Get.to(() => DiscoveryDetailScreen(argument: records, color: const Color.fromARGB(255, 197, 165, 247)),
+                                            curve: Curves.linear, transition: Transition.rightToLeft);
                                       },
                                       child: Column(
                                         children: [
@@ -460,7 +436,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             alignment: Alignment.centerRight,
             child: InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => P3DView(argument: widget.argument)));
+                Get.to(() => P3DView(argument: widget.argument), curve: Curves.linear, transition: Transition.rightToLeft);
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -613,7 +589,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             height: sizeHeight * 0.25,
             color: OneColors.transparent,
             child: Image.asset(
-             OneImages.rocket2,
+              OneImages.rocket2,
               fit: BoxFit.fitHeight,
             ),
           ),

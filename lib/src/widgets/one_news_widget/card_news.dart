@@ -6,6 +6,7 @@ import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_image.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_no_image.dart';
 import 'package:flutter_application_1/ui/pages/news_screen/detail_news_screen.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CardNews extends StatelessWidget {
@@ -47,11 +48,7 @@ class CardNews extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                       child: InkWell(
-                        onTap: (() => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: ((context) => DetailNewsScreen(argument: records)),
-                            ))),
+                        onTap: (() => Get.to(() => DetailNewsScreen(argument: records), curve: Curves.linear, transition: Transition.rightToLeft)),
                         child: OneCard(
                           color: OneColors.black.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(7),
@@ -64,9 +61,10 @@ class CardNews extends StatelessWidget {
                   },
                 );
               }
-              return const Center(child: OneLoadingShimmer(
-                                        itemCount: 5,
-                                      ));
+              return const Center(
+                  child: OneLoadingShimmer(
+                itemCount: 5,
+              ));
             }),
           ),
           const SizedBox(

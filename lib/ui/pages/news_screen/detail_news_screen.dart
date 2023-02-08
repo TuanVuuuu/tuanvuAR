@@ -11,6 +11,7 @@ import 'package:flutter_application_1/src/widgets/build_footer.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_news.dart';
 import 'package:flutter_application_1/ui/pages/search_tags_screen/search_tags_screen.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class DetailNewsScreen extends StatefulWidget {
@@ -125,7 +126,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                 flex: 1,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -344,7 +345,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                       }
                     });
 
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MySearch(list: list)));
+                    Get.to(() => MySearch(list: list), curve: Curves.linear, transition: Transition.rightToLeft);
                   }),
                   child: Container(
                     margin: const EdgeInsets.only(top: 8, bottom: 8, right: 8),

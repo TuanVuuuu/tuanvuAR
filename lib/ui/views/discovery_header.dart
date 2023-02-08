@@ -3,6 +3,8 @@ import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'dart:math' as math;
 
+import 'package:get/get.dart';
+
 class BuildDiscoveryHeader extends StatelessWidget {
   const BuildDiscoveryHeader({Key? key, required this.title}) : super(key: key);
 
@@ -26,7 +28,7 @@ class BuildDiscoveryHeader extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Get.back();
                       },
                       child: const Icon(
                         Icons.arrow_back_ios,

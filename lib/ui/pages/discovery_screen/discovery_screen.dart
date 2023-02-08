@@ -11,6 +11,7 @@ import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_detail_screen.dart';
 import 'package:flutter_application_1/ui/views/discovery_header.dart';
+import 'package:get/get.dart';
 
 class DiscoveryScreen extends StatelessWidget {
   DiscoveryScreen({
@@ -96,13 +97,13 @@ class DiscoveryScreen extends StatelessWidget {
 
                                     return InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => DiscoveryDetailScreen(
-                                                      argument: records,
-                                                      color: colors[indexRandom],
-                                                    )));
+                                        Get.to(
+                                            () => DiscoveryDetailScreen(
+                                                  argument: records,
+                                                  color: colors[indexRandom],
+                                                ),
+                                            curve: Curves.linear,
+                                            transition: Transition.rightToLeft);
                                       },
                                       child: Container(
                                           margin: const EdgeInsets.symmetric(vertical: 10),
