@@ -6,6 +6,7 @@ import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
+import 'package:get/get.dart';
 
 class MySearch extends StatelessWidget {
   const MySearch({
@@ -22,16 +23,16 @@ class MySearch extends StatelessWidget {
         body: Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(OneImages.bg),
+          image: AssetImage(OneImages.bg3),
           fit: BoxFit.cover,
         ),
       ),
       child: Scrollbar(
           child: CustomScrollView(
-        //physics: const BouncingScrollPhysics(parent: ),
+        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         slivers: <Widget>[
           SliverPersistentHeader(
-            pinned: true,
+            pinned: false,
             floating: false,
             delegate: SliverAppBarDelegate(
               child: Container(
@@ -48,7 +49,7 @@ class MySearch extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: () {
-                                Navigator.pop(context);
+                                Get.back();
                               },
                               child: const Icon(
                                 Icons.arrow_back_ios,

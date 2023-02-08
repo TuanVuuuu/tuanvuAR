@@ -3,10 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/src/shared/controller/auth_controller.dart';
 import 'package:flutter_application_1/ui/entryPoint/models/menu.dart';
 import 'package:flutter_application_1/ui/pages/news_screen/top_news_screen.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/profile_screen.dart';
 import 'package:flutter_application_1/ui/utils/river_utils.dart';
+import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 import 'components/btm_nav_item.dart';
 import 'components/menu_btn.dart';
@@ -20,6 +22,7 @@ class EntryPoint extends StatefulWidget {
 }
 
 class _EntryPointState extends State<EntryPoint> with SingleTickerProviderStateMixin {
+  AuthController authController = Get.find<AuthController>();
   bool isSideBarOpen = false;
 
   Menu selectedBottonNav = bottomNavItems.first;
@@ -94,7 +97,7 @@ class _EntryPointState extends State<EntryPoint> with SingleTickerProviderStateM
                     } else if (selectedBottonNav == bottomNavItems[1]) {
                       return const TopNewsScreen();
                     } else if (selectedBottonNav == bottomNavItems[2]) {
-                      return  ProfileScreen();
+                      return ProfileScreen();
                     }
                     return const HomeScreen();
                   })(),

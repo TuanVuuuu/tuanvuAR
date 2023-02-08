@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/components/button/one_button_ar_view.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
+import 'package:get/get.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
 import 'dart:io' as io;
@@ -61,7 +63,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
           elevation: 0,
           leading: InkWell(
             onTap: () {
-              Navigator.pop(context);
+              Get.back();
             },
             child: const Icon(
               Icons.arrow_back_ios,
@@ -178,23 +180,12 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
               Padding(
                   padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
                   child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        _launchAR(model3DUrl);
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(color: OneColors.white.withOpacity(0.4), borderRadius: BorderRadius.circular(15)),
-                      child: const Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: Icon(
-                          Icons.view_in_ar,
-                          size: 40,
-                          color: OneColors.white,
-                        ),
-                      ),
-                    ),
-                  )),
+                      onTap: () {
+                        setState(() {
+                          _launchAR(model3DUrl);
+                        });
+                      },
+                      child: const one_button_ar_view())),
             ],
           ),
           Padding(

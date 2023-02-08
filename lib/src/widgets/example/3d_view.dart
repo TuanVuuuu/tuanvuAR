@@ -71,7 +71,7 @@ class _P3DViewState extends State<P3DView> {
           elevation: 2,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: OneColors.black),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Get.back()
           ),
         ),
         backgroundColor: OneColors.white,

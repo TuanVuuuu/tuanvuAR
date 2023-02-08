@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/components/button/one_button_ar_view.dart';
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter_application_1/src/components/one_colors.dart';
@@ -14,6 +15,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_application_1/src/components/one_background_detail.dart';
 import 'package:flutter_application_1/src/components/one_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';
 import 'package:flutter_application_1/src/components/shared/constant.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';

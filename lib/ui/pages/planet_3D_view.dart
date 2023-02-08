@@ -42,23 +42,18 @@ class Planet3DView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: OneColors.transparent,
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: OneColors.black),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+          leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: OneColors.black), onPressed: () => Get.back()),
           actions: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0, right: 40),
               child: InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => LocalAndWebObjectsWidget(
-                                argument: argument,
-                              )
-                          //LocalAndWebObjectsView(argument: widget.argument),
-                          ));
+                  Get.to(
+                      () => LocalAndWebObjectsWidget(
+                            argument: argument,
+                          ),
+                      curve: Curves.linear,
+                      transition: Transition.rightToLeft);
                 },
                 child: const Icon(Icons.add, color: OneColors.transparent, size: 30),
               ),
@@ -112,7 +107,7 @@ class Planet3DView extends StatelessWidget {
         alignment: Alignment.topRight,
         child: GestureDetector(
           onTap: (() {
-            Navigator.pop;
+            Get.back();
           }),
           child: Container(
             height: 70,
