@@ -112,11 +112,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                 _buildSatellite(nameModel, context, satelliteNumber, idname),
                 // Thông tin vệ tinh của hành tinh
                 satelliteNumber != "0" ? _buildDiscovery(sizeHeight, sizeWidth) : _buildNotifiNotSatellite(nameModel, context),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 50,
-                  ),
-                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 50)),
               ],
             ),
           ),
@@ -217,11 +213,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                                               children: [
                                                 Expanded(
                                                   flex: 1,
-                                                  child: SizedBox(
-                                                    height: sizeHeight * 0.1,
-
-                                                    child: Image.network(image2DUrl ?? ""), // Default: 2
-                                                  ),
+                                                  child: SizedBox(height: sizeHeight * 0.1, child: CachedImage(imageUrl: image2DUrl ?? "") // Default: 2
+                                                      ),
                                                 ),
                                                 Expanded(
                                                   flex: 3,
@@ -574,13 +567,12 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
           top: 0,
           right: -sizeWidth * 0.2,
           child: Container(
-            height: sizeHeight * 0.35,
-            color: OneColors.transparent,
-            child: Image.network(
-              image2DUrl,
-              fit: BoxFit.fitHeight,
-            ),
-          ),
+              height: sizeHeight * 0.35,
+              color: OneColors.transparent,
+              child: CachedImage(
+                imageUrl: image2DUrl,
+                fit: BoxFit.fitHeight,
+              )),
         ),
         Positioned(
           top: sizeHeight * 0.25,

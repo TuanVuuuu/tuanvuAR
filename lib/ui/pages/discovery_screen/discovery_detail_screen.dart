@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/button/one_button_ar_view.dart';
+import 'package:flutter_application_1/src/components/loading/one_cache_images.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
@@ -252,13 +253,12 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
             top: 0,
             right: -sizeWidth! * 0.2,
             child: Container(
-              height: sizeHeight! * 0.35,
-              color: OneColors.transparent,
-              child: Image.network(
-                image2DUrl ?? "",
-                fit: BoxFit.fitHeight,
-              ),
-            ),
+                height: sizeHeight! * 0.35,
+                color: OneColors.transparent,
+                child: CachedImage(
+                  imageUrl: image2DUrl ?? "",
+                  fit: BoxFit.fitHeight,
+                )),
           ),
           Positioned(
             top: sizeHeight! * 0.25,
