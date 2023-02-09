@@ -1,8 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages, unused_import
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/splash/splash_bg.dart';
+import 'package:flutter_application_1/src/components/loading/one_cache_images.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
@@ -177,32 +179,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget _buildImageDiscover2D(DocumentSnapshot<Object?> records, String imageUrl) {
-    return CircleAvatar(
-      backgroundColor: OneColors.transparent,
-      radius: 2,
-      child: Image.network(imageUrl,
-          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-            if (loadingProgress == null) {
-              return child;
-            }
-            return const Center();
-          },
-          errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
-    );
+    return CircleAvatar(backgroundColor: OneColors.transparent, radius: 2, child: CachedImage(imageUrl: imageUrl));
   }
 
   Widget _buildImagePlanets2D(String colorModel, DocumentSnapshot<Object?> records, String imageUrl) {
-    return CircleAvatar(
-      backgroundColor: OneColors.transparent,
-      radius: 2,
-      child: Image.network(imageUrl,
-          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-            if (loadingProgress == null) {
-              return child;
-            }
-            return const Center();
-          },
-          errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
-    );
+    return CircleAvatar(backgroundColor: OneColors.transparent, radius: 2, child: CachedImage(imageUrl: imageUrl));
   }
 }

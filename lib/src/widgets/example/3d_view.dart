@@ -17,10 +17,11 @@ class P3DView extends StatefulWidget {
 class _P3DViewState extends State<P3DView> {
   final CollectionReference modeldata = FirebaseFirestore.instance.collection("modeldata");
   List<String> url = [
-    "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/3D%20model%20Astronomy%2Fboombox.glb?alt=media&token=e907c5fb-dedf-4c0b-ae6f-501256de0683",
+    "https://onedrive.live.com/?cid=22B8A031B559C726&id=22B8A031B559C726%21510&parId=22B8A031B559C726%21509&o=OneUp",
     "https://elegant-tanuki-0787ed.netlify.app/",
     "https://webar.cartmagician.com/7979_vũ/p24180c4840/489988/boombox.glb",
     "https://overbits.herokuapp.com/fbxgltf/",
+    "https://cartmagician.com/arview/v1?asset=13e592b9-ce12-407d-a82f-525294c4503f&ar=off", // Sao Mộc 3D
     "https://webar.cartmagician.com/7979_vũ/p24182c4841/489992/mars.glb", // Mars AR
     "https://cartmagician.com/arview/v1?asset=5858ff3c-b8a3-4a5d-b9be-ec21c293da88&ar=off", // Earth 3D
     "https://cartmagician.com/arview/v1?asset=d949c66e-40ae-431f-9618-109c1e12c8ae&ar=off", // Mercury 3D
@@ -46,9 +47,8 @@ class _P3DViewState extends State<P3DView> {
     delay();
     String imageUrl = widget.argument["image3D"]["imageUrl"];
     String idName = widget.argument["idName"];
-    //String urlAR = "https://webar.cartmagician.com/7979_vũ/p24183c4842/489996/earth.glb";
-    // ignore: avoid_print
-    print(imageUrl);
+    //String imageUrl = "https://webar.cartmagician.com/7979_vũ/p24183c4842/489996/earth.glb";
+    //String imageUrl = url[0];
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: OneColors.transparent,
@@ -69,10 +69,7 @@ class _P3DViewState extends State<P3DView> {
           centerTitle: true,
           backgroundColor: OneColors.white,
           elevation: 2,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: OneColors.black),
-            onPressed: () => Navigator.pop(context)
-          ),
+          leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: OneColors.black), onPressed: () => Navigator.pop(context)),
         ),
         backgroundColor: OneColors.white,
         body: Stack(
@@ -84,81 +81,85 @@ class _P3DViewState extends State<P3DView> {
                 margin: const EdgeInsets.only(top: 10, right: 15),
                 height: 70,
                 width: 70,
-                decoration: BoxDecoration(color: OneColors.white.withOpacity(1), shape: BoxShape.circle),
+                decoration: const BoxDecoration(color: OneColors.white, shape: BoxShape.circle),
                 child: const Icon(
                   Icons.view_in_ar,
                   size: 30,
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.48),
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-                boxShadow: [
-                  BoxShadow(
-                    color: OneColors.brandVNP,
-                    blurRadius: 10,
-                  )
-                ],
-                image: DecorationImage(
-                    image: AssetImage(
-                      OneImages.bg3,
-                    ),
-                    fit: BoxFit.fitWidth),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 10),
-                      child: Container(
-                        height: 53,
-                        color: OneColors.transparent,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: Text(
-                                      "Mọi người cũng tìm \nkiếm",
-                                      style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: Text(
-                                  "Xem thêm hơn 10 mục khác",
-                                  style: OneTheme.of(context).caption1.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  CardPlanets(
-                    data: modeldata,
-                    currentPlanets: idName,
-                  )
-                ],
-              ),
-            ),
+            _buildMoreModel(context, idName),
           ],
         ));
+  }
+
+  Container _buildMoreModel(BuildContext context, String idName) {
+    return Container(
+      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.48),
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            color: OneColors.brandVNP,
+            blurRadius: 10,
+          )
+        ],
+        image: DecorationImage(
+            image: AssetImage(
+              OneImages.bg3,
+            ),
+            fit: BoxFit.fitWidth),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 10),
+              child: Container(
+                height: 53,
+                color: OneColors.transparent,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              "Mọi người cũng tìm \nkiếm",
+                              style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          "Xem thêm hơn 10 mục khác",
+                          style: OneTheme.of(context).caption1.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          CardPlanets(
+            data: modeldata,
+            currentPlanets: idName,
+          )
+        ],
+      ),
+    );
   }
 
   SingleChildScrollView _build3DModel(String imageUrl) {
@@ -168,28 +169,6 @@ class _P3DViewState extends State<P3DView> {
         padding: EdgeInsets.zero,
         child: Stack(children: [
           // Chế độ hiển thị mô hình 3D
-          Column(
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.5,
-                  maxWidth: MediaQuery.of(context).size.width,
-                ),
-                // BabylonJSViewer(
-                //   src: urlAR,
-                // ),
-                child: Center(
-                  child: WebView(
-                    initialUrl: Uri.encodeFull(imageUrl),
-                    debuggingEnabled: false,
-                    backgroundColor: OneColors.white,
-                    javascriptMode: JavascriptMode.unrestricted,
-                    gestureNavigationEnabled: false,
-                  ),
-                ),
-              ),
-            ],
-          ),
 
           Column(
             children: [
@@ -198,8 +177,8 @@ class _P3DViewState extends State<P3DView> {
                   maxHeight: MediaQuery.of(context).size.height * 0.5,
                   maxWidth: MediaQuery.of(context).size.width,
                 ),
-                // BabylonJSViewer(
-                //   src: urlAR,
+                // child: BabylonJSViewer(
+                //   src: imageUrl,
                 // ),
                 child: Center(
                   child: WebView(

@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element
+// ignore_for_file: unused_element, unused_field
 
 part of '../../../libary/one_libary.dart';
 
@@ -514,25 +514,25 @@ class _HomeScreenState extends State<HomeScreen> {
       child: CircleAvatar(
         backgroundColor: OneColors.transparent,
         radius: 60,
-        child: 
-        Image.network(imageUrl,
-            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-              // if (loadingProgress?.cumulativeBytesLoaded != null) {
-              //   WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
-              //         Future.delayed(const Duration(milliseconds: 1600), () {
-              //           checkLoadImage = false;
-              //         });
-              //       }));
-              // } else {}
-              if (loadingProgress == null) return child;
-              return Center(
-                child: CircularProgressIndicator(
-                  color: OneColors.brandVNP,
-                  value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-                ),
-              );
-            },
-            errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
+        child: CachedImage(imageUrl: imageUrl),
+        // Image.network(imageUrl,
+        //     loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+        //       // if (loadingProgress?.cumulativeBytesLoaded != null) {
+        //       //   WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
+        //       //         Future.delayed(const Duration(milliseconds: 1600), () {
+        //       //           checkLoadImage = false;
+        //       //         });
+        //       //       }));
+        //       // } else {}
+        //       if (loadingProgress == null) return child;
+        //       return Center(
+        //         child: CircularProgressIndicator(
+        //           color: OneColors.brandVNP,
+        //           value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
+        //         ),
+        //       );
+        //     },
+        //     errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
       ),
     );
   }

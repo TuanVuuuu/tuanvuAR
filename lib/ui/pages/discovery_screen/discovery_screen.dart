@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/components/loading/one_cache_images.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading_shimer.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
@@ -191,7 +192,7 @@ class DiscoveryScreen extends StatelessWidget {
                                                               borderType: BorderType.RRect,
                                                               child: SizedBox(
                                                                 height: sizeHeight * 0.12,
-                                                                child: Image.network(image2DUrl ?? ""),
+                                                                child: CachedImage(imageUrl: image2DUrl ?? ""),
                                                               ),
                                                             ),
                                                           ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/components/loading/one_cache_images.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:get/get.dart';
@@ -41,6 +42,7 @@ class CardPlanets extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final DocumentSnapshot records = snapshot.data.docs[snapshot.data?.docs.length - index - 1];
                     String idname = records["idName"];
+                    String imageUrl = records["image2D"]["imageUrl"];
 
                     return InkWell(
                         onTap: () {
@@ -57,7 +59,7 @@ class CardPlanets extends StatelessWidget {
                                       width: 75,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Image.network(records["image2D"]["imageUrl"]),
+                                        child: CachedImage(imageUrl: imageUrl),
                                       ),
                                     ),
                                     Padding(
