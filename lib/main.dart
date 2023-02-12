@@ -4,9 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/shared/controller/app_routes.dart';
 import 'package:flutter_application_1/src/shared/controller/initial_binding.dart';
-import 'package:flutter_application_1/src/widgets/example/quizapp/quiz_screen/quiz_screen.dart';
-import 'package:flutter_application_1/src/widgets/example/quizapp/result_screen/result_screen.dart';
-import 'package:flutter_application_1/src/widgets/example/quizapp/welcome_screen.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 

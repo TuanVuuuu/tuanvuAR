@@ -7,8 +7,6 @@ import 'package:flutter_application_1/src/components/shared/add_data_artificial.
 import 'package:flutter_application_1/src/components/shared/add_data_discover.dart';
 import 'package:flutter_application_1/src/components/shared/add_planets_data.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
-import 'package:flutter_application_1/src/widgets/example/example4.dart';
-import 'package:flutter_application_1/src/widgets/example/quizapp/welcome_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -66,11 +64,11 @@ class ProfileScreen extends StatelessWidget {
                 Get.to(() => const AddArtificialData());
               },
               child: const Text("Add data Aritificial")),
-          ElevatedButton(
-              onPressed: () {
-                Get.to(() => WelcomeScreen());
-              },
-              child: const Text("Chat GPT App")),
+          // ElevatedButton(
+          //     onPressed: () {
+          //       Get.to(() => WelcomeScreen());
+          //     },
+          //     child: const Text("Chat GPT App")),
         ],
       ),
     );
