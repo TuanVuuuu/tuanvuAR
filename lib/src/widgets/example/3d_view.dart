@@ -204,7 +204,7 @@ class _P3DViewState extends State<P3DView> {
                       // BabylonJSViewer(
                       //   src: urlAR,
                       // ),
-                      child: const Center(child: CircularProgressIndicator()),
+                      child: Center(child: OneLoading.space_loading),
                     ),
                   ],
                 )

@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
-          const BuildHomeHeader(),
           _buildTitle(context),
           _buildListPlanets(context),
           _buildPlanetsAnimate(context),
@@ -57,18 +56,27 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 
-  SliverToBoxAdapter _buildTitle(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Các hành tinh", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: OneColors.white)),
-              const SizedBox(height: 5),
-              Text("Cùng Astronomy tìm hiểu về chúng nào !", style: OneTheme.of(context).title2.copyWith(fontSize: 16, color: OneColors.white)),
-            ],
-          )),
+  Widget _buildTitle(BuildContext context) {
+    return SliverAppBar(
+      expandedHeight: MediaQuery.of(context).size.height * 0.2,
+      leading: const SizedBox(),
+      floating: false,
+      pinned: true,
+      backgroundColor: OneColors.transparent,
+      elevation: 0,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        background: Padding(
+            padding: const EdgeInsets.only(top: 100, left: 20, right: 20, bottom: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Các hành tinh", style: OneTheme.of(context).header.copyWith(fontSize: 28, color: OneColors.white)),
+                const SizedBox(height: 5),
+                Text("Cùng Astronomy tìm hiểu về chúng nào !", style: OneTheme.of(context).title2.copyWith(fontSize: 16, color: OneColors.white)),
+              ],
+            )),
+      ),
     );
   }
 
@@ -147,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Image.asset(OneImages.saochoi),
                               ),
                               const SizedBox(width: 20),
-                              _buillStarsDiscovery(
+                              _buillStarsArtificial(
                                 sizeHeight,
                                 context,
                                 "Nhân tạo",
@@ -218,6 +226,55 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  
+  Widget _buillStarsArtificial(double sizeHeight, BuildContext context, String title, Image images) {
+    return Expanded(
+      flex: 1,
+      child: SizedBox(
+        height: sizeHeight * 0.15,
+        child: Stack(children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: InkWell(
+              onTap: () {
+                Get.to(() => ArtificialScreen(), transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+              },
+              child: Container(
+                height: sizeHeight * 0.12,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(17),
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color(0xff00B2FF).withOpacity(0.4),
+                      const Color(0xff0AA9FA).withOpacity(0.4),
+                      const Color(0xff4670DA).withOpacity(0.4),
+                    ],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    title,
+                    style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              color: OneColors.transparent,
+              height: sizeHeight * 0.08,
+              child: images,
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+
   Widget _buillStarsDiscovery(double sizeHeight, BuildContext context, String title, Image images) {
     return Expanded(
       flex: 1,
@@ -262,61 +319,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ]),
-      ),
-    );
-  }
-
-  Widget _buildCirclePlanets() {
-    return Container(
-      height: 300,
-      width: 300,
-      color: OneColors.transparent,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Earth))],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 60, right: 40),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Mercury, fit: BoxFit.fitHeight)),
-                SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Mars, fit: BoxFit.fitHeight)),
-              ],
-            ),
-          ),
-          Row(
-            children: [
-              SizedBox(height: 40, width: 85, child: Image.asset(OneImages.saturn, fit: BoxFit.fitHeight)),
-              const SizedBox(width: 15),
-              SizedBox(height: 120, width: 120, child: Image.asset(OneImages.Sun, fit: BoxFit.fitHeight)),
-              const SizedBox(width: 35),
-              SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Neptune_1, fit: BoxFit.fitHeight)),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 60, right: 40),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Venus, fit: BoxFit.fitHeight)),
-                SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Neptune, fit: BoxFit.fitHeight)),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [SizedBox(height: 40, width: 45, child: Image.asset(OneImages.Uranus))],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -497,14 +499,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Container _buildImagePlanets2D(String colorModel, DocumentSnapshot<Object?> records, String imageUrl) {
+    String idName = records["idName"];
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Color(
-              int.parse(colorModel),
-            ).withOpacity(0.4),
+            color: (idName != "saotho")
+                ? Color(
+                    int.parse(colorModel),
+                  ).withOpacity(0.4)
+                : Color(
+                    int.parse(colorModel),
+                  ).withOpacity(0.1),
             offset: const Offset(5.0, 5.0),
             blurRadius: 10.0,
             spreadRadius: 2.0,
@@ -513,7 +520,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: CircleAvatar(
         backgroundColor: OneColors.transparent,
-        radius: 60,
+        radius: (idName != "saotho") ? 60 : 80,
         child: CachedImage(imageUrl: imageUrl),
         // Image.network(imageUrl,
         //     loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {

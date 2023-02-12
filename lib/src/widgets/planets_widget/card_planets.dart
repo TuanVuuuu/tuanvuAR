@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_cache_images.dart';
+import 'package:flutter_application_1/src/components/loading/one_loading.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,7 @@ class CardPlanets extends StatelessWidget {
             stream: data.snapshots(),
             builder: ((context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                const Center(child: CircularProgressIndicator());
+                Center(child: OneLoading.space_loading);
               }
 
               if (snapshot.hasData) {
@@ -50,7 +51,7 @@ class CardPlanets extends StatelessWidget {
                         },
                         child: currentPlanets != idname
                             ? Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                padding:  EdgeInsets.symmetric(horizontal: (MediaQuery.of(context).size.width - 300)/10, vertical: 10),
                                 child: Column(
                                   children: [
                                     Container(
@@ -77,8 +78,8 @@ class CardPlanets extends StatelessWidget {
                   },
                 );
               }
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: OneLoading.space_loading,
               );
             }),
           ),

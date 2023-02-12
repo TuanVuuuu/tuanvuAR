@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/button/one_button_ar_view.dart';
@@ -10,8 +12,8 @@ import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
 import 'dart:io' as io;
 
-class DiscoveryDetailScreen extends StatefulWidget {
-  const DiscoveryDetailScreen({Key? key, required this.argument, required this.color}) : super(key: key);
+class ArtificialDetailScreen extends StatefulWidget {
+  const ArtificialDetailScreen({Key? key, required this.argument, required this.color}) : super(key: key);
 
   // ignore: prefer_typing_uninitialized_variables
   final argument;
@@ -19,10 +21,10 @@ class DiscoveryDetailScreen extends StatefulWidget {
   final color;
 
   @override
-  State<DiscoveryDetailScreen> createState() => _DiscoveryDetailScreenState();
+  State<ArtificialDetailScreen> createState() => _ArtificialDetailScreenState();
 }
 
-class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
+class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
   double? sizeHeight;
   double? sizeWidth;
   String? image2DUrl;
@@ -41,12 +43,12 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
     sizeHeight = MediaQuery.of(context).size.height;
     sizeWidth = MediaQuery.of(context).size.width;
     otherInfo = widget.argument["otherInfo"];
-    String age = otherInfo["age"];
-    String radius = otherInfo["radius"];
-    String density = otherInfo["density"];
-    String gravitation = otherInfo["gravitation"];
-    String cycle = otherInfo["cycle"];
-    String trajectory = otherInfo["trajectory"];
+    String launch_date = otherInfo["launch_date"];
+    String speed = otherInfo["speed"];
+    String orbital_altitude = otherInfo["orbital_altitude"];
+    String speed_in_orbit = otherInfo["speed_in_orbit"];
+    String launch_location = otherInfo["launch_location"];
+    String manufacturer = otherInfo["manufacturer"];
 
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -88,13 +90,13 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
               // Build name , tags, info
               _buildInfo(context, idname, model3DUrl),
               //Build tuổi, bán kính, mật độ, trọng lực, chu kỳ quay,
-              _buildGridInfo(age, radius, density, gravitation, cycle, trajectory)
+              _buildGridInfo(launch_date, speed, orbital_altitude, speed_in_orbit, launch_location, manufacturer)
             ],
           )),
         ));
   }
 
-  Widget _buildGridInfo(String age, String radius, String density, String gravitation, String cycle, String trajectory) {
+  Widget _buildGridInfo(String launch_date, String speed, String orbital_altitude, String speed_in_orbit, String launch_location, String manufacturer) {
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200.0,
@@ -112,9 +114,9 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
             const Icon(Icons.donut_large, color: OneColors.white),
             const Icon(Icons.settings_backup_restore, color: OneColors.white),
           ];
-          List<String> titles = ["Tuổi", "Bán kính", "Mật độ", "Trọng lực", "Chu kỳ quay", "Quỹ đạo"];
+          List<String> titles = ["Ngày phóng", "Tốc độ tối đa", "Độ cao quỹ đạo", "Tốc độ quỹ đạo", "Địa điểm phóng", "Nhà sản xuất"];
 
-          List<String> contents = [age, radius, density, gravitation, cycle, trajectory];
+          List<String> contents = [launch_date, speed, orbital_altitude, speed_in_orbit, launch_location, manufacturer];
           return Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
@@ -134,15 +136,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
                   child: Center(
                     child: contents[index] != ""
                         ? Text(
-                            (() {
-                              if (contents[index] == density) {
-                                return "${contents[index]}\u00B3";
-                              } else if (contents[index] == gravitation) {
-                                return "${contents[index]}\u00B2";
-                              }
-
-                              return contents[index];
-                            })(),
+                            contents[index],
                             style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
                           )
                         : Text(
@@ -258,18 +252,6 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
                   imageUrl: image2DUrl ?? "",
                   fit: BoxFit.fitHeight,
                 )),
-          ),
-          Positioned(
-            top: sizeHeight! * 0.25,
-            right: 0,
-            child: Container(
-              height: sizeHeight! * 0.25,
-              color: OneColors.transparent,
-              child: Image.asset(
-                OneImages.rocket2,
-                fit: BoxFit.fitHeight,
-              ),
-            ),
           ),
         ],
       ),

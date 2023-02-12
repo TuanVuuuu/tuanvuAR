@@ -3,9 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/components/shared/add_data_artificial.dart';
 import 'package:flutter_application_1/src/components/shared/add_data_discover.dart';
 import 'package:flutter_application_1/src/components/shared/add_planets_data.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
+import 'package:flutter_application_1/src/widgets/example/example4.dart';
+import 'package:flutter_application_1/src/widgets/example/quizapp/welcome_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -35,33 +38,41 @@ class ProfileScreen extends StatelessWidget {
       child: Scrollbar(
           child: CustomScrollView(
         //physics: const BouncingScrollPhysics(parent: ),
-        slivers: <Widget>[
-          _buildAddData(context)
-        ],
+        slivers: <Widget>[_buildAddData(context)],
       )),
     ));
   }
 
   SliverToBoxAdapter _buildAddData(BuildContext context) {
     return SliverToBoxAdapter(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.5,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => const AddDiscoverData());
-                  },
-                  child: const Text("Add data discover")),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => const AddPlanetsData());
-                  },
-                  child: const Text("Add data planets")),
-            ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.3,
           ),
-        );
+          ElevatedButton(
+              onPressed: () {
+                Get.to(() => const AddDiscoverData());
+              },
+              child: const Text("Add data discover")),
+          ElevatedButton(
+              onPressed: () {
+                Get.to(() => const AddPlanetsData());
+              },
+              child: const Text("Add data planets")),
+          ElevatedButton(
+              onPressed: () {
+                Get.to(() => const AddArtificialData());
+              },
+              child: const Text("Add data Aritificial")),
+          ElevatedButton(
+              onPressed: () {
+                Get.to(() => WelcomeScreen());
+              },
+              child: const Text("Chat GPT App")),
+        ],
+      ),
+    );
   }
 }
