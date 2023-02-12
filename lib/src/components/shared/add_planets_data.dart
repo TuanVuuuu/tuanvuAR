@@ -15,23 +15,23 @@ class AddPlanetsData extends StatelessWidget {
 
     ///////////////////// DISCOVER DATA //////////////////////////
     ///NAME////
-    String name = "Sao Mộc"; // Tên tiếng việt hành tinh có dấu // "Sao Mộc"
+    String name = "Sao Thổ"; // Tên tiếng việt hành tinh có dấu // "Sao Mộc"
 
     ///ID NAME///
-    String idName = "saomoc"; // tags viết liền không dấu // "saomoc"
+    String idName = "saotho"; // tags viết liền không dấu // "saomoc"
     //////IMAGE 2D///////
     Map colorGradient = {
-      "bottom": "0xff3f51b5", // Màu gradient bottom
-      "top": "0xff795548", // Màu gradient top
+      "bottom": "0xffe91e63", // Màu gradient bottom
+      "top": "0xff607d8b", // Màu gradient top
     };
     Map colors = {
       "colorGradient": colorGradient, // Màu gradient của card
-      "colorModel": "0xFF78371C", // Màu shadow của image2D
+      "colorModel": "0xFFDBBC79", // Màu shadow của image2D
     };
     Map image2D = {
       "colors": colors, // Màu sắc
       // Link hình ảnh 2D
-      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/2D%20model%20Astronomy%2Fjupiter-planet.png?alt=media&token=4de02df2-cd3d-4757-a6b0-6b475552977a",
+      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/2D%20model%20Astronomy%2Fsaturn-planet.png?alt=media&token=bae060de-cbdf-46ef-9071-2e9e486c7d63",
     };
     //////--------///////
     //////IMAGE 3D//////
@@ -42,24 +42,24 @@ class AddPlanetsData extends StatelessWidget {
     /////---------//////
     /////INFO//////
     String info =
-        "Sao Mộc hay Mộc tinh là hành tinh thứ năm tính từ Mặt Trời và là hành tinh lớn nhất trong Hệ Mặt Trời. Nó là hành tinh khí khổng lồ với khối lượng bằng một phần nghìn của Mặt Trời nhưng bằng hai lần rưỡi tổng khối lượng của tất cả các hành tinh khác trong Hệ Mặt Trời cộng lại.";
+        "Sao Thổ tức Thổ tinh là hành tinh thứ sáu tính theo khoảng cách trung bình từ Mặt Trời và là hành tinh lớn thứ hai về đường kính cũng như khối lượng, sau Sao Mộc trong Hệ Mặt Trời. Tên tiếng Anh của hành tinh mang tên thần Saturn trong thần thoại La Mã, ký hiệu thiên văn của hành tinh là thể hiện cái liềm của thần.";
     ////----//////
     /////INFO OTHER/////
     Map infoOther = {
-      "acreage": "6,1420 Tỷ km", //Diện tích
-      "age": "4,603 Tỷ", // Tuổi
-      "cycle": "11,8618 năm", // Chu kỳ quay
-      "density": "1,326 g/cm", // Mật độ
-      "distance": "778.500.000 km", // Khoảng cách
-      "gravitation": "24,79 m/s", // trọng lực
-      "radius": "69.911 km", // bán kính
-      "satelliteNumber": "92", // sô lượng vệ tinh
-      "temperature": "- 145", // nhiệt độ
+      "acreage": "4,270 Tỷ km", //Diện tích
+      "age": "4,503 Tỷ", // Tuổi
+      "cycle": "29,4571 năm", // Chu kỳ quay
+      "density": "0,687 g/cm", // Mật độ
+      "distance": "1,434 Tỷ km", // Khoảng cách
+      "gravitation": "10,44 m/s", // trọng lực
+      "radius": "58.232 km", // bán kính
+      "satelliteNumber": "62", // sô lượng vệ tinh
+      "temperature": "- 185", // nhiệt độ
       "trajectory": "Mặt Trời", // quỹ đạo
     };
     ////////////////////
     //////VIDEO INTRO///
-    String videosIntro = "https://www.gstatic.com/culturalinstitute/searchar/assets/earth/desktop_dark.mp4";
+    String videosIntro = "https://www.gstatic.com/culturalinstitute/searchar/assets/saturn/desktop_dark.mp4";
     /////////////////////////////////////////////////////////////
 
     Future<void> addUser() {

@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/button/one_float_to_top.dart';
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
@@ -35,6 +36,8 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
   final List contentsListMore = [];
   final List contentsListImage = [];
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     List contentList = widget.argument["content"];
@@ -48,6 +51,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
     Timestamp time = widget.argument["date"];
     var dateFormat = DateFormat.yMMMMd('en_US').add_jm().format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
     return AppScaffold(
+      floatingActionButton: OneFloatToTop(scrollController: _scrollController),
       backgroundColor: OneColors.black,
       body: Container(
         decoration: const BoxDecoration(
@@ -58,6 +62,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
         ),
         child: Scrollbar(
             child: CustomScrollView(
+          controller: _scrollController,
           slivers: [
             //Build Header
             _buildHeader(context),
@@ -381,3 +386,5 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
     );
   }
 }
+
+

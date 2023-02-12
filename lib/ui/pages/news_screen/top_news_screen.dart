@@ -186,13 +186,6 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
                 ),
               ),
 
-              // if (_delayCheck != true)
-              //   const SliverToBoxAdapter(
-              //     child: OneLoadingShimmer(
-              //       itemCount: 5,
-              //     ),
-              //   )
-              // else
               tagsButton != "Tất cả"
                   ? CardNewsWithTags(data: data, tagsButton: tagsButton)
                   : CardNews(

@@ -5,10 +5,18 @@ import 'package:lottie/lottie.dart';
 
 class OneLoading {
   OneLoading._();
-  static Widget ar_loading = Lottie.asset(
-    "assets/images/loadingAnimal.json",
-    width: 120,
-    height: 120,
+  static Widget space_loading = Lottie.asset(
+    "assets/icons_river/space-progress.json",
+    width: 100,
+    height: 100,
+    repeat: true,
+    fit: BoxFit.contain,
+  );
+
+  static Widget space_loading_larget = Lottie.asset(
+    "assets/icons_river/space-progress.json",
+    width: 200,
+    height: 200,
     repeat: true,
     fit: BoxFit.contain,
   );

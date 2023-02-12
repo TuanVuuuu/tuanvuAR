@@ -14,18 +14,17 @@ import 'package:flutter_application_1/src/components/one_theme.dart';
 import 'package:flutter_application_1/src/models/one_list_colors.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
-import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_detail_screen.dart';
-import 'package:flutter_application_1/ui/views/artificial_header.dart';
+import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_detail_screen.dart';
 import 'package:get/get.dart';
 
-class DiscoveryScreen extends StatefulWidget {
-  const DiscoveryScreen({super.key});
+class ArtificialScreen extends StatefulWidget {
+  const ArtificialScreen({super.key});
 
   @override
-  _DiscoveryScreenState createState() => _DiscoveryScreenState();
+  _ArtificialScreenState createState() => _ArtificialScreenState();
 }
 
-class _DiscoveryScreenState extends State<DiscoveryScreen> {
+class _ArtificialScreenState extends State<ArtificialScreen> {
   List<Map<String, dynamic>> _discoverDataList = [];
   List<Map<String, dynamic>> _filteredDataList = [];
   bool isLoading = true;
@@ -35,7 +34,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
   @override
   void initState() {
     super.initState();
-    getDiscoverData().then((discoverData) {
+    getArtificialData().then((discoverData) {
       setState(() {
         isLoading = false;
         _discoverDataList = discoverData;
@@ -79,7 +78,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
               ),
               child: Scrollbar(
                 child: CustomScrollView(controller: scrollController, slivers: <Widget>[
-                  BuildDiscoverHeader(context),
+                  BuildArtificialHeader(context),
                   SliverToBoxAdapter(
                     child: Padding(
                         padding: const EdgeInsets.only(top: 200),
@@ -110,7 +109,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                     parent: AlwaysScrollableScrollPhysics(),
                   ),
                   slivers: <Widget>[
-                    BuildDiscoverHeader(context),
+                    BuildArtificialHeader(context),
                     !isSearchBar ? const SliverToBoxAdapter(child: SizedBox()) : _buildSearchField(context),
                     SliverList(
                       delegate: SliverChildBuilderDelegate(childCount: _filteredDataList.length, (context, index) {
@@ -123,7 +122,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                         return InkWell(
                           onTap: () {
                             Get.to(
-                                () => DiscoveryDetailScreen(
+                                () => ArtificialDetailScreen(
                                       argument: records,
                                       color: OneColorRamdom.colors[indexRandom],
                                     ),
@@ -227,7 +226,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
     );
   }
 
-  SliverToBoxAdapter BuildDiscoverHeader(BuildContext context) {
+  SliverToBoxAdapter BuildArtificialHeader(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(top: 50, bottom: 10, left: 20, right: 20),
@@ -241,7 +240,10 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
               icon: const Icon(Icons.arrow_back_ios),
               color: OneColors.white,
             ),
-            Text("Các vì sao", style: OneTheme.of(context).header.copyWith(color: OneColors.white)),
+            Text(
+              "Nhân Tạo",
+              style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+            ),
             !isSearchBar
                 ? IconButton(
                     icon: const Icon(

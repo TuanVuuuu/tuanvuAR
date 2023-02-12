@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, unused_import
+// ignore_for_file: depend_on_referenced_packages, unused_import, avoid_print, unused_local_variable
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +8,7 @@ import 'package:flutter_application_1/src/components/loading/one_cache_images.da
 import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/one_theme.dart';
+import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/ui/entryPoint/entry_point.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -27,6 +28,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var dataList = getDiscoverData();
+    var dataListHome = getHomeData();
+    var dataListPlanets = getPlanetsData();
+
     double sizeHeight = MediaQuery.of(context).size.height;
     double sizeWidth = MediaQuery.of(context).size.width;
     int seconds = 10;
@@ -69,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       "https://assets2.lottiefiles.com/packages/lf20_qogkaqmb.json",
                       onLoaded: (p0) {
                         Future.delayed(Duration(seconds: seconds), (() {
-                          Get.offAll(() => const EntryPoint(), curve: Curves.linear, duration: const Duration(seconds: 1));
+                           Get.offAll(() => const EntryPoint(), curve: Curves.linear, duration: const Duration(seconds: 1));
                         }));
                       },
                       errorBuilder: (context, error, stackTrace) {
