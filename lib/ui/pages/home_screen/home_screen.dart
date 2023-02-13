@@ -237,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: Alignment.bottomCenter,
             child: InkWell(
               onTap: () {
-                Get.to(() => ArtificialScreen(), transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                Get.to(() => const ArtificialScreen(), transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
               },
               child: Container(
                 height: sizeHeight * 0.12,
@@ -285,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: Alignment.bottomCenter,
             child: InkWell(
               onTap: () {
-                Get.to(() => DiscoveryScreen(), transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                Get.to(() => const DiscoveryScreen(), transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
               },
               child: Container(
                 height: sizeHeight * 0.12,

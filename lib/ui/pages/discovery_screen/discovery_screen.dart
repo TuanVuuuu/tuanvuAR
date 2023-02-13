@@ -15,7 +15,6 @@ import 'package:flutter_application_1/src/models/one_list_colors.dart';
 import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_detail_screen.dart';
-import 'package:flutter_application_1/ui/views/artificial_header.dart';
 import 'package:get/get.dart';
 
 class DiscoveryScreen extends StatefulWidget {
@@ -292,6 +291,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
             ],
           ),
           child: TextField(
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9a-zA-Z ]'))],
             maxLength: 28,
             controller: _searchTextController,
             cursorColor: OneColors.white,
