@@ -294,6 +294,7 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
             ],
           ),
           child: TextField(
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9a-zA-Z ]'))],
             maxLength: 28,
             controller: _searchTextController,
             cursorColor: OneColors.white,
