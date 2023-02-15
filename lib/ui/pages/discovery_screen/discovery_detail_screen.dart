@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/src/components/button/one_button_ar_view.dart';
-import 'package:flutter_application_1/src/components/loading/one_cache_images.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
 import 'dart:io' as io;
@@ -169,60 +165,76 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
-                child: Text(
-                  name!,
-                  style: OneTheme.of(context).header.copyWith(fontSize: 30, color: OneColors.white),
-                ),
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
-                  child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          _launchAR(model3DUrl);
-                        });
-                      },
-                      child: const one_button_ar_view())),
+              _buildName(context),
+              _buildButtonAr(model3DUrl),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-            child: Row(
-                children: idname.map((i) {
-              return Container(
-                margin: const EdgeInsets.only(right: 10),
-                height: 20,
-                decoration: BoxDecoration(color: widget.color, borderRadius: BorderRadius.circular(20)),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Text(
-                      i,
-                      style: OneTheme.of(context).body1.copyWith(color: OneColors.white, fontSize: 10),
-                    ),
-                  ),
-                ),
-              );
-            }).toList()),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-            child: ReadMoreText(
-              info!,
-              style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
-              trimLines: 5,
-              textAlign: TextAlign.justify,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: " Xem thêm",
-              trimExpandedText: " ...Rút gọn",
-              lessStyle: OneTheme.of(context).body1.copyWith(color: OneColors.yellow),
-              moreStyle: OneTheme.of(context).body1.copyWith(color: OneColors.yellow),
+          _buildListTags(idname, context),
+          _buildInfoReadMore(context),
+        ],
+      ),
+    );
+  }
+
+  Padding _buildInfoReadMore(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      child: ReadMoreText(
+        info!,
+        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
+        trimLines: 5,
+        textAlign: TextAlign.justify,
+        trimMode: TrimMode.Line,
+        trimCollapsedText: " Xem thêm",
+        trimExpandedText: " ...Rút gọn",
+        lessStyle: OneTheme.of(context).body1.copyWith(color: OneColors.yellow),
+        moreStyle: OneTheme.of(context).body1.copyWith(color: OneColors.yellow),
+      ),
+    );
+  }
+
+  Padding _buildListTags(List<dynamic> idname, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      child: Row(
+          children: idname.map((i) {
+        return Container(
+          margin: const EdgeInsets.only(right: 10),
+          height: 20,
+          decoration: BoxDecoration(color: widget.color, borderRadius: BorderRadius.circular(20)),
+          child: Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              child: Text(
+                i,
+                style: OneTheme.of(context).body1.copyWith(color: OneColors.white, fontSize: 10),
+              ),
             ),
           ),
-        ],
+        );
+      }).toList()),
+    );
+  }
+
+  Padding _buildButtonAr(String model3DUrl) {
+    return Padding(
+        padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
+        child: InkWell(
+            onTap: () {
+              setState(() {
+                _launchAR(model3DUrl);
+              });
+            },
+            child: const one_button_ar_view()));
+  }
+
+  Padding _buildName(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
+      child: Text(
+        name!,
+        style: OneTheme.of(context).header.copyWith(fontSize: 30, color: OneColors.white),
       ),
     );
   }

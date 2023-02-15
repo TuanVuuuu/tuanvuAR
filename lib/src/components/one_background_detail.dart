@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_background.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 
 class OneBackgroundDetail extends StatelessWidget {
   const OneBackgroundDetail({

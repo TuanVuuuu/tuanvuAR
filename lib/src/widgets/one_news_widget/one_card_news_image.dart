@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
 
 class OneCardNewsImage extends StatelessWidget {
   const OneCardNewsImage({

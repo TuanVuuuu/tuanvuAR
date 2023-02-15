@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/loading/one_cache_images.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/models/one_list_colors.dart';
 import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_detail_screen.dart';
 import 'package:get/get.dart';
@@ -69,83 +67,94 @@ class CardDiscoverPlanets extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Tên ngôi sao
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 5.0),
-                                  child: Text(
-                                    "$name",
-                                    style: OneTheme.of(context).caption1.copyWith(color: OneColors.black, fontSize: 10, fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              ),
+                              _buildName(context),
                               // thông tin ngôi sao
-                              Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    "$info",
-                                    style: OneTheme.of(context).caption1.copyWith(
-                                          color: OneColors.black,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                    maxLines: 5,
-                                    textAlign: TextAlign.justify,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
+                              _buildInfo(context),
                               // tags
-                              Row(
-                                  children: tags.map((i) {
-                                return Container(
-                                  margin: const EdgeInsets.only(left: 5),
-                                  height: 20,
-                                  decoration: BoxDecoration(color: OneColors.brandVNP.withOpacity(0.4), borderRadius: BorderRadius.circular(5)),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                      child: Text(
-                                        i,
-                                        style: OneTheme.of(context).body1.copyWith(color: OneColors.white, fontSize: 10),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }).toList()),
+                              _buildTags(context),
                             ],
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: DottedBorder(
-                              color: OneColors.black,
-                              strokeWidth: 0.05,
-                              borderType: BorderType.RRect,
-                              child: SizedBox(
-                                height: sizeHeight * 0.12,
-                                child: CachedImage(imageUrl: image2DUrl ?? ""),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Hình ảnh ngôi sao
+                        _buildImages(),
                       ],
                     ),
                   ),
                 ),
               ),
-              // Hình ảnh ngôi sao
-
-              // Text(
-              //   name ?? "",
-              //   style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-              // ),
             ],
           )),
+    );
+  }
+
+  Expanded _buildImages() {
+    return Expanded(
+      flex: 1,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: DottedBorder(
+          color: OneColors.black,
+          strokeWidth: 0.05,
+          borderType: BorderType.RRect,
+          child: SizedBox(
+            height: sizeHeight * 0.12,
+            child: CachedImage(imageUrl: image2DUrl ?? ""),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row _buildTags(BuildContext context) {
+    return Row(
+        children: tags.map((i) {
+      return Container(
+        margin: const EdgeInsets.only(left: 5),
+        height: 20,
+        decoration: BoxDecoration(color: OneColors.brandVNP.withOpacity(0.4), borderRadius: BorderRadius.circular(5)),
+        child: Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            child: Text(
+              i,
+              style: OneTheme.of(context).body1.copyWith(color: OneColors.white, fontSize: 10),
+            ),
+          ),
+        ),
+      );
+    }).toList());
+  }
+
+  Center _buildInfo(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Text(
+          "$info",
+          style: OneTheme.of(context).caption1.copyWith(
+                color: OneColors.black,
+                fontSize: 10,
+                fontWeight: FontWeight.w400,
+              ),
+          maxLines: 5,
+          textAlign: TextAlign.justify,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
+  }
+
+  Align _buildName(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 5.0),
+        child: Text(
+          "$name",
+          style: OneTheme.of(context).caption1.copyWith(color: OneColors.black, fontSize: 10, fontWeight: FontWeight.w700),
+        ),
+      ),
     );
   }
 }

@@ -1,14 +1,3 @@
-// ignore_for_file: unnecessary_overrides
-
-/*
- * File: one_button_controller.dart
- * File Created: Friday, 26th February 2021 12:24:41 am
- * Author: Hieu Tran
- * -----
- * Last Modified: Friday, 26th February 2021 12:26:43 am
- * Modified By: Hieu Tran
- */
-
 part of '../../../libary/one_libary.dart';
 
 class OneButtonController extends ValueNotifier<OneButtonValue> {
@@ -35,9 +24,4 @@ class OneButtonController extends ValueNotifier<OneButtonValue> {
   set state(OneButtonState state) => value = value.copyWith(state: state);
   set label(String? label) => value = value.copyWith(label: label);
   set visibility(OneVisibility visibility) => value = value.copyWith(visibility: visibility);
-
-  @override
-  set value(OneButtonValue newValue) {
-    super.value = newValue;
-  }
 }

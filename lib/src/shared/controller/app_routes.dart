@@ -1,9 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/libary/one_libary.dart';
-import 'package:flutter_application_1/splash/splash_screen.dart';
-import 'package:get/get.dart';
+part of '../../../libary/one_libary.dart';
 
 enum AppRoutes {
   SPLASH_SCREEN,

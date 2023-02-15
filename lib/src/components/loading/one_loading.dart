@@ -20,4 +20,20 @@ class OneLoading {
     repeat: true,
     fit: BoxFit.contain,
   );
+
+  static Widget quiz_false = Lottie.asset(
+    "assets/icons_river/crying-baby-astronaut.json",
+    width: 150,
+    height: 150,
+    repeat: true,
+    fit: BoxFit.contain,
+  );
+
+  static Widget quiz_pass = Lottie.asset(
+    "assets/icons_river/happy-spaceman.json",
+    width: 200,
+    height: 200,
+    repeat: true,
+    fit: BoxFit.contain,
+  );
 }

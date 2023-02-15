@@ -88,12 +88,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         ),
         backgroundColor: OneColors.white,
         body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(OneImages.bg4),
-              fit: BoxFit.cover,
-            ),
-          ),
+          decoration: OneWidget.background_bg4,
           child: Scrollbar(
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),

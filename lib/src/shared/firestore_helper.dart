@@ -42,10 +42,10 @@ Future<List<Map<String, dynamic>>> getHomeData() async {
 }
 
 Future<List<Map<String, dynamic>>> getPlanetsData() async {
-  CollectionReference discoverdata = FirebaseFirestore.instance.collection("modeldata");
+  CollectionReference modeldata = FirebaseFirestore.instance.collection("modeldata");
   List<DocumentSnapshot> items = [];
   List<Map<String, dynamic>> dataList = [];
-  QuerySnapshot snapshot = await discoverdata.get();
+  QuerySnapshot snapshot = await modeldata.get();
   for (var element in snapshot.docs) {
     var mapData = element.data() as Map<String, dynamic>;
     dataList.add(mapData);

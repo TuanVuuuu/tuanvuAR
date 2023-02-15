@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
+part of '../../../libary/one_libary.dart';
 
 class OneThemeData with Diagnosticable {
   OneThemeData();

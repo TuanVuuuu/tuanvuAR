@@ -1,4 +1,4 @@
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+part of '../../../libary/one_libary.dart';
 
 class OneCacheManager {
   OneCacheManager._();

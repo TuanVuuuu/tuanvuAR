@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_card.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
 
 class BuildHeader extends StatelessWidget {

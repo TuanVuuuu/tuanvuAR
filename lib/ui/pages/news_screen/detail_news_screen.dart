@@ -2,14 +2,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/button/one_float_to_top.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_application_1/src/components/one_thick_ness.dart';
-import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/widgets/build_footer.dart';
-import 'package:flutter_application_1/src/widgets/one_news_widget/card_news.dart';
 import 'package:flutter_application_1/ui/pages/search_tags_screen/search_tags_screen.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
 import 'package:get/get.dart';
@@ -54,12 +49,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
       floatingActionButton: OneFloatToTop(scrollController: _scrollController),
       backgroundColor: OneColors.black,
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(OneImages.bg4),
-            fit: BoxFit.cover,
-          ),
-        ),
+        decoration: OneWidget.background_bg4,
         child: Scrollbar(
             child: CustomScrollView(
           controller: _scrollController,
@@ -386,5 +376,3 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
     );
   }
 }
-
-

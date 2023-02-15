@@ -1,6 +1,5 @@
 // ignore_for_file: constant_identifier_names, prefer_typing_uninitialized_variables, non_constant_identifier_names, unused_field
 
-
 class OneImages {
   OneImages._();
 
@@ -19,6 +18,7 @@ class OneImages {
   static const String shake_phone = "assets/images/shake_phone.png";
   static const String telescope = "assets/images/telescope.png";
   static const String triangle = "assets/images/triangle.png";
+  static const String questions_undraw = "assets/icons/undraw_questions.svg";
 
   static const String Earth = "assets/images/planets_animate/Earth.png";
   static const String Mercury = "assets/images/planets_animate/Mercury.png";

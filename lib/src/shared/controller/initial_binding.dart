@@ -1,5 +1,4 @@
-import 'package:flutter_application_1/src/shared/controller/auth_controller.dart';
-import 'package:get/get.dart';
+part of '../../../libary/one_libary.dart';
 
 class InitialBinding implements Bindings {
   @override

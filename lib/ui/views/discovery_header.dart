@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'dart:math' as math;
 
 class BuildDiscoveryHeader extends StatelessWidget {

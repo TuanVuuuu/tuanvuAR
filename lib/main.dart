@@ -2,8 +2,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/shared/controller/app_routes.dart';
-import 'package:flutter_application_1/src/shared/controller/initial_binding.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 

@@ -1,15 +1,4 @@
-/*
- * File: one_loading_shimmer.dart
- * File Created: Wednesday, 27th January 2021 10:32:32 am
- * Author: Hieu Tran
- * -----
- * Last Modified: Wednesday, 27th January 2021 10:33:06 am
- * Modified By: Hieu Tran
- */
-
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:shimmer/shimmer.dart';
+part of '../../../libary/one_libary.dart';
 
 class OneLoadingShimmer extends StatelessWidget {
   const OneLoadingShimmer({
@@ -29,8 +18,8 @@ class OneLoadingShimmer extends StatelessWidget {
     return Container(
       padding: padding,
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.blue[100]!,
+        baseColor: OneColors.textGrey2,
+        highlightColor: OneColors.blue100,
         child: ListView.builder(
           shrinkWrap: true,
           physics: const ClampingScrollPhysics(),

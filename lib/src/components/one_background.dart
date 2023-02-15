@@ -1,10 +1,4 @@
-import 'dart:async';
-import 'dart:ui' as ui;
-
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_images.dart';
+part of '../../../libary/one_libary.dart';
 
 class OneBackground extends StatelessWidget {
   const OneBackground({

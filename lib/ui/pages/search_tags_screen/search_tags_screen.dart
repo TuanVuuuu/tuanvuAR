@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
-import 'package:flutter_application_1/src/shared/app_scaffold.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
 
@@ -62,18 +60,7 @@ class MySearch extends StatelessWidget {
                                   "Tìm kiếm với từ khoá :  ",
                                   style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(color: OneColors.blue100, borderRadius: BorderRadius.circular(5)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Text(
-                                      "${list[0]}",
-                                      style: OneTheme.of(context).title2.copyWith(color: OneColors.brandVNP),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.clip,
-                                    ),
-                                  ),
-                                ),
+                                _buildTagsSearch(context),
                               ],
                             )
                           ],
@@ -91,5 +78,20 @@ class MySearch extends StatelessWidget {
         ],
       )),
     ));
+  }
+
+  Container _buildTagsSearch(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(color: OneColors.blue100, borderRadius: BorderRadius.circular(5)),
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Text(
+          "${list[0]}",
+          style: OneTheme.of(context).title2.copyWith(color: OneColors.brandVNP),
+          maxLines: 2,
+          overflow: TextOverflow.clip,
+        ),
+      ),
+    );
   }
 }
