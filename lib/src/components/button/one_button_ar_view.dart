@@ -1,8 +1,6 @@
 // ignore_for_file: camel_case_types
 
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
-import 'package:flutter_application_1/src/components/one_theme.dart';
+part of '../../../libary/one_libary.dart';
 
 class one_button_ar_view extends StatelessWidget {
   const one_button_ar_view({

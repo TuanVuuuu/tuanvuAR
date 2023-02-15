@@ -16,18 +16,18 @@ class P3DView extends StatefulWidget {
 
 class _P3DViewState extends State<P3DView> {
   final CollectionReference modeldata = FirebaseFirestore.instance.collection("modeldata");
-  List<String> url = [
-    "https://onedrive.live.com/?cid=22B8A031B559C726&id=22B8A031B559C726%21510&parId=22B8A031B559C726%21509&o=OneUp",
-    "https://elegant-tanuki-0787ed.netlify.app/",
-    "https://webar.cartmagician.com/7979_vũ/p24180c4840/489988/boombox.glb",
-    "https://overbits.herokuapp.com/fbxgltf/",
-    "https://cartmagician.com/arview/v1?asset=13e592b9-ce12-407d-a82f-525294c4503f&ar=off", // Sao Mộc 3D
-    "https://webar.cartmagician.com/7979_vũ/p24182c4841/489992/mars.glb", // Mars AR
-    "https://cartmagician.com/arview/v1?asset=5858ff3c-b8a3-4a5d-b9be-ec21c293da88&ar=off", // Earth 3D
-    "https://cartmagician.com/arview/v1?asset=d949c66e-40ae-431f-9618-109c1e12c8ae&ar=off", // Mercury 3D
-    "https://webar.cartmagician.com/7979_vũ/p24190c4843/490360/mercury.glb", // Mercury AR
-    "https://ar-code.com/blog/video-tutorial-how-to-compress-reduce-the-file-size-of-a-3d-model-on-blender-glb-gltf-dae-fbx-obj", // link hướng dẫn chuyển đổi mô hình 3d glb sang gltf
-  ];
+  // List<String> url = [
+  //   "https://onedrive.live.com/?cid=22B8A031B559C726&id=22B8A031B559C726%21510&parId=22B8A031B559C726%21509&o=OneUp",
+  //   "https://elegant-tanuki-0787ed.netlify.app/",
+  //   "https://webar.cartmagician.com/7979_vũ/p24180c4840/489988/boombox.glb",
+  //   "https://overbits.herokuapp.com/fbxgltf/",
+  //   "https://cartmagician.com/arview/v1?asset=13e592b9-ce12-407d-a82f-525294c4503f&ar=off", // Sao Mộc 3D
+  //   "https://webar.cartmagician.com/7979_vũ/p24182c4841/489992/mars.glb", // Mars AR
+  //   "https://cartmagician.com/arview/v1?asset=5858ff3c-b8a3-4a5d-b9be-ec21c293da88&ar=off", // Earth 3D
+  //   "https://cartmagician.com/arview/v1?asset=d949c66e-40ae-431f-9618-109c1e12c8ae&ar=off", // Mercury 3D
+  //   "https://webar.cartmagician.com/7979_vũ/p24190c4843/490360/mercury.glb", // Mercury AR
+  //   "https://ar-code.com/blog/video-tutorial-how-to-compress-reduce-the-file-size-of-a-3d-model-on-blender-glb-gltf-dae-fbx-obj", // link hướng dẫn chuyển đổi mô hình 3d glb sang gltf
+  // ];
   bool _delayCheck = false;
 
   void delay() {

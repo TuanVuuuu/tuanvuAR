@@ -1,12 +1,3 @@
-/*
- * File: one_button_value.dart
- * File Created: Friday, 26th February 2021 1:02:52 am
- * Author: Hieu Tran
- * -----
- * Last Modified: Friday, 26th February 2021 1:03:09 am
- * Modified By: Hieu Tran
- */
-
 part of '../../../libary/one_libary.dart';
 
 class OneButtonValue extends Equatable {

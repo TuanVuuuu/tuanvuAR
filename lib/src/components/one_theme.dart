@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'one_theme_data.dart';
+part of '../../../libary/one_libary.dart';
 
 class OneTheme extends StatelessWidget {
   const OneTheme({

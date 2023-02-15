@@ -1,5 +1,5 @@
 // ignore_for_file: constant_identifier_names
-import 'package:flutter/material.dart';
+part of '../../../libary/one_libary.dart';
 
 class OneColors {
   OneColors._();
@@ -9,10 +9,11 @@ class OneColors {
   }
 
   //Text Colors
-  static const Color transparent = Color(0x00000000);
-  static const Color amber = Colors.amber;
-  static const Color blue = Colors.blue;
+  static const Color transparent = Color.fromARGB(0, 0, 0, 0);
+  static const Color amber = Color(0xFFFFC107);
+  static const Color blue = Color.fromARGB(255, 17, 0, 255);
   static const Color blue100 = Color(0xFFBBDEFB);
+  static const Color buttonGrey = Color(0xFF273032);
   static const Color white24 = Color(0x3DFFFFFF);
   static const Color white70 = Color(0xB3FFFFFF);
   static const Color black12 = Color(0x1F000000);
@@ -52,6 +53,7 @@ class OneColors {
   //Basic Colors
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
+  static const Color black50 = Color(0xFF162023);
   static const Color grey = Color(0xFF9E9E9E);
   static const Color yellow = Color(0xFFFCB017);
   static const Color red = Color(0xFFF2323F);

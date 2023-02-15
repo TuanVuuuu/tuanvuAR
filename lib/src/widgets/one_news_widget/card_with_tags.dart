@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/loading/one_loading_shimer.dart';
-import 'package:flutter_application_1/src/components/one_card.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_image.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_no_image.dart';
 import 'package:flutter_application_1/ui/pages/news_screen/detail_news_screen.dart';

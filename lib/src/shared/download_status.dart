@@ -2,8 +2,7 @@
 /// rememebr FlutterDownloader.registerCallback(downloadCallback); runs on background thread while your app is running on UI thread .
 /// You will have to manually transmit / map callback function data from background thead to UI thread.
 
-import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+part of '../../../libary/one_libary.dart';
 
 enum DownloadStatus { downlaoding, downlaoded, notInQueue }
 

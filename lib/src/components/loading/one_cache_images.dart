@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/components/loading/one_cache_manager.dart';
+part of '../../../libary/one_libary.dart';
 
 class CachedImage extends StatelessWidget {
   const CachedImage({

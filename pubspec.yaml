@@ -69,7 +69,6 @@ dependencies:
   percent_indicator: ^4.2.2
   cached_network_image: ^3.2.3
   flutter_cache_manager: ^3.3.0
-  babylonjs_viewer: ^1.2.1
 
 flutter_icons:
   android: "launcher_icon"

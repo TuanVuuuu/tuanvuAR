@@ -1,18 +1,16 @@
+// part of '../../../libary/one_libary.dart';
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
-import 'package:flutter_application_1/src/components/one_colors.dart';
 import 'package:flutter_application_1/src/shared/controller/auth_controller.dart';
+import 'package:flutter_application_1/ui/entryPoint/components/btm_nav_item.dart';
 import 'package:flutter_application_1/ui/entryPoint/models/menu.dart';
-import 'package:flutter_application_1/ui/pages/news_screen/top_news_screen.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/profile_screen.dart';
 import 'package:flutter_application_1/ui/utils/river_utils.dart';
 import 'package:get/get.dart';
 import 'package:rive/rive.dart';
-import 'components/btm_nav_item.dart';
-import 'components/menu_btn.dart';
-import 'components/side_bar.dart';
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});
@@ -26,7 +24,7 @@ class _EntryPointState extends State<EntryPoint> with SingleTickerProviderStateM
   bool isSideBarOpen = false;
 
   Menu selectedBottonNav = bottomNavItems.first;
-  Menu selectedSideMenu = sidebarMenus.first;
+  //  Menu selectedSideMenu = sidebarMenus.first;
 
   late SMIBool isMenuOpenInput;
 
@@ -69,15 +67,15 @@ class _EntryPointState extends State<EntryPoint> with SingleTickerProviderStateM
       backgroundColor: const Color(0xFF17203A),
       body: Stack(
         children: [
-          AnimatedPositioned(
-            width: 288,
-            height: MediaQuery.of(context).size.height,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.fastOutSlowIn,
-            left: isSideBarOpen ? 0 : -288,
-            top: 0,
-            child: const SideBar(),
-          ),
+          // AnimatedPositioned(
+          //   width: 288,
+          //   height: MediaQuery.of(context).size.height,
+          //   duration: const Duration(milliseconds: 200),
+          //   curve: Curves.fastOutSlowIn,
+          //   left: isSideBarOpen ? 0 : -288,
+          //   top: 0,
+          //   child: const SideBar(),
+          // ),
           Transform(
             alignment: Alignment.center,
             transform: Matrix4.identity()
@@ -105,37 +103,37 @@ class _EntryPointState extends State<EntryPoint> with SingleTickerProviderStateM
               ),
             ),
           ),
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.fastOutSlowIn,
-            left: isSideBarOpen ? 220 : 0,
-            top: 16,
-            child: MenuBtn(
-              press: () {
-                isMenuOpenInput.value = !isMenuOpenInput.value;
+          // AnimatedPositioned(
+          //   duration: const Duration(milliseconds: 200),
+          //   curve: Curves.fastOutSlowIn,
+          //   left: isSideBarOpen ? 220 : 0,
+          //   top: 16,
+          //   child: MenuBtn(
+          //     press: () {
+          //       isMenuOpenInput.value = !isMenuOpenInput.value;
 
-                if (_animationController.value == 0) {
-                  _animationController.forward();
-                } else {
-                  _animationController.reverse();
-                }
+          //       if (_animationController.value == 0) {
+          //         _animationController.forward();
+          //       } else {
+          //         _animationController.reverse();
+          //       }
 
-                setState(
-                  () {
-                    isSideBarOpen = !isSideBarOpen;
-                  },
-                );
-              },
-              riveOnInit: (artboard) {
-                final controller = StateMachineController.fromArtboard(artboard, "State Machine");
+          //       setState(
+          //         () {
+          //           isSideBarOpen = !isSideBarOpen;
+          //         },
+          //       );
+          //     },
+          //     riveOnInit: (artboard) {
+          //       final controller = StateMachineController.fromArtboard(artboard, "State Machine");
 
-                artboard.addController(controller!);
+          //       artboard.addController(controller!);
 
-                isMenuOpenInput = controller.findInput<bool>("isOpen") as SMIBool;
-                isMenuOpenInput.value = true;
-              },
-            ),
-          ),
+          //       isMenuOpenInput = controller.findInput<bool>("isOpen") as SMIBool;
+          //       isMenuOpenInput.value = true;
+          //     },
+          //   ),
+          // ),
         ],
       ),
       bottomNavigationBar: Transform.translate(

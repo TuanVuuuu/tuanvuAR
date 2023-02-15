@@ -1,14 +1,4 @@
 // ignore_for_file: library_private_types_in_public_api
-
-/*
- * File: one_button.dart
- * File Created: Friday, 22nd January 2021 9:25:26 am
- * Author: Hieu Tran
- * -----
- * Last Modified: Friday, 22nd January 2021 9:25:57 am
- * Modified By: Hieu Tran
- */
-
 part of '../../../libary/one_libary.dart';
 
 enum OneButtonState {
@@ -38,7 +28,7 @@ class OneButton extends StatefulWidget {
     this.prefixIconAssetPath,
     this.suffixIconAssetPath,
     this.color,
-    this.gradient,
+    // this.gradient,
     this.background,
     this.textColor,
     this.padding,
@@ -60,7 +50,7 @@ class OneButton extends StatefulWidget {
   final bool? enable;
   final OneButtonController? controller;
   final Color? color;
-  final LinearGradient? gradient;
+  // final LinearGradient? gradient;
   final Color? background;
   final Color? textColor;
   final EdgeInsetsGeometry? padding;
@@ -88,25 +78,25 @@ class _OneButtonState extends State<OneButton> {
   OneVisibility get visibility => _visibility ?? _effectiveController.visibility;
 
   Color get _color => widget.color ?? OneColors.brandVNPT;
-  LinearGradient get _gradient {
-    if (widget.gradient != null) {
-      return widget.gradient!;
-    } else if (widget.color != null) {
-      return LinearGradient(
-        colors: [widget.color!, widget.color!],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      );
-    }
-    return OneColors.gradient;
-  }
+  // // LinearGradient get _gradient {
+  //   if (widget.gradient != null) {
+  //     return widget.gradient!;
+  //   } else if (widget.color != null) {
+  //     return LinearGradient(
+  //       colors: [widget.color!, widget.color!],
+  //       begin: Alignment.topLeft,
+  //       end: Alignment.bottomRight,
+  //     );
+  //   }
+  //   return OneColors.gradient;
+  // }
 
   Color get _background => widget.background ?? OneColors.white;
 
   BoxDecoration get _decoration {
     return BoxDecoration(
       color: (state != OneButtonState.outline && state != OneButtonState.borderless) || !enable ? OneColors.greyLight : _background,
-      gradient: state != OneButtonState.primary || !enable ? null : _gradient,
+      // gradient: state != OneButtonState.primary || !enable ? null : _gradient,
       borderRadius: widget.borderRadius ?? BorderRadius.circular(8.0),
       border: state == OneButtonState.outline && enable ? Border.all(width: 1.0, color: _color) : null,
     );

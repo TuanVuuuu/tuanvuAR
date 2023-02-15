@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'dart:math' as math;
-import 'package:flutter_application_1/src/components/one_colors.dart';
+part of '../../../libary/one_libary.dart';
 
 class WelcomeHeader extends StatelessWidget {
   const WelcomeHeader({super.key});

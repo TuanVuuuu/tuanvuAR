@@ -8,4 +8,5 @@ class OneIcons {
   //=================================
 
   static const String ic_menu_3 = 'packages/one_assets/lib/icons/global/ic_menu_3.svg';
+  static const String questions_undraw = "assets/icons/undraw_Questions.svg";
 }

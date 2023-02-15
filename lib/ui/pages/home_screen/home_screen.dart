@@ -38,12 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     return AppScaffold(
         body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(OneImages.bg2),
-          fit: BoxFit.cover,
-        ),
-      ),
+      decoration: OneWidget.background_bg2,
       child: Scrollbar(
           child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
@@ -67,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         background: Padding(
-            padding: const EdgeInsets.only(top: 100, left: 20, right: 20, bottom: 20),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1, left: 20, right: 20, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -226,7 +221,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  
   Widget _buillStarsArtificial(double sizeHeight, BuildContext context, String title, Image images) {
     return Expanded(
       flex: 1,
@@ -239,38 +233,46 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Get.to(() => const ArtificialScreen(), transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
               },
-              child: Container(
-                height: sizeHeight * 0.12,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(17),
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color(0xff00B2FF).withOpacity(0.4),
-                      const Color(0xff0AA9FA).withOpacity(0.4),
-                      const Color(0xff4670DA).withOpacity(0.4),
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                  ),
-                ),
-              ),
+              child: _gradientBox(sizeHeight, title, context),
             ),
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              color: OneColors.transparent,
-              height: sizeHeight * 0.08,
-              child: images,
-            ),
-          ),
+          _alignTopRightImage(sizeHeight, images),
         ]),
+      ),
+    );
+  }
+
+  Align _alignTopRightImage(double sizeHeight, Image images) {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Container(
+        color: OneColors.transparent,
+        height: sizeHeight * 0.08,
+        child: images,
+      ),
+    );
+  }
+
+  Container _gradientBox(double sizeHeight, String title, BuildContext context) {
+    return Container(
+      height: sizeHeight * 0.12,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(17),
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xff00B2FF).withOpacity(0.4),
+            const Color(0xff0AA9FA).withOpacity(0.4),
+            const Color(0xff4670DA).withOpacity(0.4),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+      ),
+      child: Center(
+        child: Text(
+          title,
+          style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+        ),
       ),
     );
   }
@@ -287,37 +289,10 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Get.to(() => const DiscoveryScreen(), transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
               },
-              child: Container(
-                height: sizeHeight * 0.12,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(17),
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color(0xff00B2FF).withOpacity(0.4),
-                      const Color(0xff0AA9FA).withOpacity(0.4),
-                      const Color(0xff4670DA).withOpacity(0.4),
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                  ),
-                ),
-              ),
+              child: _gradientBox(sizeHeight, title, context),
             ),
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              color: OneColors.transparent,
-              height: sizeHeight * 0.08,
-              child: images,
-            ),
-          ),
+          _alignTopRightImage(sizeHeight, images),
         ]),
       ),
     );
@@ -343,10 +318,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         viewportFraction: 0.5,
                         enlargeCenterPage: true,
                       ),
-                      // physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-                      // padding: EdgeInsets.zero,
-                      // scrollDirection: Axis.horizontal,
-                      // shrinkWrap: true,
                       itemCount: snapshot.data?.docs.length,
                       itemBuilder: (context, index, realIndex) {
                         final DocumentSnapshot records = snapshot.data!.docs[index];
@@ -371,8 +342,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   decoration: BoxDecoration(
                                     borderRadius: const BorderRadius.all(Radius.circular(40)),
                                     boxShadow: [
-                                      BoxShadow(color: OneColors.grey.withOpacity(0.2), offset: const Offset(5.0, 5.0), blurRadius: 10.0, spreadRadius: 2.0), //BoxShadow
-                                      BoxShadow(color: OneColors.grey.withOpacity(0.2), offset: const Offset(0.0, 0.0), blurRadius: 0.0, spreadRadius: 0.0), //BoxShadow
+                                      OneWidget.boxshadow_offset_5, //BoxShadow
+                                      OneWidget.boxshadow_offset_0, //BoxShadow
                                     ],
                                   ),
 
