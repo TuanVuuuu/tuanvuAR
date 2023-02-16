@@ -11,12 +11,13 @@ class OneColors {
   //Text Colors
   static const Color transparent = Color.fromARGB(0, 0, 0, 0);
   static const Color amber = Color(0xFFFFC107);
+
   static const Color blue = Color.fromARGB(255, 17, 0, 255);
   static const Color blue100 = Color(0xFFBBDEFB);
   static const Color buttonGrey = Color(0xFF273032);
   static const Color white24 = Color(0x3DFFFFFF);
   static const Color white70 = Color(0xB3FFFFFF);
-  static const Color black12 = Color(0x1F000000);
+  static const Color black12 = Color(0xFF162023);
   static const Color textGrey1 = Color(0xFF9E9E9E);
   static const Color textGrey2 = Color(0xFF6D6D6D);
   static const Color textGrey3 = Color(0xFF454545);
@@ -57,6 +58,7 @@ class OneColors {
   static const Color grey = Color(0xFF9E9E9E);
   static const Color yellow = Color(0xFFFCB017);
   static const Color red = Color(0xFFF2323F);
+  static const Color pink = Color(0xFFEB5757);
   //Notifications Colors
   static const Color error = Color(0xFFF2323F);
   static const Color success = Color(0xFF4CAF50);

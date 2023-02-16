@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/components/shared/add_data_questions.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/quiz_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -137,12 +138,29 @@ class ProfileScreen extends StatelessWidget {
                   style: OneTheme.of(context).title2.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(height: 20),
+                /////////////////////////////////ADD DATA///////////////////////////////////
+                _addData(),
+                /////////////////////////////////ADD DATA///////////////////////////////////
               ],
             ),
           )
         ],
       ),
     ));
+  }
+
+  Center _addData() {
+    return Center(
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(25)),
+            backgroundColor: OneColors.textOrange,
+          ),
+          onPressed: () {
+            Get.to(() => const AddQuestionsData());
+          },
+          child: const Text("Add data discover")),
+    );
   }
 
   Column _buildCardTitle(double sizeHeight, BuildContext context) {
