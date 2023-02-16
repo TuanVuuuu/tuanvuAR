@@ -7,8 +7,8 @@ class OneLoading {
   OneLoading._();
   static Widget space_loading = Lottie.asset(
     "assets/icons_river/space-progress.json",
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     repeat: true,
     fit: BoxFit.contain,
   );
