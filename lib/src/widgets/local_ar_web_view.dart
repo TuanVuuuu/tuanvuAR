@@ -66,9 +66,8 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
                         //   width: 10,
                         // ),
                         _arButton(
-                          context,
-                          true,
-                          widget.argument["image3D"]["imageARUrl"],
+                          context, true, widget.argument,
+                          //widget.argument["image3D"]["imageARUrl"],
                         )
                       ],
                     ),
@@ -149,7 +148,12 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
                 ),
               ),
             ),
-            label != true ? const OneButton(color: OneColors.transparent, label: "Khởi chạy mô hình") : const SizedBox(),
+            label != true
+                ? ElevatedButton(
+                    child: const Text("Khởi chạy mô hình"),
+                    onPressed: () {},
+                  )
+                : const SizedBox(),
           ],
         ),
       ),
@@ -170,7 +174,10 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
           showAnimatedGuide: false,
         );
     setState(() {
-      onLocalObjectButtonPressed(widget.argument["image3D"]["imageARLocal"]);
+      onLocalObjectButtonPressed(
+        widget.argument,
+        // widget.argument["image3D"]["imageARLocal"],
+      );
     });
 
     this.arObjectManager.onInitialize();

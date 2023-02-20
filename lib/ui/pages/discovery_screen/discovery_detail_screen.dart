@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
 import 'dart:io' as io;
@@ -24,8 +25,23 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
   String? image2DUrl;
   String? name;
   String? info;
+  List<dynamic>? tags;
   // ignore: prefer_typing_uninitialized_variables
   var otherInfo;
+
+  List<Map<String, dynamic>> _modelDataList = [];
+  bool isLoading = true;
+  bool isSearchBar = false;
+  @override
+  void initState() {
+    super.initState();
+    getPlanetsData().then((modelData) {
+      setState(() {
+        isLoading = false;
+        _modelDataList = modelData;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +49,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
     String model3DUrl = widget.argument["images"]["image3DUrl"];
     name = widget.argument["name"];
     info = widget.argument["info"];
+    tags = widget.argument["tags"];
     List idname = widget.argument["idname"];
     sizeHeight = MediaQuery.of(context).size.height;
     sizeWidth = MediaQuery.of(context).size.width;
@@ -259,6 +276,39 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
                 shape: BoxShape.circle,
               ),
             ),
+          ),
+          Positioned(
+            top: sizeHeight! * 0.25,
+            left: -sizeWidth! * 0.07,
+            child: Container(
+                height: 110,
+                width: 100,
+                decoration: BoxDecoration(
+                  boxShadow: [BoxShadow(color: OneColors.grey.withOpacity(0.7), blurRadius: 20)],
+                  shape: BoxShape.circle
+                ),
+                
+                child: Column(children: [
+                  ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: 1,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        children: tags!
+                            .map((tag) => _modelDataList
+                                .where((model) => model["idName"] == tag)
+                                .map((model) => CachedImage(
+                                      imageUrl: model["image2D"]["imageUrl"] ?? "",
+                                      fit: BoxFit.fitHeight,
+                                    ))
+                                .toList())
+                            .expand((item) => item)
+                            .toList(),
+                      );
+                    },
+                  )
+                ])),
           ),
           Positioned(
             top: 0,

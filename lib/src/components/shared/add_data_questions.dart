@@ -23,15 +23,15 @@ class AddQuestionsData extends StatelessWidget {
 //       isCorrect: json['isCorrect'],
     ///////////////////// DISCOVER DATA //////////////////////////
     Question question = Question(
-      questionText: "Nhận định nào dưới đây chưa chính xác?",
+      questionText: "Với các hành tinh sau của hệ Mặt Trời: Kim tinh, Mộc tinh, Thủy tinh, Hỏa tinh, Trái Đất, Hải Vương tinh. Thứ tự các hành tinh xa dần Mặt Trời là:",
       answersList: [
-        Answer(answerText: "Các ngôi sao, hành tinh, vệ tinh được gọi chung là các thiên thể.", isCorrect: false),
-        Answer(answerText: "Hệ Mặt Trời nằm trong Dải Ngân Hà.", isCorrect: false),
-        Answer(answerText: "Dải Ngân Hà có phạm vi không gian lớn hơn Thiên Hà.", isCorrect: true),
-        Answer(answerText: "Trong mỗi Thiên Hà có rất nhiều các hành tinh.", isCorrect: false),
+        Answer(answerText: "Kim tinh, Mộc tinh, Thủy tinh, Hỏa tinh, Trái Đất, Hải Vương tinh. ", isCorrect: false),
+        Answer(answerText: "Hỏa tinh, Kim tinh, Trái Đất, Mộc tinh, Thủy tinh, Hải Vương tinh. ", isCorrect: false),
+        Answer(answerText: "Thủy tinh, Kim tinh, Trái Đất, Hỏa tinh, Mộc tinh, Hải Vương tinh. ", isCorrect: true),
+        Answer(answerText: "Hải Vương tinh. Mộc tinh, Hỏa tinh, Trái Đất, Kim tinh,Thủy tinh.", isCorrect: false),
       ],
-      tags: "Đúng là vậy, Câu C sai vì Ngân Hà và Thiên Hà là một",
-      more: "",
+      tags: "Thứ tự các hành tinh xa dần Mặt Trời là Thủy tinh, Kim tinh, Trái Đất, Hỏa tinh, Mộc tinh, Hải Vương tinh.",
+      more: "",  // saokim, traidat, saothuy, saomoc, saothuy, saotho
     );
     /////////////////////////////////////////////////////////////
 

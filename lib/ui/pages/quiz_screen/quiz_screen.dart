@@ -195,10 +195,9 @@ class _QuizScreenState extends State<QuizScreen> {
           ],
         ),
         Container(
-          height: MediaQuery.of(context).size.height * 0.15,
           alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           width: double.infinity,
-          padding: const EdgeInsets.all(10),
           child: Text(
             questionList.isEmpty ? "" : questionList[currentQuestionIndex].questionText,
             style: const TextStyle(
@@ -390,26 +389,29 @@ class _QuizScreenState extends State<QuizScreen> {
                           flex: 1,
                           child: Stack(
                             children: [
-                              SizedBox(
-                                height: 110,
-                                width: 110,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "$score / ${questionList.length}",
-                                        style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "ĐIỂM",
-                                        style: OneTheme.of(context).title2.copyWith(color: OneColors.white),
-                                      )
-                                    ],
+                              Padding(
+                                padding: const EdgeInsets.only(top : 8.0),
+                                child: SizedBox(
+                                  height: 130,
+                                  width: 130,
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${score * 10} / ${questionList.length * 10}",
+                                          style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "ĐIỂM",
+                                          style: OneTheme.of(context).title2.copyWith(color: OneColors.white),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -467,7 +469,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                     child: InkWell(
                       onTap: () {
-                        Get.to(() => const EntryPoint(), curve: Curves.linear, transition: Transition.rightToLeft);
+                        Get.to(() => const BottomNavigationBarWidget(), curve: Curves.linear, transition: Transition.rightToLeft);
                         setState(() {
                           currentQuestionIndex = 0;
                           score = 0;

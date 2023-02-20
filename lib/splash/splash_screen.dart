@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       "https://assets2.lottiefiles.com/packages/lf20_qogkaqmb.json",
                       onLoaded: (p0) {
                         Future.delayed(Duration(seconds: seconds), (() {
-                          Get.offAll(() => const EntryPoint(), curve: Curves.linear, duration: const Duration(seconds: 1));
+                          Get.offAll(() => const BottomNavigationBarWidget(), curve: Curves.linear, duration: const Duration(seconds: 1));
                         }));
                       },
                       errorBuilder: (context, error, stackTrace) {
