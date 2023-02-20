@@ -41,10 +41,9 @@ class _PercentageCircleState extends State<PercentageCircle> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
-    print(widget.percentage);
     return Container(
-      width: 110,
-      height: 110,
+      width: 130,
+      height: 130,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(

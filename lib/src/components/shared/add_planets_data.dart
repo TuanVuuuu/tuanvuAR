@@ -15,23 +15,23 @@ class AddPlanetsData extends StatelessWidget {
 
     ///////////////////// DISCOVER DATA //////////////////////////
     ///NAME////
-    String name = "Sao Thổ"; // Tên tiếng việt hành tinh có dấu // "Sao Mộc"
+    String name = "Sao Kim"; // Tên tiếng việt hành tinh có dấu // "Sao Mộc"
 
     ///ID NAME///
-    String idName = "saotho"; // tags viết liền không dấu // "saomoc"
+    String idName = "saokim"; // tags viết liền không dấu // "saomoc"
     //////IMAGE 2D///////
     Map colorGradient = {
-      "bottom": "0xffe91e63", // Màu gradient bottom
-      "top": "0xff607d8b", // Màu gradient top
+      "bottom": "0xff8bc34a", // Màu gradient bottom
+      "top": "0xff2196f3", // Màu gradient top
     };
     Map colors = {
       "colorGradient": colorGradient, // Màu gradient của card
-      "colorModel": "0xFFDBBC79", // Màu shadow của image2D
+      "colorModel": "0xFF9E5213", // Màu shadow của image2D
     };
     Map image2D = {
       "colors": colors, // Màu sắc
       // Link hình ảnh 2D
-      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/2D%20model%20Astronomy%2Fsaturn-planet.png?alt=media&token=bae060de-cbdf-46ef-9071-2e9e486c7d63",
+      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/2D%20model%20Astronomy%2Fvenus-planet.png?alt=media&token=792cc533-52f8-4b0e-970f-190fad3e94ff",
     };
     //////--------///////
     //////IMAGE 3D//////
@@ -42,24 +42,24 @@ class AddPlanetsData extends StatelessWidget {
     /////---------//////
     /////INFO//////
     String info =
-        "Sao Thổ tức Thổ tinh là hành tinh thứ sáu tính theo khoảng cách trung bình từ Mặt Trời và là hành tinh lớn thứ hai về đường kính cũng như khối lượng, sau Sao Mộc trong Hệ Mặt Trời. Tên tiếng Anh của hành tinh mang tên thần Saturn trong thần thoại La Mã, ký hiệu thiên văn của hành tinh là thể hiện cái liềm của thần.";
+        "Sao Kim hay Kim tinh, còn gọi là sao Thái Bạch, Thái Bạch Kim tinh là hành tinh thứ 2 trong hệ Mặt Trời, tự quay quanh nó với chu kỳ 224,7 ngày Trái Đất. Xếp sau Mặt Trăng, nó là thiên thể tự nhiên sáng nhất trong bầu trời tối, với cấp sao biểu kiến bằng −4.6, đủ sáng để tạo nên bóng trên mặt nước.";
     ////----//////
     /////INFO OTHER/////
     Map infoOther = {
-      "acreage": "4,270 Tỷ km", //Diện tích
+      "acreage": "460.200.000 km", //Diện tích  km2
       "age": "4,503 Tỷ", // Tuổi
-      "cycle": "29,4571 năm", // Chu kỳ quay
-      "density": "0,687 g/cm", // Mật độ
-      "distance": "1,434 Tỷ km", // Khoảng cách
-      "gravitation": "10,44 m/s", // trọng lực
-      "radius": "58.232 km", // bán kính
-      "satelliteNumber": "62", // sô lượng vệ tinh
-      "temperature": "- 185", // nhiệt độ
+      "cycle": "225 ngày", // Chu kỳ quay
+      "density": "5,24 g/cm", // Mật độ
+      "distance": "108.200.000 km", // Khoảng cách
+      "gravitation": "8,87 m/s", // trọng lực
+      "radius": "6.051,8 km", // bán kính
+      "satelliteNumber": "0", // sô lượng vệ tinh
+      "temperature": "	462", // nhiệt độ
       "trajectory": "Mặt Trời", // quỹ đạo
     };
     ////////////////////
     //////VIDEO INTRO///
-    String videosIntro = "https://www.gstatic.com/culturalinstitute/searchar/assets/saturn/desktop_dark.mp4";
+    String videosIntro = "https://www.gstatic.com/culturalinstitute/searchar/assets/venus_surface/desktop_dark.mp4";
     /////////////////////////////////////////////////////////////
 
     Future<void> addUser() {

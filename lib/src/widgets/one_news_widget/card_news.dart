@@ -40,9 +40,11 @@ class CardNews extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                       child: InkWell(
                         onTap: (() => Get.to(() => DetailNewsScreen(argument: records), curve: Curves.linear, transition: Transition.rightToLeft)),
-                        child: OneCard(
-                          color: OneColors.black.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(7),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: OneColors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(7),
+                          ),
                           child: (records["content"][0]["images"]["imageUrl"] != null && records["content"][0]["images"]["imageUrl"] != "")
                               ? OneCardNewsImage(records: records, dateFormat: dateFormat)
                               : OneCardNewsNoImage(records: records, dateFormat: dateFormat),

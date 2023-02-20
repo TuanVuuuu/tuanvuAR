@@ -52,7 +52,7 @@ Future<List<Map<String, dynamic>>> getPlanetsData() async {
   for (var element in snapshot.docs) {
     var mapData = element.data() as Map<String, dynamic>;
     dataList.add(mapData);
-    print(mapData);
+    // print(mapData);
   }
   return dataList;
 }

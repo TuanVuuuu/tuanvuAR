@@ -14,25 +14,25 @@ class AddArtificialData extends StatelessWidget {
     CollectionReference artificialdata = FirebaseFirestore.instance.collection('artificialdata');
 
     ///////////////////// DISCOVER DATA //////////////////////////
-    String name = "Sputnik 1"; // Tên vệ tinh / sao chổi
+    String name = "Soyuz"; // Tên vệ tinh / sao chổi
     List idname = ["Vệ tinh nhân tạo", "Trái Đất"]; // Tags có dấu
     List tags = ["vetinh", "traidat"]; // Tags viết liền không dấu
     // Thông tin của vệ tinh / sao chổi
     String info =
-        "Sputnik 1 là vệ tinh Trái đất nhân tạo đầu tiên. Nó được Liên Xô phóng vào quỹ đạo hình elip thấp của Trái đất vào ngày 4 tháng 10 năm 1957 như một phần của chương trình không gian của Liên Xô.";
+        "Soyuz là chương trình chở người lên vũ trụ kéo dài nhất lịch sử. Tàu Soyuz đầu tiên phóng vào năm 1967. Kể từ đó, Nga đã phát triển 10 phiên bản khác nhau của mẫu tàu này. Hơn 150 chuyến bay chở người đã được thực hiện bởi tàu Soyuz. Soyuz có nghĩa là 'đoàn kết' trong tiếng Nga. Mọi phiên bản đều tuân theo thiết kế ba phần gồm module hạ cánh, module quỹ đạo và module đẩy. Trong lần phóng Soyuz đầu tiên, phi hành gia Vladimir Komarov thiệt mạng do sự cố của chiếc dù khi trở về Trái Đất.";
     // Thông tin khác
     Map otherInfo = {
-      "launch_date": "4 tháng 10, 1957", // Ngày phóng
-      "speed": "29.000 km/h", // Tốc độ tối đa: 
-      "orbital_altitude": "577 km", // Độ cao quỹ đạo: 
-      "speed_in_orbit": "8 km/s", // Tốc độ trên quỹ đạo:
-      "launch_location": "Gagarin's Start", //Địa điểm phóng: 
-      "manufacturer": "Tập đoàn Energia", // Nhà sản xuất: 
+      "launch_date": "23 tháng 4 năm 1967", // Ngày phóng
+      "speed": "", // Tốc độ tối đa:
+      "orbital_altitude": "197.0km", // Độ cao quỹ đạo:
+      "speed_in_orbit": "", // Tốc độ trên quỹ đạo:
+      "launch_location": "Sân bay Baikonur", //Địa điểm phóng:
+      "manufacturer": "Liên bang Xô viết", // Nhà sản xuất:
     };
     // Ảnh
     Map images = {
       // Ảnh 2D
-      "image2DUrl": "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/2D%20model%20Astronomy%2Fsputnik-1-satellite.png?alt=media&token=1e50e410-a882-4446-a382-1f4bde35c407",
+      "image2DUrl": "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/2D%20model%20Astronomy%2Fsoyuz-1-satellite.png?alt=media&token=d59879df-a5e8-4fc7-8beb-1b4edf0df6cf",
       // Ảnh 3D
       "image3DUrl": "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/3D%20model%20Astronomy%2Ffobos1.glb?alt=media&token=0b3c6e42-9e06-48fe-a67b-f964718213a0",
     };

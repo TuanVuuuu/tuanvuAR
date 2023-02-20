@@ -19,7 +19,6 @@ class CardPlanets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.25,
       child: Row(
         children: [
@@ -31,48 +30,51 @@ class CardPlanets extends StatelessWidget {
               }
 
               if (snapshot.hasData) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: cardLength ?? snapshot.data?.docs.length,
-                  itemBuilder: (context, index) {
-                    final DocumentSnapshot records = snapshot.data.docs[snapshot.data?.docs.length - index - 1];
-                    String idname = records["idName"];
-                    String imageUrl = records["image2D"]["imageUrl"];
-
-                    return InkWell(
-                        onTap: () {
-                          Get.to(() => PlanetDetailScreen(argument: records), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
-                        },
-                        child: currentPlanets != idname
-                            ? Padding(
-                                padding: EdgeInsets.symmetric(horizontal: (MediaQuery.of(context).size.width - 300) / 10, vertical: 10),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(color: OneColors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(10)),
-                                      height: 75,
-                                      width: 75,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: CachedImage(imageUrl: imageUrl),
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width ,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: cardLength ?? snapshot.data?.docs.length ,
+                    itemBuilder: (context, index) {
+                      final DocumentSnapshot records = snapshot.data.docs[index];
+                      String idname = records["idName"];
+                      String imageUrl = records["image2D"]["imageUrl"];
+                
+                      return InkWell(
+                          onTap: () {
+                            Get.to(() => PlanetDetailScreen(argument: records), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                          },
+                          child: currentPlanets != idname
+                              ? Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: (MediaQuery.of(context).size.width - 300) / 10, vertical: 10),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(color: OneColors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(10)),
+                                        height: 75,
+                                        width: 75,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: CachedImage(imageUrl: imageUrl),
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                      child: Text(
-                                        records["name"],
-                                        maxLines: 2,
-                                        style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                        child: Text(
+                                          records["name"],
+                                          maxLines: 2,
+                                          style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox());
-                  },
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox());
+                    },
+                  ),
                 );
               }
               return Center(

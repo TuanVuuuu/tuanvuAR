@@ -20,56 +20,65 @@ class CardNewsWithTags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: StreamBuilder(
-        stream: data.snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            const Center(
-                child: OneLoadingShimmer(
-              itemCount: 5,
-            ));
-          }
-          if (snapshot.hasData) {
-            return ListView.builder(
-              physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              itemCount: snapshot.data?.docs.length,
-              itemBuilder: (context, index) {
-                int indexRev = snapshot.data!.docs.length - index - 1;
-                final DocumentSnapshot records = snapshot.data!.docs[indexRev];
-                Timestamp time = records["date"];
-                var dateFormat = DateFormat.yMMMMd('en_US').add_jm().format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
-                return Padding(
-                    padding: EdgeInsets.zero,
-                    child: (() {
-                      for (int i = 0; i < records["tags"].length; i++) {
-                        if (records["tags"][i] == tagsButton) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            child: InkWell(
-                              onTap: (() => Get.to(() => DetailNewsScreen(argument: records), curve: Curves.linear, transition: Transition.rightToLeft)),
-                              child: OneCard(
-                                color: OneColors.black.withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(7),
-                                child: (records["content"][0]["images"]["imageUrl"] != null && records["content"][0]["images"]["imageUrl"] != "")
-                                    ? OneCardNewsImage(records: records, dateFormat: dateFormat)
-                                    : OneCardNewsNoImage(records: records, dateFormat: dateFormat),
-                              ),
-                            ),
-                          );
-                        } else {}
-                      }
-                      {}
-                    })());
-              },
-            );
-          }
-          return const Center(
-              child: OneLoadingShimmer(
-            itemCount: 5,
-          ));
-        },
+      child: Column(
+        children: [
+          StreamBuilder(
+            stream: data.snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                const Center(
+                    child: OneLoadingShimmer(
+                  itemCount: 5,
+                ));
+              }
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data?.docs.length,
+                  itemBuilder: (context, index) {
+                    int indexRev = snapshot.data!.docs.length - index - 1;
+                    final DocumentSnapshot records = snapshot.data!.docs[indexRev];
+                    Timestamp time = records["date"];
+                    var dateFormat = DateFormat.yMMMMd('en_US').add_jm().format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
+                    return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                        child: (() {
+                          for (int i = 0; i < records["tags"].length; i++) {
+                            if (records["tags"][i] == tagsButton) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                child: InkWell(
+                                  onTap: (() => Get.to(() => DetailNewsScreen(argument: records), curve: Curves.linear, transition: Transition.rightToLeft)),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: OneColors.black.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(7),
+                                    ),
+                                    child: (records["content"][0]["images"]["imageUrl"] != null && records["content"][0]["images"]["imageUrl"] != "")
+                                        ? OneCardNewsImage(records: records, dateFormat: dateFormat)
+                                        : OneCardNewsNoImage(records: records, dateFormat: dateFormat),
+                                  ),
+                                ),
+                              );
+                            } else {}
+                          }
+                          {}
+                        })());
+                  },
+                );
+              }
+              return const Center(
+                  child: OneLoadingShimmer(
+                itemCount: 5,
+              ));
+            },
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+        ],
       ),
     );
   }

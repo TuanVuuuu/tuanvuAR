@@ -16,19 +16,6 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
   List dataList = [];
   List<String> tagsButtonList = [];
   List<String> docIds = [];
-  bool _delayCheck = false;
-
-  void delay() {
-    Future.delayed(const Duration(milliseconds: 1000), (() {
-      if (_delayCheck != true) {
-        if (mounted) {
-          setState(() {
-            _delayCheck = true;
-          });
-        }
-      }
-    }));
-  }
 
   @override
   void initState() {
@@ -42,7 +29,6 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    delay();
     final CollectionReference data = FirebaseFirestore.instance.collection("homedata");
     List result = Set.of(tagsButtonList).toList();
     SystemChrome.setSystemUIOverlayStyle(
@@ -162,7 +148,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
             text: 'Bạn đang tìm kiếm với từ khoá : ',
             style: DefaultTextStyle.of(context).style.copyWith(color: OneColors.white),
             children: <TextSpan>[
-              TextSpan(text: tagsButton, style: const TextStyle(fontWeight: FontWeight.bold, color: OneColors.blue)),
+              TextSpan(text: tagsButton, style: const TextStyle(fontWeight: FontWeight.bold, color: OneColors.textOrange)),
             ],
           ),
         ));

@@ -97,7 +97,6 @@ class _P3DViewState extends State<P3DView> {
     return Container(
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.48),
       height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         boxShadow: [

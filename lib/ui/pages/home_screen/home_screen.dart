@@ -188,10 +188,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             textAlign: TextAlign.start,
                                             style: OneTheme.of(context).body1.copyWith(color: OneColors.textGrey1, fontSize: 14),
                                           ),
-                                          Text(
-                                            "Let's go!",
-                                            textAlign: TextAlign.start,
-                                            style: OneTheme.of(context).body1.copyWith(color: OneColors.brandVNP, fontSize: 14),
+                                          InkWell(
+                                            onTap: () {
+                                              Get.to(() => const LocalAndWebObjectsWidget(argument: "https://github.com/TuanVuuuu/tuanvu_assets/blob/tuanvu_03022023/assets/3d_images/satellite/animated_moon.glb?raw=true"),
+                                                  curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                                            },
+                                            child: Text(
+                                              "Let's go!",
+                                              textAlign: TextAlign.start,
+                                              style: OneTheme.of(context).body1.copyWith(color: OneColors.brandVNP, fontSize: 14),
+                                            ),
                                           ),
                                         ],
                                       ),

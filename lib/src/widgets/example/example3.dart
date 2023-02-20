@@ -30,6 +30,8 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
   double newTransY = 0;
   double newTransZ = 0;
 
+  bool showWorldOrigin = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -80,9 +82,14 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String imageARUrl = widget.argument["image3D"]["imageARUrl"];
+    //String imageARUrl = widget.argument["image3D"]["imageARUrl"];
+    String imageARUrl = "https://github.com/TuanVuuuu/tuanvu_assets/blob/tuanvu_03022023/assets/3d_images/satellite/animated_moon.glb?raw=true";
     return Scaffold(
-        appBar: AppBar(backgroundColor: OneColors.transparent, elevation: 0),
+        appBar: AppBar(
+          backgroundColor: OneColors.transparent,
+          elevation: 0,
+          
+        ),
         extendBodyBehindAppBar: true,
         body: Stack(children: [
           ARView(
@@ -93,7 +100,7 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                       showFeaturePoints: false,
                       showPlanes: true,
                       customPlaneTexturePath: "Images/triangle.png",
-                      showWorldOrigin: true,
+                      showWorldOrigin: showWorldOrigin,
                       handleTaps: false,
                     );
                 this.arObjectManager!.onInitialize();
@@ -618,7 +625,7 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
       arObjectManager!.removeNode(webObjectNode!);
       webObjectNode = null;
     } else {
-      var newNode = ARNode(type: NodeType.webGLB, uri: "https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-01/assets/3D_model/earth.glb?raw=true", scale: Vector3(0.02, 0.02, 0.02));
+      var newNode = ARNode(type: NodeType.webGLB, uri: imageARUrl, scale: Vector3(0.02, 0.02, 0.02));
       bool? didAddWebNode = await arObjectManager!.addNode(newNode);
       webObjectNode = (didAddWebNode!) ? newNode : null;
     }
