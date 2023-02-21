@@ -13,7 +13,7 @@ class OneFloatToTop extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: OneColors.white.withOpacity(0.4),
       onPressed: () {
-        if (_scrollController.offset >= _scrollController.position.maxScrollExtent) {
+        if (_scrollController.offset >= 0) {
           _scrollController.animateTo(
             0.0,
             duration: const Duration(milliseconds: 500),

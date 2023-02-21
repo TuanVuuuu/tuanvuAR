@@ -15,6 +15,7 @@ class AddDiscoverData extends StatelessWidget {
 
     ///////////////////// DISCOVER DATA //////////////////////////
     String name = "Mimas"; // Tên vệ tinh / sao chổi
+    String idnew = "mimas"; //tags tên của vệ tinh
     List idname = ["Vệ tinh tự nhiên", "Sao Thổ"]; // Tags có dấu
     List tags = ["vetinh", "saotho"]; // Tags viết liền không dấu
     // Thông tin của vệ tinh / sao chổi
@@ -42,6 +43,7 @@ class AddDiscoverData extends StatelessWidget {
       // Call the user's CollectionReference to add a new user
       return discoverdata
           .add({
+            'idnew': idnew,
             'info': info,
             'name': name,
             'idname': idname,

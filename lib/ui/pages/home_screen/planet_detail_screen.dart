@@ -26,6 +26,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
   String documentDirectoryPath = "";
   String? idmain;
 
+  List<Map<String, dynamic>> _newsDataList = [];
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +45,11 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         showControls: false,
       );
       setState(() {});
+    });
+    getHomeData().then((newsData) {
+      setState(() {
+        _newsDataList = newsData;
+      });
     });
   }
 
@@ -78,7 +85,13 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     var colors = widget.argument["image2D"]["colors"];
     String colorModel = colors["colorModel"];
 
+    print(idname);
+
     idmain = idname;
+    List<Widget> slivers = [
+      if (_newsDataList.where((data) => data["tags"].contains(nameModel)).isNotEmpty) _buildNewsCard(nameModel, context),
+    ];
+
     return AppScaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -107,11 +120,116 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                 _buildSatellite(nameModel, context, satelliteNumber, idname),
                 // Thông tin vệ tinh của hành tinh
                 satelliteNumber != "0" ? _buildDiscovery(sizeHeight, sizeWidth) : _buildNotifiNotSatellite(nameModel, context),
+                slivers.isNotEmpty
+                    ? SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                            Text(
+                              "Kiến thức liên quan : ",
+                              style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+                            ),
+                            const SizedBox(height: 20),
+                          ]),
+                        ),
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox()),
+                _buildNewsCard(nameModel, context),
+
                 const SliverToBoxAdapter(child: SizedBox(height: 50)),
               ],
             ),
           ),
         ));
+  }
+
+  SliverToBoxAdapter _buildNewsCard(String nameModel, BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Column(
+        children: _newsDataList
+            .where((data) => data["tags"].contains(nameModel))
+            .take(3)
+            .map((data) => InkWell(
+                  onTap: (() => Get.to(() => DetailNewsScreen(argument: data), curve: Curves.linear, transition: Transition.rightToLeft)),
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
+                    decoration: BoxDecoration(
+                      color: OneColors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data["title"],
+                                  style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.justify,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  data["titleDisplay"],
+                                  style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+                                  maxLines: 4,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.justify,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  data["author"],
+                                  style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+                                  maxLines: 4,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.justify,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: OneColors.white,
+                                  blurRadius: 3,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            height: 90,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: data['content'][0]['images']['imageUrl'] != ""
+                                  ? Image.network(
+                                      data['content'][0]['images']['imageUrl'],
+                                      fit: BoxFit.cover,
+                                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) return child;
+                                        return OneLoading.space_loading;
+                                      },
+                                      errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
+                                    )
+                                  : const SizedBox(),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ))
+            .toList(),
+      ),
+    );
   }
 
   Widget _buildNamePlanets(String nameModel, BuildContext context, String modelURL) {

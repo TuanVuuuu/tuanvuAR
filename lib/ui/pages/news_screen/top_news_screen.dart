@@ -53,14 +53,11 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
               child: CustomScrollView(
             physics: const BouncingScrollPhysics(),
             slivers: <Widget>[
+              _buildHeader(context, result),
               // _buildTopNews(context, result),
               _addDataToList(data, result, context),
 
-              tagsButton != "Tất cả"
-                  ? CardNewsWithTags(data: data, tagsButton: tagsButton)
-                  : CardNews(
-                      data: data,
-                    )
+              tagsButton != "Tất cả" ? CardNewsWithTags(data: data, tagsButton: tagsButton, checktags: true) : CardNewsWithTags(data: data, tagsButton: tagsButton)
             ],
           )),
         ));
@@ -68,74 +65,89 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
 
   SliverToBoxAdapter _addDataToList(CollectionReference<Object?> data, List<dynamic> result, BuildContext context) {
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 100, bottom: 15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Column(
-              children: [
-                SizedBox(
-                  child: StreamBuilder(
-                      stream: data.snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          const Center(
-                              child: OneLoadingShimmer(
-                            itemCount: 5,
-                          ));
-                        }
-                        if (snapshot.hasData) {
-                          return ListView.builder(
-                            physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
+      child: Column(
+        children: [
+          SizedBox(
+            child: StreamBuilder(
+                stream: data.snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    const Center(
+                        child: OneLoadingShimmer(
+                      itemCount: 5,
+                    ));
+                  }
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data?.docs.length,
+                      itemBuilder: (context, index) {
+                        final DocumentSnapshot records = snapshot.data!.docs[index];
+                        return Padding(
                             padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data?.docs.length,
-                            itemBuilder: (context, index) {
-                              final DocumentSnapshot records = snapshot.data!.docs[index];
-                              return Padding(
-                                  padding: EdgeInsets.zero,
-                                  child: (() {
-                                    for (int i = 0; i < records["tags"].length; i++) {
-                                      if (result.isEmpty && dataList != []) {
-                                        WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
-                                              tagsButtonList.add(records["tags"][i]);
-                                              dataList.add(records["title"]);
-                                            }));
-                                      }
-                                    }
+                            child: (() {
+                              for (int i = 0; i < records["tags"].length; i++) {
+                                if (result.isEmpty && dataList != []) {
+                                  WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
+                                        tagsButtonList.add(records["tags"][i]);
+                                        dataList.add(records["title"]);
+                                      }));
+                                }
+                              }
 
-                                    return Container();
-                                  })());
-                            },
-                          );
-                        }
+                              return Container();
+                            })());
+                      },
+                    );
+                  }
 
-                        return Container();
-                      }),
+                  return Container();
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context, List<dynamic> result) {
+    return SliverAppBar(
+      expandedHeight: MediaQuery.of(context).size.height * 0.15,
+      leading: const SizedBox(),
+      floating: false,
+      pinned: true,
+      backgroundColor: OneColors.transparent,
+      elevation: 0,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        background: Padding(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.1,
+              left: 20,
+              right: 20,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildTitle(context),
+                const SizedBox(height: 10),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  child: Row(
+                    children: [
+                      tagsButtonView("Tất cả"),
+                      _buildListTags(result),
+                      const SizedBox(width: 20),
+                    ],
+                  ),
                 ),
+
+                //Text(textHolder),
+                tagsButton != "Tất cả" ? _titleTagsButton(context) : const SizedBox(),
               ],
-            ),
-
-            //Có thể bạn chưa biết
-            _buildTitle(context),
-            const SizedBox(height: 10),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                children: [
-                  tagsButtonView("Tất cả"),
-                  _buildListTags(result),
-                  const SizedBox(width: 20),
-                ],
-              ),
-            ),
-
-            //Text(textHolder),
-            tagsButton != "Tất cả" ? _titleTagsButton(context) : const SizedBox(),
-          ],
-        ),
+            )),
       ),
     );
   }

@@ -218,7 +218,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
         return Container(
           margin: const EdgeInsets.only(right: 10),
           height: 20,
-          decoration: BoxDecoration(color: widget.color, borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(color: widget.color.withOpacity(0.5), borderRadius: BorderRadius.circular(20)),
           child: Align(
             alignment: Alignment.center,
             child: Padding(
@@ -280,14 +280,9 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
           Positioned(
             top: sizeHeight! * 0.25,
             left: -sizeWidth! * 0.07,
-            child: Container(
+            child: SizedBox(
                 height: 110,
                 width: 100,
-                decoration: BoxDecoration(
-                  boxShadow: [BoxShadow(color: OneColors.grey.withOpacity(0.7), blurRadius: 20)],
-                  shape: BoxShape.circle
-                ),
-                
                 child: Column(children: [
                   ListView.builder(
                     padding: EdgeInsets.zero,

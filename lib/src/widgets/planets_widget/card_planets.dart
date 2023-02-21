@@ -31,18 +31,18 @@ class CardPlanets extends StatelessWidget {
 
               if (snapshot.hasData) {
                 return SizedBox(
-                  width: MediaQuery.of(context).size.width ,
+                  width: MediaQuery.of(context).size.width,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
-                    itemCount: cardLength ?? snapshot.data?.docs.length ,
+                    itemCount: cardLength ?? snapshot.data?.docs.length,
                     itemBuilder: (context, index) {
                       final DocumentSnapshot records = snapshot.data.docs[index];
                       String idname = records["idName"];
                       String imageUrl = records["image2D"]["imageUrl"];
-                
+
                       return InkWell(
                           onTap: () {
                             Get.to(() => PlanetDetailScreen(argument: records), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
@@ -77,14 +77,10 @@ class CardPlanets extends StatelessWidget {
                   ),
                 );
               }
-              return Center(
-                child: OneLoading.space_loading,
-              );
+              return Center(child: OneLoading.space_loading);
             }),
           ),
-          const SizedBox(
-            height: 50,
-          ),
+          const SizedBox(height: 50),
         ],
       ),
     );
