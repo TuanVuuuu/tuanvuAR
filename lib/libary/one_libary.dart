@@ -18,7 +18,6 @@ import 'package:flutter_application_1/src/components/one_background_detail.dart'
 import 'package:flutter_application_1/src/components/one_icons.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_image.dart';
-import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_no_image.dart';
 import 'package:flutter_application_1/ui/entryPoint/entry_point.dart';
 import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_screen.dart';
 import 'package:flutter_application_1/ui/pages/news_screen/detail_news_screen.dart';
@@ -93,5 +92,4 @@ part '../src/shared/controller/app_routes.dart';
 part '../src/shared/controller/initial_binding.dart';
 part '../src/shared/app_scaffold.dart';
 part '../src/shared/download_status.dart';
-part '../src/widgets/one_news_widget/card_news.dart';
 part '../ui/pages/news_screen/top_news_screen.dart';

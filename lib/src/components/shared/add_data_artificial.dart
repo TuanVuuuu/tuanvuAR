@@ -15,6 +15,7 @@ class AddArtificialData extends StatelessWidget {
 
     ///////////////////// DISCOVER DATA //////////////////////////
     String name = "Soyuz"; // Tên vệ tinh / sao chổi
+    String idnew = "soyuz";
     List idname = ["Vệ tinh nhân tạo", "Trái Đất"]; // Tags có dấu
     List tags = ["vetinh", "traidat"]; // Tags viết liền không dấu
     // Thông tin của vệ tinh / sao chổi
@@ -42,6 +43,7 @@ class AddArtificialData extends StatelessWidget {
       // Call the user's CollectionReference to add a new user
       return artificialdata
           .add({
+            'idnew': idnew,
             'info': info,
             'name': name,
             'idname': idname,

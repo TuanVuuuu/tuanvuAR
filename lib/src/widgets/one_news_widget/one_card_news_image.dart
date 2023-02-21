@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
@@ -5,18 +7,34 @@ import 'package:flutter_application_1/src/components/loading/one_loading.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 
 class OneCardNewsImage extends StatelessWidget {
-  const OneCardNewsImage({
+  OneCardNewsImage({
     Key? key,
     required this.records,
     required this.dateFormat,
+    this.checkimages,
   }) : super(key: key);
 
   final DocumentSnapshot<Object?> records;
   final String dateFormat;
+  bool? checkimages;
 
   @override
   Widget build(BuildContext context) {
-    String author = records["author"];
+    final theme = OneTheme.of(context);
+    final title = records['title'] ?? '';
+    final author = records['author'] ?? '';
+    final content = records['content'][0];
+    final imageUrl = content['images']['imageUrl'] ?? '';
+
+    DateTime now = DateTime.now();
+    Timestamp time = records["date"];
+    DateTime otherDateTime = DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch);
+    Duration difference = now.difference(otherDateTime);
+    int seconds = difference.inSeconds;
+    int minutes = difference.inMinutes;
+    int hours = difference.inHours;
+    int days = difference.inDays;
+    int weeks = (difference.inDays / 7).floor();
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -27,63 +45,138 @@ class OneCardNewsImage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${records["title"] ?? ""}",
-                        style: OneTheme.of(context).title1.copyWith(overflow: TextOverflow.ellipsis, fontSize: 17, color: OneColors.white),
-                        maxLines: 2,
+                        title,
+                        style: theme.title1.copyWith(
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 17,
+                          color: OneColors.white,
+                        ),
+                        maxLines: checkimages != false ? 2 : 1,
                         textAlign: TextAlign.left,
                       ),
                       const SizedBox(height: 10),
-                      Text("${records["content"][0]["contents"] ?? ""}",
-                          maxLines: 4, textAlign: TextAlign.left, style: OneTheme.of(context).body2.copyWith(overflow: TextOverflow.ellipsis, color: OneColors.white)),
-                      //Text("${records["content"] ?? ""}", maxLines: 4, textAlign: TextAlign.justify, style: OneTheme.of(context).body2.copyWith(overflow: TextOverflow.ellipsis)),
+                      Text(
+                        records['titleDisplay'],
+                        maxLines: 4,
+                        textAlign: TextAlign.left,
+                        style: theme.body2.copyWith(
+                          overflow: TextOverflow.ellipsis,
+                          color: OneColors.white,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                    decoration: BoxDecoration(boxShadow: const [
-                      BoxShadow(color: OneColors.white, blurRadius: 3),
-                    ], borderRadius: BorderRadius.circular(15)),
-                    height: 120,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.network(records["content"][0]["images"]["imageUrl"],
-                          fit: BoxFit.cover,
-                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return OneLoading.space_loading;
-                            // return Center(
-                            //   child: CircularProgressIndicator(
-                            //     color: OneColors.brandVNP,
-                            //     value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-                            //   ),
-                            // );
-                          },
-                          errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
-                    ),
-                  )),
+              checkimages != false
+                  ? Expanded(
+                      flex: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              color: OneColors.white,
+                              blurRadius: 3,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        height: 120,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: imageUrl.isNotEmpty
+                              ? Image.network(
+                                  imageUrl,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return OneLoading.space_loading;
+                                  },
+                                  errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
+                                )
+                              : const SizedBox(),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
           const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              (dateFormat != "" && author != "")
-                  ? SizedBox(
-                      width: MediaQuery.of(context).size.width - 70,
-                      child: Text(
-                        "$author - $dateFormat",
-                        style: OneTheme.of(context).body2.copyWith(overflow: TextOverflow.clip, fontSize: 12, fontWeight: FontWeight.w300, color: OneColors.white),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
-                  : const SizedBox()
-            ],
-          ),
+          if (author.isNotEmpty)
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 70,
+              child: Row(
+                children: [
+                  Text(
+                    '$author - ',
+                    style: theme.body2.copyWith(
+                      overflow: TextOverflow.clip,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      color: OneColors.white,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  seconds < 60
+                      ? Text(
+                          '$seconds giây trước',
+                          style: theme.body2.copyWith(
+                            overflow: TextOverflow.clip,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300,
+                            color: OneColors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : (minutes < 60
+                          ? Text(
+                              '$minutes phút trước',
+                              style: theme.body2.copyWith(
+                                overflow: TextOverflow.clip,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                                color: OneColors.white,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          : (hours < 24
+                              ? Text(
+                                  '$hours giờ trước',
+                                  style: theme.body2.copyWith(
+                                    overflow: TextOverflow.clip,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w300,
+                                    color: OneColors.white,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                )
+                              : (days < 7
+                                  ? Text(
+                                      '$days ngày trước',
+                                      style: theme.body2.copyWith(
+                                        overflow: TextOverflow.clip,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300,
+                                        color: OneColors.white,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    )
+                                  : Text(
+                                      '$weeks tuần trước',
+                                      style: theme.body2.copyWith(
+                                        overflow: TextOverflow.clip,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300,
+                                        color: OneColors.white,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    )))),
+                ],
+              ),
+            ),
         ],
       ),
     );

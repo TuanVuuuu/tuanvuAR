@@ -1,9 +1,9 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, unused_element
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
-import 'package:flutter_application_1/src/components/shared/add_data_artificial.dart';
+import 'package:flutter_application_1/src/components/shared/add_data_news.dart';
 // import 'package:flutter_application_1/src/components/shared/add_data_questions.dart';
 // import 'package:flutter_application_1/src/components/shared/add_planets_data.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/quiz_screen.dart';
@@ -141,7 +141,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 /////////////////////////////////ADD DATA///////////////////////////////////
-                _addData(),
+                //_addData(),
                 /////////////////////////////////ADD DATA///////////////////////////////////
               ],
             ),
@@ -160,8 +160,8 @@ class ProfileScreen extends StatelessWidget {
           ),
           onPressed: () {
             Get.to(
-              () => 
-              const AddArtificialData()
+              () => const AddNewsData(),
+              //const AddArtificialData()
               //const AddQuestionsData(),
             );
           },

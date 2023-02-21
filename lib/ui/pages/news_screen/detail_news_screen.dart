@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_null_comparison
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
-import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/src/widgets/build_footer.dart';
+import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
+import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_detail_screen.dart';
 import 'package:flutter_application_1/ui/pages/search_tags_screen/search_tags_screen.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
 import 'package:get/get.dart';
@@ -26,25 +28,43 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
   final CollectionReference homedata = FirebaseFirestore.instance.collection("homedata");
   final List list = [];
   // contentList
-  final List contentListCaption = [];
-  final List contentListContents = [];
-  final List contentsListMore = [];
-  final List contentsListImage = [];
+  // final List contentListCaption = [];
+  // final List contentListContents = [];
+  // final List contentsListMore = [];
+  // final List contentsListImage = [];
 
   final ScrollController _scrollController = ScrollController();
+
+  List<Map<String, dynamic>> _discoverDataList = [];
+  List<Map<String, dynamic>> _planetsDataList = [];
+  @override
+  void initState() {
+    super.initState();
+    getDiscoverData().then((discoverData) {
+      setState(() {
+        _discoverDataList = discoverData;
+      });
+    });
+    getPlanetsData().then((planetsData) {
+      setState(() {
+        _planetsDataList = planetsData;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     List contentList = widget.argument["content"];
 
-    // Xoá bỏ phần tử trùng lặp
-    Set.of(contentListCaption).toList();
-    Set.of(contentListContents).toList();
-    Set.of(contentsListMore).toList();
-    Set.of(contentsListImage).toList();
+    // // Xoá bỏ phần tử trùng lặp
+    // Set.of(contentListCaption).toList();
+    // Set.of(contentListContents).toList();
+    // Set.of(contentsListMore).toList();
+    // Set.of(contentsListImage).toList();
 
     Timestamp time = widget.argument["date"];
     var dateFormat = DateFormat.yMMMMd('en_US').add_jm().format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
+
     return AppScaffold(
       floatingActionButton: OneFloatToTop(scrollController: _scrollController),
       backgroundColor: OneColors.black,
@@ -66,33 +86,13 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                   _buildTags(),
                   // Build date
                   _buildDate(dateFormat, context),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20, bottom: 10),
-                    child: Text(
-                      widget.argument["title"],
-                      style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
-                    ),
-                  ),
-                  //setState  Nội dung
-                  Padding(
-                      padding: EdgeInsets.zero,
-                      child: (() {
-                        for (int i = 0; i < widget.argument["content"].length; i++) {
-                          String caption = contentList[i]["caption"];
-                          String contents = contentList[i]["contents"];
-                          String contentsMore = contentList[i]["contentsMore"];
-                          var images = contentList[i]["images"];
+                  //
+                  _buildTitleSmall(context),
 
-                          setState(() {
-                            contentListContents.add(contents);
-                            contentListCaption.add(caption);
-                            contentsListMore.add(contentsMore);
-                            contentsListImage.add(images);
-                          });
-                        }
-                      })()),
-                  //NỘI DUNG
-                  _buildContents(contentList),
+                  _buildTitleGuild(context),
+                  //Nội dung
+                  _buildContents(contentList, context),
+
                   // Nguồn
                   _buildAuthor(context, dateFormat),
                   //Có thể bạn sẽ thích nó
@@ -100,10 +100,275 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                 ],
               ),
             ),
-            CardNews(data: homedata, cardLength: 2),
+            CardNewsWithTags(
+              data: homedata,
+              cardLength: 2,
+              tagsButton: widget.argument["tags"][0],
+            ),
             const SliverToBoxAdapter(child: BuildFooter())
           ],
         )),
+      ),
+    );
+  }
+
+  Padding _buildContents(List<dynamic> contentList, BuildContext context) {
+    // double sizeHeight = MediaQuery.of(context).size.height;
+    // double sizeWidth = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+      child: Container(
+        alignment: Alignment.topLeft,
+        child: Column(
+          children: contentList.map((e) {
+            String tagscheck = e["tags"];
+
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    "${e["caption"]}",
+                    style: OneTheme.of(context).caption1.copyWith(color: OneColors.white, fontSize: 16),
+                  ),
+                ),
+                Column(
+                  children: e["contents"]
+                      .map((contents) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              contents,
+                              style: OneTheme.of(context).body2.copyWith(color: OneColors.white, fontSize: 14, height: 1.5),
+                              textAlign: TextAlign.justify,
+                            ),
+                          ],
+                        );
+                      })
+                      .toList()
+                      .cast<Widget>(),
+                ),
+                e["images"]["imageUrl"] != ""
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Column(
+                          children: [
+                            Image.network(e["images"]["imageUrl"]),
+                            const SizedBox(height: 3),
+                            Text(
+                              e["images"]["imageNotes"],
+                              style: OneTheme.of(context).body2.copyWith(color: OneColors.grey, fontSize: 12),
+                            ),
+                            const SizedBox(height: 3),
+                            e["images"]["imageCredit"] != ""
+                                ? Text(
+                                    "Nguồn: ${e["images"]["imageCredit"]}",
+                                    style: OneTheme.of(context).body2.copyWith(color: OneColors.grey, fontSize: 10),
+                                  )
+                                : const SizedBox(),
+                          ],
+                        ),
+                      )
+                    : const SizedBox(),
+                Column(
+                  children: e["contentsMore"]
+                      .map((contentsMore) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              contentsMore,
+                              style: OneTheme.of(context).body2.copyWith(color: OneColors.white, fontSize: 14, height: 1.5),
+                              textAlign: TextAlign.justify,
+                            ),
+                          ],
+                        );
+                      })
+                      .toList()
+                      .cast<Widget>(),
+                ),
+                SizedBox(
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        itemCount: _discoverDataList.length,
+                        itemBuilder: (context, index) {
+                          var data = _discoverDataList[index];
+                          String idnew = data["idnew"];
+                          String url = data["images"]["image2DUrl"];
+                          String name = data["name"];
+                          String info = data["info"];
+                          return (idnew == tagscheck)
+                              ? InkWell(
+                                  onTap: () {
+                                    Get.to(
+                                        () => DiscoveryDetailScreen(
+                                              argument: data,
+                                              color: OneColors.white,
+                                            ),
+                                        curve: Curves.linear,
+                                        transition: Transition.rightToLeft);
+                                  },
+                                  child: Container(
+                                      decoration: BoxDecoration(color: OneColors.white.withOpacity(0.4), borderRadius: BorderRadius.circular(15)),
+                                      height: 100,
+                                      padding: const EdgeInsets.all(8),
+                                      margin: const EdgeInsets.symmetric(vertical: 10),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 1,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: SizedBox(
+                                                height: 80,
+                                                width: 80,
+                                                child: CachedImage(
+                                                  imageUrl: url,
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 3,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text(
+                                                  name,
+                                                  style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
+                                                ),
+                                                Text(
+                                                  info,
+                                                  maxLines: 4,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      )),
+                                )
+                              : const SizedBox();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemCount: _planetsDataList.length,
+                          itemBuilder: (context, index) {
+                            var data = _planetsDataList[index];
+                            String idName = data["idName"];
+                            String url = data["image2D"]["imageUrl"];
+                            String name = data["name"];
+                            String info = data["info"];
+                            return (idName == tagscheck)
+                                ? InkWell(
+                                    onTap: () {
+                                      Get.to(
+                                          () => PlanetDetailScreen(
+                                                argument: data,
+                                              ),
+                                          curve: Curves.linear,
+                                          transition: Transition.rightToLeft);
+                                    },
+                                    child: Container(
+                                        decoration: BoxDecoration(color: OneColors.white.withOpacity(0.4), borderRadius: BorderRadius.circular(15)),
+                                        height: 100,
+                                        padding: const EdgeInsets.all(8),
+                                        margin: const EdgeInsets.symmetric(vertical: 10),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: SizedBox(
+                                                  height: 80,
+                                                  width: 80,
+                                                  child: CachedImage(
+                                                    imageUrl: url,
+                                                    fit: BoxFit.fitHeight,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 3,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  Text(
+                                                    name,
+                                                    style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
+                                                  ),
+                                                  Text(
+                                                    info,
+                                                    maxLines: 4,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        )),
+                                  )
+                                : const SizedBox();
+                          }
+                          // Loại bỏ phần tử null
+
+                          ),
+                    ],
+                  ),
+                )
+              ],
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+
+  Padding _buildTitleSmall(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20),
+      child: Text(
+        widget.argument["title"],
+        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
+      ),
+    );
+  }
+
+  Padding _buildTitleGuild(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20),
+      child: Text(
+        widget.argument["guideTitle"],
+        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
+        textAlign: TextAlign.justify,
       ),
     );
   }
@@ -152,7 +417,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
             alignment: Alignment.centerLeft,
             child: Text(
               "Có thể bạn sẽ thích :",
-              style: OneTheme.of(context).title1.copyWith(height: 2, color: OneColors.textGrey3, fontStyle: FontStyle.normal),
+              style: OneTheme.of(context).title1.copyWith(height: 2, color: OneColors.greyLight, fontStyle: FontStyle.normal),
             ),
           ),
           const Expanded(child: OneThickNess())
@@ -168,7 +433,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
           alignment: Alignment.centerLeft,
           child: Text(
             "Được cập nhật vào $dateFormat",
-            style: OneTheme.of(context).body2.copyWith(color: OneColors.textGrey2),
+            style: OneTheme.of(context).body2.copyWith(color: OneColors.greyLight),
           )),
     );
   }
@@ -182,134 +447,17 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
             alignment: Alignment.centerLeft,
             child: Text(
               "Được đăng tải bởi : ${widget.argument["author"]}",
-              style: OneTheme.of(context).title2.copyWith(color: OneColors.textGrey2, fontStyle: FontStyle.italic),
+              style: OneTheme.of(context).title2.copyWith(color: OneColors.greyLight, fontStyle: FontStyle.italic),
             ),
           ),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
               dateFormat,
-              style: OneTheme.of(context).body2.copyWith(color: OneColors.textGrey2, fontStyle: FontStyle.normal),
+              style: OneTheme.of(context).body2.copyWith(color: OneColors.greyLight, fontStyle: FontStyle.normal),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Padding _buildContents(List<dynamic> contentList) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Column(
-          children: [
-            SizedBox(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-                itemCount: contentList.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      // CAPTION
-                      index <= contentListCaption.length
-                          ? Padding(
-                              padding: contentListCaption[index] != null ? EdgeInsets.zero : const EdgeInsets.symmetric(vertical: 5),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  contentListCaption[index] ?? "",
-                                  style: OneTheme.of(context).caption1.copyWith(fontSize: 18, color: OneColors.white),
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                      // CONTENT
-                      index <= contentListContents.length
-                          ? Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5.0),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  contentListContents[index] ?? "",
-                                  style: OneTheme.of(context).body2.copyWith(fontSize: 15, color: OneColors.white),
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-
-                      //CONTENT IMAGE
-                      index <= contentsListImage.length
-                          ? Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5.0),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: (contentsListImage[index]["imageUrl"] != null && contentsListImage[index]["imageUrl"] != "")
-                                      ? Column(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(boxShadow: [BoxShadow(color: OneColors.white.withOpacity(0.4), blurRadius: 10)]),
-                                              child: Image.network(contentsListImage[index]["imageUrl"],
-                                                  fit: BoxFit.fill,
-                                                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                                    if (loadingProgress == null) return child;
-                                                    return Center(
-                                                      child: CircularProgressIndicator(
-                                                        color: OneColors.blue,
-                                                        value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-                                                      ),
-                                                    );
-                                                  },
-                                                  errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                contentsListImage[index]["imageNotes"] ?? "",
-                                                style: OneTheme.of(context).body2.copyWith(fontSize: 10, fontStyle: FontStyle.italic, color: OneColors.textGrey1),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "Nguồn : ${contentsListImage[index]["imageCredit"] ?? ""}",
-                                                style: OneTheme.of(context).body2.copyWith(fontSize: 10, fontStyle: FontStyle.italic, color: OneColors.textGrey1),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      : const SizedBox()),
-                            )
-                          : const SizedBox(),
-                      // CONTENT MORE
-                      index <= contentsListMore.length
-                          ? Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5.0),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  contentsListMore[index] ?? "",
-                                  style: OneTheme.of(context).body2.copyWith(fontSize: 15, color: OneColors.white),
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                    ],
-                  );
-                },
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

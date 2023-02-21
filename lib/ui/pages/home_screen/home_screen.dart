@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildTitle(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.height * 0.2,
+      expandedHeight: MediaQuery.of(context).size.height * 0.15,
       leading: const SizedBox(),
       floating: false,
       pinned: true,
