@@ -14,6 +14,7 @@ class OneColors {
 
   static const Color blue = Color.fromARGB(255, 17, 0, 255);
   static const Color blue100 = Color(0xFFBBDEFB);
+  static const Color blue200 = Color(0xff0D6FCA);
   static const Color buttonGrey = Color(0xFF273032);
   static const Color white24 = Color(0x3DFFFFFF);
   static const Color white70 = Color(0xB3FFFFFF);

@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // Import the firebase_core and cloud_firestore plugin
@@ -14,27 +16,28 @@ class AddNewsData extends StatelessWidget {
     CollectionReference homedata = FirebaseFirestore.instance.collection('homedata');
 
     ///////////////////// NEWS DATA //////////////////////////
-    String author = "Mực Tím"; // Tên tác giả
+    String author = "Trí Thức Trẻ"; // Tên tác giả
 
     final DateTime now = DateTime.now();
     final Timestamp date = Timestamp.fromDate(now);
 
     ///
-    String title = "Khám phá vũ trụ: Sao Kim - hành tinh nóng nhất trong hệ mặt trời"; //Tên tiêu đề
+    String title = "Chiêm ngưỡng tấm hình ấn tượng của sao Mộc do kính viễn vọng ghi lại"; //Tên tiêu đề
     // tên tiêu đề sẽ hiển thị ở bên ngoài
     String titleDisplay =
-        "Sao Kim là hành tinh sáng nhất trong Hệ Mặt trời sau Mặt trăng và Mặt trời. Sao Kim được đặt theo tên vị thần tình yêu và sắc đẹp của La Mã - Venus. Lý do nó được đặt theo tên của vị thần đẹp nhất trong quần thể vì nó tỏa sáng nhất trong số 5 hành tinh mà các nhà thiên văn học cổ đại biết đến.";
+        "Từ trường của sao Mộc cao hơn của Trái Đất hàng trăm lần nên hiện tượng cực quang trên hành tinh này không bao giờ ngừng lại và có cường độ lớn hơn nhiều so với trên Trái Đất.";
 
     ///
-    String guideTitle = "Sao Kim, hành tinh thứ hai gần Mặt trời, là một vì tinh tú có rất nhiều điều kỳ thú.";
+    String guideTitle =
+        "Từ trường của sao Mộc cao hơn của Trái Đất hàng trăm lần nên hiện tượng cực quang trên hành tinh này không bao giờ ngừng lại và có cường độ lớn hơn nhiều so với trên Trái Đất.";
 
     ////////////////// CONTENT List 1///////////////////////////////
     String caption = "";
     List<String> contents = [
-      "Sao Kim là hành tinh sáng nhất trong Hệ Mặt trời sau Mặt trăng và Mặt trời. Sao Kim được đặt theo tên vị thần tình yêu và sắc đẹp của La Mã - Venus. Lý do nó được đặt theo tên của vị thần đẹp nhất trong quần thể vì nó tỏa sáng nhất trong số 5 hành tinh mà các nhà thiên văn học cổ đại biết đến.",
+      "Hình ảnh ấn tượng mà các bạn đang xem là cực quang trong dải cực tím được kính viễn vọng 'Hubble' chụp ở cực bắc của sao Mộc. Tờ EurekAlert dẫn lời các chuyên gia cho biết: đây là một trong số những bức hình vũ trụ có nhiều màu sắc nhất mà loài người chúng ta từng chụp được.",
     ];
-    String imageUrl = "http://static.muctim.com.vn/data/teen360/pictures/2022/04/11/1649647233_mai-h-m.jpg";
-    String imageNotes = "Sao Kim còn được biết đến với tên gọi sao Hôm hoặc sao Mai.";
+    String imageUrl = "https://e.khoahoc.tv/photos/image/2016/07/05/cuc-quang-tren-sao-moc.jpg";
+    String imageNotes = "Cực quang trong dải cực tím được kính viễn vọng 'Hubble' chụp ở cực bắc của sao Mộc.";
     String imageCredit = "";
 
     Map images = {
@@ -42,9 +45,11 @@ class AddNewsData extends StatelessWidget {
       "imageNotes": imageNotes,
       "imageUrl": imageUrl,
     };
-    List<String> contentsMore = [];
+    List<String> contentsMore = [
+      "Cơ chế hình thành cực quang trên sao Mộc cũng giống như trên Trái Đất, chúng sinh ra khi các hạt gió mặt trời manh năng lượng cao và được định hướng bởi từ trường đi vào khí quyển của hành tinh tại vùng cực. Tuy nhiên, do từ trường của sao Mộc cao hơn của Trái Đất hàng trăm lần nên hiện tượng cực quang trên hành tinh này không bao giờ ngừng lại và có cường độ lớn hơn nhiều so với trên Trái Đất.",
+    ];
 
-    String tagsContents = "saokim";
+    String tagsContents = "";
     Map contentDetail = {
       "caption": caption,
       "contents": contents,
@@ -55,11 +60,10 @@ class AddNewsData extends StatelessWidget {
 
     /////////////////// CONTENT List 2//////////////////////////////
     String caption1 = "";
-    List<String> contents1 = [
-      "Sao Kim là một trong những vật thể sáng nhất trên bầu trời, do đó nó hay bị nhầm là vật thể bay không xác định (UFO). Vào thời cổ đại, sao Kim thường được cho là 2 ngôi sao khác nhau, ngôi sao buổi tối và ngôi sao buổi sáng. Nó là ngôi sao xuất hiện đầu tiên vào ban đêm và biến mất cuối cùng vào lúc bình minh. Trong tiếng Latinh, chúng lần lượt được gọi là Vesper và Lucifer.",
-    ];
-    String imageUrl1 = "http://static.muctim.com.vn/data/teen360/pictures/2022/04/11/1649646879_sao_kim_1_saiy.jpg";
-    String imageNotes1 = "Vị trí của sao Kim trong hệ Mặt trời.";
+    List<String> contents1 = [];
+    String imageUrl1 = "https://e.khoahoc.tv/photos/image/2016/07/05/cuc-quang-tren-sao-moc-1.jpg";
+    String imageNotes1 =
+        "Cực quang sao Mộc này chứa năng lượng gấp hàng trăm lần các hiện tượng cực quang diễn ra trên Trái đất. Đồng thời, thay vì các cơn bão mặt trời, bão từ làm xuất hiện cực quang trên Trái đất thì cực quang trên sao Mộc có thể hình thành bởi một nguồn tác động khác.";
     String imageCredit1 = "";
 
     List<String> contentsMore1 = [];
@@ -82,13 +86,13 @@ class AddNewsData extends StatelessWidget {
 
     /////////////////////////////////////////////////////////////
     ////////////////////// CONTENT List 3//////////////////////////////
-    String caption2 = "Kích thước của sao Kim";
+    String caption2 = "Tấm ảnh khó tin";
     List<String> contents2 = [
-      "Sao Kim và Trái đất thường được gọi là anh em sinh đôi vì chúng giống nhau về kích thước, khối lượng, mật độ, thành phần và lực hấp dẫn. Đường kính của sao Kim bằng 12.092km, chỉ nhỏ hơn 650km so với Trái Đất của chúng ta, và khối lượng bằng khoảng 80% Trái đất.",
+      "Mỗi tháng một lần 'Hubble' lại theo dõi cực quang trên sao Mộc. Các chuyên gia NASA và ESA (Cơ quan Vũ trụ châu Âu) đã so sánh hai hình ảnh: một tấm do kính thiên văn 'Hubble' chụp trong dải cực tím, và tấm thứ hai chụp năm 2014 ở bước sóng hồng ngoại. Kết quả rất ấn tượng.",
     ];
-    String imageUrl2 = "";
-    String imageNotes2 = "";
-    String imageCredit2 = "";
+    String imageUrl2 = "https://e.khoahoc.tv/photos/image/2016/07/07/sao-tho-2.jpg";
+    String imageNotes2 = "Hiện tượng cực quang nổi bật trong không gian với màu xanh trắng, hoạt động thành các vòng xoáy rõ rệt trên cực Bắc sao Mộc.";
+    String imageCredit2 = "Dailymail";
 
     List<String> contentsMore2 = [];
 
@@ -109,13 +113,11 @@ class AddNewsData extends StatelessWidget {
 
     /////////////////////////////////////////////////////////////
     ///////////////////////// CONTENT List 4//////////////////////////////
-    String caption3 = "Cấu tạo sao Kim";
-    List<String> contents3 = [
-      "Bên trong của Sao Kim được làm bằng một lõi sắt kim loại rộng khoảng 6.000 km. Lớp phủ đá nóng chảy của sao Kim dày khoảng 3.000 km. Vỏ sao Kim chủ yếu là đá bazan và ước tính dày trung bình từ 10 đến 20 km.",
-    ];
-    String imageUrl3 = "http://static.muctim.com.vn/data/teen360/pictures/2022/04/11/1649646835_loi-sao-kim.jpg";
-    String imageNotes3 = "";
-    String imageCredit3 = "";
+    String caption3 = "";
+    List<String> contents3 = [];
+    String imageUrl3 = "https://e.khoahoc.tv/photos/image/2016/07/07/sao-tho-3.jpg";
+    String imageNotes3 = "Theo các chuyên gia nhận định, rất nhiều tia cực tím, tia X-ray cực quang lẫn gió mặt trời và khí bụi va chạm xuất hiện trong hệ thống này.";
+    String imageCredit3 = "Dailymail";
 
     List<String> contentsMore3 = [];
 
@@ -136,17 +138,14 @@ class AddNewsData extends StatelessWidget {
 
     /////////////////////////////////////////////////////////////
     //////////////////////////// CONTENT List 5//////////////////////////////
-    String caption4 = "Nhiệt độ của sao Kim";
-    List<String> contents4 = [
-      "Sao Kim là hành tinh nóng nhất trong hệ mặt trời. Mặc dù sao Kim không phải là hành tinh gần mặt trời nhất, bầu khí quyển dày đặc của nó giữ nhiệt trong một phiên bản chạy trốn của hiệu ứng nhà kính làm Trái đất ấm lên. Kết quả là nhiệt độ trên sao Kim lên tới 880 độ F (471 độ C), đủ nóng để nấu chảy chì. Các tàu vũ trụ đã sống sót chỉ vài giờ sau khi hạ cánh xuống hành tinh này trước khi bị phá hủy.",
-    ];
-    String imageUrl4 = "http://static.muctim.com.vn/data/teen360/pictures/2022/04/11/1649647271_sao-kim-google-sites-15182253.jpg";
-    String imageNotes4 = "";
-    String imageCredit4 = "";
+    String caption4 = "";
+    List<String> contents4 = [];
 
-    List<String> contentsMore4 = [
-      "Với nhiệt độ thiêu đốt, sao Kim có bầu khí quyển địa ngục, chủ yếu bao gồm carbon dioxide với các đám mây axit sunfuric và chỉ có một lượng nhỏ nước. Bầu khí quyển của nó nặng hơn bất kỳ hành tinh nào khác, dẫn đến áp suất bề mặt gấp 90 lần Trái đất - tương tự như áp suất tồn tại sâu 1000 mét trong đại dương.",
-    ];
+    String imageUrl4 = "https://e.khoahoc.tv/photos/image/2016/07/07/sao-tho-4.jpg";
+    String imageNotes4 = 'Tiến sĩ Jonathan Nichols, một nhà khoa học không gian tại Đại học Leicester cho biết: "Đây là hiện tượng cực quang kịch tính và đẹp nhất mà tôi từng thấy...".';
+    String imageCredit4 = "Dailymail";
+
+    List<String> contentsMore4 = [];
 
     Map images4 = {
       "imageCredit": imageCredit4,
@@ -154,7 +153,7 @@ class AddNewsData extends StatelessWidget {
       "imageUrl": imageUrl4,
     };
 
-    String tagsContents4 = "";
+    String tagsContents4 = "saomoc";
     Map contentDetail4 = {
       "caption": caption4,
       "contents": contents4,
@@ -165,14 +164,14 @@ class AddNewsData extends StatelessWidget {
 
     /////////////////////////////////////////////////////////////
     //////////////////////////// CONTENT List 5//////////////////////////////
-    String caption5 = "Sao Kim hoạt động như thế nào?";
+    String caption5 = "5. Sao Hỏa từng có nước";
     List<String> contents5 = [
-      "Sao Kim mất 243 ngày Trái đất để quay trên trục của nó, đây là hành tinh chậm nhất trong số các hành tinh chính. Sao Kim quay một vòng quanh Mặt trời mất 225 ngày (so với Trái đất là 365 ngày).",
-      "Nếu nhìn từ trên cao, sao Kim quay trên trục của nó theo hướng ngược lại với hầu hết các hành tinh. Sao Kim quay từ Đông sang Tây, trong khi tất cả các hành tinh khác đều quay theo hướng ngược lại (từ Tây sang Đông). Nói cách khác, ở sao Kim, Mặt Trời mọc ở hướng Tây và lặn ở hướng Đông.",
+      "Một trong những sự thật được biết đến nhiều nhất về sao Hỏa là nó từng có một lượng lớn nước lỏng. Hàng tỉ năm trước, sao Hỏa có bầu khí quyển dày đặc và hiệu ứng nhà kính mạnh - điều kiện cho phép tồn tại nước lỏng, mặc dù thực tế là sao Hỏa quay quanh khu vực có thể ở của mặt trời.",
+      "Các nhà khoa học đã tìm thấy bằng chứng rõ ràng về các sông, hồ, biển và thậm chí cả đại dương cổ đại trên bề mặt sao Hỏa, cho thấy có khả năng đã từng tồn tại sự sống trên sao Hỏa.",
     ];
-    String imageUrl5 = "";
-    String imageNotes5 = "";
-    String imageCredit5 = "";
+    String imageUrl5 = "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/7/20/1070757/Nuoc-Sao-Hoa.jpg";
+    String imageNotes5 = "Sao Hoả từng có nước.";
+    String imageCredit5 = "NASA";
 
     List<String> contentsMore5 = [];
 
@@ -193,18 +192,16 @@ class AddNewsData extends StatelessWidget {
 
     /////////////////////////////////////////////////////////////
     //////////////////////////// CONTENT List 6//////////////////////////////
-    String caption6 = "Khí hậu sao Kim";
+    String caption6 = "6. Khí quyển của sao Hỏa đã bị Mặt trời phá hủy";
     List<String> contents6 = [
-      "Lớp trên cùng của các đám mây của sao Kim được đẩy bởi sức gió bão với tốc độ di chuyển khoảng 360 km/h. Bầu khí quyển dày đặc tạo ra hiện tượng hiệu ứng nhà kính làm cho hành tinh này trở nên cực nóng.",
-      "Tàu vũ trụ Venus Express hoạt động từ năm 2005 đến năm 2014, đã tìm thấy bằng chứng về tia sét trên hành tinh, hình thành trong các đám mây axit sunfuric. Nó có khả năng phóng điện từ sét có thể giúp hình thành các phân tử cần thiết để bắt đầu sự sống giống như Trái Đất.",
+      "Trong quá khứ, sao Hỏa có một bầu khí quyển có mật độ tương đương với Trái đất, nhưng ngày nay, bầu khí quyển của sao Hỏa là không đáng kể. Không giống như Trái đất, sao Hỏa không còn từ trường có thể làm lệch hướng bức xạ mặt trời.",
+      "Việc thiếu từ trường có thể xảy ra khi lõi của sao Hỏa đông đặc lại. Không có từ trường, sao Hỏa không có sự bảo vệ chống lại bức xạ mặt trời, bức xạ này từ từ tước bỏ bầu khí quyển của sao Hỏa.",
     ];
-    String imageUrl6 = "http://static.muctim.com.vn/data/teen360/pictures/2022/04/11/1649647356_b--m-t.jpg";
-    String imageNotes6 = "Bề mặt sao Kim lỗ chỗ do có nhiều hố va chạm.";
+    String imageUrl6 = "";
+    String imageNotes6 = "";
     String imageCredit6 = "";
 
-    List<String> contentsMore6 = [
-      "Theo các nhà thiên văn học, có khoảng hơn 1.000 hố va chạm phân bố khắp bề mặt sao Kim. Và 85% hố va chạm vẫn còn ở trạng thái nguyên thủy. Áp suất khí quyển trên sao Kim lớn hơn ở Trái Đất 92 lần.",
-    ];
+    List<String> contentsMore6 = [];
 
     Map images6 = {
       "imageCredit": imageCredit6,
@@ -223,17 +220,13 @@ class AddNewsData extends StatelessWidget {
 
     /////////////////////////////////////////////////////////////
     //////////////////////////// CONTENT List 7//////////////////////////////
-    String caption7 = "Thám hiểm sao Kim";
+    String caption7 = "7. Sao Hỏa là hành tinh duy nhất có robot";
     List<String> contents7 = [
-      "Hoa Kỳ, Liên Xô, Cơ quan Vũ trụ Châu u và Cơ quan Thám hiểm Hàng không Vũ trụ Nhật Bản đã triển khai nhiều tàu vũ trụ đến Sao Kim - hơn 20 chiếc cho đến nay.",
-      "Mariner 2 của NASA cách Sao Kim 34.760 km vào năm 1962, trở thành hành tinh đầu tiên được quan sát bởi một tàu vũ trụ đi qua.",
-      "Venera 7 của Liên Xô là tàu vũ trụ đầu tiên hạ cánh trên một hành tinh khác, đáp xuống Sao Kim vào tháng 12 năm 1970. Venera 9 đã quay lại những bức ảnh đầu tiên về bề mặt Sao Kim.",
-      "Tàu quỹ đạo sao Kim đầu tiên, Magellan của NASA, đã tạo ra bản đồ của 98% bề mặt hành tinh, cho thấy các đặc điểm có chiều ngang nhỏ tới 100m.",
-      "Tàu Venus Express của Cơ quan Vũ trụ Châu Âu đã dành 8 năm trên quỹ đạo xung quanh Sao Kim với nhiều loại thiết bị và xác nhận sự hiện diện của tia sét ở đó. Đến tháng 12 năm 2014, tàu vũ trụ hết thuốc phóng và cuối cùng bốc cháy trong bầu khí quyển của Sao Kim. Năm 2021, NASA đã công bố 2 con tàu vũ trụ mới tới Sao Kim sẽ khởi động vào năm 2030.",
+      "Sao Hỏa hiện là hành tinh duy nhất trong hệ mặt trời có robot cư trú. Hiện tại có 5 tàu thám hiểm trên bề mặt sao Hỏa. Nhân loại hiện không có robot trên hành tinh nào khác, biến sao Hỏa trở thành hành tinh của robot.",
     ];
-    String imageUrl7 = "";
-    String imageNotes7 = "";
-    String imageCredit7 = "";
+    String imageUrl7 = "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/7/20/1070757/Tau-Sao-Hoa.jpg";
+    String imageNotes7 = "Tàu thám hiểm trên sao Hoả";
+    String imageCredit7 = "NASA";
 
     List<String> contentsMore7 = [];
 
@@ -253,7 +246,84 @@ class AddNewsData extends StatelessWidget {
     };
 
     /////////////////////////////////////////////////////////////
-    // //////////////////////////// CONTENT List 7//////////////////////////////
+    /////////////////////////////// CONTENT List 8//////////////////////////////
+
+    String caption8 = "8. Hoàng hôn trên sao Hỏa có màu xanh";
+    List<String> contents8 = [
+      "Trên Trái đất, hoàng hôn có màu cam và vàng, còn bầu trời ban ngày của chúng ta có màu xanh. Trên sao Hỏa, gần như điều ngược lại xảy ra. Vào ban ngày, bầu trời sao Hỏa có màu đỏ, trong khi hoàng hôn có màu xanh. Khi mặt trời lặn trên sao Hỏa, ánh sáng đỏ từ mặt trời bị lọc ra và ánh sáng xanh bị phân tán, làm cho hoàng hôn có màu xanh.",
+    ];
+    String imageUrl8 = "";
+    String imageNotes8 = "";
+    String imageCredit8 = "";
+
+    List<String> contentsMore8 = [];
+
+    Map images8 = {
+      "imageCredit": imageCredit8,
+      "imageNotes": imageNotes8,
+      "imageUrl": imageUrl8,
+    };
+
+    String tagsContents8 = "";
+    Map contentDetail8 = {
+      "caption": caption8,
+      "contents": contents8,
+      "contentsMore": contentsMore8,
+      "images": images8,
+      "tags": tagsContents8,
+    };
+    //////////////////////////// CONTENT List 9//////////////////////////////
+
+    String caption9 = "9. Sao Hỏa sẽ có quầng vào một ngày nào đó";
+    List<String> contents9 = [
+      "Mặt trăng lớn nhất của sao Hỏa, Phobos, đang dần di chuyển đến gần sao Hỏa. Các nhà thiên văn ước tính rằng trong khoảng 500 triệu năm nữa, Phobos sẽ ở gần sao Hỏa đến mức nó sẽ bị xé toạc bởi lực hấp dẫn của sao Hỏa hoặc sẽ đâm vào bề mặt. Dù bằng cách nào, kết quả sẽ là sự hình thành của một hệ thống quầng nhỏ xung quanh sao Hỏa.",
+    ];
+    String imageUrl9 = "";
+    String imageNotes9 = "";
+    String imageCredit9 = "";
+
+    List<String> contentsMore9 = [];
+
+    Map images9 = {
+      "imageCredit": imageCredit9,
+      "imageNotes": imageNotes9,
+      "imageUrl": imageUrl9,
+    };
+
+    String tagsContents9 = "";
+    Map contentDetail9 = {
+      "caption": caption9,
+      "contents": contents9,
+      "contentsMore": contentsMore9,
+      "images": images9,
+      "tags": tagsContents9,
+    };
+    //////////////////////////// CONTENT List 10//////////////////////////////
+
+    String caption10 = "10. Bão bụi làm cho bầu trời của sao Hỏa có màu đỏ";
+    List<String> contents10 = [
+      "Sao Hỏa thường không có bầu trời đỏ. Sở dĩ bầu trời có màu đỏ là do các cơn bão bụi phát tán các hạt bụi vào bầu khí quyển, khiến bầu trời có màu đỏ hồng.",
+    ];
+    String imageUrl10 = "";
+    String imageNotes10 = "";
+    String imageCredit10 = "";
+
+    List<String> contentsMore10 = [];
+
+    Map images10 = {
+      "imageCredit": imageCredit10,
+      "imageNotes": imageNotes10,
+      "imageUrl": imageUrl10,
+    };
+
+    String tagsContents10 = "saohoa";
+    Map contentDetail10 = {
+      "caption": caption10,
+      "contents": contents10,
+      "contentsMore": contentsMore10,
+      "images": images10,
+      "tags": tagsContents10,
+    };
     // String caption7 = "Sức nóng của mặt trời";
     // List<String> contents7 = [
     //   "Mặt trời rất – rất nóng , tính riêng phần lõi của Mặt Trời nơi các phản ứng nhiệt hạch xảy ra không ngừng nghỉ thì nhiệt độ lên tới 17 triệu độ C. Trong khi nhiệt độ bề mặt chỉ rơi vào khoảng 7000 độ C.",
@@ -289,13 +359,18 @@ class AddNewsData extends StatelessWidget {
       contentDetail2,
       contentDetail3,
       contentDetail4,
-      contentDetail5,
-      contentDetail6,
-      contentDetail7,
+      // contentDetail5,
+      // contentDetail6,
+      // contentDetail7,
+      // contentDetail8,
+      // contentDetail9,
+      // contentDetail10,
     ];
     /////////////////////////////////////////////////////////////
     ///
-    List<String> tags = ["Vũ trụ", "Nasa", "Trái Đất"];
+    List<String> tags = ["Cực Quang", "Sao Mộc"];
+    var random = Random().nextInt(1000) + 50;
+    int views = random;
 
     Future<void> addUser() {
       // Call the user's CollectionReference to add a new user
@@ -308,6 +383,7 @@ class AddNewsData extends StatelessWidget {
             "date": date,
             "tags": tags,
             "title": title,
+            "views": views,
           })
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));

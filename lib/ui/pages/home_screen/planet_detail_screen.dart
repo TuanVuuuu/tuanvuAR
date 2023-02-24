@@ -144,13 +144,42 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
   }
 
   SliverToBoxAdapter _buildNewsCard(String nameModel, BuildContext context) {
+    String formatViews(int views) {
+      if (views < 1000) {
+        return '$views';
+      } else if (views >= 1000 && views < 1000000) {
+        double viewsInK = views / 1000;
+        return '${viewsInK.toStringAsFixed(1)}K';
+      } else if (views >= 1000000 && views < 1000000000) {
+        double viewsInM = views / 1000000;
+        return '${viewsInM.toStringAsFixed(1)}M';
+      } else {
+        double viewsInB = views / 1000000000;
+        return '${viewsInB.toStringAsFixed(1)}B';
+      }
+    }
+
     return SliverToBoxAdapter(
       child: Column(
         children: _newsDataList
             .where((data) => data["tags"].contains(nameModel))
             .take(3)
             .map((data) => InkWell(
-                  onTap: (() => Get.to(() => DetailNewsScreen(argument: data), curve: Curves.linear, transition: Transition.rightToLeft)),
+                  onTap: (() {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 500),
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          return SlideTransition(
+                            position: Tween(begin: const Offset(1.0, 0.0), end: Offset.zero).animate(animation),
+                            child: child,
+                          );
+                        },
+                        pageBuilder: (context, animation, secondaryAnimation) => DetailNewsScreen(argument: data, viewscheck: false),
+                      ),
+                    );
+                  }),
                   child: Container(
                     margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
                     padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
@@ -158,71 +187,109 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                       color: OneColors.black.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(7),
                     ),
-                    child: Row(
+                    child: Column(
                       children: [
-                        Expanded(
-                          flex: 5,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data["title"],
-                                  style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.justify,
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data["title"],
+                                      style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      data["titleDisplay"],
+                                      style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+                                      maxLines: 4,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  data["titleDisplay"],
-                                  style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
-                                  maxLines: 4,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.justify,
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  data["author"],
-                                  style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
-                                  maxLines: 4,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: OneColors.white,
+                                          blurRadius: 3,
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    height: 90,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: data['content'][0]['images']['imageUrl'] != ""
+                                          ? Image.network(
+                                              data['content'][0]['images']['imageUrl'],
+                                              fit: BoxFit.cover,
+                                              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                                if (loadingProgress == null) return child;
+                                                return OneLoading.space_loading;
+                                              },
+                                              errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
+                                            )
+                                          : const SizedBox(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
-                        Expanded(
-                          flex: 3,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: OneColors.white,
-                                  blurRadius: 3,
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              data["author"],
+                              style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.justify,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                const Icon(
+                                  Icons.visibility,
+                                  color: OneColors.grey,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "${formatViews(data["views"])} lượt xem",
+                                  style: OneTheme.of(context).caption1.copyWith(
+                                        overflow: TextOverflow.clip,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300,
+                                        color: OneColors.white,
+                                      ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ],
-                              borderRadius: BorderRadius.circular(15),
                             ),
-                            height: 90,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: data['content'][0]['images']['imageUrl'] != ""
-                                  ? Image.network(
-                                      data['content'][0]['images']['imageUrl'],
-                                      fit: BoxFit.cover,
-                                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                        if (loadingProgress == null) return child;
-                                        return OneLoading.space_loading;
-                                      },
-                                      errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
-                                    )
-                                  : const SizedBox(),
-                            ),
-                          ),
-                        )
+                          ],
+                        ),
                       ],
                     ),
                   ),

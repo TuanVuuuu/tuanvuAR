@@ -25,6 +25,7 @@ class OneCardNewsImage extends StatelessWidget {
     final author = records['author'] ?? '';
     final content = records['content'][0];
     final imageUrl = content['images']['imageUrl'] ?? '';
+    final views = records['views'] ?? '';
 
     DateTime now = DateTime.now();
     Timestamp time = records["date"];
@@ -35,6 +36,22 @@ class OneCardNewsImage extends StatelessWidget {
     int hours = difference.inHours;
     int days = difference.inDays;
     int weeks = (difference.inDays / 7).floor();
+
+    String formatViews(int views) {
+      if (views < 1000) {
+        return '$views';
+      } else if (views >= 1000 && views < 1000000) {
+        double viewsInK = views / 1000;
+        return '${viewsInK.toStringAsFixed(1)}K';
+      } else if (views >= 1000000 && views < 1000000000) {
+        double viewsInM = views / 1000000;
+        return '${viewsInM.toStringAsFixed(1)}M';
+      } else {
+        double viewsInB = views / 1000000000;
+        return '${viewsInB.toStringAsFixed(1)}B';
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -110,19 +127,12 @@ class OneCardNewsImage extends StatelessWidget {
               width: MediaQuery.of(context).size.width - 70,
               child: Row(
                 children: [
-                  Text(
-                    '$author - ',
-                    style: theme.body2.copyWith(
-                      overflow: TextOverflow.clip,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      color: OneColors.white,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  seconds < 60
-                      ? Text(
-                          '$seconds giây trước',
+                  Expanded(
+                    flex: 2,
+                    child: Row(
+                      children: [
+                        Text(
+                          '$author - ',
                           style: theme.body2.copyWith(
                             overflow: TextOverflow.clip,
                             fontSize: 12,
@@ -130,50 +140,90 @@ class OneCardNewsImage extends StatelessWidget {
                             color: OneColors.white,
                           ),
                           overflow: TextOverflow.ellipsis,
-                        )
-                      : (minutes < 60
-                          ? Text(
-                              '$minutes phút trước',
-                              style: theme.body2.copyWith(
-                                overflow: TextOverflow.clip,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300,
-                                color: OneColors.white,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            )
-                          : (hours < 24
-                              ? Text(
-                                  '$hours giờ trước',
-                                  style: theme.body2.copyWith(
-                                    overflow: TextOverflow.clip,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w300,
-                                    color: OneColors.white,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                )
-                              : (days < 7
-                                  ? Text(
-                                      '$days ngày trước',
-                                      style: theme.body2.copyWith(
-                                        overflow: TextOverflow.clip,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: OneColors.white,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    )
-                                  : Text(
-                                      '$weeks tuần trước',
-                                      style: theme.body2.copyWith(
-                                        overflow: TextOverflow.clip,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: OneColors.white,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    )))),
+                        ),
+                        seconds < 60
+                            ? Text(
+                                '$seconds giây trước',
+                                style: theme.body2.copyWith(
+                                  overflow: TextOverflow.clip,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w300,
+                                  color: OneColors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            : (minutes < 60
+                                ? Text(
+                                    '$minutes phút trước',
+                                    style: theme.body2.copyWith(
+                                      overflow: TextOverflow.clip,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300,
+                                      color: OneColors.white,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                : (hours < 24
+                                    ? Text(
+                                        '$hours giờ trước',
+                                        style: theme.body2.copyWith(
+                                          overflow: TextOverflow.clip,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w300,
+                                          color: OneColors.white,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      )
+                                    : (days < 7
+                                        ? Text(
+                                            '$days ngày trước',
+                                            style: theme.body2.copyWith(
+                                              overflow: TextOverflow.clip,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w300,
+                                              color: OneColors.white,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        : Text(
+                                            '$weeks tuần trước',
+                                            style: theme.body2.copyWith(
+                                              overflow: TextOverflow.clip,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w300,
+                                              color: OneColors.white,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          )))),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(
+                          Icons.visibility,
+                          color: OneColors.grey,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "${formatViews(views)} lượt xem",
+                          style: theme.body2.copyWith(
+                            overflow: TextOverflow.clip,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300,
+                            color: OneColors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

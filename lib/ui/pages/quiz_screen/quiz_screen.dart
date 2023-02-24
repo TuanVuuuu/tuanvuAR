@@ -57,112 +57,125 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? Container(
-            decoration: OneWidget.background_bg3,
-            child: Scaffold(
-              backgroundColor: OneColors.transparent,
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    OneLoading.space_loading_larget,
-                    Text(
-                      "Đang tải dữ liệu ...",
-                      style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                    )
-                  ],
-                ),
-              ),
+    if (isLoading) {
+      return _buildLoading(context);
+    } else {
+      return _buildQuizCard(context);
+    }
+  }
+
+  Container _buildQuizCard(BuildContext context) {
+    return Container(
+      decoration: OneWidget.background_bg3,
+      child: AppScaffold(
+        appBar: AppBar(
+          backgroundColor: OneColors.transparent,
+          elevation: 0,
+          title: const Text(
+            "Đố vui",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
             ),
-          )
-        : Container(
-            decoration: OneWidget.background_bg3,
-            child: AppScaffold(
-              appBar: AppBar(
-                backgroundColor: OneColors.transparent,
-                elevation: 0,
-                title: const Text(
-                  "Đố vui",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
+          ),
+          centerTitle: true,
+        ),
+        extendBodyBehindAppBar: true,
+        backgroundColor: OneColors.transparent,
+        body: Scrollbar(
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            slivers: [
+              SliverToBoxAdapter(
+                child: Container(
+                  margin: const EdgeInsets.only(right: 16, left: 16, bottom: 32, top: 130),
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: OneColors.black.withOpacity(0.7),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _questionWidget(),
+                      _answerList(),
+                      display != false
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: correct != false
+                                    ? Text(
+                                        "Chính xác",
+                                        style: OneTheme.of(context).body1.copyWith(color: OneColors.borderGreen),
+                                      )
+                                    : Text(
+                                        "Sai rồi",
+                                        style: OneTheme.of(context).body1.copyWith(color: OneColors.red),
+                                      ),
+                              ),
+                            )
+                          : const SizedBox(),
+                      display != false
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: questionList[currentQuestionIndex].more != ""
+                                  ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 4,
+                                          child: _buildReadMore(context),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: MoreButton(
+                                            data: modeldata,
+                                            currentPlanets: questionList[currentQuestionIndex].more,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : _buildReadMore(context))
+                          : const SizedBox(
+                              height: 30,
+                            ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          _nextButton(),
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                centerTitle: true,
               ),
-              extendBodyBehindAppBar: true,
-              backgroundColor: OneColors.transparent,
-              body: Scrollbar(
-                child: CustomScrollView(
-                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 16, left: 16, bottom: 32, top: 130),
-                        padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: OneColors.black.withOpacity(0.7),
-                        ),
-                        child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                          _questionWidget(),
-                          _answerList(),
-                          display != false
-                              ? Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: correct != false
-                                        ? Text(
-                                            "Chính xác",
-                                            style: OneTheme.of(context).body1.copyWith(color: OneColors.borderGreen),
-                                          )
-                                        : Text(
-                                            "Sai rồi",
-                                            style: OneTheme.of(context).body1.copyWith(color: OneColors.red),
-                                          ),
-                                  ),
-                                )
-                              : const SizedBox(),
-                          display != false
-                              ? SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: questionList[currentQuestionIndex].more != ""
-                                      ? Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              flex: 4,
-                                              child: _buildReadMore(context),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: MoreButton(
-                                                data: modeldata,
-                                                currentPlanets: questionList[currentQuestionIndex].more,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : _buildReadMore(context))
-                              : const SizedBox(
-                                  height: 30,
-                                ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              _nextButton(),
-                            ],
-                          )
-                        ]),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container _buildLoading(BuildContext context) {
+    return Container(
+      decoration: OneWidget.background_bg3,
+      child: Scaffold(
+        backgroundColor: OneColors.transparent,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OneLoading.space_loading_larget,
+              Text(
+                "Đang tải dữ liệu ...",
+                style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Padding _buildReadMore(BuildContext context) {
@@ -390,7 +403,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           child: Stack(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top : 8.0),
+                                padding: const EdgeInsets.only(top: 8.0),
                                 child: SizedBox(
                                   height: 130,
                                   width: 130,
@@ -526,67 +539,6 @@ class _QuizScreenState extends State<QuizScreen> {
         ],
       ),
     );
-
-    // AlertDialog(
-    //   backgroundColor: OneColors.white,
-    //   shape: RoundedRectangleBorder(
-    //     borderRadius: BorderRadius.circular(20),
-    //   ),
-    //   title: Text(
-    //     "$title\nBạn đã dành được ${score * 10} điểm",
-    //     style: TextStyle(color: isPassed ? Colors.green : Colors.redAccent),
-    //     textAlign: TextAlign.center,
-    //   ),
-    //   content: SizedBox(
-    //     height: MediaQuery.of(context).size.height * 0.4,
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //       children: [
-    //         isPassed ? OneLoading.quiz_pass : OneLoading.quiz_false,
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //           children: [
-    //             ElevatedButton(
-    //               style: ElevatedButton.styleFrom(
-    //                 shape: RoundedRectangleBorder(
-    //                   borderRadius: BorderRadius.circular(10),
-    //                 ),
-    //               ),
-    //               child: const Text("Chơi lại"),
-    //               onPressed: () {
-    //                 Navigator.pop(context);
-    //                 setState(() {
-    //                   currentQuestionIndex = 0;
-    //                   score = 0;
-    //                   selectedAnswer = null;
-    //                 });
-    //               },
-    //             ),
-    //             const SizedBox(
-    //               width: 15,
-    //             ),
-    //             ElevatedButton(
-    //               style: ElevatedButton.styleFrom(
-    //                 shape: RoundedRectangleBorder(
-    //                   borderRadius: BorderRadius.circular(10),
-    //                 ),
-    //               ),
-    //               child: const Text("Thoát"),
-    //               onPressed: () {
-    //                 Get.to(() => const EntryPoint(), curve: Curves.linear, transition: Transition.rightToLeft);
-    //                 setState(() {
-    //                   currentQuestionIndex = 0;
-    //                   score = 0;
-    //                   selectedAnswer = null;
-    //                 });
-    //               },
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 
   Padding _buildButtonPlayAgain() {

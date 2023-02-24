@@ -113,7 +113,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
 
   Widget _buildHeader(BuildContext context, List<dynamic> result) {
     return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.height * 0.15,
+      expandedHeight: MediaQuery.of(context).size.height * 0.2,
       leading: const SizedBox(),
       floating: false,
       pinned: true,
