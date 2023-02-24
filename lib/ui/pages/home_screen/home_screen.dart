@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildTitle(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.height * 0.15,
+      expandedHeight: MediaQuery.of(context).size.height * 0.165,
       leading: const SizedBox(),
       floating: false,
       pinned: true,
@@ -76,8 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   SliverToBoxAdapter _buildPlanetsAnimate(BuildContext context) {
-    double sizeHeight = MediaQuery.of(context).size.height;
-    double sizeWidth = MediaQuery.of(context).size.width;
+    final Size size = MediaQuery.of(context).size;
+    final double sizeHeight = size.height;
+    final double sizeWidth = size.width;
     return SliverToBoxAdapter(
       child: Padding(
           padding: const EdgeInsets.only(left: 0, right: 10, top: 20, bottom: 70),
@@ -190,8 +191,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              Get.to(() => const LocalAndWebObjectsWidget(argument: "https://github.com/TuanVuuuu/tuanvu_assets/blob/tuanvu_03022023/assets/3d_images/satellite/animated_moon.glb?raw=true"),
-                                                  curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                                              Get.to(
+                                                  () => const LocalAndWebObjectsWidget(
+                                                      argument: "https://github.com/TuanVuuuu/tuanvu_assets/blob/tuanvu_03022023/assets/3d_images/satellite/animated_moon.glb?raw=true"),
+                                                  curve: Curves.linear,
+                                                  transition: Transition.rightToLeft,
+                                                  duration: const Duration(milliseconds: 200));
                                             },
                                             child: Text(
                                               "Let's go!",
@@ -311,168 +316,195 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 330,
             width: MediaQuery.of(context).size.width,
-            child: StreamBuilder(
-                stream: data.snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {}
-                  if (snapshot.hasData) {
-                    return CarouselSlider.builder(
-                      options: CarouselOptions(
-                        height: 350,
-                        autoPlay: false,
-                        reverse: true,
-                        viewportFraction: 0.5,
-                        enlargeCenterPage: true,
-                      ),
-                      itemCount: snapshot.data?.docs.length,
-                      itemBuilder: (context, index, realIndex) {
-                        final DocumentSnapshot records = snapshot.data!.docs[index];
-
-                        // Image colors
-                        var colors = records["image2D"]["colors"];
-                        String colorModel = colors["colorModel"];
-                        String colorGradientTop = colors["colorGradient"]["top"];
-                        String colorGradientBottom = colors["colorGradient"]["bottom"];
-
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 10.0, right: 10, left: 10, bottom: 10),
-                          child: SizedBox(
-                              child: Stack(
-                            children: [
-                              // Tên + giới thiệu vắn tắt
-                              Padding(
-                                padding: const EdgeInsets.only(top: 48.0, left: 17),
-                                // INFO IMAGE
-                                child: Container(
-                                  height: 250,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(40)),
-                                    boxShadow: [
-                                      OneWidget.boxshadow_offset_5, //BoxShadow
-                                      OneWidget.boxshadow_offset_0, //BoxShadow
-                                    ],
-                                  ),
-
-                                  // Card với màu gradient
-                                  child: Container(
-                                    height: 252,
-                                    width: 171,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Color(int.parse(colorGradientBottom)),
-                                          Color(int.parse(colorGradientTop)),
-                                        ],
-                                        begin: Alignment.bottomRight,
-                                        end: Alignment.topLeft,
-                                      ),
-                                      borderRadius: const BorderRadius.all(Radius.circular(40)),
-                                    ),
-
-                                    // Info Planets + "Xem thêm" Button
-                                    child: Stack(children: [
-                                      Container(
-                                        margin: const EdgeInsets.only(left: 10, right: 10, top: 90, bottom: 30),
-                                        decoration: const BoxDecoration(
-                                            color: OneColors.white,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                              bottomLeft: Radius.circular(30),
-                                              bottomRight: Radius.circular(30),
-                                            ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: OneColors.black,
-                                                offset: Offset(0.0, 3.0),
-                                                blurRadius: 5.0,
-                                                spreadRadius: 0.5,
-                                              )
-                                            ]),
-                                        // Name and Info planets
-                                        child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    records["name"] ?? "Trái đất",
-                                                    style: OneTheme.of(context).body1,
-                                                  ),
-                                                  const SizedBox(height: 5),
-                                                  Text(
-                                                    records["info"] ?? "Trái đất, hay còn được gọi là Địa cầu (Tiếng Anh : Earth, Tiếng Hán : ...",
-                                                    style: OneTheme.of(context).body1.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
-                                                    textAlign: TextAlign.justify,
-                                                    maxLines: 4,
-                                                    overflow: TextOverflow.ellipsis,
-                                                  ),
-                                                  const SizedBox(height: 20),
-                                                ],
-                                              ),
-                                            )),
-                                      ),
-                                      //Button "Xem thêm"
-                                      Padding(
-                                          padding: const EdgeInsets.only(top: 170),
-                                          child: Center(
-                                            child: Container(
-                                              decoration: const BoxDecoration(shape: BoxShape.circle, color: OneColors.white, boxShadow: [
-                                                BoxShadow(
-                                                  color: OneColors.black,
-                                                  offset: Offset(0.0, 5.0),
-                                                  blurRadius: 5.0,
-                                                  spreadRadius: 0.5,
-                                                )
-                                              ]),
-                                              height: 40,
-                                              width: 40,
-                                              child: InkWell(
-                                                onTap: (() {
-                                                  Get.to(
-                                                      () => PlanetDetailScreen(
-                                                            argument: records,
-                                                          ),
-                                                      curve: Curves.linear,
-                                                      transition: Transition.rightToLeft);
-                                                }),
-                                                child: Container(
-                                                  margin: const EdgeInsets.all(3),
-                                                  decoration: const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: OneColors.amber,
-                                                  ),
-                                                  child: const Center(
-                                                    child: Icon(
-                                                      Icons.arrow_forward,
-                                                      color: OneColors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )),
-                                    ]),
-                                  ),
-                                ),
-                              ),
-
-                              // IMAGE 2D của các hành tinh
-                              _buildImagePlanets2D(colorModel, records, records["image2D"]["imageUrl"])
-                            ],
-                          )),
-                        );
-                      },
-                    );
-                  }
-                  return Container();
-                }),
+            child: FutureBuilder<List<DocumentSnapshot>>(
+              future: _getPlanetData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: OneLoading.space_loading_larget,
+                  );
+                }
+                if (snapshot.hasData) {
+                  return _buildPlanetCarousel(snapshot.data!);
+                }
+                return Container();
+              },
+            ),
           ),
         ],
       ),
     );
+  }
+
+  Future<List<DocumentSnapshot>> _getPlanetData() async {
+    QuerySnapshot querySnapshot = await data.get();
+    return querySnapshot.docs;
+  }
+
+  Widget _buildPlanetCarousel(List<DocumentSnapshot> planets) {
+    return CarouselSlider.builder(
+      options: CarouselOptions(
+        height: 350,
+        autoPlay: false,
+        reverse: true,
+        viewportFraction: 0.5,
+        enlargeCenterPage: true,
+      ),
+      itemCount: planets.length,
+      itemBuilder: (context, index, realIndex) {
+        final DocumentSnapshot records = planets[index];
+
+        // Image colors
+        var colors = records["image2D"]["colors"];
+        String colorModel = colors["colorModel"];
+        String colorGradientTop = colors["colorGradient"]["top"];
+        String colorGradientBottom = colors["colorGradient"]["bottom"];
+
+        return Padding(
+          padding: const EdgeInsets.only(top: 10.0, right: 10, left: 10, bottom: 10),
+          child: SizedBox(
+            child: Stack(
+              children: [
+                // Tên + giới thiệu vắn tắt
+                Padding(
+                  padding: const EdgeInsets.only(top: 48.0, left: 17),
+                  // INFO IMAGE
+                  child: _buildPlanetInfoCard(colorGradientBottom, colorGradientTop, records, context),
+                ),
+
+                // IMAGE 2D của các hành tinh
+                _buildImagePlanets2D(colorModel, records, records["image2D"]["imageUrl"])
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Container _buildPlanetInfoCard(String colorGradientBottom, String colorGradientTop, DocumentSnapshot<Object?> records, BuildContext context) {
+    return Container(
+      height: 250,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(40)),
+        boxShadow: [
+          OneWidget.boxshadow_offset_5, //BoxShadow
+          OneWidget.boxshadow_offset_0, //BoxShadow
+        ],
+      ),
+
+      // Card với màu gradient
+      child: Container(
+        height: 252,
+        width: 171,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(int.parse(colorGradientBottom)),
+              Color(int.parse(colorGradientTop)),
+            ],
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(40)),
+        ),
+
+        // Info Planets + "Xem thêm" Button
+        child: Stack(children: [
+          Container(
+            margin: const EdgeInsets.only(left: 10, right: 10, top: 90, bottom: 30),
+            decoration: const BoxDecoration(
+                color: OneColors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: OneColors.black,
+                    offset: Offset(0.0, 3.0),
+                    blurRadius: 5.0,
+                    spreadRadius: 0.5,
+                  )
+                ]),
+            // Name and Info planets
+            child: _buildNameAndInfo(records, context),
+          ),
+          //Button "Xem thêm"
+          _buildMoreButton(records),
+        ]),
+      ),
+    );
+  }
+
+  Padding _buildMoreButton(DocumentSnapshot<Object?> records) {
+    return Padding(
+        padding: const EdgeInsets.only(top: 170),
+        child: Center(
+          child: Container(
+            decoration: const BoxDecoration(shape: BoxShape.circle, color: OneColors.white, boxShadow: [
+              BoxShadow(
+                color: OneColors.black,
+                offset: Offset(0.0, 5.0),
+                blurRadius: 5.0,
+                spreadRadius: 0.5,
+              )
+            ]),
+            height: 40,
+            width: 40,
+            child: InkWell(
+              onTap: (() {
+                Get.to(
+                    () => PlanetDetailScreen(
+                          argument: records,
+                        ),
+                    curve: Curves.linear,
+                    transition: Transition.rightToLeft);
+              }),
+              child: Container(
+                margin: const EdgeInsets.all(3),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: OneColors.amber,
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: OneColors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ));
+  }
+
+  Align _buildNameAndInfo(DocumentSnapshot<Object?> records, BuildContext context) {
+    return Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                records["name"] ?? "Trái đất",
+                style: OneTheme.of(context).body1,
+              ),
+              const SizedBox(height: 5),
+              Text(
+                records["info"] ?? "Trái đất, hay còn được gọi là Địa cầu (Tiếng Anh : Earth, Tiếng Hán : ...",
+                style: OneTheme.of(context).body1.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                textAlign: TextAlign.justify,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ));
   }
 
   Container _buildImagePlanets2D(String colorModel, DocumentSnapshot<Object?> records, String imageUrl) {
@@ -499,24 +531,6 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: OneColors.transparent,
         radius: (idName != "saotho") ? 60 : 80,
         child: CachedImage(imageUrl: imageUrl),
-        // Image.network(imageUrl,
-        //     loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-        //       // if (loadingProgress?.cumulativeBytesLoaded != null) {
-        //       //   WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
-        //       //         Future.delayed(const Duration(milliseconds: 1600), () {
-        //       //           checkLoadImage = false;
-        //       //         });
-        //       //       }));
-        //       // } else {}
-        //       if (loadingProgress == null) return child;
-        //       return Center(
-        //         child: CircularProgressIndicator(
-        //           color: OneColors.brandVNP,
-        //           value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-        //         ),
-        //       );
-        //     },
-        //     errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found)),
       ),
     );
   }

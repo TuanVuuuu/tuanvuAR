@@ -9,6 +9,7 @@ import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
 import 'package:flutter_application_1/src/models/one_list_colors.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
+import 'package:flutter_application_1/src/widgets/search_button.dart';
 import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_detail_screen.dart';
 import 'package:get/get.dart';
 
@@ -56,104 +57,109 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
       ),
     );
 
-    double sizeHeight = MediaQuery.of(context).size.height;
-    double sizeWidth = MediaQuery.of(context).size.width;
-    final ScrollController scrollController = ScrollController();
-    Random random = Random();
+    final size = MediaQuery.of(context).size;
+    final scrollController = ScrollController();
+    final random = Random();
 
     return AppScaffold(
       floatingActionButton: OneFloatToTop(scrollController: scrollController),
-      body: _discoverDataList.isEmpty
-          ? Container(
-              decoration: OneWidget.background_bg3,
-              child: Scrollbar(
-                child: CustomScrollView(controller: scrollController, slivers: <Widget>[
-                  BuildDiscoverHeader(context),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                        padding: const EdgeInsets.only(top: 200),
-                        child: Column(
-                          children: [
-                            OneLoading.space_loading_larget,
-                            Text(
-                              "Đang tải dữ liệu",
-                              style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                            )
-                          ],
-                        )),
-                  )
-                ]),
-              ),
-            )
-          : Container(
-              decoration: OneWidget.background_bg3,
-              child: Scrollbar(
-                child: CustomScrollView(
-                  controller: scrollController,
-                  physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics(),
-                  ),
-                  slivers: <Widget>[
-                    BuildDiscoverHeader(context),
-                    !isSearchBar ? const SliverToBoxAdapter(child: SizedBox()) : _buildSearchField(context),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(childCount: _filteredDataList.length, (context, index) {
-                        var records = _filteredDataList[index];
-                        String? name = records["name"];
-                        String? image2DUrl = records["images"]["image2DUrl"];
-                        String? info = records["info"];
-                        List tags = records["tags"];
-                        int indexRandom = random.nextInt(OneColorRamdom.colors.length);
-                        return InkWell(
-                          onTap: () {
-                            Get.to(
-                                () => DiscoveryDetailScreen(
-                                      argument: records,
-                                      color: OneColorRamdom.colors[indexRandom],
-                                    ),
-                                curve: Curves.linear,
-                                transition: Transition.rightToLeft);
-                          },
+      body: _discoverDataList.isEmpty ? _buildLoadingView(context, scrollController) : _buildDiscoverListView(context, size, scrollController, random),
+    );
+  }
+
+  Widget _buildLoadingView(BuildContext context, ScrollController scrollController) {
+    return Container(
+      decoration: OneWidget.background_bg3,
+      child: Scrollbar(
+        child: CustomScrollView(controller: scrollController, slivers: <Widget>[
+          buildDiscoverHeader(context),
+          SliverToBoxAdapter(
+            child: Padding(
+                padding: const EdgeInsets.only(top: 200),
+                child: Column(
+                  children: [
+                    OneLoading.space_loading_larget,
+                    Text(
+                      "Đang tải dữ liệu",
+                      style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+                    )
+                  ],
+                )),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  Widget _buildDiscoverListView(BuildContext context, Size size, ScrollController scrollController, Random random) {
+    return Container(
+      decoration: OneWidget.background_bg3,
+      child: Scrollbar(
+        child: CustomScrollView(
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          slivers: <Widget>[
+            buildDiscoverHeader(context),
+            !isSearchBar ? const SliverToBoxAdapter(child: SizedBox()) : _buildSearchField(context),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(childCount: _filteredDataList.length, (context, index) {
+                var records = _filteredDataList[index];
+                String? name = records["name"];
+                String? image2DUrl = records["images"]["image2DUrl"];
+                String? info = records["info"];
+                List tags = records["tags"];
+                int indexRandom = random.nextInt(OneColorRamdom.colors.length);
+                return InkWell(
+                  onTap: () {
+                    Get.to(
+                        () => DiscoveryDetailScreen(
+                              argument: records,
+                              color: OneColorRamdom.colors[indexRandom],
+                            ),
+                        curve: Curves.linear,
+                        transition: Transition.rightToLeft);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: size.height * 0.16,
+                          width: size.width - 40,
+                          decoration: BoxDecoration(color: OneColorRamdom.colors[indexRandom].withOpacity(0.7), borderRadius: BorderRadius.circular(15)),
                           child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                            margin: const EdgeInsets.all(8),
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
                             child: Row(
                               children: [
-                                Container(
-                                  height: sizeHeight * 0.16,
-                                  width: sizeWidth - 40,
-                                  decoration: BoxDecoration(color: OneColorRamdom.colors[indexRandom].withOpacity(0.7), borderRadius: BorderRadius.circular(15)),
-                                  child: Container(
-                                    margin: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 2,
-                                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                            // Tên ngôi sao
-                                            _buildName(name, context),
-                                            // thông tin ngôi sao
-                                            _buildInfo(info, context),
-                                            // tags
-                                            _buildListTags(tags, context),
-                                          ]),
-                                        ),
-                                        _buildImages(sizeHeight, image2DUrl),
-                                      ],
-                                    ),
-                                  ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                    // Tên ngôi sao
+                                    _buildName(name, context),
+                                    // thông tin ngôi sao
+                                    _buildInfo(info, context),
+                                    // tags
+                                    _buildListTags(tags, context),
+                                  ]),
                                 ),
+                                _buildImages(size.height, image2DUrl),
                               ],
                             ),
                           ),
-                        );
-                      }),
-                    )
-                  ],
-                ),
-              ),
-            ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -228,45 +234,34 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
     );
   }
 
-  SliverToBoxAdapter BuildDiscoverHeader(BuildContext context) {
+  SliverToBoxAdapter buildDiscoverHeader(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(top: 50, bottom: 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 Navigator.pop(context);
               },
-              icon: const Icon(Icons.arrow_back_ios),
-              color: OneColors.white,
+              child: const Icon(
+                Icons.arrow_back_ios,
+                color: OneColors.white,
+              ),
             ),
-            Text("Các vì sao", style: OneTheme.of(context).header.copyWith(color: OneColors.white)),
-            !isSearchBar
-                ? IconButton(
-                    icon: const Icon(
-                      Icons.search,
-                      size: 30,
-                      color: OneColors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isSearchBar = true;
-                      });
-                    },
-                  )
-                : TextButton(
-                    child: Text(
-                      "Đóng",
-                      style: OneTheme.of(context).title2.copyWith(color: OneColors.white),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isSearchBar = false;
-                      });
-                    },
-                  ),
+            Text(
+              "Các vì sao",
+              style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+            ),
+            SearchButton(
+              isSearchBar: isSearchBar,
+              onPressed: () {
+                setState(() {
+                  isSearchBar = !isSearchBar;
+                });
+              },
+            ),
           ],
         ),
       ),
@@ -293,7 +288,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
             ],
           ),
           child: TextField(
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9a-zA-Z ]'))],
+            // inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9a-zA-Z ]'))],
             maxLength: 28,
             controller: _searchTextController,
             cursorColor: OneColors.white,
@@ -321,15 +316,9 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
             ),
             onChanged: (text) {
               searchData(text);
-              if (text.isNotEmpty) {
-                setState(() {
-                  _isCleared = true;
-                });
-              } else {
-                setState(() {
-                  _isCleared = false;
-                });
-              }
+              setState(() {
+                _isCleared = text.isNotEmpty;
+              });
             },
           ),
         ),

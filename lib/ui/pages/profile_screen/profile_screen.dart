@@ -40,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
           child: CustomScrollView(
         physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         slivers: [
-          _buildTitleHeader(context),
+          _buildHeader(context),
           _buildBody(context, sizeHeight),
         ],
       )),
@@ -50,6 +50,7 @@ class ProfileScreen extends StatelessWidget {
   SliverToBoxAdapter _buildBody(BuildContext context, double sizeHeight) {
     return SliverToBoxAdapter(
         child: Container(
+      margin: const EdgeInsets.symmetric(horizontal: 15.0),
       decoration: BoxDecoration(
         color: OneColors.black.withOpacity(0.4),
         borderRadius: BorderRadius.circular(20),
@@ -66,7 +67,7 @@ class ProfileScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: OneColors.black.withOpacity(0.7),
                   border: Border.all(
-                    color: OneColors.textOrange,
+                    color: OneColors.blue200,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(25),
@@ -179,7 +180,7 @@ class ProfileScreen extends StatelessWidget {
             horizontal: 10,
           ),
           decoration: BoxDecoration(
-            color: OneColors.textOrange,
+            color: OneColors.blue200,
             borderRadius: BorderRadius.circular(25),
           ),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -207,15 +208,30 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  SliverToBoxAdapter _buildTitleHeader(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 20),
-        child: Text(
-          "Đố vui vùng Astronomy",
-          style: OneTheme.of(context).header.copyWith(
-                color: OneColors.white,
-              ),
+  Widget _buildHeader(
+    BuildContext context,
+  ) {
+    return SliverAppBar(
+      expandedHeight: MediaQuery.of(context).size.height * 0.07,
+      leading: const SizedBox(),
+      floating: false,
+      pinned: true,
+      backgroundColor: OneColors.transparent,
+      elevation: 0,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        background: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.07,
+            left: 20,
+            right: 20,
+          ),
+          child: Text(
+            "Đố vui vùng Astronomy",
+            style: OneTheme.of(context).header.copyWith(
+                  color: OneColors.white,
+                ),
+          ),
         ),
       ),
     );
@@ -225,7 +241,7 @@ class ProfileScreen extends StatelessWidget {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          backgroundColor: OneColors.textOrange,
+          backgroundColor: OneColors.blue200,
         ),
         onPressed: () {
           Get.to(() => const QuizScreen());

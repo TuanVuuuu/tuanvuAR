@@ -22,7 +22,7 @@ class CachedImage extends StatelessWidget {
       imageUrl: imageUrl,
       key: UniqueKey(),
       placeholder: (context, url) => progress == true ? const CircularProgressIndicator() : const SizedBox(),
-      errorWidget: (context, url, error) => const Icon(Icons.error),
+      errorWidget: (context, url, error) => const SizedBox(),
     );
   }
 }
