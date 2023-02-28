@@ -18,6 +18,7 @@ class OneImages {
   static const String shake_phone = "assets/images/shake_phone.png";
   static const String telescope = "assets/images/telescope.png";
   static const String triangle = "assets/images/triangle.png";
+  static const String login_svg = "assets/images/login_svg.png";
   static const String questions_undraw = "assets/icons/undraw_questions.svg";
 
   static const String Earth = "assets/images/planets_animate/Earth.png";
@@ -29,12 +30,17 @@ class OneImages {
   static const String Venus = "assets/images/planets_animate/Venus.png";
   static const String Neptune = "assets/images/planets_animate/Neptune.png";
   static const String Uranus = "assets/images/planets_animate/Uranus.png";
+  static const String galaxy = "assets/images/planets_animate/galaxy.png";
+  static const String solar_system = "assets/images/planets_animate/solar_system.png";
+  static const String doomsday = "assets/images/planets_animate/doomsday.png";
 
   static const String bg = "assets/images/bg/bg.png";
   static const String bg1 = "assets/images/bg/bg1.png";
   static const String bg2 = "assets/images/bg/bg2.png";
   static const String bg3 = "assets/images/bg/bg3.png";
   static const String bg4 = "assets/images/bg/bg4.png";
+
+  static const String avatars = "assets/avatars/avatar_monkey.png";
 
   static const String menu_button = "assets/icons_river/menu_button.riv";
   static const String icons = "assets/icons_river/icons.riv";

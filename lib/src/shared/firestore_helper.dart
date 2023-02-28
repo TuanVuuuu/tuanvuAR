@@ -58,31 +58,10 @@ Future<List<Map<String, dynamic>>> getPlanetsData() async {
 }
 
 Future<List<Question>> getQuestionsData() async {
-  // CollectionReference questiondata = FirebaseFirestore.instance.collection("questiondata");
-  // List<DocumentSnapshot> items = [];
-  // List<Map<String, dynamic>> dataList = [];
-  // QuerySnapshot snapshot = await questiondata.get();
-  // for (var element in snapshot.docs) {
-  //   var mapData = element.data() as Map<String, dynamic>;
-  //   dataList.add(mapData);
-  //   print(mapData);
-  // }
-  // return dataList;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   QuerySnapshot querySnapshot = await firestore.collection('questionData').get();
   return querySnapshot.docs.map((doc) => questionFromJson(json.encode(doc.data()))).toList();
 }
-
-// Future<List<Map<String, dynamic>>> getQuestionsData() async {
-//   List<Question> questions = [];
-// // lấy dữ liệu từ Firebase
-//   FirebaseFirestore.instance.collection('questionData').get().then((querySnapshot) {
-//     querySnapshot.docs.forEach((doc) {
-//       questions.add(Question.fromJson(doc.data()));
-//     });
-//   });
-
-// }
 
 Question questionFromJson(String jsonStr) {
   Map<String, dynamic> json = jsonDecode(jsonStr);
@@ -93,4 +72,17 @@ Question questionFromJson(String jsonStr) {
     tags: json['explanation'],
     more: json['correctAnswer'],
   );
+}
+
+Future<List<Map<String, dynamic>>> getUserData() async {
+  CollectionReference usersdata = FirebaseFirestore.instance.collection("users");
+  List<DocumentSnapshot> items = [];
+  List<Map<String, dynamic>> dataList = [];
+  QuerySnapshot snapshot = await usersdata.get();
+  for (var element in snapshot.docs) {
+    var mapData = element.data() as Map<String, dynamic>;
+    dataList.add(mapData);
+    //print(mapData);
+  }
+  return dataList;
 }

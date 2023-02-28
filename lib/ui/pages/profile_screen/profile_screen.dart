@@ -1,22 +1,44 @@
 // ignore_for_file: must_be_immutable, unused_element
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
-import 'package:flutter_application_1/src/components/shared/add_data_news.dart';
-// import 'package:flutter_application_1/src/components/shared/add_data_questions.dart';
-// import 'package:flutter_application_1/src/components/shared/add_planets_data.dart';
-import 'package:flutter_application_1/ui/pages/quiz_screen/quiz_screen.dart';
+import 'package:flutter_application_1/src/shared/firestore_helper.dart';
+import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
+import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_screen.dart';
+import 'package:flutter_application_1/ui/pages/auth_screen/user_detail_info_screen.dart';
+import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_screen.dart';
+import 'package:flutter_application_1/ui/pages/quiz_manager_screen/quiz_manager_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   String tagsButton = "";
+  final User? users = FirebaseAuth.instance.currentUser;
+  List<Map<String, dynamic>> _usersdataDataList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData().then((usersdata) {
+      setState(() {
+        _usersdataDataList = usersdata;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final CollectionReference data = FirebaseFirestore.instance.collection("homedata");
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -28,6 +50,7 @@ class ProfileScreen extends StatelessWidget {
     );
 
     double sizeHeight = MediaQuery.of(context).size.height;
+    double sizeWidth = MediaQuery.of(context).size.width;
     return AppScaffold(
         body: Container(
       decoration: const BoxDecoration(
@@ -41,132 +64,106 @@ class ProfileScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         slivers: [
           _buildHeader(context),
-          _buildBody(context, sizeHeight),
+          _buildListItems(sizeWidth),
+          _buildGame(context, sizeHeight),
+          _buildTitle(context, "Dành cho bạn"),
+          _buildGridViews(),
+          _buildTitle(context, "Mới nhất"),
+          CardNewsWithTags(
+            data: data,
+            tagsButton: tagsButton,
+            cardLength: 1,
+            style: true,
+          )
         ],
       )),
     ));
   }
 
-  SliverToBoxAdapter _buildBody(BuildContext context, double sizeHeight) {
+  SliverToBoxAdapter _buildTitle(BuildContext context, String title) {
     return SliverToBoxAdapter(
-        child: Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15.0),
-      decoration: BoxDecoration(
-        color: OneColors.black.withOpacity(0.4),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTitleQuestion(context),
-          Stack(
-            children: [
-              Container(
-                height: sizeHeight * 0.3,
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                decoration: BoxDecoration(
-                  color: OneColors.black.withOpacity(0.7),
-                  border: Border.all(
-                    color: OneColors.blue200,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
-              _buildCardTitle(sizeHeight, context),
-              Padding(
-                padding: EdgeInsets.only(top: sizeHeight * 0.21, left: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 10),
-                    Text(
-                      "Môn : Thiên văn học",
-                      style: OneTheme.of(context).title2.copyWith(
-                            color: OneColors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "Chủ đề : Các Hành tinh trong Hệ Mặt Trời",
-                      style: OneTheme.of(context).title2.copyWith(
-                            color: OneColors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Tổng câu hỏi : 10",
-                            style: OneTheme.of(context).title2.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "Giới thiệu tổng quan",
-                            style: OneTheme.of(context).title2.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [_buildButtonStart(context)],
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Trong trò chơi này, người chơi sẽ phải trả lời các câu hỏi liên quan đến thiên văn học. Nó bao gồm các câu hỏi về các hành tinh, ngôi sao, thiên thể và hiện tượng thiên văn, cũng như các khái niệm và thuật ngữ liên quan đến thiên văn học.",
-                  textAlign: TextAlign.justify,
-                  style: OneTheme.of(context).title2.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
-                ),
-                const SizedBox(height: 20),
-                /////////////////////////////////ADD DATA///////////////////////////////////
-                //_addData(),
-                /////////////////////////////////ADD DATA///////////////////////////////////
-              ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
             ),
-          )
-        ],
+          ],
+        ),
       ),
-    ));
+    );
   }
 
-  Center _addData() {
-    return Center(
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(25)),
-            backgroundColor: OneColors.textOrange,
-          ),
-          onPressed: () {
-            Get.to(
-              () => const AddNewsData(),
-              //const AddArtificialData()
-              //const AddQuestionsData(),
-            );
-          },
-          child: const Text("Add data question")),
+  SliverGrid _buildGridViews() {
+    return SliverGrid(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+      ),
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          List title = ["Vệ tinh", "Nhân tạo", "Hệ Mặt trời", "Ngân Hà", "Sao chổi", "Ngày tận thế"];
+          List items = [OneImages.Mercury, OneImages.rocket1, OneImages.solar_system, OneImages.galaxy, OneImages.saochoi, OneImages.doomsday];
+          List ontap = [
+            () {
+              Get.to(() => const DiscoveryScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+            },
+            () {
+              Get.to(() => const ArtificialScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+            },
+            () {},
+            () {},
+            () {},
+            () {},
+          ];
+          return InkWell(
+            onTap: ontap[index],
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 30),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: OneColors.white.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(height: 60, width: 60, child: Image.asset(items[index])),
+                      Text(title[index], style: OneTheme.of(context).body2.copyWith(color: OneColors.black)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+        childCount: 6,
+      ),
+    );
+  }
+
+  SliverToBoxAdapter _buildGame(BuildContext context, double sizeHeight) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Trò chơi",
+              style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+            ),
+            InkWell(
+                onTap: () {
+                  Get.to(() => QuizManagerScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                },
+                child: _buildCardTitle(sizeHeight, context)),
+          ],
+        ),
+      ),
     );
   }
 
@@ -175,12 +172,12 @@ class ProfileScreen extends StatelessWidget {
       children: [
         Container(
           height: sizeHeight * 0.2,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.only(top: 10, bottom: 20),
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
           ),
           decoration: BoxDecoration(
-            color: OneColors.blue200,
+            color: OneColors.textOrange,
             borderRadius: BorderRadius.circular(25),
           ),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -191,77 +188,146 @@ class ProfileScreen extends StatelessWidget {
                 style: OneTheme.of(context).header.copyWith(color: OneColors.white),
               ),
             ),
-            Expanded(flex: 1, child: SvgPicture.asset(OneImages.questions_undraw)),
+            Expanded(
+              flex: 1,
+              child: SvgPicture.asset(OneImages.questions_undraw),
+            ),
           ]),
         ),
       ],
     );
   }
 
-  Padding _buildTitleQuestion(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Text(
-        "Kiểm tra sự hiểu biết của bạn về vũ trụ thông qua một số câu hỏi!",
-        style: OneTheme.of(context).title1.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
-      ),
-    );
-  }
-
-  Widget _buildHeader(
-    BuildContext context,
-  ) {
-    return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.height * 0.07,
-      leading: const SizedBox(),
-      floating: false,
-      pinned: true,
-      backgroundColor: OneColors.transparent,
-      elevation: 0,
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: true,
-        background: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.07,
-            left: 20,
-            right: 20,
-          ),
-          child: Text(
-            "Đố vui vùng Astronomy",
-            style: OneTheme.of(context).header.copyWith(
-                  color: OneColors.white,
-                ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildButtonStart(BuildContext context) {
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          backgroundColor: OneColors.blue200,
-        ),
-        onPressed: () {
-          Get.to(() => const QuizScreen());
+  SliverToBoxAdapter _buildListItems(double sizeWidth) {
+    return SliverToBoxAdapter(
+        child: SizedBox(
+      width: sizeWidth,
+      height: 60,
+      child: ListView.builder(
+        itemCount: 4,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          List itemsTitle = [
+            Text("Tài khoản", style: OneTheme.of(context).body2),
+            Text("Yêu thích", style: OneTheme.of(context).body2),
+            Text("Cài đặt", style: OneTheme.of(context).body2),
+            Text("Hỗ trợ", style: OneTheme.of(context).body2),
+          ];
+          List items = [
+            const Icon(
+              Icons.contact_page,
+              color: OneColors.blue300,
+            ),
+            const Icon(
+              Icons.favorite,
+              color: OneColors.pink,
+            ),
+            const Icon(
+              Icons.build,
+              color: OneColors.black,
+            ),
+            const Icon(
+              Icons.contact_support,
+              color: OneColors.blue200,
+            ),
+          ];
+          List ontap = [
+            () {
+              Get.to(() => const UserDetailInfoScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+            },
+            () {},
+            () {},
+            () {},
+          ];
+          return InkWell(
+            onTap: ontap[index],
+            child: Container(
+              height: 60,
+              width: 80,
+              margin: EdgeInsets.only(left: (sizeWidth - 80 * 4) / 5),
+              decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  items[index],
+                  itemsTitle[index],
+                ],
+              ),
+            ),
+          );
         },
-        child: const Text("Bắt đầu"));
+      ),
+    ));
+  }
+
+  SliverToBoxAdapter _buildHeader(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+        child: Container(
+          decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(25)),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 40, left: 20, bottom: 40),
+                child: Row(
+                  children: [
+                    _buildAvatars(),
+                    _buildNameAndEmail(context),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Column _buildNameAndEmail(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildUserName(
+          context,
+          "name",
+          OneTheme.of(context).body1.copyWith(color: OneColors.black),
+        ),
+        _buildUserName(
+          context,
+          "email",
+          OneTheme.of(context).body2.copyWith(color: OneColors.black),
+        ),
+      ],
+    );
+  }
+
+  Container _buildAvatars() {
+    return Container(
+      height: 50,
+      width: 50,
+      margin: const EdgeInsets.only(right: 15),
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: OneColors.blue300,
+      ),
+      child: Image.asset(OneImages.avatars),
+    );
+  }
+
+  Column _buildUserName(BuildContext context, String feild, style) {
+    return Column(
+      children: _usersdataDataList
+          .where((element) => element["email"] == users!.email)
+          .take(1)
+          .map(
+            (e) => Text(
+              "${e[feild]}",
+              style: style ?? OneTheme.of(context).header.copyWith(color: OneColors.white),
+            ),
+          )
+          .toList(),
+    );
   }
 }
-
-// ElevatedButton(
-//     onPressed: () {
-//       Get.to(() => const AddDiscoverData());
-//     },
-//     child: const Text("Add data discover")),
-// ElevatedButton(
-//     onPressed: () {
-//       Get.to(() => const AddPlanetsData());
-//     },
-//     child: const Text("Add data planets")),
-// ElevatedButton(
-//     onPressed: () {
-//       Get.to(() => const AddArtificialData());
-//     },
-//     child: const Text("Add data Aritificial")),
