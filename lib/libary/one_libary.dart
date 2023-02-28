@@ -4,6 +4,7 @@
 
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,8 +21,9 @@ import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags
 import 'package:flutter_application_1/src/widgets/one_news_widget/one_card_news_image.dart';
 import 'package:flutter_application_1/ui/entryPoint/entry_point.dart';
 import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_screen.dart';
+import 'package:flutter_application_1/ui/pages/auth_screen/login_manager.dart';
+import 'package:flutter_application_1/ui/pages/auth_screen/signin_screen.dart';
 import 'package:flutter_application_1/ui/pages/news_screen/detail_news_screen.dart';
-import 'package:flutter_application_1/ui/pages/profile_screen/profile_screen.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_svg/flutter_svg.dart';

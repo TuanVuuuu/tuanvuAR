@@ -61,6 +61,10 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   flutter_downloader: ^1.10.2
   percent_indicator: ^4.2.2
+  firebase_auth: ^4.2.2
+  firebase_ml_vision: ^0.12.0+3
+  arcore_flutter_plugin: ^0.1.0
+  camera: ^0.10.3+2
 
 flutter_icons:
   android: "launcher_icon"
@@ -99,6 +103,7 @@ flutter:
     - assets/localModel/
     - assets/icons_river/
     - assets/icons/
+    - assets/avatars/
     
   #   - images/a_dot_ham.jpeg
 

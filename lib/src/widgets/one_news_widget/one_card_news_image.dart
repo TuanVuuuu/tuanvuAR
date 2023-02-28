@@ -12,11 +12,13 @@ class OneCardNewsImage extends StatelessWidget {
     required this.records,
     required this.dateFormat,
     this.checkimages,
+    this.style,
   }) : super(key: key);
 
   final DocumentSnapshot<Object?> records;
   final String dateFormat;
   bool? checkimages;
+  bool? style;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class OneCardNewsImage extends StatelessWidget {
                         style: theme.title1.copyWith(
                           overflow: TextOverflow.ellipsis,
                           fontSize: 17,
-                          color: OneColors.white,
+                          color: style != true ? OneColors.white : OneColors.black,
                         ),
                         maxLines: checkimages != false ? 2 : 1,
                         textAlign: TextAlign.left,
@@ -81,7 +83,7 @@ class OneCardNewsImage extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: theme.body2.copyWith(
                           overflow: TextOverflow.ellipsis,
-                          color: OneColors.white,
+                          color: style != true ? OneColors.white : OneColors.black,
                         ),
                       ),
                     ],
@@ -93,9 +95,9 @@ class OneCardNewsImage extends StatelessWidget {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
-                          boxShadow: const [
+                          boxShadow: [
                             BoxShadow(
-                              color: OneColors.white,
+                              color: style != true ? OneColors.white : OneColors.black,
                               blurRadius: 3,
                             ),
                           ],
@@ -137,7 +139,7 @@ class OneCardNewsImage extends StatelessWidget {
                             overflow: TextOverflow.clip,
                             fontSize: 12,
                             fontWeight: FontWeight.w300,
-                            color: OneColors.white,
+                            color:style != true ? OneColors.white : OneColors.black ,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -148,7 +150,7 @@ class OneCardNewsImage extends StatelessWidget {
                                   overflow: TextOverflow.clip,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w300,
-                                  color: OneColors.white,
+                                  color: style != true ? OneColors.white : OneColors.black,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               )
@@ -159,7 +161,7 @@ class OneCardNewsImage extends StatelessWidget {
                                       overflow: TextOverflow.clip,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w300,
-                                      color: OneColors.white,
+                                      color: style != true ? OneColors.white : OneColors.black,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   )
@@ -170,7 +172,7 @@ class OneCardNewsImage extends StatelessWidget {
                                           overflow: TextOverflow.clip,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w300,
-                                          color: OneColors.white,
+                                          color: style != true ? OneColors.white : OneColors.black,
                                         ),
                                         overflow: TextOverflow.ellipsis,
                                       )
@@ -181,7 +183,7 @@ class OneCardNewsImage extends StatelessWidget {
                                               overflow: TextOverflow.clip,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w300,
-                                              color: OneColors.white,
+                                              color: style != true ? OneColors.white : OneColors.black,
                                             ),
                                             overflow: TextOverflow.ellipsis,
                                           )
@@ -191,7 +193,7 @@ class OneCardNewsImage extends StatelessWidget {
                                               overflow: TextOverflow.clip,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w300,
-                                              color: OneColors.white,
+                                              color: style != true ? OneColors.white : OneColors.black,
                                             ),
                                             overflow: TextOverflow.ellipsis,
                                           )))),
@@ -217,7 +219,7 @@ class OneCardNewsImage extends StatelessWidget {
                             overflow: TextOverflow.clip,
                             fontSize: 12,
                             fontWeight: FontWeight.w300,
-                            color: OneColors.white,
+                            color: style != true ? OneColors.white : OneColors.black,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),

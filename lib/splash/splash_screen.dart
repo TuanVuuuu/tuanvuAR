@@ -13,6 +13,26 @@ class _SplashScreenState extends State<SplashScreen> {
   final CollectionReference modeldata = FirebaseFirestore.instance.collection("modeldata");
   final CollectionReference discoverdata = FirebaseFirestore.instance.collection("discoverdata");
 
+  void checkLoginStatus() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    if (user == null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const LoginManagerScreen(),
+        ),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const BottomNavigationBarWidget(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var dataList = getDiscoverData();
@@ -61,7 +81,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       "https://assets2.lottiefiles.com/packages/lf20_qogkaqmb.json",
                       onLoaded: (p0) {
                         Future.delayed(Duration(seconds: seconds), (() {
-                          Get.offAll(() => const BottomNavigationBarWidget(), curve: Curves.linear, duration: const Duration(seconds: 1));
+                          checkLoginStatus();
+                          // Get.offAll(() => const BottomNavigationBarWidget(), curve: Curves.linear, duration: const Duration(seconds: 1));
                         }));
                       },
                       errorBuilder: (context, error, stackTrace) {

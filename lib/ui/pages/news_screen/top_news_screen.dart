@@ -71,12 +71,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
             child: StreamBuilder(
                 stream: data.snapshots(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    const Center(
-                        child: OneLoadingShimmer(
-                      itemCount: 5,
-                    ));
-                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {}
                   if (snapshot.hasData) {
                     return ListView.builder(
                       physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
