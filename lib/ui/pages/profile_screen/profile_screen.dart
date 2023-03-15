@@ -1,4 +1,6 @@
 // ignore_for_file: must_be_immutable, unused_element
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,12 +27,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String tagsButton = "";
   final User? users = FirebaseAuth.instance.currentUser;
   List<Map<String, dynamic>> _usersdataDataList = [];
+  bool isLoading = true;
+  bool _isFetching = false;
+  StreamSubscription<int>? _subscription;
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    _isFetching = false;
+    super.dispose();
+  }
+
+  Future<void> fetchData() async {
+    _isFetching = true;
+    List<Map<String, dynamic>> fetchedData = await getUserData();
+    if (_isFetching) {
+      setState(() {
+        _usersdataDataList = fetchedData;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    fetchData();
+    _subscription = Stream<int>.periodic(const Duration(seconds: 0)).listen((_) => fetchData());
     getUserData().then((usersdata) {
       setState(() {
+        isLoading = false;
         _usersdataDataList = usersdata;
       });
     });
@@ -286,21 +311,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Column _buildNameAndEmail(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildUserName(
-          context,
-          "name",
-          OneTheme.of(context).body1.copyWith(color: OneColors.black),
-        ),
-        _buildUserName(
-          context,
-          "email",
-          OneTheme.of(context).body2.copyWith(color: OneColors.black),
-        ),
-      ],
-    );
+    return isLoading == false
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildUserName(
+                context,
+                "name",
+                OneTheme.of(context).body1.copyWith(color: OneColors.black),
+              ),
+              _buildUserName(
+                context,
+                "email",
+                OneTheme.of(context).body2.copyWith(color: OneColors.black),
+              ),
+            ],
+          )
+        : Column(
+            children: [
+              Text(
+                "Xin chào",
+                style: OneTheme.of(context).body1.copyWith(color: OneColors.black),
+              ),
+            ],
+          );
   }
 
   Container _buildAvatars() {

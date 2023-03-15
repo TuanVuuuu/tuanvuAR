@@ -54,183 +54,160 @@ class OneCardNewsImage extends StatelessWidget {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(
+    return SizedBox(
+      height: (checkimages != false) ? 163 : 104,
+      child: Row(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: theme.title1.copyWith(
-                          overflow: TextOverflow.ellipsis,
-                          fontSize: 17,
-                          color: style != true ? OneColors.white : OneColors.black,
-                        ),
-                        maxLines: checkimages != false ? 2 : 1,
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        records['titleDisplay'],
-                        maxLines: 4,
-                        textAlign: TextAlign.left,
-                        style: theme.body2.copyWith(
-                          overflow: TextOverflow.ellipsis,
-                          color: style != true ? OneColors.white : OneColors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              checkimages != false
-                  ? Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: style != true ? OneColors.white : OneColors.black,
-                              blurRadius: 3,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        height: 120,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: imageUrl.isNotEmpty
-                              ? Image.network(
-                                  imageUrl,
-                                  fit: BoxFit.cover,
-                                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return OneLoading.space_loading;
-                                  },
-                                  errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
-                                )
-                              : const SizedBox(),
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
-            ],
-          ),
-          const SizedBox(height: 10),
-          if (author.isNotEmpty)
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 70,
-              child: Row(
+          if (checkimages != false) Expanded(flex: 1, child: _buildImages(imageUrl)) else const SizedBox(),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(
-                    flex: 2,
-                    child: Row(
+                  _buildTitle(title, theme),
+                  _buildTitleDisplay(theme),
+                  const SizedBox(height: 10),
+                  if (author.isNotEmpty)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(
-                          '$author - ',
-                          style: theme.body2.copyWith(
-                            overflow: TextOverflow.clip,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w300,
-                            color:style != true ? OneColors.white : OneColors.black ,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        seconds < 60
-                            ? Text(
-                                '$seconds giây trước',
-                                style: theme.body2.copyWith(
-                                  overflow: TextOverflow.clip,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300,
-                                  color: style != true ? OneColors.white : OneColors.black,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            : (minutes < 60
-                                ? Text(
-                                    '$minutes phút trước',
-                                    style: theme.body2.copyWith(
-                                      overflow: TextOverflow.clip,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w300,
-                                      color: style != true ? OneColors.white : OneColors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  )
-                                : (hours < 24
-                                    ? Text(
-                                        '$hours giờ trước',
-                                        style: theme.body2.copyWith(
-                                          overflow: TextOverflow.clip,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w300,
-                                          color: style != true ? OneColors.white : OneColors.black,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      )
-                                    : (days < 7
-                                        ? Text(
-                                            '$days ngày trước',
-                                            style: theme.body2.copyWith(
-                                              overflow: TextOverflow.clip,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300,
-                                              color: style != true ? OneColors.white : OneColors.black,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          )
-                                        : Text(
-                                            '$weeks tuần trước',
-                                            style: theme.body2.copyWith(
-                                              overflow: TextOverflow.clip,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300,
-                                              color: style != true ? OneColors.white : OneColors.black,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          )))),
+                        _buildTimes(author, theme, seconds, minutes, hours, days, weeks, context),
+                        _buildViewCounter(formatViews, views, theme),
                       ],
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Icon(
-                          Icons.visibility,
-                          color: OneColors.grey,
-                          size: 20,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "${formatViews(views)} lượt xem",
-                          style: theme.body2.copyWith(
-                            overflow: TextOverflow.clip,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w300,
-                            color: style != true ? OneColors.white : OneColors.black,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
+          )
         ],
       ),
+    );
+  }
+
+  Widget _buildViewCounter(String Function(int views) formatViews, views, OneThemeData theme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const Icon(
+          Icons.visibility,
+          color: OneColors.grey,
+          size: 10,
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Text(
+          "${formatViews(views)} lượt xem",
+          style: theme.body2.copyWith(
+            overflow: TextOverflow.clip,
+            fontSize: 5,
+            fontWeight: FontWeight.w300,
+            color: OneColors.black,
+          ),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
+  }
+
+  Expanded _buildTimes(author, OneThemeData theme, int seconds, int minutes, int hours, int days, int weeks, BuildContext context) {
+    return Expanded(
+        flex: 2,
+        child: Row(
+          children: [
+            const Icon(
+              Icons.date_range_outlined,
+              color: OneColors.black,
+              size: 10,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Row(
+              children: [
+                Text(
+                  "$author - ",
+                  style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontSize: 5),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.justify,
+                ),
+                seconds < 60
+                    ? _buildTimeCard(seconds, theme, '$seconds giây trước')
+                    : (minutes < 60
+                        ? _buildTimeCard(seconds, theme, '$minutes phút trước')
+                        : (hours < 24
+                            ? _buildTimeCard(seconds, theme, '$hours giờ trước')
+                            : (days < 7 ? _buildTimeCard(seconds, theme, '$days ngày trước') : _buildTimeCard(seconds, theme, '$weeks tuần trước'))))
+              ],
+            ),
+          ],
+        ));
+  }
+
+  Text _buildTimeCard(int seconds, OneThemeData theme, String time) {
+    return Text(
+      time,
+      style: theme.body2.copyWith(overflow: TextOverflow.clip, fontSize: 5, fontWeight: FontWeight.w300, color: OneColors.black),
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _buildImages(imageUrl) {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: const [
+          BoxShadow(
+            color: OneColors.black,
+            blurRadius: 3,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(15),
+      ),
+      height: 163,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: imageUrl.isNotEmpty
+            ? Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return OneLoading.space_loading;
+                },
+                errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
+              )
+            : const SizedBox(),
+      ),
+    );
+  }
+
+  Text _buildTitleDisplay(OneThemeData theme) {
+    return Text(
+      records['titleDisplay'],
+      maxLines: (checkimages != false) ? 5 : 3,
+      textAlign: TextAlign.left,
+      style: theme.body2.copyWith(
+        overflow: TextOverflow.ellipsis,
+        color: OneColors.black,
+        fontSize: 9,
+      ),
+    );
+  }
+
+  Text _buildTitle(title, OneThemeData theme) {
+    return Text(
+      title,
+      style: theme.title1.copyWith(
+        overflow: TextOverflow.ellipsis,
+        fontSize: 13,
+        color: OneColors.black,
+      ),
+      maxLines: checkimages != false ? 2 : 1,
+      textAlign: TextAlign.left,
     );
   }
 }

@@ -11,7 +11,7 @@ class one_button_ar_view extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 20),
-      decoration: BoxDecoration(color: OneColors.white.withOpacity(0.4), borderRadius: BorderRadius.circular(15)),
+      decoration: BoxDecoration(color: OneColors.bgButton, borderRadius: BorderRadius.circular(15)),
       height: 50,
       child: Padding(
         padding: const EdgeInsets.all(5.0),

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/models/one_list_colors.dart';
@@ -54,31 +53,25 @@ class CardDiscoverPlanets extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.all(8),
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                  child: DottedBorder(
-                    color: OneColors.transparent,
-                    strokeWidth: 1,
-                    borderType: BorderType.RRect,
-                    radius: const Radius.circular(15),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Tên ngôi sao
-                              _buildName(context),
-                              // thông tin ngôi sao
-                              _buildInfo(context),
-                              // tags
-                              _buildTags(context),
-                            ],
-                          ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Tên ngôi sao
+                            _buildName(context),
+                            // thông tin ngôi sao
+                            _buildInfo(context),
+                            // tags
+                            _buildTags(context),
+                          ],
                         ),
-                        // Hình ảnh ngôi sao
-                        _buildImages(),
-                      ],
-                    ),
+                      ),
+                      // Hình ảnh ngôi sao
+                      _buildImages(),
+                    ],
                   ),
                 ),
               ),
@@ -92,14 +85,9 @@ class CardDiscoverPlanets extends StatelessWidget {
       flex: 1,
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0),
-        child: DottedBorder(
-          color: OneColors.black,
-          strokeWidth: 0.05,
-          borderType: BorderType.RRect,
-          child: SizedBox(
-            height: sizeHeight * 0.12,
-            child: CachedImage(imageUrl: image2DUrl ?? ""),
-          ),
+        child: SizedBox(
+          height: sizeHeight * 0.12,
+          child: CachedImage(imageUrl: image2DUrl ?? ""),
         ),
       ),
     );

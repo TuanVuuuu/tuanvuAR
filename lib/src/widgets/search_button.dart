@@ -18,7 +18,7 @@ class SearchButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           "Đóng",
-          style: OneTheme.of(context).title2.copyWith(color: OneColors.white),
+          style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
         ),
       );
     } else {
@@ -27,7 +27,7 @@ class SearchButton extends StatelessWidget {
         child: const Icon(
           Icons.search,
           size: 30,
-          color: OneColors.white,
+          color: OneColors.black,
         ),
       );
     }

@@ -19,7 +19,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
 
   VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
-  bool? loadingProgressCheck;
 
   String iosAssetPath = '';
   String taskId = '';
@@ -28,12 +27,11 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
 
   List<Map<String, dynamic>> _newsDataList = [];
 
+  bool checkstate = false;
+  bool readmore = false;
   @override
   void initState() {
     super.initState();
-    setState(() {
-      loadingProgressCheck;
-    });
 
     _videoPlayerController = VideoPlayerController.network(widget.argument["videosIntro"]);
     _videoPlayerController!.initialize().then((_) {
@@ -42,7 +40,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         autoPlay: true,
         looping: true,
         showControlsOnInitialize: false,
-        showControls: false,
+        showControls: true,
       );
       setState(() {});
     });
@@ -85,62 +83,232 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     var colors = widget.argument["image2D"]["colors"];
     String colorModel = colors["colorModel"];
 
-    print(idname);
-
     idmain = idname;
     List<Widget> slivers = [
       if (_newsDataList.where((data) => data["tags"].contains(nameModel)).isNotEmpty) _buildNewsCard(nameModel, context),
     ];
 
+    print(checkstate);
     return AppScaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: OneColors.transparent,
-          elevation: 0,
-          leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: OneColors.white), onPressed: () => Navigator.pop(context)),
-        ),
-        backgroundColor: OneColors.white,
-        body: Container(
-          decoration: OneWidget.background_bg4,
-          child: Scrollbar(
+      backgroundColor: OneColors.white,
+      body: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Scrollbar(
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
               slivers: [
                 _buildImage2DDetail(nameModel, context, widget.argument, modelURL, sizeHeight, sizeWidth, image2DUrl, colorModel),
-
-                _buildNamePlanets(nameModel, context, modelURL),
                 // Thông tin về số vệ tinh, tuổi, nhiệt độ
                 _buildInfoExpanded(infoOther, context),
                 // Thông tin chi tiết của hành tinh
                 _buildInfoPlanets(infoModel, context),
                 // Thông tin về mật độ, Bán Kính , chu kì quay, trọng lực, khoảng cách với mặt trời, quỹ đạo
-                _buildListInfo(infoOther, context),
+                // _buildListInfo(infoOther, context),
                 // Trình phát video giới thiệu
-                _buildVideoPlayer(),
-                _buildSatellite(nameModel, context, satelliteNumber, idname),
-                // Thông tin vệ tinh của hành tinh
-                satelliteNumber != "0" ? _buildDiscovery(sizeHeight, sizeWidth) : _buildNotifiNotSatellite(nameModel, context),
-                slivers.isNotEmpty
-                    ? SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                            Text(
-                              "Kiến thức liên quan : ",
-                              style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                            ),
-                            const SizedBox(height: 20),
-                          ]),
-                        ),
-                      )
-                    : const SliverToBoxAdapter(child: SizedBox()),
-                _buildNewsCard(nameModel, context),
+                checkstate == false ? _buildVideoPlayer() : const SliverToBoxAdapter(child: SizedBox()),
+                // _buildSatellite(nameModel, context, satelliteNumber, idname),
 
-                const SliverToBoxAdapter(child: SizedBox(height: 50)),
+                checkstate == false
+                    ? const SliverToBoxAdapter(child: SizedBox())
+                    : const SliverToBoxAdapter(
+                        child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: OneThickNess(),
+                      )),
+
+                // Thông tin về mật độ, Bán Kính , chu kì quay, trọng lực, khoảng cách với mặt trời, quỹ đạo
+                checkstate != false ? _buildListInfo(infoOther, context, readmore) : const SliverToBoxAdapter(child: SizedBox()),
+
+                checkstate == false ? const SliverToBoxAdapter(child: SizedBox()) : _buildReadmoreInfoExpanded(context),
+
+                // Thông tin vệ tinh của hành tinh
+                // satelliteNumber != "0" ? _buildDiscovery(sizeHeight, sizeWidth) : _buildNotifiNotSatellite(nameModel, context),
+                // slivers.isNotEmpty ? _buildTitleOtherNews(context) : const SliverToBoxAdapter(child: SizedBox()),
+                // _buildNewsCard(nameModel, context),
+                checkstate != false
+                    ? satelliteNumber != "0"
+                        ? SliverToBoxAdapter(
+                            child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              "Vệ tinh",
+                              style: OneTheme.of(context).title1.copyWith(color: OneColors.black, fontSize: 30, fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.right,
+                            ),
+                          ))
+                        : const SliverToBoxAdapter(child: SizedBox())
+                    : const SliverToBoxAdapter(child: SizedBox()),
+
+                checkstate != false
+                    ? satelliteNumber != "0"
+                        ? _buildDiscovery(sizeHeight, sizeWidth)
+                        : const SliverToBoxAdapter(child: SizedBox())
+                    : const SliverToBoxAdapter(child: SizedBox()),
+
+                const SliverToBoxAdapter(child: SizedBox(height: 200)),
               ],
             ),
           ),
-        ));
+          _buildBottomBar(sizeWidth, context, checkstate, modelURL),
+        ],
+      ),
+    );
+  }
+
+  SliverToBoxAdapter _buildReadmoreInfoExpanded(BuildContext context) {
+    return SliverToBoxAdapter(
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.35,
+            color: OneColors.textGrey2,
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                if (readmore == false) {
+                  readmore = true;
+                } else {
+                  readmore = false;
+                }
+              });
+            },
+            child: Text(readmore == false ? "Xem thêm" : "Rút gọn", style: OneTheme.of(context).body1.copyWith(color: OneColors.grey, fontSize: 12)),
+          ),
+          Container(
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.35,
+            color: OneColors.textGrey2,
+          ),
+        ],
+      ),
+    ));
+  }
+
+  Positioned _buildBottomBar(double sizeWidth, BuildContext context, bool checkState, String modelURL) {
+    return Positioned(
+      bottom: 10,
+      left: sizeWidth * 0.05,
+      child: SizedBox(
+        height: 128,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 102,
+                width: sizeWidth * 0.9,
+                decoration: BoxDecoration(
+                    color: OneColors.white,
+                    boxShadow: const [
+                      BoxShadow(blurRadius: 10, color: OneColors.grey),
+                    ],
+                    borderRadius: BorderRadius.circular(44)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(backgroundColor: OneColors.transparent, elevation: 0),
+                                onPressed: () {
+                                  setState(() {
+                                    if (checkstate == false) {
+                                      checkstate = true;
+                                    } else {
+                                      checkstate = false;
+                                    }
+                                  });
+                                },
+                                child: const Icon(Icons.info_outline, size: 30, color: OneColors.black)),
+                            Text(
+                              "Chi tiết",
+                              style: OneTheme.of(context).title1.copyWith(color: OneColors.black, fontSize: 15, fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Icon(Icons.view_in_ar, size: 30),
+                          Text(
+                            "Mô hình 3D",
+                            style: OneTheme.of(context).title1.copyWith(color: OneColors.black, fontSize: 15, fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 115,
+              width: sizeWidth * 0.9,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      _launchAR(modelURL);
+                    },
+                    child: Container(
+                      height: 81,
+                      width: 81,
+                      decoration: BoxDecoration(
+                        color: OneColors.bgButton,
+                        shape: BoxShape.circle,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: OneColors.grey,
+                            blurRadius: 4,
+                          ),
+                        ],
+                        border: Border.all(color: OneColors.white, width: 1),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset(OneImages.icons_ar_view),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    "AR",
+                    style: OneTheme.of(context).title1.copyWith(color: OneColors.black, fontSize: 25, fontWeight: FontWeight.w400),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  SliverToBoxAdapter _buildTitleOtherNews(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            "Kiến thức liên quan : ",
+            style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+          ),
+          const SizedBox(height: 20),
+        ]),
+      ),
+    );
   }
 
   SliverToBoxAdapter _buildNewsCard(String nameModel, BuildContext context) {
@@ -190,104 +358,14 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                     child: Column(
                       children: [
                         Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      data["title"],
-                                      style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.justify,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      data["titleDisplay"],
-                                      style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
-                                      maxLines: 4,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.justify,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: OneColors.white,
-                                          blurRadius: 3,
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    height: 90,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: data['content'][0]['images']['imageUrl'] != ""
-                                          ? Image.network(
-                                              data['content'][0]['images']['imageUrl'],
-                                              fit: BoxFit.cover,
-                                              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                                if (loadingProgress == null) return child;
-                                                return OneLoading.space_loading;
-                                              },
-                                              errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
-                                            )
-                                          : const SizedBox(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                          children: [_buildTitleCard(data, context), const SizedBox(width: 10), _buildImageCard(data)],
                         ),
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              data["author"],
-                              style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.justify,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                const Icon(
-                                  Icons.visibility,
-                                  color: OneColors.grey,
-                                  size: 20,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "${formatViews(data["views"])} lượt xem",
-                                  style: OneTheme.of(context).caption1.copyWith(
-                                        overflow: TextOverflow.clip,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: OneColors.white,
-                                      ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
+                            _buildAuthorCard(data, context),
+                            _buildViewCountCard(formatViews, data, context),
                           ],
                         ),
                       ],
@@ -299,152 +377,166 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     );
   }
 
-  Widget _buildNamePlanets(String nameModel, BuildContext context, String modelURL) {
-    return SliverToBoxAdapter(
-      child: // Tên Hành tinh
-          Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Row _buildViewCountCard(String Function(int views) formatViews, Map<String, dynamic> data, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const Icon(
+          Icons.visibility,
+          color: OneColors.grey,
+          size: 20,
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Text(
+          "${formatViews(data["views"])} lượt xem",
+          style: OneTheme.of(context).caption1.copyWith(
+                overflow: TextOverflow.clip,
+                fontSize: 12,
+                fontWeight: FontWeight.w300,
+                color: OneColors.white,
+              ),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
+  }
+
+  Text _buildAuthorCard(Map<String, dynamic> data, BuildContext context) {
+    return Text(
+      data["author"],
+      style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+      maxLines: 4,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.justify,
+    );
+  }
+
+  Expanded _buildImageCard(Map<String, dynamic> data) {
+    return Expanded(
+      flex: 1,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 30, left: 24),
-            child: Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  nameModel.toUpperCase(),
-                  style: OneTheme.of(context).header.copyWith(color: OneColors.white, letterSpacing: 5),
-                )),
-          ),
-          InkWell(
-            onTap: () {
-              setState(() {
-                _launchAR(modelURL);
-              });
-            },
-            child: const one_button_ar_view(),
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  color: OneColors.white,
+                  blurRadius: 3,
+                ),
+              ],
+              borderRadius: BorderRadius.circular(15),
+            ),
+            height: 90,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: data['content'][0]['images']['imageUrl'] != ""
+                  ? Image.network(
+                      data['content'][0]['images']['imageUrl'],
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return OneLoading.space_loading;
+                      },
+                      errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
+                    )
+                  : const SizedBox(),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildNotifiNotSatellite(String nameModel, BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Row(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                height: 200,
-                child: Image.asset(OneImages.novetinh), // Default: 2
-              ),
-              Text(
-                "$nameModel không có vệ tinh nha!",
-                style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-              )
-            ],
-          ),
-        ],
+  Expanded _buildTitleCard(Map<String, dynamic> data, BuildContext context) {
+    return Expanded(
+      flex: 2,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              data["title"],
+              style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.justify,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              data["titleDisplay"],
+              style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.justify,
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildNamePlanets(String nameModel, BuildContext context, String modelURL) {
+    return // Tên Hành tinh
+        Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 0, left: 24),
+          child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                nameModel.toUpperCase(),
+                style: OneTheme.of(context).header.copyWith(color: OneColors.black, letterSpacing: 5, fontSize: 35),
+              )),
+        ),
+        // InkWell(
+        //   onTap: () {
+        //     setState(() {
+        //       _launchAR(modelURL);
+        //     });
+        //   },
+        //   child: const one_button_ar_view(),
+        // ),
+      ],
     );
   }
 
   SliverToBoxAdapter _buildDiscovery(double sizeHeight, double sizeWidth) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.only(top: 0, bottom: 15),
+        padding: const EdgeInsets.only(top: 10, bottom: 15),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              children: [
-                SizedBox(
-                  child: StreamBuilder(
-                      stream: discoverydata.snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {}
-                        if (snapshot.hasData) {
-                          return ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data?.docs.length,
-                            itemBuilder: (context, index) {
-                              final DocumentSnapshot records = snapshot.data!.docs[index];
-                              String? name = records["name"];
-                              String? image2DUrl = records["images"]["image2DUrl"];
-                              String? info = records["info"];
-                              List tags = records["tags"];
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 10, right: 10),
-                                child: Column(
-                                    children: tags.map((i) {
-                                  if (i == idmain) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Get.to(() => DiscoveryDetailScreen(argument: records, color: const Color.fromARGB(255, 197, 165, 247)),
-                                            curve: Curves.linear, transition: Transition.rightToLeft);
-                                      },
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            width: sizeWidth - 20,
-                                            height: sizeHeight * 0.1,
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: SizedBox(height: sizeHeight * 0.1, child: CachedImage(imageUrl: image2DUrl ?? "") // Default: 2
-                                                      ),
-                                                ),
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.only(left: 20),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      children: [
-                                                        Container(
-                                                          margin: const EdgeInsets.only(bottom: 10),
-                                                          child: Text(
-                                                            name ?? "",
-                                                            style: OneTheme.of(context).body1.copyWith(color: OneColors.white, fontSize: 12),
-                                                            maxLines: 3,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          info ?? "",
-                                                          style: OneTheme.of(context).body1.copyWith(color: OneColors.textGrey1, fontSize: 10),
-                                                          maxLines: 4,
-                                                          overflow: TextOverflow.ellipsis,
-                                                          textAlign: TextAlign.justify,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const Padding(
-                                            padding: EdgeInsets.only(bottom: 30.0),
-                                            child: OneThickNess(),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  return Container();
-                                }).toList()),
-                              );
-                            },
-                          );
-                        }
+            SizedBox(
+              height: 70,
+              child: StreamBuilder(
+                  stream: discoverydata.snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {}
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (context, index) {
+                          final DocumentSnapshot records = snapshot.data!.docs[index];
+                          String? name = records["name"];
+                          String? image2DUrl = records["images"]["image2DUrl"];
+                          List tags = records["tags"];
+                          return _buildCardItemsSatellite(tags, records, name, context, image2DUrl);
+                        },
+                      );
+                    }
 
-                        return Container();
-                      }),
-                ),
-              ],
+                    return Container();
+                  }),
             ),
             const SizedBox(height: 10),
           ],
@@ -453,139 +545,116 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     );
   }
 
-  SliverToBoxAdapter _buildListInfo(infoOther, BuildContext context) {
+  Padding _buildCardItemsSatellite(List<dynamic> tags, DocumentSnapshot<Object?> records, String? name, BuildContext context, String? image2DUrl) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: tags.map((i) {
+            if (i == idmain) {
+              return InkWell(
+                onTap: () {
+                  Get.to(() => DiscoveryDetailScreen(argument: records, color: const Color.fromARGB(255, 197, 165, 247)), curve: Curves.linear, transition: Transition.rightToLeft);
+                },
+                child: SizedBox(
+                  height: 70,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(15), boxShadow: const [
+                                BoxShadow(
+                                  color: OneColors.grey,
+                                  blurRadius: 4,
+                                )
+                              ]),
+                              width: 170,
+                              height: 62,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const SizedBox(height: 50, width: 50 // Default: 2
+                                      ),
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    child: Text(
+                                      name ?? "",
+                                      style: OneTheme.of(context).body1.copyWith(color: OneColors.black, fontSize: 12),
+                                      maxLines: 3,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: SizedBox(height: 50, child: CachedImage(imageUrl: image2DUrl ?? "")),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+            return Container();
+          }).toList()),
+    );
+  }
+
+  SliverToBoxAdapter _buildListInfo(infoOther, BuildContext context, bool readmore) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.only(left: 024.0, bottom: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 0, top: 20),
         child: Column(
           children: [
-            (infoOther["density"] != "")
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Row(
-                      children: [
-                        Text("Mật độ: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                        Text(" ${infoOther["density"]}\u00B3", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                      ],
-                    ),
-                  )
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              (infoOther["density"] != "") ? _buildItemsInfoOther(context, infoOther, "MẬT ĐỘ", "${infoOther["density"]}\u00B3") : const SizedBox(),
+              (infoOther["radius"] != "") ? _buildItemsInfoOther(context, infoOther, "BÁN KÍNH", "${infoOther["radius"]}") : const SizedBox(),
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              (infoOther["acreage"] != "") ? _buildItemsInfoOther(context, infoOther, "DIỆN TÍCH", "${infoOther["acreage"]}\u00B2") : const SizedBox(),
+              (infoOther["cycle"] != "") ? _buildItemsInfoOther(context, infoOther, "CHU KỲ QUAY", "${infoOther["cycle"]}") : const SizedBox(),
+            ]),
+            readmore == true
+                ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    (infoOther["gravitation"] != "") ? _buildItemsInfoOther(context, infoOther, "TRỌNG LỰC", "${infoOther["gravitation"]}\u00B2") : const SizedBox(),
+                    (infoOther["distance"] != "") ? _buildItemsInfoOther(context, infoOther, "KHOẢNG CÁCH", "${infoOther["distance"]}") : const SizedBox(),
+                  ])
                 : const SizedBox(),
-            (infoOther["radius"] != "")
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Row(
-                      children: [
-                        Text("Bán kính: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                        Text(" ${infoOther["radius"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
-            (infoOther["acreage"] != "")
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Row(
-                      children: [
-                        Text("Diện tích: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                        Text(" ${infoOther["acreage"]}\u00B2", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
-            (infoOther["cycle"] != "")
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Row(
-                      children: [
-                        Text("Chu kỳ quay: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                        Text(" ${infoOther["cycle"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
-            (infoOther["gravitation"] != "")
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Row(
-                      children: [
-                        Text("Trọng lực: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                        Text(" ${infoOther["gravitation"]}\u00B2", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
-            (infoOther["distance"] != "")
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Row(
-                      children: [
-                        Text("Khoảng cách từ ${infoOther["trajectory"]} : ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                        Text(" ${infoOther["distance"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
-            (infoOther["trajectory"] != "")
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Row(
-                      children: [
-                        Text("Quỹ đạo: ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                        Text(" ${infoOther["trajectory"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
+            readmore == true
+                ? (infoOther["trajectory"] != "")
+                    ? _buildItemsInfoOther(context, infoOther, "QUỸ ĐẠO", "${infoOther["trajectory"]}")
+                    : const SizedBox()
+                : const SizedBox()
           ],
         ),
       ),
     );
   }
 
-  SliverToBoxAdapter _buildSatellite(String nameModel, BuildContext context, String satelliteNumber, String idname) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 00.0, top: 30),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Vệ tinh của $nameModel",
-                          style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                        ),
-                        const SizedBox(height: 10),
-                        satelliteNumber != "0"
-                            ? Text(
-                                "$nameModel có $satelliteNumber vệ tinh",
-                                style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
-                              )
-                            : const Text(""),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: SizedBox(
-                    height: 100,
-                    child: (idname == "saohoa" || idname == "traidat" || idname == "saothuy" || idname == "saomoc") ? Image.asset("assets/images/planets_animate/2x/$idname.png") : const SizedBox(),
-                  ),
-                )
-              ],
+  Padding _buildItemsInfoOther(BuildContext context, infoOther, String title, String subtitle) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: OneTheme.of(context).body1.copyWith(color: OneColors.grey, fontSize: 12)),
+          const SizedBox(height: 5),
+          Container(
+            height: 51,
+            width: 153,
+            decoration: BoxDecoration(
+              border: Border.all(color: OneColors.grey, width: 1),
+              borderRadius: BorderRadius.circular(17),
             ),
-            const SizedBox(
-              height: 50,
-            ),
-          ],
-        ),
+            child: Center(child: Text(subtitle, style: OneTheme.of(context).body1.copyWith(color: OneColors.black))),
+          )
+        ],
       ),
     );
   }
@@ -595,11 +664,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
       child: Column(
         children: [
           Stack(children: [
-            Opacity(
-              opacity: 1,
-              child: Center(
-                child: _chewieVideoPlayer(),
-              ),
+            Center(
+              child: _chewieVideoPlayer(),
             ),
           ]),
           const SizedBox(
@@ -647,8 +713,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         child: Column(children: [
           ReadMoreText(
             infoModel,
-            style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
-            trimLines: 5,
+            style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.black),
+            trimLines: 3,
             textAlign: TextAlign.justify,
             trimMode: TrimMode.Line,
             trimCollapsedText: " Xem thêm",
@@ -670,20 +736,20 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
           children: [
             Row(
               children: [
-                InkWell(onTap: () {}, child: const Icon(Icons.nightlight_rounded, color: OneColors.white)),
-                Text(" ${infoOther["satelliteNumber"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                InkWell(onTap: () {}, child: const Icon(Icons.nightlight_rounded, color: OneColors.black)),
+                Text(" ${infoOther["satelliteNumber"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.black)),
               ],
             ),
             Row(
               children: [
-                Text("Tuổi : ", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
-                Text("${infoOther["age"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                Text("Tuổi : ", style: OneTheme.of(context).body1.copyWith(color: OneColors.black)),
+                Text("${infoOther["age"]}", style: OneTheme.of(context).body1.copyWith(color: OneColors.black)),
               ],
             ),
             Row(
               children: [
-                const Icon(Icons.device_thermostat, color: OneColors.white),
-                Text("${infoOther["temperature"]} \u00B0C", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                const Icon(Icons.device_thermostat, color: OneColors.black),
+                Text("${infoOther["temperature"]} \u00B0C", style: OneTheme.of(context).body1.copyWith(color: OneColors.black)),
               ],
             ),
           ],
@@ -724,49 +790,79 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
   SliverToBoxAdapter _buildImage2DDetail(String nameModel, BuildContext context, dynamic widget, String modelURL, double sizeHeight, double sizeWidth, String image2DUrl, String colorModel) {
     return SliverToBoxAdapter(
       child: Stack(clipBehavior: Clip.none, children: [
+        checkstate == false
+            ? Positioned(
+                top: 0,
+                right: -sizeWidth * 0.2,
+                child: SizedBox(
+                    height: sizeHeight * 0.35,
+                    child: CachedImage(
+                      imageUrl: image2DUrl,
+                      fit: BoxFit.fitHeight,
+                    )),
+              )
+            : const SizedBox(),
+        checkstate == false
+            ? Positioned(
+                top: sizeHeight * 0.25,
+                right: 0,
+                child: Container(
+                  height: sizeHeight * 0.25,
+                  color: OneColors.transparent,
+                  child: Image.asset(
+                    OneImages.rocket2,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+              )
+            : const SizedBox(),
         Positioned(
-          top: -sizeHeight * 0.4,
-          right: -sizeWidth * 0.4,
-          child: Container(
-            height: sizeHeight,
-            width: sizeWidth,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                    color: Color(
-                      int.parse(colorModel),
-                    ).withOpacity(0.4),
-                    blurRadius: 100,
-                    spreadRadius: 50)
-              ],
-              shape: BoxShape.circle,
+          top: 70,
+          left: 20,
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: 55,
+              width: 55,
+              decoration: BoxDecoration(
+                  color: OneColors.bgButton,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: OneColors.grey,
+                      blurRadius: 4,
+                    ),
+                  ],
+                  border: Border.all(color: OneColors.white, width: 1),
+                  borderRadius: BorderRadius.circular(30)),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 5),
+                child: Icon(Icons.arrow_back_ios, color: OneColors.white),
+              ),
             ),
           ),
         ),
-        Positioned(
-          top: 0,
-          right: -sizeWidth * 0.2,
-          child: Container(
-              height: sizeHeight * 0.35,
-              color: OneColors.transparent,
-              child: CachedImage(
-                imageUrl: image2DUrl,
-                fit: BoxFit.fitHeight,
-              )),
-        ),
-        Positioned(
-          top: sizeHeight * 0.25,
-          right: 0,
-          child: Container(
-            height: sizeHeight * 0.25,
-            color: OneColors.transparent,
-            child: Image.asset(
-              OneImages.rocket2,
-              fit: BoxFit.fitHeight,
-            ),
-          ),
-        ),
-        SizedBox(height: sizeHeight * 0.4),
+        checkstate == false
+            ? Positioned(
+                top: sizeHeight * 0.3,
+                left: 0,
+                child: Container(
+                  height: sizeHeight * 0.25,
+                  color: OneColors.transparent,
+                  child: _buildNamePlanets(nameModel, context, modelURL),
+                ),
+              )
+            : Positioned(
+                top: 70,
+                right: 20,
+                child: Container(
+                  height: sizeHeight * 0.25,
+                  color: OneColors.transparent,
+                  child: _buildNamePlanets(nameModel, context, modelURL),
+                ),
+              ),
+        SizedBox(height: checkstate == false ? sizeHeight * 0.4 : 140),
       ]),
     );
   }

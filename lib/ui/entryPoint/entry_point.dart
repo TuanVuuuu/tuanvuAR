@@ -2,15 +2,24 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
+import 'package:flutter_application_1/ui/pages/a_example_1/example_1.dart';
+// import 'package:flutter_application_1/ui/pages/a_example_2/arscreen3.dart';
+import 'package:flutter_application_1/ui/pages/a_example_2/arscreen4.dart';
+import 'package:flutter_application_1/ui/pages/a_example_3/arscreen5.dart';
+// import 'package:flutter_application_1/ui/pages/a_example_1/example.dart';
 import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_screen.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/forgot_password_screen.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/sign_out.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/user_detail_info_screen.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/profile_screen.dart';
 import 'package:flutter_application_1/ui/pages/quiz_manager_screen/quiz_manager_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:io' as io;
 
 import 'package:native_ar_viewer/native_ar_viewer.dart';
@@ -29,6 +38,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   final List<Widget> _tabList = [
     const HomeScreen(),
     const TopNewsScreen(),
+    const TopNewsScreen(),
+    const ProfileScreen(),
     const ProfileScreen(),
   ];
 
@@ -73,7 +84,45 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
             children: _tabList,
           ),
           _buildBottomBar(),
-          _buildButtonOpenSideBar(context)
+          _buildButtonOpenSideBar(context),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: InkWell(
+              onTap: () {},
+              child: 
+                  Container(
+                    height: 80,
+                    width: 80,
+                    margin: const EdgeInsets.only(bottom: 30),
+                    decoration: BoxDecoration(
+                        color: OneColors.bgButton,
+                        shape: BoxShape.circle,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: OneColors.grey,
+                            blurRadius: 5,
+                          ),
+                        ],
+                        border: Border.all(color: OneColors.white, width: 1)),
+                    child: SvgPicture.asset(
+                      OneImages.icons_ar_view,
+                      height: 24,
+                      width: 24,
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                
+            ),
+          ),
+          Align(alignment: Alignment.bottomCenter,
+          child: Text(
+                    "AR",
+                    style: GoogleFonts.aBeeZee(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 24,
+                      color: OneColors.black,
+                    ),
+                  ),)
         ],
       ),
     );
@@ -128,10 +177,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
               ),
             ),
           ),
-          Text(
-            "Astronomy",
-            style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-          )
         ],
       ),
     );
@@ -143,17 +188,16 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       child: Row(
         children: [
           Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              color: OneColors.grey,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: const Icon(
-              Icons.person,
-              size: 50,
-            ),
-          ),
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: OneColors.blue300,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Image.asset(OneImages.avatars),
+              )),
           const SizedBox(
             width: 10,
           ),
@@ -236,6 +280,10 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         _itemsSideBar(context, "Đăng xuất", Icons.logout, null, () {
           Get.to(() => SignOutScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
         }),
+        _itemsSideBar(context, "Ar Screen", Icons.logout, null, () {
+          //Get.to(() => const MySplashScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+          Get.to(() => const MultipleAugmentedImagesPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+        }),
       ],
     );
   }
@@ -286,21 +334,30 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         alignment: Alignment.topRight,
         child: Column(
           children: [
-            Container(
-              height: 50,
-              width: 50,
-              margin: const EdgeInsets.only(top: 70, right: 20),
-              decoration: const BoxDecoration(color: OneColors.white, shape: BoxShape.circle, boxShadow: [
-                BoxShadow(
-                  color: OneColors.grey,
-                  blurRadius: 5,
-                )
-              ]),
-              child: IconButton(
-                icon: const Icon(Icons.segment),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
+            InkWell(
+              onTap: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+              child: Container(
+                height: 55,
+                width: 55,
+                margin: const EdgeInsets.only(top: 70, right: 20),
+                decoration: BoxDecoration(
+                    color: OneColors.bgButton,
+                    shape: BoxShape.circle,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: OneColors.grey,
+                        blurRadius: 5,
+                      ),
+                    ],
+                    border: Border.all(color: OneColors.white, width: 1)),
+                child: SvgPicture.asset(
+                  OneImages.icons_chart,
+                  height: 24,
+                  width: 24,
+                  fit: BoxFit.scaleDown,
+                ),
               ),
             ),
           ],
@@ -314,41 +371,48 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       padding: const EdgeInsets.only(right: 0.0, left: 0),
       child: Align(
         alignment: const Alignment(0.0, 1.0),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),
-          ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            selectedIconTheme: const IconThemeData(color: Color(0xffC1EF00)),
-            showSelectedLabels: true,
-            showUnselectedLabels: false,
-            fixedColor: Colors.white,
-            backgroundColor: Colors.black.withOpacity(0.7),
-            unselectedItemColor: Colors.white,
-            currentIndex: _pageIndex,
-            onTap: (int index) {
-              setState(() {
-                _pageIndex = index;
-              });
-              _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
-            },
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Trang chủ",
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          fixedColor: OneColors.black,
+          backgroundColor: Colors.white,
+          unselectedItemColor: Colors.black,
+          currentIndex: _pageIndex,
+          onTap: (int index) {
+            setState(() {
+              _pageIndex = index;
+            });
+            _pageController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+            );
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(OneImages.icons_home),
+              label: "HOME",
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(OneImages.icons_discover),
+              label: "DISCOVER",
+            ),
+            const BottomNavigationBarItem(
+              icon: SizedBox(
+                height: 30,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: "Khám Phá",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: "Hồ sơ",
-              ),
-            ],
-          ),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(OneImages.icons_game),
+              label: "GAME",
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(OneImages.icons_personalcard),
+              label: "PROFILE",
+            ),
+          ],
         ),
       ),
     );

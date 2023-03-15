@@ -11,6 +11,7 @@ class OneColors {
   //Text Colors
   static const Color transparent = Color.fromARGB(0, 0, 0, 0);
   static const Color amber = Color(0xFFFFC107);
+  static const Color bgButton = Color(0xFF273032);
 
   static const Color blue = Color.fromARGB(255, 17, 0, 255);
   static const Color blue100 = Color(0xFFBBDEFB);

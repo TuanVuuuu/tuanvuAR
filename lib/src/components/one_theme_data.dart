@@ -31,8 +31,7 @@ class OneThemeData with Diagnosticable {
     // final ThemeData themeData = Theme.of(context);
     final OneThemeData theme = OneThemeData();
 
-    theme.header = const TextStyle(
-      fontFamily: 'NunitoSans',
+    theme.header = GoogleFonts.aBeeZee(
       fontWeight: FontWeight.w700,
       fontStyle: FontStyle.normal,
       fontSize: 20.0,

@@ -34,6 +34,8 @@ class OneImages {
   static const String solar_system = "assets/images/planets_animate/solar_system.png";
   static const String doomsday = "assets/images/planets_animate/doomsday.png";
 
+  static const String earth_1 = "assets/2D_model/earth_1.jpeg";
+
   static const String bg = "assets/images/bg/bg.png";
   static const String bg1 = "assets/images/bg/bg1.png";
   static const String bg2 = "assets/images/bg/bg2.png";
@@ -44,6 +46,17 @@ class OneImages {
 
   static const String menu_button = "assets/icons_river/menu_button.riv";
   static const String icons = "assets/icons_river/icons.riv";
+
+  static const String icons_chart = "assets/icons_river/chart.svg";
+  static const String icons_discover = "assets/icons_river/discover.svg";
+  static const String icons_game = "assets/icons_river/game.svg";
+  static const String icons_home = "assets/icons_river/home.svg";
+  static const String icons_personalcard = "assets/icons_river/personalcard.svg";
+  static const String icons_ar_view = "assets/icons_river/ar_view.svg";
+  static const String card_solar_system = "assets/icons_river/card_solar_system.png";
+  static const String card_galaxy = "assets/icons_river/card_galaxy.png";
+  static const String card_black_hole = "assets/icons_river/card_black_hole.png";
+  static const String card_space_ship = "assets/icons_river/card_space_ship.png";
 
   static const String background = 'assets/images/background.png';
 }
