@@ -17,9 +17,19 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
   List<String> tagsButtonList = [];
   List<String> docIds = [];
 
+  final User? user = FirebaseAuth.instance.currentUser;
+  List<Map<String, dynamic>> _usersdataDataList = [];
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
+    getUserData().then((usersdata) {
+      setState(() {
+        isLoading = false;
+        _usersdataDataList = usersdata;
+      });
+    });
   }
 
   @override
@@ -42,25 +52,15 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
     );
     return AppScaffold(
         backgroundColor: OneColors.white,
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(OneImages.bg3),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Scrollbar(
-              child: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: <Widget>[
-              _buildHeader(context, result),
-              // _buildTopNews(context, result),
-              _addDataToList(data, result, context),
-
-              tagsButton != "Tất cả" ? CardNewsWithTags(data: data, tagsButton: tagsButton, checktags: true) : CardNewsWithTags(data: data, tagsButton: tagsButton)
-            ],
-          )),
-        ));
+        body: Scrollbar(
+            child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: <Widget>[
+            _buildTitleWelcome(context, result),
+            _addDataToList(data, result, context),
+            tagsButton != "Tất cả" ? CardNewsWithTags(data: data, tagsButton: tagsButton, checktags: true) : CardNewsWithTags(data: data, tagsButton: tagsButton)
+          ],
+        )));
   }
 
   SliverToBoxAdapter _addDataToList(CollectionReference<Object?> data, List<dynamic> result, BuildContext context) {
@@ -106,9 +106,9 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, List<dynamic> result) {
+  Widget _buildTitleWelcome(BuildContext context, List<dynamic> result) {
     return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.height * 0.2,
+      expandedHeight: 140,
       leading: const SizedBox(),
       floating: false,
       pinned: true,
@@ -117,30 +117,55 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         background: Padding(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.1,
-              left: 20,
-              right: 20,
-            ),
+            padding: const EdgeInsets.only(top: 60, right: 20, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildTitle(context),
-                const SizedBox(height: 10),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    children: [
-                      tagsButtonView("Tất cả"),
-                      _buildListTags(result),
-                      const SizedBox(width: 20),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    children: _usersdataDataList
+                        .where((element) => element["email"] == user?.email)
+                        .take(1)
+                        .map(
+                          (e) => Text(
+                            "Hi, ${e["name"]}",
+                            style: OneTheme.of(context).header.copyWith(fontSize: 19),
+                          ),
+                        )
+                        .toList(),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Text(
+                    "Khám phá vũ trụ nào!",
+                    style: OneTheme.of(context).header.copyWith(fontSize: 23),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top : 10.0),
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 20),
+                            tagsButtonView("Tất cả"),
+                            _buildListTags(result),
+                            const SizedBox(width: 20),
+                          ],
+                        ),
+                      ),
+                    ),
 
-                //Text(textHolder),
-                tagsButton != "Tất cả" ? _titleTagsButton(context) : const SizedBox(),
+                    //Text(textHolder),
+                    tagsButton != "Tất cả" ? _titleTagsButton(context) : const SizedBox(),
+                  ],
+                )
               ],
             )),
       ),
@@ -150,46 +175,37 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
   Align _titleTagsButton(BuildContext context) {
     return Align(
         alignment: Alignment.centerLeft,
-        child: RichText(
-          text: TextSpan(
-            text: 'Bạn đang tìm kiếm với từ khoá : ',
-            style: DefaultTextStyle.of(context).style.copyWith(color: OneColors.white),
-            children: <TextSpan>[
-              TextSpan(text: tagsButton, style: const TextStyle(fontWeight: FontWeight.bold, color: OneColors.textOrange)),
-            ],
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: RichText(
+            text: TextSpan(
+              text: 'Bạn đang tìm kiếm với từ khoá : ',
+              style: DefaultTextStyle.of(context).style.copyWith(color: OneColors.black),
+              children: <TextSpan>[
+                TextSpan(text: tagsButton, style: const TextStyle(fontWeight: FontWeight.bold, color: OneColors.textOrange)),
+              ],
+            ),
           ),
         ));
   }
 
-  Padding _buildListTags(List<dynamic> result) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: SizedBox(
-        height: 40,
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-          itemCount: result.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                tagsButtonView(result[index]),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Align _buildTitle(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        "Có thể bạn chưa biết!",
-        style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+  SizedBox _buildListTags(List<dynamic> result) {
+    return SizedBox(
+      height: 50,
+      child: ListView.builder(
+        padding: EdgeInsets.zero,
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
+        itemCount: result.length,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              tagsButtonView(result[index]),
+            ],
+          );
+        },
       ),
     );
   }
@@ -202,15 +218,21 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
         });
       }),
       child: Container(
+        height: 40,
         margin: const EdgeInsets.only(right: 8),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: OneColors.blue100),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: OneColors.white, boxShadow: const [
+          BoxShadow(
+            color: OneColors.grey,
+            blurRadius: 4,
+          )
+        ]),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Align(
               alignment: Alignment.center,
               child: Text(
                 label,
-                style: const TextStyle(color: OneColors.brandVNP),
+                style: OneTheme.of(context).header.copyWith(color: OneColors.black, fontSize: 12, fontWeight: FontWeight.w400),
               )),
         ),
       ),

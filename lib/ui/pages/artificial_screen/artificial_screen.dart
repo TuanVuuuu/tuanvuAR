@@ -1,8 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, unused_field, unused_local_variable, non_constant_identifier_names
 
 import 'dart:math';
-
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
@@ -64,93 +62,87 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
     return AppScaffold(
       floatingActionButton: OneFloatToTop(scrollController: scrollController),
       body: _discoverDataList.isEmpty
-          ? Container(
-              decoration: OneWidget.background_bg3,
-              child: Scrollbar(
-                child: CustomScrollView(controller: scrollController, slivers: <Widget>[
-                  BuildArtificialHeader(context),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                        padding: const EdgeInsets.only(top: 200),
-                        child: Column(
-                          children: [
-                            OneLoading.space_loading_larget,
-                            Text(
-                              "Đang tải dữ liệu",
-                              style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                            )
-                          ],
-                        )),
-                  )
-                ]),
-              ),
+          ? Scrollbar(
+              child: CustomScrollView(controller: scrollController, slivers: <Widget>[
+                BuildArtificialHeader(context),
+                SliverToBoxAdapter(
+                  child: Padding(
+                      padding: const EdgeInsets.only(top: 200),
+                      child: Column(
+                        children: [
+                          OneLoading.space_loading_larget,
+                          Text(
+                            "Đang tải dữ liệu",
+                            style: OneTheme.of(context).header.copyWith(color: OneColors.black),
+                          )
+                        ],
+                      )),
+                )
+              ]),
             )
-          : Container(
-              decoration: OneWidget.background_bg3,
-              child: Scrollbar(
-                child: CustomScrollView(
-                  controller: scrollController,
-                  physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics(),
-                  ),
-                  slivers: <Widget>[
-                    BuildArtificialHeader(context),
-                    !isSearchBar ? const SliverToBoxAdapter(child: SizedBox()) : _buildSearchField(context),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(childCount: _filteredDataList.length, (context, index) {
-                        var records = _filteredDataList[index];
-                        String? name = records["name"];
-                        String? image2DUrl = records["images"]["image2DUrl"];
-                        String? info = records["info"];
-                        List tags = records["tags"];
-                        int indexRandom = random.nextInt(OneColorRamdom.colors.length);
-                        return InkWell(
-                          onTap: () {
-                            Get.to(
-                                () => ArtificialDetailScreen(
-                                      argument: records,
-                                      color: OneColorRamdom.colors[indexRandom],
-                                    ),
-                                curve: Curves.linear,
-                                transition: Transition.rightToLeft);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: sizeHeight * 0.16,
-                                  width: sizeWidth - 40,
-                                  decoration: BoxDecoration(color: OneColorRamdom.colors[indexRandom].withOpacity(0.7), borderRadius: BorderRadius.circular(15)),
-                                  child: Container(
-                                    margin: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 2,
-                                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                            // Tên ngôi sao
-                                            _buildName(name, context),
-                                            // thông tin ngôi sao
-                                            _buildInfo(info, context),
-                                            _buildTagsList(tags, context),
-                                          ]),
-                                        ),
-                                        _buildImages(sizeHeight, image2DUrl),
-                                      ],
-                                    ),
+          : Scrollbar(
+              child: CustomScrollView(
+                controller: scrollController,
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
+                slivers: <Widget>[
+                  BuildArtificialHeader(context),
+                  !isSearchBar ? const SliverToBoxAdapter(child: SizedBox()) : _buildSearchField(context),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(childCount: _filteredDataList.length, (context, index) {
+                      var records = _filteredDataList[index];
+                      String? name = records["name"];
+                      String? image2DUrl = records["images"]["image2DUrl"];
+                      String? info = records["info"];
+                      List tags = records["tags"];
+                      int indexRandom = random.nextInt(OneColorRamdom.colors.length);
+                      return InkWell(
+                        onTap: () {
+                          Get.to(
+                              () => ArtificialDetailScreen(
+                                    argument: records,
+                                    color: OneColorRamdom.colors[indexRandom],
+                                  ),
+                              curve: Curves.linear,
+                              transition: Transition.rightToLeft);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          decoration: const BoxDecoration(color: OneColors.white, boxShadow: [BoxShadow(color: OneColors.grey, blurRadius: 4, offset: Offset(0, 5))]),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: sizeHeight * 0.17,
+                                width: sizeWidth - 40,
+                                decoration: const BoxDecoration(color: OneColors.white),
+                                child: Container(
+                                  margin: const EdgeInsets.all(8),
+                                  child: Row(
+                                    children: [
+                                      _buildImages(sizeHeight, image2DUrl),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                          // Tên ngôi sao
+                                          _buildName(name, context),
+                                          // thông tin ngôi sao
+                                          _buildInfo(info, context),
+                                          _buildTagsList(tags, context),
+                                          const OneThickNess()
+                                        ]),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        );
-                      }),
-                    )
-                  ],
-                ),
+                        ),
+                      );
+                    }),
+                  )
+                ],
               ),
             ),
     );
@@ -163,7 +155,7 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
         padding: const EdgeInsets.only(left: 5.0),
         child: Text(
           "$name",
-          style: OneTheme.of(context).caption1.copyWith(color: OneColors.black, fontSize: 10, fontWeight: FontWeight.w700),
+          style: OneTheme.of(context).caption1.copyWith(color: OneColors.black, fontSize: 13, fontWeight: FontWeight.w700),
         ),
       ),
     );
@@ -177,10 +169,10 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
           "$info",
           style: OneTheme.of(context).caption1.copyWith(
                 color: OneColors.black,
-                fontSize: 10,
+                fontSize: 13,
                 fontWeight: FontWeight.w400,
               ),
-          maxLines: 5,
+          maxLines: 3,
           textAlign: TextAlign.justify,
           overflow: TextOverflow.ellipsis,
         ),
@@ -214,14 +206,9 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
       flex: 1,
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0),
-        child: DottedBorder(
-          color: OneColors.black,
-          strokeWidth: 0.05,
-          borderType: BorderType.RRect,
-          child: SizedBox(
-            height: sizeHeight * 0.12,
-            child: CachedImage(imageUrl: image2DUrl ?? ""),
-          ),
+        child: SizedBox(
+          height: sizeHeight * 0.12,
+          child: CachedImage(imageUrl: image2DUrl ?? ""),
         ),
       ),
     );
@@ -239,18 +226,18 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.arrow_back_ios),
-              color: OneColors.white,
+              color: OneColors.black,
             ),
             Text(
               "Nhân Tạo",
-              style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+              style: OneTheme.of(context).header.copyWith(color: OneColors.black),
             ),
             !isSearchBar
                 ? IconButton(
                     icon: const Icon(
                       Icons.search,
                       size: 30,
-                      color: OneColors.white,
+                      color: OneColors.black,
                     ),
                     onPressed: () {
                       setState(() {
@@ -261,7 +248,7 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
                 : TextButton(
                     child: Text(
                       "Đóng",
-                      style: OneTheme.of(context).title2.copyWith(color: OneColors.white),
+                      style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
                     ),
                     onPressed: () {
                       setState(() {
@@ -282,35 +269,35 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(20.0),
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 6.0,
-                offset: Offset(0, 2),
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(20.0),
               ),
-            ],
-          ),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 6.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+              border: Border.all(color: OneColors.black, width: 1)),
           child: TextField(
             // inputFormatters: [
             //   //FilteringTextInputFormatter.allow(RegExp(r'[0-9a-zA-Z ]')),
             // ],
             maxLength: 28,
             controller: _searchTextController,
-            cursorColor: OneColors.white,
-            style: OneTheme.of(context).title2.copyWith(color: OneColors.white),
+            cursorColor: OneColors.black,
+            style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
             decoration: InputDecoration(
               counterText: "",
               hintText: "Search",
-              hintStyle: OneTheme.of(context).title2.copyWith(color: OneColors.white, letterSpacing: 5),
+              hintStyle: OneTheme.of(context).title2.copyWith(color: OneColors.grey, letterSpacing: 5),
               contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               border: InputBorder.none,
               fillColor: OneColors.transparent,
               filled: true,
-              suffixIconColor: OneColors.white,
+              suffixIconColor: OneColors.grey,
               suffixIcon: IconButton(
                 icon: _isCleared ? const Icon(Icons.close) : const Icon(Icons.close),
                 onPressed: () {

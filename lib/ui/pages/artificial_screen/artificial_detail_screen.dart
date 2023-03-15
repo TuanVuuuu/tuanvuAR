@@ -64,26 +64,23 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
             },
             child: const Icon(
               Icons.arrow_back_ios,
-              color: OneColors.white,
+              color: OneColors.black,
             ),
           ),
         ),
         extendBodyBehindAppBar: true,
-        body: Container(
-          decoration: OneWidget.background_bg4,
-          child: Scrollbar(
-              child: CustomScrollView(
-            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            slivers: <Widget>[
-              // Build Image
-              _buildImage(context),
-              // Build name , tags, info
-              _buildInfo(context, idname, model3DUrl),
-              //Build tuổi, bán kính, mật độ, trọng lực, chu kỳ quay,
-              _buildGridInfo(launch_date, speed, orbital_altitude, speed_in_orbit, launch_location, manufacturer)
-            ],
-          )),
-        ));
+        body: Scrollbar(
+            child: CustomScrollView(
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          slivers: <Widget>[
+            // Build Image
+            _buildImage(context),
+            // Build name , tags, info
+            _buildInfo(context, idname, model3DUrl),
+            //Build tuổi, bán kính, mật độ, trọng lực, chu kỳ quay,
+            _buildGridInfo(launch_date, speed, orbital_altitude, speed_in_orbit, launch_location, manufacturer)
+          ],
+        )));
   }
 
   Widget _buildGridInfo(String launch_date, String speed, String orbital_altitude, String speed_in_orbit, String launch_location, String manufacturer) {
@@ -97,14 +94,14 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           List<Icon> icons = [
-            const Icon(Icons.history_toggle_off, color: OneColors.white),
-            const Icon(Icons.open_in_full, color: OneColors.white),
-            const Icon(Icons.drag_indicator, color: OneColors.white),
-            const Icon(Icons.play_for_work, color: OneColors.white),
-            const Icon(Icons.donut_large, color: OneColors.white),
-            const Icon(Icons.settings_backup_restore, color: OneColors.white),
+            const Icon(Icons.history_toggle_off, color: OneColors.black),
+            const Icon(Icons.open_in_full, color: OneColors.black),
+            const Icon(Icons.drag_indicator, color: OneColors.black),
+            const Icon(Icons.play_for_work, color: OneColors.black),
+            const Icon(Icons.donut_large, color: OneColors.black),
+            const Icon(Icons.settings_backup_restore, color: OneColors.black),
           ];
-          List<String> titles = ["Ngày phóng", "Tốc độ tối đa", "Độ cao quỹ đạo", "Tốc độ quỹ đạo", "Địa điểm phóng", "Nhà sản xuất"];
+          List<String> titles = ["Ngày phóng", "Tốc độ tối đa", "Độ cao quỹ đạo", "Tốc độ quỹ đạo", "Địa điểm phóng", "Nhà sản xuất"];
 
           List<String> contents = [launch_date, speed, orbital_altitude, speed_in_orbit, launch_location, manufacturer];
           return Padding(
@@ -115,19 +112,19 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
                   children: [
                     icons[index],
                     const SizedBox(width: 5),
-                    Text(titles[index], style: OneTheme.of(context).title1.copyWith(color: OneColors.white, fontWeight: FontWeight.w400)),
+                    Text(titles[index], style: OneTheme.of(context).title1.copyWith(color: OneColors.black, fontWeight: FontWeight.w400)),
                   ],
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 10),
                   height: 40,
                   width: sizeWidth! - 60,
-                  decoration: BoxDecoration(color: OneColors.transparent, borderRadius: BorderRadius.circular(15), border: Border.all(color: OneColors.white, width: 2)),
+                  decoration: BoxDecoration(color: OneColors.transparent, borderRadius: BorderRadius.circular(15), border: Border.all(color: OneColors.black, width: 2)),
                   child: Center(
                     child: contents[index] != ""
                         ? Text(
                             contents[index],
-                            style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+                            style: OneTheme.of(context).title1.copyWith(color: OneColors.black),
                           )
                         : Text(
                             "Đang cập nhật",
@@ -169,7 +166,7 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
       child: Text(
         name!,
-        style: OneTheme.of(context).header.copyWith(fontSize: 30, color: OneColors.white),
+        style: OneTheme.of(context).header.copyWith(fontSize: 30, color: OneColors.black),
       ),
     );
   }
@@ -191,8 +188,8 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       child: ReadMoreText(
         info!,
-        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
-        trimLines: 5,
+        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.black),
+        trimLines: 3,
         textAlign: TextAlign.justify,
         trimMode: TrimMode.Line,
         trimCollapsedText: " Xem thêm",
@@ -236,18 +233,6 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(
-            top: -sizeHeight! * 0.4,
-            right: -sizeWidth! * 0.4,
-            child: Container(
-              height: sizeHeight!,
-              width: sizeWidth!,
-              decoration: BoxDecoration(
-                boxShadow: [BoxShadow(color: widget.color.withOpacity(0.2), blurRadius: 50, spreadRadius: 50)],
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
           Positioned(
             top: 0,
             right: -sizeWidth! * 0.2,

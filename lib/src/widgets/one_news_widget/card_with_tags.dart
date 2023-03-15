@@ -116,10 +116,12 @@ class _CardNewsWithTagsState extends State<CardNewsWithTags> {
       }),
       child: Container(
         margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
-        decoration: BoxDecoration(
-          color: widget.style != true ? OneColors.black.withOpacity(0.5) : OneColors.white,
-          borderRadius: BorderRadius.circular(20),
-        ),
+        decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
+          BoxShadow(
+            color: OneColors.grey,
+            blurRadius: 4,
+          )
+        ]),
         child: (records["content"][0]["images"]["imageUrl"] != null && records["content"][0]["images"]["imageUrl"] != "")
             ? OneCardNewsImage(
                 records: records,

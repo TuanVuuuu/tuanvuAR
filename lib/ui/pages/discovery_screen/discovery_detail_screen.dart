@@ -80,31 +80,23 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
             },
             child: const Icon(
               Icons.arrow_back_ios,
-              color: OneColors.white,
+              color: OneColors.black,
             ),
           ),
         ),
         extendBodyBehindAppBar: true,
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(OneImages.bg4),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Scrollbar(
-              child: CustomScrollView(
-            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            slivers: <Widget>[
-              // Build Image
-              _buildImage(context),
-              // Build name , tags, info
-              _buildInfo(context, idname, model3DUrl),
-              //Build tuổi, bán kính, mật độ, trọng lực, chu kỳ quay,
-              _buildGridInfo(age, radius, density, gravitation, cycle, trajectory)
-            ],
-          )),
-        ));
+        body: Scrollbar(
+            child: CustomScrollView(
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          slivers: <Widget>[
+            // Build Image
+            _buildImage(context),
+            // Build name , tags, info
+            _buildInfo(context, idname, model3DUrl),
+            //Build tuổi, bán kính, mật độ, trọng lực, chu kỳ quay,
+            _buildGridInfo(age, radius, density, gravitation, cycle, trajectory)
+          ],
+        )));
   }
 
   Widget _buildGridInfo(String age, String radius, String density, String gravitation, String cycle, String trajectory) {
@@ -118,12 +110,12 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           List<Icon> icons = [
-            const Icon(Icons.history_toggle_off, color: OneColors.white),
-            const Icon(Icons.open_in_full, color: OneColors.white),
-            const Icon(Icons.drag_indicator, color: OneColors.white),
-            const Icon(Icons.play_for_work, color: OneColors.white),
-            const Icon(Icons.donut_large, color: OneColors.white),
-            const Icon(Icons.settings_backup_restore, color: OneColors.white),
+            const Icon(Icons.history_toggle_off, color: OneColors.black),
+            const Icon(Icons.open_in_full, color: OneColors.black),
+            const Icon(Icons.drag_indicator, color: OneColors.black),
+            const Icon(Icons.play_for_work, color: OneColors.black),
+            const Icon(Icons.donut_large, color: OneColors.black),
+            const Icon(Icons.settings_backup_restore, color: OneColors.black),
           ];
           List<String> titles = ["Tuổi", "Bán kính", "Mật độ", "Trọng lực", "Chu kỳ quay", "Quỹ đạo"];
 
@@ -136,14 +128,14 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
                   children: [
                     icons[index],
                     const SizedBox(width: 5),
-                    Text(titles[index], style: OneTheme.of(context).title1.copyWith(color: OneColors.white, fontWeight: FontWeight.w400)),
+                    Text(titles[index], style: OneTheme.of(context).title1.copyWith(color: OneColors.black, fontWeight: FontWeight.w400)),
                   ],
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 10),
                   height: 40,
                   width: sizeWidth! - 60,
-                  decoration: BoxDecoration(color: OneColors.transparent, borderRadius: BorderRadius.circular(15), border: Border.all(color: OneColors.white, width: 2)),
+                  decoration: BoxDecoration(color: OneColors.transparent, borderRadius: BorderRadius.circular(15), border: Border.all(color: OneColors.black, width: 2)),
                   child: Center(
                     child: contents[index] != ""
                         ? Text(
@@ -156,7 +148,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
 
                               return contents[index];
                             })(),
-                            style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+                            style: OneTheme.of(context).title1.copyWith(color: OneColors.black),
                           )
                         : Text(
                             "Đang cập nhật",
@@ -198,8 +190,8 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       child: ReadMoreText(
         info!,
-        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
-        trimLines: 5,
+        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.black),
+        trimLines: 3,
         textAlign: TextAlign.justify,
         trimMode: TrimMode.Line,
         trimCollapsedText: " Xem thêm",
@@ -251,7 +243,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
       child: Text(
         name!,
-        style: OneTheme.of(context).header.copyWith(fontSize: 30, color: OneColors.white),
+        style: OneTheme.of(context).header.copyWith(fontSize: 30, color: OneColors.black),
       ),
     );
   }
@@ -265,18 +257,6 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(
-            top: -sizeHeight! * 0.4,
-            right: -sizeWidth! * 0.4,
-            child: Container(
-              height: sizeHeight!,
-              width: sizeWidth!,
-              decoration: BoxDecoration(
-                boxShadow: [BoxShadow(color: widget.color.withOpacity(0.2), blurRadius: 50, spreadRadius: 50)],
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
           Positioned(
             top: sizeHeight! * 0.25,
             left: -sizeWidth! * 0.07,
