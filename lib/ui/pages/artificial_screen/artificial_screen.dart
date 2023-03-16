@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
+import 'package:flutter_application_1/src/components/widget/one_blur.dart';
 import 'package:flutter_application_1/src/models/one_list_colors.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_detail_screen.dart';
@@ -204,12 +205,35 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
   Expanded _buildImages(double sizeHeight, String? image2DUrl) {
     return Expanded(
       flex: 1,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: SizedBox(
-          height: sizeHeight * 0.12,
-          child: CachedImage(imageUrl: image2DUrl ?? ""),
-        ),
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: BlurFilter(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: sizeHeight * 0.08,
+                  child: CachedImage(
+                    color: Colors.grey,
+                    imageUrl: image2DUrl ?? "",
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: SizedBox(
+                height: sizeHeight * 0.12,
+                child: CachedImage(imageUrl: image2DUrl ?? ""),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -217,7 +241,7 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
   SliverToBoxAdapter BuildArtificialHeader(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.only(top: 50, bottom: 10, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -265,7 +289,7 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
   SliverToBoxAdapter _buildSearchField(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           decoration: BoxDecoration(
@@ -273,13 +297,6 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
               borderRadius: const BorderRadius.all(
                 Radius.circular(20.0),
               ),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 6.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
               border: Border.all(color: OneColors.black, width: 1)),
           child: TextField(
             // inputFormatters: [

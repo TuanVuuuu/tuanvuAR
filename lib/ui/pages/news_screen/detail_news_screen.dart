@@ -64,49 +64,45 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
 
     return AppScaffold(
       floatingActionButton: OneFloatToTop(scrollController: _scrollController),
-      backgroundColor: OneColors.black,
-      body: Container(
-        decoration: OneWidget.background_bg4,
-        child: Scrollbar(
-            child: CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            //Build Header
-            _buildHeader(context),
-            //Content
-            SliverToBoxAdapter(
-              child: Column(children: [
-                // Build title
-                _buildTitle(context),
-                // Build Tags
-                _buildTags(),
-                // Build date
-                _buildDate(dateFormat, context),
-                //
-                _buildTitleSmall(context),
+      body: Scrollbar(
+          child: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          //Build Header
+          _buildHeader(context),
+          //Content
+          SliverToBoxAdapter(
+            child: Column(children: [
+              // Build title
+              _buildTitle(context),
+              // Build Tags
+              _buildTags(),
+              // Build date
+              _buildDate(dateFormat, context),
+              //
+              _buildTitleSmall(context),
 
-                _buildTitleGuild(context),
-                //Nội dung
-                _buildContents(contentList, context),
+              _buildTitleGuild(context),
+              //Nội dung
+              _buildContents(contentList, context),
 
-                // Nguồn
-                _buildAuthor(context, dateFormat),
-                //Có thể bạn sẽ thích nó
-                _buildLikes(context),
-                //
-              ]),
-            ),
-            CardNewsWithTags(
-              cardLength: 2,
-              checkindexRandom: true,
-              data: homedata,
-              tagsButton: 'Tất cả',
-            ),
+              // Nguồn
+              _buildAuthor(context, dateFormat),
+              //Có thể bạn sẽ thích nó
+              _buildLikes(context),
+              //
+            ]),
+          ),
+          CardNewsWithTags(
+            cardLength: 2,
+            checkindexRandom: true,
+            data: homedata,
+            tagsButton: 'Tất cả',
+          ),
 
-            const SliverToBoxAdapter(child: BuildFooter())
-          ],
-        )),
-      ),
+          const SliverToBoxAdapter(child: BuildFooter())
+        ],
+      )),
     );
   }
 
@@ -149,7 +145,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         "${e["caption"]}",
-        style: OneTheme.of(context).caption1.copyWith(color: OneColors.white, fontSize: 16),
+        style: OneTheme.of(context).caption1.copyWith(color: OneColors.black, fontSize: 16),
       ),
     );
   }
@@ -165,7 +161,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
               children: [
                 Text(
                   contents,
-                  style: OneTheme.of(context).body2.copyWith(color: OneColors.white, fontSize: 14, height: 1.5),
+                  style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontSize: 14, height: 1.5),
                   textAlign: TextAlign.justify,
                 ),
               ],
@@ -187,13 +183,13 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
           const SizedBox(height: 3),
           Text(
             e["images"]["imageNotes"],
-            style: OneTheme.of(context).body2.copyWith(color: OneColors.grey, fontSize: 12),
+            style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontSize: 12),
           ),
           const SizedBox(height: 3),
           e["images"]["imageCredit"] != ""
               ? Text(
                   "Nguồn: ${e["images"]["imageCredit"]}",
-                  style: OneTheme.of(context).body2.copyWith(color: OneColors.grey, fontSize: 10),
+                  style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontSize: 10),
                 )
               : const SizedBox(),
         ],
@@ -210,7 +206,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
               children: [
                 Text(
                   contentsMore,
-                  style: OneTheme.of(context).body2.copyWith(color: OneColors.white, fontSize: 14, height: 1.5),
+                  style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontSize: 14, height: 1.5),
                   textAlign: TextAlign.justify,
                 ),
               ],
@@ -247,7 +243,12 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                               transition: Transition.rightToLeft);
                         },
                         child: Container(
-                            decoration: BoxDecoration(color: OneColors.white.withOpacity(0.4), borderRadius: BorderRadius.circular(15)),
+                            decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(15), boxShadow: const [
+                              BoxShadow(
+                                color: OneColors.grey,
+                                blurRadius: 4,
+                              )
+                            ]),
                             height: 110,
                             padding: const EdgeInsets.all(8),
                             margin: const EdgeInsets.symmetric(vertical: 10),
@@ -259,7 +260,6 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: SizedBox(
                                       height: 80,
-                                      width: 80,
                                       child: CachedImage(
                                         imageUrl: url,
                                         fit: BoxFit.fitHeight,
@@ -268,20 +268,20 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 3,
+                                  flex: 2,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
                                       Text(
                                         name,
-                                        style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
+                                        style: OneTheme.of(context).body1.copyWith(color: OneColors.black),
                                       ),
                                       Text(
                                         info,
-                                        maxLines: 4,
+                                        maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
-                                        style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+                                        style: OneTheme.of(context).body2.copyWith(color: OneColors.black),
                                       ),
                                     ],
                                   ),
@@ -326,19 +326,23 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                             transition: Transition.rightToLeft);
                       },
                       child: Container(
-                          decoration: BoxDecoration(color: OneColors.white.withOpacity(0.4), borderRadius: BorderRadius.circular(15)),
+                          decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(15), boxShadow: const [
+                            BoxShadow(
+                              color: OneColors.grey,
+                              blurRadius: 4,
+                            )
+                          ]),
                           height: 110,
                           padding: const EdgeInsets.all(8),
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           child: Row(
                             children: [
                               Expanded(
-                                flex: 3,
+                                flex: 1,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: SizedBox(
                                     height: 80,
-                                    width: 80,
                                     child: CachedImage(
                                       imageUrl: url,
                                       fit: BoxFit.fitHeight,
@@ -347,20 +351,20 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
                                 ),
                               ),
                               Expanded(
-                                flex: 7,
+                                flex: 2,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     Text(
                                       name,
-                                      style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
+                                      style: OneTheme.of(context).body1.copyWith(color: OneColors.black),
                                     ),
                                     Text(
                                       info,
-                                      maxLines: 4,
+                                      maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
-                                      style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
+                                      style: OneTheme.of(context).body2.copyWith(color: OneColors.black),
                                     ),
                                   ],
                                 ),
@@ -381,7 +385,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
       padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20),
       child: Text(
         widget.argument["title"],
-        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
+        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.black),
       ),
     );
   }
@@ -391,7 +395,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
       padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20),
       child: Text(
         widget.argument["guideTitle"],
-        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.white),
+        style: OneTheme.of(context).body2.copyWith(fontSize: 16, color: OneColors.black),
         textAlign: TextAlign.justify,
       ),
     );
@@ -422,9 +426,9 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Icon(Icons.arrow_back_ios, color: OneColors.white),
+                const Icon(Icons.arrow_back_ios, color: OneColors.black),
                 const SizedBox(width: 10),
-                Text("Trở về", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                Text("Trở về", style: OneTheme.of(context).body1.copyWith(color: OneColors.black)),
               ],
             ),
           ),
@@ -458,7 +462,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
           alignment: Alignment.centerLeft,
           child: Text(
             "Được cập nhật vào $dateFormat",
-            style: OneTheme.of(context).body2.copyWith(color: OneColors.greyLight),
+            style: OneTheme.of(context).body2.copyWith(color: OneColors.black),
           )),
     );
   }
@@ -472,14 +476,14 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
             alignment: Alignment.centerLeft,
             child: Text(
               "Được đăng tải bởi : ${widget.argument["author"]}",
-              style: OneTheme.of(context).title2.copyWith(color: OneColors.greyLight, fontStyle: FontStyle.italic),
+              style: OneTheme.of(context).title2.copyWith(color: OneColors.black, fontStyle: FontStyle.italic),
             ),
           ),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
               dateFormat,
-              style: OneTheme.of(context).body2.copyWith(color: OneColors.greyLight, fontStyle: FontStyle.normal),
+              style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontStyle: FontStyle.normal),
             ),
           ),
         ],
@@ -542,7 +546,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
       padding: const EdgeInsets.only(top: 0, left: 23, right: 23),
       child: Text(
         widget.argument["title"],
-        style: OneTheme.of(context).header.copyWith(fontSize: 26, color: OneColors.white),
+        style: OneTheme.of(context).header.copyWith(fontSize: 26, color: OneColors.black),
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
       ),

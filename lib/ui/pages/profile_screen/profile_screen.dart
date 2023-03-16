@@ -10,6 +10,8 @@ import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
 import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_screen.dart';
+import 'package:flutter_application_1/ui/pages/auth_screen/forgot_password_screen.dart';
+import 'package:flutter_application_1/ui/pages/auth_screen/sign_out.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/user_detail_info_screen.dart';
 import 'package:flutter_application_1/ui/pages/discovery_screen/discovery_screen.dart';
 import 'package:flutter_application_1/ui/pages/quiz_manager_screen/quiz_manager_screen.dart';
@@ -77,95 +79,143 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double sizeHeight = MediaQuery.of(context).size.height;
     double sizeWidth = MediaQuery.of(context).size.width;
     return AppScaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(OneImages.bg3),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Scrollbar(
-          child: CustomScrollView(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        slivers: [
-          _buildHeader(context),
-          _buildListItems(sizeWidth),
-          _buildGame(context, sizeHeight),
-          _buildTitle(context, "Dành cho bạn"),
-          _buildGridViews(),
-          _buildTitle(context, "Mới nhất"),
-          CardNewsWithTags(
-            data: data,
-            tagsButton: tagsButton,
-            cardLength: 1,
-            style: true,
-          )
-        ],
-      )),
-    ));
+        body: Scrollbar(
+            child: CustomScrollView(
+      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      slivers: [
+        _buildHeader(context),
+        // _buildListItems(sizeWidth),
+        // _buildGame(context, sizeHeight),
+        _buildTitle(context, "Lối tắt"),
+        _buildGridItems(context),
+        _buildTitle(context, "Khác"),
+        _buildListShotcut(context)
+      ],
+    )));
   }
 
-  SliverToBoxAdapter _buildTitle(BuildContext context, String title) {
+  SliverToBoxAdapter _buildListShotcut(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
+      child: Column(
+        children: [
+          _buildShotcutItems(context, "Giới thiệu", const Icon(Icons.book), null),
+          _buildShotcutItems(context, "Đổi mật khẩu", const Icon(Icons.lock_clock), () {
+            Get.to(() => const ForgotPasswordScreen(), curve: Curves.linear, transition: Transition.rightToLeft);
+          }),
+          _buildShotcutItems(context, "Đăng xuất", const Icon(Icons.logout), () {
+            Get.to(() => SignOutScreen(), curve: Curves.linear, transition: Transition.rightToLeft);
+          }),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildShotcutItems(BuildContext context, String title, dynamic icons, Function()? ontap) {
+    return InkWell(
+      onTap: ontap,
+      child: Container(
+        margin: const EdgeInsets.only(top: 13, right: 27, left: 27),
+        height: 53,
+        decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(33), boxShadow: const [
+          BoxShadow(
+            color: OneColors.grey,
+            blurRadius: 4,
+            offset: Offset(0, 4),
+          )
+        ]),
+        child: Row(children: [
+          Expanded(flex: 1, child: icons),
+          Expanded(
+            flex: 4,
+            child: Text(
               title,
-              style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+              style: OneTheme.of(context).title1.copyWith(color: OneColors.black),
             ),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  SliverToBoxAdapter _buildGridItems(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 200,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                _buildItemsRow(
+                  context,
+                  "Tài khoản",
+                  const Icon(Icons.person, color: OneColors.blue200),
+                ),
+                _buildItemsRow(
+                  context,
+                  "Yêu thích",
+                  const Icon(Icons.favorite, color: OneColors.pink),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                _buildItemsRow(
+                  context,
+                  "Bảng xếp hạng",
+                  const Icon(Icons.military_tech, color: OneColors.amber),
+                ),
+                _buildItemsRow(
+                  context,
+                  "Cài đặt",
+                  const Icon(Icons.settings, color: OneColors.bgButton),
+                ),
+              ],
+            )
           ],
         ),
       ),
     );
   }
 
-  SliverGrid _buildGridViews() {
-    return SliverGrid(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-      ),
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          List title = ["Vệ tinh", "Nhân tạo", "Hệ Mặt trời", "Ngân Hà", "Sao chổi", "Ngày tận thế"];
-          List items = [OneImages.Mercury, OneImages.rocket1, OneImages.solar_system, OneImages.galaxy, OneImages.saochoi, OneImages.doomsday];
-          List ontap = [
-            () {
-              Get.to(() => const DiscoveryScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
-            },
-            () {
-              Get.to(() => const ArtificialScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
-            },
-            () {},
-            () {},
-            () {},
-            () {},
-          ];
-          return InkWell(
-            onTap: ontap[index],
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: OneColors.white.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(height: 60, width: 60, child: Image.asset(items[index])),
-                      Text(title[index], style: OneTheme.of(context).body2.copyWith(color: OneColors.black)),
-                    ],
-                  ),
-                ),
+  Expanded _buildItemsRow(BuildContext context, String title, dynamic icon) {
+    return Expanded(
+        flex: 1,
+        child: Container(
+          margin: const EdgeInsets.only(right: 20, left: 20),
+          height: 90,
+          decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(8), boxShadow: const [
+            BoxShadow(
+              color: OneColors.grey,
+              blurRadius: 4,
+            )
+          ]),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 17.0, top: 16, bottom: 19),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              icon,
+              Text(
+                title,
+                style: OneTheme.of(context).title1.copyWith(color: OneColors.black),
               ),
+            ]),
+          ),
+        ));
+  }
+
+  SliverToBoxAdapter _buildTitle(BuildContext context, String title) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: OneTheme.of(context).title1.copyWith(color: OneColors.black),
             ),
-          );
-        },
-        childCount: 6,
+          ],
+        ),
       ),
     );
   }
@@ -289,13 +339,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   SliverToBoxAdapter _buildHeader(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+        padding: const EdgeInsets.only(top: 40, left: 10, right: 10, bottom: 10),
         child: Container(
-          decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(25)),
+          decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(54), boxShadow: const [BoxShadow(color: OneColors.grey, blurRadius: 4, offset: Offset(0, 4))]),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 40, left: 20, bottom: 40),
+                padding: const EdgeInsets.only(top: 33, left: 20, bottom: 33),
                 child: Row(
                   children: [
                     _buildAvatars(),

@@ -407,94 +407,94 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Padding _buildDialogSuccess(bool isPassed) {
     return Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Text(
-                    isPassed ? "Hoàn thành" : "Kết thúc",
-                    style: OneTheme.of(context).header.copyWith(color: isPassed ? OneColors.borderGreen : OneColors.red, fontSize: 30),
-                  ),
-                );
+      padding: const EdgeInsets.all(30.0),
+      child: Text(
+        isPassed ? "Hoàn thành" : "Kết thúc",
+        style: OneTheme.of(context).header.copyWith(color: isPassed ? OneColors.borderGreen : OneColors.red, fontSize: 30),
+      ),
+    );
   }
 
   Padding _buildScoresPersent(String title, bool isPassed) {
     return Padding(
-                  padding: const EdgeInsets.only(right: 40, left: 40, top: 10, bottom: 20),
-                  child: Container(
-                    decoration: BoxDecoration(color: OneColors.black12, borderRadius: BorderRadius.circular(20), boxShadow: const [
-                      BoxShadow(
-                        color: OneColors.white,
-                        blurRadius: 1,
-                      )
-                    ]),
-                    padding: const EdgeInsets.all(10),
-                    child: Row(children: [
-                      Expanded(
-                        flex: 1,
-                        child: Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: SizedBox(
-                                height: 130,
-                                width: 130,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "${score * 10} / ${questionList.length * 10}",
-                                        style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "ĐIỂM",
-                                        style: OneTheme.of(context).title2.copyWith(color: OneColors.white),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            PercentageCircle(
-                              percentage: (score / (questionList.length)) - 0.03,
-                            ),
-                          ],
-                        ),
+      padding: const EdgeInsets.only(right: 40, left: 40, top: 10, bottom: 20),
+      child: Container(
+        decoration: BoxDecoration(color: OneColors.black12, borderRadius: BorderRadius.circular(20), boxShadow: const [
+          BoxShadow(
+            color: OneColors.white,
+            blurRadius: 1,
+          )
+        ]),
+        padding: const EdgeInsets.all(10),
+        child: Row(children: [
+          Expanded(
+            flex: 1,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: SizedBox(
+                    height: 130,
+                    width: 130,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${score * 10} / ${questionList.length * 10}",
+                            style: OneTheme.of(context).header.copyWith(color: OneColors.white),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "ĐIỂM",
+                            style: OneTheme.of(context).title2.copyWith(color: OneColors.white),
+                          )
+                        ],
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: [
-                            RichText(
-                              textAlign: TextAlign.left,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                      text: title,
-                                      style: OneTheme.of(context).title1.copyWith(
-                                            color: isPassed ? OneColors.borderGreen : OneColors.red,
-                                          )),
-                                  TextSpan(
-                                      text: isPassed ? "\nBạn đã vượt qua bài kiểm tra với tỷ lệ " : "\nBạn đã không thể vượt qua bài kiểm tra với tỷ lệ ",
-                                      style: OneTheme.of(context).title1.copyWith(
-                                            color: OneColors.white,
-                                          )),
-                                  TextSpan(
-                                      text: "${((score / questionList.length) * 100).truncate()}%.",
-                                      style: OneTheme.of(context).title1.copyWith(
-                                            color: isPassed ? OneColors.textOrange : OneColors.red,
-                                          )),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ]),
+                    ),
                   ),
-                );
+                ),
+                PercentageCircle(
+                  percentage: (score / (questionList.length)) - 0.03,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: [
+                RichText(
+                  textAlign: TextAlign.left,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: title,
+                          style: OneTheme.of(context).title1.copyWith(
+                                color: isPassed ? OneColors.borderGreen : OneColors.red,
+                              )),
+                      TextSpan(
+                          text: isPassed ? "\nBạn đã vượt qua bài kiểm tra với tỷ lệ " : "\nBạn đã không thể vượt qua bài kiểm tra với tỷ lệ ",
+                          style: OneTheme.of(context).title1.copyWith(
+                                color: OneColors.white,
+                              )),
+                      TextSpan(
+                          text: "${((score / questionList.length) * 100).truncate()}%.",
+                          style: OneTheme.of(context).title1.copyWith(
+                                color: isPassed ? OneColors.textOrange : OneColors.red,
+                              )),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ]),
+      ),
+    );
   }
 
   Padding _buildBackHome() {
@@ -502,7 +502,7 @@ class _QuizScreenState extends State<QuizScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: InkWell(
         onTap: () {
-          Get.to(() => const BottomNavigationBarWidget(), curve: Curves.linear, transition: Transition.rightToLeft);
+          Get.to(() => const BottomNavigationBarWidget(setIndex: 3), curve: Curves.linear, transition: Transition.rightToLeft);
           setState(() {
             currentQuestionIndex = 0;
             score = 0;

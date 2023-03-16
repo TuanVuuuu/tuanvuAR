@@ -25,7 +25,12 @@ import 'dart:io' as io;
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
-  const BottomNavigationBarWidget({Key? key}) : super(key: key);
+  const BottomNavigationBarWidget({
+    Key? key,
+    this.setIndex,
+  }) : super(key: key);
+
+  final int? setIndex;
 
   @override
   _BottomNavigationBarWidgetState createState() => _BottomNavigationBarWidgetState();
@@ -39,7 +44,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
     const HomeScreen(),
     const TopNewsScreen(),
     const TopNewsScreen(),
-    const ProfileScreen(),
+    QuizManagerScreen(),
     const ProfileScreen(),
   ];
 
@@ -56,6 +61,9 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         _usersdataDataList = usersdata;
       });
     });
+    if (widget.setIndex != null) {
+      _pageIndex = widget.setIndex!;
+    }
   }
 
   @override
@@ -74,55 +82,47 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       ),
       body: Stack(
         children: [
-          PageView(
-            controller: _pageController,
-            onPageChanged: (int index) {
-              setState(() {
-                _pageIndex = index;
-              });
-            },
-            children: _tabList,
-          ),
+          _tabList.elementAt(_pageIndex),
           _buildBottomBar(),
           _buildButtonOpenSideBar(context),
           Align(
             alignment: Alignment.bottomCenter,
             child: InkWell(
               onTap: () {},
-              child: 
-                  Container(
-                    height: 80,
-                    width: 80,
-                    margin: const EdgeInsets.only(bottom: 30),
-                    decoration: BoxDecoration(
-                        color: OneColors.bgButton,
-                        shape: BoxShape.circle,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: OneColors.grey,
-                            blurRadius: 5,
-                          ),
-                        ],
-                        border: Border.all(color: OneColors.white, width: 1)),
-                    child: SvgPicture.asset(
-                      OneImages.icons_ar_view,
-                      height: 24,
-                      width: 24,
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                
+              child: Container(
+                height: 80,
+                width: 80,
+                margin: const EdgeInsets.only(bottom: 30),
+                decoration: BoxDecoration(
+                    color: OneColors.bgButton,
+                    shape: BoxShape.circle,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: OneColors.grey,
+                        blurRadius: 5,
+                      ),
+                    ],
+                    border: Border.all(color: OneColors.white, width: 1)),
+                child: SvgPicture.asset(
+                  OneImages.icons_ar_view,
+                  height: 24,
+                  width: 24,
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
             ),
           ),
-          Align(alignment: Alignment.bottomCenter,
-          child: Text(
-                    "AR",
-                    style: GoogleFonts.aBeeZee(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 24,
-                      color: OneColors.black,
-                    ),
-                  ),)
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              "AR",
+              style: GoogleFonts.aBeeZee(
+                fontWeight: FontWeight.w400,
+                fontSize: 24,
+                color: OneColors.black,
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -234,18 +234,20 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           setState(() {
             _pageIndex = 0;
           });
-          _pageController.animateToPage(_pageIndex, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+
           Scaffold.of(context).closeEndDrawer();
         }),
         _itemsSideBar(context, "Khám phá", Icons.support, null, () {
           setState(() {
             _pageIndex = 1;
           });
-          _pageController.animateToPage(_pageIndex, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+
           Scaffold.of(context).closeEndDrawer();
         }),
         _itemsSideBar(context, "Trò chơi", Icons.extension, null, () {
-          Get.to(() => QuizManagerScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+          setState(() {
+            _pageIndex = 3;
+          });
 
           Scaffold.of(context).closeEndDrawer();
         }),
@@ -383,11 +385,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
             setState(() {
               _pageIndex = index;
             });
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeOut,
-            );
           },
           items: [
             BottomNavigationBarItem(
