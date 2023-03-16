@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/components/widget/one_blur.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
@@ -258,44 +259,61 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            top: sizeHeight! * 0.25,
-            left: -sizeWidth! * 0.07,
-            child: SizedBox(
-                height: 110,
-                width: 100,
-                child: Column(children: [
-                  ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: 1,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: tags!
-                            .map((tag) => _modelDataList
-                                .where((model) => model["idName"] == tag)
-                                .map((model) => CachedImage(
-                                      imageUrl: model["image2D"]["imageUrl"] ?? "",
-                                      fit: BoxFit.fitHeight,
-                                    ))
-                                .toList())
-                            .expand((item) => item)
-                            .toList(),
-                      );
-                    },
-                  )
-                ])),
-          ),
+              top: 15,
+              right: -sizeWidth! * 0.2 + 10,
+              child: SizedBox(
+                height: sizeHeight! * 0.35 + 5,
+                child: BlurFilter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CachedImage(
+                      // color: Colors.grey,
+                      imageUrl: image2DUrl ?? "",
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+              )),
+
           Positioned(
             top: 0,
             right: -sizeWidth! * 0.2,
-            child: Container(
+            child: SizedBox(
                 height: sizeHeight! * 0.35,
-                color: OneColors.transparent,
                 child: CachedImage(
                   imageUrl: image2DUrl ?? "",
                   fit: BoxFit.fitHeight,
                 )),
           ),
+
+          // Positioned(
+          //   top: sizeHeight! * 0.25,
+          //   left: -sizeWidth! * 0.07,
+          //   child: SizedBox(
+          //       height: 110,
+          //       width: 100,
+          //       child: Column(children: [
+          //         ListView.builder(
+          //           padding: EdgeInsets.zero,
+          //           itemCount: 1,
+          //           shrinkWrap: true,
+          //           itemBuilder: (BuildContext context, int index) {
+          //             return Column(
+          //               children: tags!
+          //                   .map((tag) => _modelDataList
+          //                       .where((model) => model["idName"] == tag)
+          //                       .map((model) => CachedImage(
+          //                             imageUrl: model["image2D"]["imageUrl"] ?? "",
+          //                             fit: BoxFit.fitHeight,
+          //                           ))
+          //                       .toList())
+          //                   .expand((item) => item)
+          //                   .toList(),
+          //             );
+          //           },
+          //         )
+          //       ])),
+          // ),
           Positioned(
             top: sizeHeight! * 0.25,
             right: 0,

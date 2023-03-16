@@ -8,16 +8,19 @@ class CachedImage extends StatelessWidget {
     required this.imageUrl,
     this.fit,
     this.progress,
+    this.color,
   }) : super(key: key);
 
   final String imageUrl;
   final fit;
   final bool? progress;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       fit: fit,
+      color: color,
       cacheManager: OneCacheManager.customCacheManager,
       imageUrl: imageUrl,
       key: UniqueKey(),

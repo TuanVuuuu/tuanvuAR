@@ -240,7 +240,14 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Icon(Icons.view_in_ar, size: 30),
+                          IconButton(
+                              icon: const Icon(
+                                Icons.view_in_ar,
+                                size: 30
+                              ),
+                              onPressed: () {
+                                Get.to(() => P3DView(argument: widget.argument), curve: Curves.linear, transition: Transition.rightToLeft);
+                              }),
                           Text(
                             "Mô hình 3D",
                             style: OneTheme.of(context).title1.copyWith(color: OneColors.black, fontSize: 15, fontWeight: FontWeight.w400),
@@ -592,6 +599,22 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                           ],
                         ),
                       ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: BlurFilter(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              child: CachedImage(
+                                color: OneColors.grey,
+                                imageUrl: image2DUrl ?? "",
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: SizedBox(height: 50, child: CachedImage(imageUrl: image2DUrl ?? "")),
@@ -668,39 +691,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
               child: _chewieVideoPlayer(),
             ),
           ]),
-          const SizedBox(
-            height: 20,
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: InkWell(
-              onTap: () {
-                Get.to(() => P3DView(argument: widget.argument), curve: Curves.linear, transition: Transition.rightToLeft);
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                width: MediaQuery.of(context).size.width * 0.4,
-                decoration: BoxDecoration(color: const Color(0xff202124), border: Border.all(color: OneColors.grey, width: 2), borderRadius: BorderRadius.circular(30)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8, top: 3, bottom: 3),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Icon(
-                        Icons.view_in_ar,
-                        color: OneColors.white,
-                        size: 16,
-                      ),
-                      Text(
-                        "Xem ở chế độ 3D",
-                        style: OneTheme.of(context).caption1.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );
@@ -790,18 +780,38 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
   SliverToBoxAdapter _buildImage2DDetail(String nameModel, BuildContext context, dynamic widget, String modelURL, double sizeHeight, double sizeWidth, String image2DUrl, String colorModel) {
     return SliverToBoxAdapter(
       child: Stack(clipBehavior: Clip.none, children: [
-        checkstate == false
-            ? Positioned(
-                top: 0,
-                right: -sizeWidth * 0.2,
-                child: SizedBox(
-                    height: sizeHeight * 0.35,
+        if (checkstate == false)
+          Positioned(
+              top: 15,
+              right: -sizeWidth * 0.2 + 10,
+              child: SizedBox(
+                height: sizeHeight * 0.35 + 5,
+                child: BlurFilter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: CachedImage(
+                      color: Color(int.parse(colorModel)),
                       imageUrl: image2DUrl,
                       fit: BoxFit.fitHeight,
-                    )),
-              )
-            : const SizedBox(),
+                    ),
+                  ),
+                ),
+              ))
+        else
+          const SizedBox(),
+        if (checkstate == false)
+          Positioned(
+            top: 0,
+            right: -sizeWidth * 0.2,
+            child: SizedBox(
+                height: sizeHeight * 0.35,
+                child: CachedImage(
+                  imageUrl: image2DUrl,
+                  fit: BoxFit.fitHeight,
+                )),
+          )
+        else
+          const SizedBox(),
         checkstate == false
             ? Positioned(
                 top: sizeHeight * 0.25,

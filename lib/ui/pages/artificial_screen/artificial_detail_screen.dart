@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/components/widget/one_blur.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
 import 'dart:io' as io;
@@ -233,6 +234,22 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
+          Positioned(
+              top: 30,
+              right: -sizeWidth! * 0.2 + 10,
+              child: SizedBox(
+                height: sizeHeight! * 0.35 + 5,
+                child: BlurFilter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CachedImage(
+                      color: Colors.grey,
+                      imageUrl: image2DUrl ?? "",
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+              )),
           Positioned(
             top: 0,
             right: -sizeWidth! * 0.2,

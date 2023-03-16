@@ -27,22 +27,14 @@ class QuizManagerScreen extends StatelessWidget {
 
     double sizeHeight = MediaQuery.of(context).size.height;
     return AppScaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(OneImages.bg3),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Scrollbar(
-          child: CustomScrollView(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        slivers: [
-          _buildHeader(context),
-          _buildBody(context, sizeHeight),
-        ],
-      )),
-    ));
+        body: Scrollbar(
+            child: CustomScrollView(
+      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      slivers: [
+        _buildHeader(context),
+        _buildBody(context, sizeHeight),
+      ],
+    )));
   }
 
   SliverToBoxAdapter _buildBody(BuildContext context, double sizeHeight) {
@@ -50,7 +42,13 @@ class QuizManagerScreen extends StatelessWidget {
         child: Container(
       margin: const EdgeInsets.symmetric(horizontal: 15.0),
       decoration: BoxDecoration(
-        color: OneColors.black.withOpacity(0.4),
+        color: OneColors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: OneColors.grey,
+            blurRadius: 4,
+          )
+        ],
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -59,95 +57,103 @@ class QuizManagerScreen extends StatelessWidget {
           _buildTitleQuestion(context),
           Stack(
             children: [
-              Container(
-                height: sizeHeight * 0.3,
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                decoration: BoxDecoration(
-                  color: OneColors.black.withOpacity(0.7),
-                  border: Border.all(
-                    color: OneColors.blue200,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
+              _buildCardBackGround(sizeHeight),
               _buildCardTitle(sizeHeight, context),
-              Padding(
-                padding: EdgeInsets.only(top: sizeHeight * 0.21, left: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 10),
-                    Text(
-                      "Môn : Thiên văn học",
-                      style: OneTheme.of(context).title2.copyWith(
-                            color: OneColors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "Chủ đề : Các Hành tinh trong Hệ Mặt Trời",
-                      style: OneTheme.of(context).title2.copyWith(
-                            color: OneColors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                    ),
-                  ],
-                ),
-              )
+              _buildCardObject(sizeHeight, context),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Tổng câu hỏi : 10",
-                            style: OneTheme.of(context).title2.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "Giới thiệu tổng quan",
-                            style: OneTheme.of(context).title2.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [_buildButtonStart(context)],
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Trong trò chơi này, người chơi sẽ phải trả lời các câu hỏi liên quan đến thiên văn học. Nó bao gồm các câu hỏi về các hành tinh, ngôi sao, thiên thể và hiện tượng thiên văn, cũng như các khái niệm và thuật ngữ liên quan đến thiên văn học.",
-                  textAlign: TextAlign.justify,
-                  style: OneTheme.of(context).title2.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
-                ),
-                const SizedBox(height: 20),
-                /////////////////////////////////ADD DATA///////////////////////////////////
-                //_addData(),
-                /////////////////////////////////ADD DATA///////////////////////////////////
-              ],
-            ),
-          )
+          _buildCardInfo(context),
         ],
       ),
     ));
+  }
+
+  Container _buildCardInfo(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Tổng câu hỏi : 10",
+                    style: OneTheme.of(context).title2.copyWith(color: OneColors.black, fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Giới thiệu tổng quan",
+                    style: OneTheme.of(context).title2.copyWith(color: OneColors.black, fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [_buildButtonStart(context)],
+              )
+            ],
+          ),
+          const SizedBox(height: 5),
+          Text(
+            "Trong trò chơi này, người chơi sẽ phải trả lời các câu hỏi liên quan đến thiên văn học. Nó bao gồm các câu hỏi về các hành tinh, ngôi sao, thiên thể và hiện tượng thiên văn, cũng như các khái niệm và thuật ngữ liên quan đến thiên văn học.",
+            textAlign: TextAlign.justify,
+            style: OneTheme.of(context).title2.copyWith(color: OneColors.black, fontWeight: FontWeight.w400),
+          ),
+          const SizedBox(height: 20),
+          /////////////////////////////////ADD DATA///////////////////////////////////
+          //_addData(),
+          /////////////////////////////////ADD DATA///////////////////////////////////
+        ],
+      ),
+    );
+  }
+
+  Container _buildCardBackGround(double sizeHeight) {
+    return Container(
+      height: sizeHeight * 0.3,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        color: OneColors.black.withOpacity(0.7),
+        border: Border.all(
+          color: OneColors.blue200,
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(25),
+      ),
+    );
+  }
+
+  Padding _buildCardObject(double sizeHeight, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: sizeHeight * 0.21, left: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 10),
+          Text(
+            "Môn : Thiên văn học",
+            style: OneTheme.of(context).title2.copyWith(
+                  color: OneColors.white,
+                  fontWeight: FontWeight.w400,
+                ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            "Chủ đề : Các Hành tinh trong Hệ Mặt Trời",
+            style: OneTheme.of(context).title2.copyWith(
+                  color: OneColors.white,
+                  fontWeight: FontWeight.w400,
+                ),
+          ),
+        ],
+      ),
+    );
   }
 
   Center _addData() {
@@ -198,10 +204,12 @@ class QuizManagerScreen extends StatelessWidget {
 
   Padding _buildTitleQuestion(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Text(
-        "Kiểm tra sự hiểu biết của bạn về vũ trụ thông qua một số câu hỏi!",
-        style: OneTheme.of(context).title1.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
+        "Kiểm tra sự hiểu biết của bạn về vũ trụ",
+        maxLines: 1,
+        overflow: TextOverflow.fade,
+        style: OneTheme.of(context).title1.copyWith(color: OneColors.black, fontWeight: FontWeight.w400),
       ),
     );
   }
@@ -217,17 +225,13 @@ class QuizManagerScreen extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         background: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1, left: 20, right: 20, bottom: 20),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back_ios, color: OneColors.white,),
-              ),
-              Text("Đố vui cùng Astronomy", style: OneTheme.of(context).title1.copyWith(fontSize: 25, color: OneColors.white)),
-            ],
+          padding: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 20),
+          child: Text(
+            "Đố vui",
+            style: OneTheme.of(context).title1.copyWith(
+                  fontSize: 25,
+                  color: OneColors.black,
+                ),
           ),
         ),
       ),

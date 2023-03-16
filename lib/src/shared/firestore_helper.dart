@@ -26,7 +26,7 @@ Future<List<Map<String, dynamic>>> getArtificialData() async {
   for (var element in snapshot.docs) {
     var mapData = element.data() as Map<String, dynamic>;
     dataList.add(mapData);
-    print(mapData);
+    // print(mapData);
   }
   return dataList;
 }
@@ -39,7 +39,7 @@ Future<List<Map<String, dynamic>>> getHomeData() async {
   for (var element in snapshot.docs) {
     var mapData = element.data() as Map<String, dynamic>;
     dataList.add(mapData);
-    print(mapData);
+    // print(mapData);
   }
   return dataList;
 }

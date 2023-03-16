@@ -54,7 +54,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
         backgroundColor: OneColors.white,
         body: Scrollbar(
             child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           slivers: <Widget>[
             _buildTitleWelcome(context, result),
             _addDataToList(data, result, context),
@@ -108,7 +108,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
 
   Widget _buildTitleWelcome(BuildContext context, List<dynamic> result) {
     return SliverAppBar(
-      expandedHeight: 140,
+      expandedHeight:tagsButton == "Tất cả" ? 140 : 150,
       leading: const SizedBox(),
       floating: false,
       pinned: true,

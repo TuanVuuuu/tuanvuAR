@@ -47,12 +47,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return AppScaffold(
         body: Scrollbar(
             child: CustomScrollView(
-      physics: const BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       slivers: <Widget>[
         _buildTitle(context),
         _buildListPlanets(context),
         _buildItems(context),
         _buildTopNewsCard(context),
+        const SliverToBoxAdapter(child: SizedBox(height: 100)),
       ],
     )));
   }
