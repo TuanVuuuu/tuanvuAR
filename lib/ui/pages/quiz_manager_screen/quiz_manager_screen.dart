@@ -119,7 +119,7 @@ class QuizManagerScreen extends StatelessWidget {
       height: sizeHeight * 0.3,
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        color: OneColors.black.withOpacity(0.7),
+        color: OneColors.bgButton,
         border: Border.all(
           color: OneColors.blue200,
           width: 2,
@@ -148,6 +148,7 @@ class QuizManagerScreen extends StatelessWidget {
             "Chủ đề : Các Hành tinh trong Hệ Mặt Trời",
             style: OneTheme.of(context).title2.copyWith(
                   color: OneColors.white,
+                  fontSize: 15,
                   fontWeight: FontWeight.w400,
                 ),
           ),

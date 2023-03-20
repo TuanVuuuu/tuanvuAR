@@ -108,7 +108,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
 
   Widget _buildTitleWelcome(BuildContext context, List<dynamic> result) {
     return SliverAppBar(
-      expandedHeight:tagsButton == "Tất cả" ? 140 : 150,
+      expandedHeight:tagsButton == "Tất cả" ? 140 + 32 : 150 + 38,
       leading: const SizedBox(),
       floating: false,
       pinned: true,
@@ -117,7 +117,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         background: Padding(
-            padding: const EdgeInsets.only(top: 60, right: 20, bottom: 20),
+            padding: const EdgeInsets.only(top: 60, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

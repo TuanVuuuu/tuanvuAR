@@ -76,7 +76,7 @@ class _UserDetailInfoScreenState extends State<UserDetailInfoScreen> {
             ),
             const SizedBox(height: 15),
             _buildCardUser(context, "NickName", "name"),
-            _buildCardUser(context, "Điểm cao", "scores"),
+            _buildCardUser(context, "Điểm kinh nghiệm (EXP)", "scores"),
             _buildCardUser(context, "Email", "email"),
             const Spacer(),
             _buildLogout(context),
@@ -158,7 +158,7 @@ class _UserDetailInfoScreenState extends State<UserDetailInfoScreen> {
       decoration: BoxDecoration(color: OneColors.black100.withOpacity(0.7), borderRadius: BorderRadius.circular(20)),
       alignment: Alignment.centerLeft,
       margin: const EdgeInsets.only(left: 10, top: 20, right: 10),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

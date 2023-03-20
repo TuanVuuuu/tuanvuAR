@@ -88,7 +88,13 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           Align(
             alignment: Alignment.bottomCenter,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(
+                  () => const MultipleAugmentedImagesPage(),
+                  transition: Transition.rightToLeft,
+                  duration: const Duration(milliseconds: 200),
+                );
+              },
               child: Container(
                 height: 80,
                 width: 80,

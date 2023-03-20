@@ -20,10 +20,8 @@ class _MultipleAugmentedImagesPageState extends State<MultipleAugmentedImagesPag
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Multiple augmented images'),
-        ),
         body: ArCoreView(
           onArCoreViewCreated: _onArCoreViewCreated,
           type: ArCoreViewType.AUGMENTEDIMAGES,
@@ -85,37 +83,7 @@ class _MultipleAugmentedImagesPageState extends State<MultipleAugmentedImagesPag
     arCoreController?.addArCoreNodeToAugmentedImage(node, augmentedImage.index);
   }
 
-  void _addCube(ArCoreAugmentedImage augmentedImage) {
-    double size = augmentedImage.extentX / 2;
-    final material = ArCoreMaterial(
-      color: const Color.fromARGB(120, 66, 134, 244),
-      metallic: 1.0,
-    );
-    final cube = ArCoreCube(
-      materials: [material],
-      size: vector.Vector3(size, size, size),
-    );
-    final node = ArCoreNode(
-      shape: cube,
-    );
-    arCoreController?.addArCoreNodeToAugmentedImage(node, augmentedImage.index);
-  }
-
-  void _addCylindre(ArCoreAugmentedImage augmentedImage) {
-    final material = ArCoreMaterial(
-      color: Colors.red,
-      reflectance: 1.0,
-    );
-    final cylindre = ArCoreCylinder(
-      materials: [material],
-      radius: augmentedImage.extentX / 2,
-      height: augmentedImage.extentX / 3,
-    );
-    final node = ArCoreNode(
-      shape: cylindre,
-    );
-    arCoreController?.addArCoreNodeToAugmentedImage(node, augmentedImage.index);
-  }
+ 
 
   @override
   void dispose() {

@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, avoid_print
 
 import 'dart:math';
 
@@ -6,10 +6,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/ui/entryPoint/entry_point.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/more_button.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/percentage_circle.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/question_model.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
 
@@ -34,12 +37,6 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    // getQuestionsData().then((value) {
-    //   setState(() {
-    //     questionList = value;
-    //     print(value);
-    //   });
-    // });
     getData();
   }
 
@@ -343,10 +340,17 @@ class _QuizScreenState extends State<QuizScreen> {
 
   _showScoreDialog() {
     bool isPassed = false;
+    Random random = Random();
+    int randomNumber = random.nextInt(50);
 
     if (score >= questionList.length * 0.6) {
       //pass if 60 %
       isPassed = true;
+      updateScore(100 + randomNumber);
+    } else if (score >= questionList.length * 0.8) {
+      //pass if 60 %
+      isPassed = true;
+      updateScore(200 + randomNumber);
     }
     String title = isPassed ? "Chúc mừng bạn!!" : "Rất tiếc";
 
@@ -395,7 +399,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   ),
                   _buildButtonPlayAgain(),
                   const Spacer(),
-                  _buildBackHome()
+                  _buildBackHome(isPassed, randomNumber)
                 ],
               ),
             ),
@@ -497,7 +501,7 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 
-  Padding _buildBackHome() {
+  Padding _buildBackHome(bool isPassed, int randomNumber) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: InkWell(
@@ -523,13 +527,23 @@ class _QuizScreenState extends State<QuizScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.home,
-                    color: OneColors.white,
-                    size: 30,
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        OneImages.icons_game,
+                        height: 30,
+                        color: OneColors.white,
+                      ),
+                      isPassed
+                          ? Text(
+                              score >= questionList.length * 0.8 ? " + ${(200 + randomNumber).toString()} EXP" : " + 100EXP",
+                              style: OneTheme.of(context).title1.copyWith(color: OneColors.brandVNP),
+                            )
+                          : const SizedBox()
+                    ],
                   ),
                   Text(
-                    "Trở về trang chủ!",
+                    "Quay trở về",
                     style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
                   )
                 ],

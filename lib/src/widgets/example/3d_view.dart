@@ -119,7 +119,7 @@ class _P3DViewState extends State<P3DView> {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 10),
               child: Container(
-                height: 53,
+                height: 60,
                 color: OneColors.transparent,
                 child: Row(
                   children: [
@@ -130,7 +130,7 @@ class _P3DViewState extends State<P3DView> {
                           Align(
                             alignment: Alignment.bottomLeft,
                             child: Text(
-                              "Mọi người cũng tìm \nkiếm",
+                              "Mọi người cũng\ntìm kiếm",
                               style: OneTheme.of(context).header.copyWith(color: OneColors.white),
                             ),
                           ),
