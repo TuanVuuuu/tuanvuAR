@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_null_comparison, must_be_immutable
+// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_null_comparison, must_be_immutable, depend_on_referenced_packages
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -446,7 +446,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
             alignment: Alignment.centerLeft,
             child: Text(
               "Có thể bạn sẽ thích :",
-              style: OneTheme.of(context).title1.copyWith(height: 2, color: OneColors.greyLight, fontStyle: FontStyle.normal),
+              style: OneTheme.of(context).title1.copyWith(height: 2, color: OneColors.black, fontStyle: FontStyle.normal),
             ),
           ),
           const Expanded(child: OneThickNess())

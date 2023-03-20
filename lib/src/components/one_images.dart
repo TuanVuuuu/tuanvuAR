@@ -53,6 +53,9 @@ class OneImages {
   static const String icons_home = "assets/icons_river/home.svg";
   static const String icons_personalcard = "assets/icons_river/personalcard.svg";
   static const String icons_ar_view = "assets/icons_river/ar_view.svg";
+  static const String icons_rank_no1 = "assets/icons_river/rank_no1.png";
+  static const String icons_rank_no2 = "assets/icons_river/rank_no2.png";
+  static const String icons_rank_no3 = "assets/icons_river/rank_no3.png";
   static const String card_solar_system = "assets/icons_river/card_solar_system.png";
   static const String card_galaxy = "assets/icons_river/card_galaxy.png";
   static const String card_black_hole = "assets/icons_river/card_black_hole.png";

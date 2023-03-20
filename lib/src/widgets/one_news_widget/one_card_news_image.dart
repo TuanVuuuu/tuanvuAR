@@ -55,7 +55,7 @@ class OneCardNewsImage extends StatelessWidget {
     }
 
     return SizedBox(
-      height: (checkimages != false) ? 163 : 104,
+      height: (checkimages != false) ? 163 + 7 : 104 + 14,
       child: Row(
         children: [
           if (checkimages != false) Expanded(flex: 1, child: _buildImages(imageUrl)) else const SizedBox(),
@@ -73,6 +73,7 @@ class OneCardNewsImage extends StatelessWidget {
                   if (author.isNotEmpty)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         _buildTimes(author, theme, seconds, minutes, hours, days, weeks, context),
                         _buildViewCounter(formatViews, views, theme),
@@ -103,7 +104,7 @@ class OneCardNewsImage extends StatelessWidget {
           "${formatViews(views)} lượt xem",
           style: theme.body2.copyWith(
             overflow: TextOverflow.clip,
-            fontSize: 5,
+            fontSize: 10,
             fontWeight: FontWeight.w300,
             color: OneColors.black,
           ),
@@ -116,24 +117,25 @@ class OneCardNewsImage extends StatelessWidget {
   Expanded _buildTimes(author, OneThemeData theme, int seconds, int minutes, int hours, int days, int weeks, BuildContext context) {
     return Expanded(
         flex: 2,
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(
-              Icons.date_range_outlined,
-              color: OneColors.black,
-              size: 10,
-            ),
-            const SizedBox(
-              width: 5,
+            Text(
+              "$author",
+              style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontSize: 10),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.justify,
             ),
             Row(
               children: [
-                Text(
-                  "$author - ",
-                  style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontSize: 5),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.justify,
+                const Icon(
+                  Icons.date_range_outlined,
+                  color: OneColors.black,
+                  size: 10,
+                ),
+                const SizedBox(
+                  width: 5,
                 ),
                 seconds < 60
                     ? _buildTimeCard(seconds, theme, '$seconds giây trước')
@@ -151,7 +153,7 @@ class OneCardNewsImage extends StatelessWidget {
   Text _buildTimeCard(int seconds, OneThemeData theme, String time) {
     return Text(
       time,
-      style: theme.body2.copyWith(overflow: TextOverflow.clip, fontSize: 5, fontWeight: FontWeight.w300, color: OneColors.black),
+      style: theme.body2.copyWith(overflow: TextOverflow.clip, fontSize: 10, fontWeight: FontWeight.w300, color: OneColors.black),
       overflow: TextOverflow.ellipsis,
     );
   }

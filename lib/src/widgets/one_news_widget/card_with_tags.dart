@@ -1,6 +1,4 @@
-// ignore_for_file: must_be_immutable, use_build_context_synchronously, library_private_types_in_public_api
-
-import 'dart:math';
+// ignore_for_file: library_private_types_in_public_api, must_be_immutable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -73,8 +71,9 @@ class _CardNewsWithTagsState extends State<CardNewsWithTags> {
               shrinkWrap: true,
               itemCount: widget.cardLength ?? _documents!.length,
               itemBuilder: (context, index) {
-                var indexRandom = Random().nextInt(_documents!.length);
-                final DocumentSnapshot records = widget.checkindexRandom != true ? _documents![index] : _documents![indexRandom];
+                List<DocumentSnapshot> shuffledDocuments = List.from(_documents!)..shuffle(); // Xáo trộn danh sách các tài liệu
+
+                final DocumentSnapshot records = widget.checkindexRandom != true ? _documents![index] : shuffledDocuments[index];
                 Timestamp time = records["date"];
                 var dateFormat = DateFormat.yMMMMd('en_US').add_jm().format(DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch));
                 if (widget.checktags == true && !(records["tags"].any((tag) => tag == widget.tagsButton))) {

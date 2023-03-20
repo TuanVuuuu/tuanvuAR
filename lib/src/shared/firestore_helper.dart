@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/question_model.dart';
 
 Future<List<Map<String, dynamic>>> getDiscoverData() async {
@@ -86,3 +87,26 @@ Future<List<Map<String, dynamic>>> getUserData() async {
   }
   return dataList;
 }
+
+void updateScore(int scoreToAdd) async {
+  final CollectionReference usersRef = FirebaseFirestore.instance.collection('users');
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  if (user != null) {
+    final String uid = user.uid;
+    final DocumentReference userDocRef = usersRef.doc(uid);
+
+    try {
+      // Lấy điểm số hiện tại của người dùng
+      final DocumentSnapshot userDocSnapshot = await userDocRef.get();
+      final int currentScore = userDocSnapshot.get('scores');
+
+      // Cập nhật điểm số của người dùng
+      await userDocRef.update({'scores': currentScore + scoreToAdd});
+      print('Score updated successfully');
+    } catch (e) {
+      print('Error updating score: $e');
+    }
+  }
+}
+

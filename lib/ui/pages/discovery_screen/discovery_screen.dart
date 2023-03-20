@@ -98,6 +98,9 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
         slivers: <Widget>[
           buildDiscoverHeader(context),
           !isSearchBar ? const SliverToBoxAdapter(child: SizedBox()) : _buildSearchField(context),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 15),
+          ),
           SliverList(
             delegate: SliverChildBuilderDelegate(childCount: _filteredDataList.length, (context, index) {
               var records = _filteredDataList[index];
@@ -117,7 +120,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                       transition: Transition.rightToLeft);
                 },
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  margin: const EdgeInsets.only(left: 20, right: 20),
                   decoration: const BoxDecoration(color: OneColors.white, boxShadow: [BoxShadow(color: OneColors.grey, blurRadius: 4, offset: Offset(0, 5))]),
                   child: Row(
                     children: [
