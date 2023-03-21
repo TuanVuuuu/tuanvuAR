@@ -110,8 +110,8 @@ class _RankUserScreenState extends State<RankUserScreen> {
           _buildTopThreeRanker(
             context,
             sizeWidth,
-            _leaderboard.isNotEmpty ? '${_leaderboard[3]['name']}' : "Rank 1",
-            _leaderboard.isNotEmpty ? '${_leaderboard[3]['scores']}' : "0",
+            _leaderboard.isNotEmpty ? '${_leaderboard[2]['name']}' : "Rank 1",
+            _leaderboard.isNotEmpty ? '${_leaderboard[2]['scores']}' : "0",
             OneImages.icons_rank_no3,
             100,
             OneColors.textOrange,
