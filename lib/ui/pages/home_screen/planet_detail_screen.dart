@@ -84,9 +84,9 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     String colorModel = colors["colorModel"];
 
     idmain = idname;
-    List<Widget> slivers = [
-      if (_newsDataList.where((data) => data["tags"].contains(nameModel)).isNotEmpty) _buildNewsCard(nameModel, context),
-    ];
+    // List<Widget> slivers = [
+    //   if (_newsDataList.where((data) => data["tags"].contains(nameModel)).isNotEmpty) _buildNewsCard(nameModel, context),
+    // ];
 
     print(checkstate);
     return AppScaffold(

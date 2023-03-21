@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,11 +8,11 @@ import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/ui/pages/a_example_2/arscreen3.dart';
+import 'package:flutter_application_1/ui/pages/a_example_3/avatar_screen.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/forgot_password_screen.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/sign_out.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/user_detail_info_screen.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/rank_user_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -27,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   List<Map<String, dynamic>> _usersdataDataList = [];
   bool isLoading = true;
   bool _isFetching = false;
+  Map<String, dynamic>? _mapCurrentUser;
 
   @override
   void dispose() {
@@ -48,6 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     fetchData();
+    _loadCurrentUser();
     getUserData().then((usersdata) {
       setState(() {
         isLoading = false;
@@ -72,7 +75,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: Scrollbar(
             child: CustomScrollView(
       physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      slivers: [_buildHeader(context), _buildTitle(context, "Lối tắt"), _buildGridItems(context), _buildTitle(context, "Khác"), _buildListShotcut(context)],
+      slivers: [
+        _buildHeader(context),
+        _buildTitle(context, "Lối tắt"),
+        _buildGridItems(context),
+        _buildTitle(context, "Khác"),
+        _buildListShotcut(context),
+      ],
     )));
   }
 
@@ -81,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         children: [
           _buildShotcutItems(context, "Giới thiệu", const Icon(Icons.book), () {
-            Get.to(() => const AugmentedImages(), curve: Curves.linear, transition: Transition.rightToLeft);
+            Get.to(() => const ProfilePage(), curve: Curves.linear, transition: Transition.rightToLeft);
           }),
           _buildShotcutItems(context, "Đổi mật khẩu", const Icon(Icons.lock_clock), () {
             Get.to(() => const ForgotPasswordScreen(), curve: Curves.linear, transition: Transition.rightToLeft);
@@ -222,7 +231,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.only(top: 33, left: 20, bottom: 33),
                 child: Row(
                   children: [
-                    _buildAvatars(),
+                    (_mapCurrentUser?["avatarUrl"] != null && _mapCurrentUser?["avatarUrl"] != "")
+                        ? CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              _mapCurrentUser?["avatarUrl"],
+                            ),
+                            radius: 25,
+                          )
+                        : _buildAvatars(),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    // _buildAvatars(),
                     _buildNameAndEmail(context),
                   ],
                 ),
@@ -300,4 +320,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .toList(),
     );
   }
+
+  Future<void> _loadCurrentUser() async {
+    final Map<String, dynamic> leaderboard = await getCurrentUser();
+    setState(() {
+      _mapCurrentUser = leaderboard;
+    });
+  }
+
+  
 }

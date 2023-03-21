@@ -20,11 +20,12 @@ class _UserDetailInfoScreenState extends State<UserDetailInfoScreen> {
   bool isLoading = true;
   bool isEditing = false;
   late TextEditingController _nameController;
-
+  Map<String, dynamic>? _mapCurrentUser;
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController();
+    _loadCurrentUser();
     getUserData().then((usersdata) {
       setState(() {
         isLoading = false;
@@ -201,19 +202,14 @@ class _UserDetailInfoScreenState extends State<UserDetailInfoScreen> {
         controller: _nameController,
         decoration: InputDecoration(
           counterText: "",
-          hintText: "Nickname",
-          hintStyle: OneTheme.of(context).body1.copyWith(color: OneColors.grey),
-          contentPadding: const EdgeInsets.symmetric(vertical: 15),
-          alignLabelWithHint: true,
-          prefixIcon: const Icon(
-            Icons.person,
-            color: OneColors.blue300,
-          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(
-              color: Colors.white,
-            ),
+          ),
+          hintText: "NickName",
+          hintStyle: OneTheme.of(context).body1.copyWith(color: OneColors.white),
+          prefixIcon: const Icon(
+            Icons.person,
+            color: OneColors.white,
           ),
         ),
         style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
@@ -241,16 +237,33 @@ class _UserDetailInfoScreenState extends State<UserDetailInfoScreen> {
 
   Center _buildAvatar(BuildContext context) {
     return Center(
-      child: Container(
-        margin: const EdgeInsets.only(top: 70),
-        height: MediaQuery.of(context).size.height * 0.3,
-        width: MediaQuery.of(context).size.height * 0.4,
-        decoration: const BoxDecoration(
-          color: OneColors.blue300,
-          shape: BoxShape.circle,
-        ),
-        child: Image.asset(OneImages.avatars),
-      ),
+      child: (_mapCurrentUser != null && _mapCurrentUser?["avatarUrl"] != "")
+          ? Padding(
+              padding: const EdgeInsets.only(top: 70),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  _mapCurrentUser?["avatarUrl"],
+                ),
+                radius: MediaQuery.of(context).size.height * 0.15,
+              ),
+            )
+          : Container(
+              margin: const EdgeInsets.only(top: 70),
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.height * 0.4,
+              decoration: const BoxDecoration(
+                color: OneColors.blue300,
+                shape: BoxShape.circle,
+              ),
+              child: Image.asset(OneImages.avatars),
+            ),
     );
+  }
+
+  Future<void> _loadCurrentUser() async {
+    final Map<String, dynamic> leaderboard = await getCurrentUser();
+    setState(() {
+      _mapCurrentUser = leaderboard;
+    });
   }
 }

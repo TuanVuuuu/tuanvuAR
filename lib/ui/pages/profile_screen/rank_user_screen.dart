@@ -44,7 +44,10 @@ class _RankUserScreenState extends State<RankUserScreen> {
           children: [
             _buildButtonBack(context),
             _buildTopThree(sizeWidth, context),
-            _buildListRankUsers(sizeHeight, sizeWidth),
+            _buildListRankUsers(
+              sizeHeight,
+              sizeWidth,
+            ),
             _buildCurrentInfo(sizeWidth, context),
           ],
         ),
@@ -85,7 +88,7 @@ class _RankUserScreenState extends State<RankUserScreen> {
     return Container(
       margin: const EdgeInsets.only(top: 70 + 55),
       width: sizeWidth,
-      height: 250,
+      height: 270,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -97,6 +100,7 @@ class _RankUserScreenState extends State<RankUserScreen> {
             OneImages.icons_rank_no2,
             125,
             OneColors.grey,
+            _leaderboard.isNotEmpty ? _leaderboard[1]["avatarUrl"] : "",
           ),
           _buildTopThreeRanker(
             context,
@@ -106,6 +110,7 @@ class _RankUserScreenState extends State<RankUserScreen> {
             OneImages.icons_rank_no1,
             150,
             OneColors.amber,
+            _leaderboard.isNotEmpty ? _leaderboard[0]["avatarUrl"] : "",
           ),
           _buildTopThreeRanker(
             context,
@@ -115,13 +120,14 @@ class _RankUserScreenState extends State<RankUserScreen> {
             OneImages.icons_rank_no3,
             100,
             OneColors.textOrange,
+            _leaderboard.isNotEmpty ? _leaderboard[2]["avatarUrl"] : "",
           ),
         ],
       ),
     );
   }
 
-  Align _buildTopThreeRanker(BuildContext context, double sizeWidth, String name, String scores, String image, double height, Color color) {
+  Align _buildTopThreeRanker(BuildContext context, double sizeWidth, String name, String scores, String image, double height, Color color, String avatarUrl) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Column(
@@ -131,6 +137,26 @@ class _RankUserScreenState extends State<RankUserScreen> {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    (avatarUrl != "")
+                        ? CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              avatarUrl,
+                            ),
+                            radius: 25,
+                          )
+                        : Container(
+                            height: 50,
+                            width: 50,
+                            margin: const EdgeInsets.only(right: 15),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: OneColors.blue300,
+                            ),
+                            child: Image.asset(OneImages.avatars),
+                          ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Text(
                       name,
                       style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
@@ -210,6 +236,7 @@ class _RankUserScreenState extends State<RankUserScreen> {
                 itemBuilder: (context, index) {
                   final String name = _leaderboard[index]['name'];
                   final int score = _leaderboard[index]['scores'];
+                  final String avatarUrl = _leaderboard[index]["avatarUrl"];
 
                   return Container(
                     height: 50,
@@ -243,6 +270,28 @@ class _RankUserScreenState extends State<RankUserScreen> {
                                 '#${index + 1}',
                                 style: OneTheme.of(context).body1.copyWith(color: OneColors.black),
                               ),
+                              index + 1 == 1
+                                  ? const SizedBox(
+                                      width: 15,
+                                    )
+                                  : const SizedBox(),
+                              (avatarUrl != "")
+                                  ? CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        avatarUrl,
+                                      ),
+                                      radius: 15,
+                                    )
+                                  : Container(
+                                      height: 30,
+                                      width: 30,
+                                      margin: const EdgeInsets.only(left: 15),
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: OneColors.blue300,
+                                      ),
+                                      child: Image.asset(OneImages.avatars),
+                                    ),
                               SizedBox(
                                 height: 20,
                                 child: index + 1 == 1
@@ -322,6 +371,7 @@ class _RankUserScreenState extends State<RankUserScreen> {
         'name': userDocSnapshot.get('name'),
         'scores': userDocSnapshot.get('scores'),
         'email': userDocSnapshot.get('email'),
+        'avatarUrl': userDocSnapshot.get("avatarUrl")
       };
       leaderboard.add(userData);
     }

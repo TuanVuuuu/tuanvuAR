@@ -2,14 +2,11 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
-import 'package:flutter_application_1/ui/pages/a_example_1/example_1.dart';
-// import 'package:flutter_application_1/ui/pages/a_example_2/arscreen3.dart';
 import 'package:flutter_application_1/ui/pages/a_example_2/arscreen4.dart';
-import 'package:flutter_application_1/ui/pages/a_example_3/arscreen5.dart';
+// import 'package:flutter_application_1/ui/pages/a_example_3/arscreen5.dart';
 // import 'package:flutter_application_1/ui/pages/a_example_1/example.dart';
 import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_screen.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/forgot_password_screen.dart';
@@ -40,6 +37,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   final User? user = FirebaseAuth.instance.currentUser;
   late PageController _pageController;
   int _pageIndex = 0;
+  Map<String, dynamic>? _mapCurrentUser;
   final List<Widget> _tabList = [
     const HomeScreen(),
     const TopNewsScreen(),
@@ -55,6 +53,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _pageIndex);
+    _loadCurrentUser();
     getUserData().then((usersdata) {
       setState(() {
         isLoading = false;
@@ -193,17 +192,24 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       padding: const EdgeInsets.only(top: 20, left: 10, right: 30),
       child: Row(
         children: [
-          Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                color: OneColors.blue300,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: Image.asset(OneImages.avatars),
-              )),
+          (_mapCurrentUser?["avatarUrl"] != null && _mapCurrentUser?["avatarUrl"] != "")
+              ? CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    _mapCurrentUser?["avatarUrl"],
+                  ),
+                  radius: 25,
+                )
+              : Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: OneColors.blue300,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Image.asset(OneImages.avatars),
+                  )),
           const SizedBox(
             width: 10,
           ),
@@ -427,5 +433,12 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Platform not supported')));
     }
+  }
+
+  Future<void> _loadCurrentUser() async {
+    final Map<String, dynamic> leaderboard = await getCurrentUser();
+    setState(() {
+      _mapCurrentUser = leaderboard;
+    });
   }
 }

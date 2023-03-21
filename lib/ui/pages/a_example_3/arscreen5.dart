@@ -51,18 +51,13 @@ class _AssetsObjectState extends State<AssetsObject> {
   void _addToucano(ArCoreHitTestResult plane) {
     if (objectSelected != null) {
       //"https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF/Duck.gltf"
-      final toucanoNode = ArCoreReferenceNode(
-          name: objectSelected,
-          object3DFileName: objectSelected,
-          position: plane.pose.translation,
-          rotation: plane.pose.rotation);
+      final toucanoNode = ArCoreReferenceNode(name: objectSelected, object3DFileName: objectSelected, position: plane.pose.translation, rotation: plane.pose.rotation);
 
       arCoreController?.addArCoreNodeWithAnchor(toucanoNode);
     } else {
       showDialog<void>(
         context: context,
-        builder: (BuildContext context) =>
-            const AlertDialog(content: Text('Select an object!')),
+        builder: (BuildContext context) => const AlertDialog(content: Text('Select an object!')),
       );
     }
   }
@@ -73,7 +68,6 @@ class _AssetsObjectState extends State<AssetsObject> {
   }
 
   void onTapHandler(String name) {
-    print("Flutter: onNodeTap");
     showDialog<void>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -153,8 +147,7 @@ class _ListObjectSelectionState extends State<ListObjectSelection> {
                 ),
               ),
               child: Container(
-                color:
-                    selected == gifs[index] ? Colors.red : Colors.transparent,
+                color: selected == gifs[index] ? Colors.red : Colors.transparent,
                 padding: selected == gifs[index] ? const EdgeInsets.all(8.0) : null,
                 child: Image.asset(gifs[index]),
               ),

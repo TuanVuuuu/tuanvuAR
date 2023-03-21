@@ -61,6 +61,8 @@ dependencies:
   flutter_cube: ^0.1.1
   google_fonts: ^4.0.3
   intl: ^0.17.0
+  image_picker: ^0.8.7
+  firebase_storage: ^11.0.16
   
 
 flutter_icons:

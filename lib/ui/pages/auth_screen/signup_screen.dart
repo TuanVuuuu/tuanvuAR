@@ -36,27 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
             builder: (context) => Column(
               children: [
                 const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Tạo tài khoản mới!",
-                        style: OneTheme.of(context).header.copyWith(color: OneColors.black, fontSize: 25),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Hãy thực hiện đăng ký tài khoản để có thể bắt đầu hành trình, khám phá, tìm hiểu về vũ trụ bao la rộng lớn!",
-                        style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
+                _buildTitleSignUp(context),
                 const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -81,61 +61,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                     ),
                     const SizedBox(height: 16.0),
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        hintText: "Email",
-                        prefixIcon: const Icon(Icons.email),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Vui lòng không bỏ trống!';
-                        }
-                        // Kiểm tra định dạng email bằng RegExp
-                        final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                        if (!emailRegex.hasMatch(value)) {
-                          return 'Nhập sai định dạng email!';
-                        }
-                        return null;
-                      },
-                    ),
+                    _buildTextFieldEmail(),
                     const SizedBox(height: 16.0),
-                    TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        hintText: "Mật khẩu",
-                        prefixIcon: const Icon(Icons.lock),
-                        suffixIcon: IconButton(
-                          icon: obscureTextValue ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              obscureTextValue = !obscureTextValue;
-                            });
-                          },
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Vui lòng không bỏ trống!';
-                        } else if (value.length < 6) {
-                          return 'Mật khẩu phải có ít nhất 6 kí tự';
-                        }
-                        return null;
-                      },
-                      obscureText: obscureTextValue,
-                    ),
+                    _buildTextFieldPassWord(),
                     const SizedBox(height: 16.0),
                     InkWell(
                       onTap: () async {
@@ -234,6 +162,90 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  TextFormField _buildTextFieldEmail() {
+    return TextFormField(
+      controller: _emailController,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.black,
+          ),
+        ),
+        hintText: "Email",
+        prefixIcon: const Icon(Icons.email),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Vui lòng không bỏ trống!';
+        }
+        // Kiểm tra định dạng email bằng RegExp
+        final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+        if (!emailRegex.hasMatch(value)) {
+          return 'Nhập sai định dạng email!';
+        }
+        return null;
+      },
+    );
+  }
+
+  TextFormField _buildTextFieldPassWord() {
+    return TextFormField(
+      controller: _passwordController,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.black,
+          ),
+        ),
+        hintText: "Mật khẩu",
+        prefixIcon: const Icon(Icons.lock),
+        suffixIcon: IconButton(
+          icon: obscureTextValue ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
+          onPressed: () {
+            setState(() {
+              obscureTextValue = !obscureTextValue;
+            });
+          },
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Vui lòng không bỏ trống!';
+        } else if (value.length < 6) {
+          return 'Mật khẩu phải có ít nhất 6 kí tự';
+        }
+        return null;
+      },
+      obscureText: obscureTextValue,
+    );
+  }
+
+  Padding _buildTitleSignUp(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+      ),
+      child: Column(
+        children: [
+          Text(
+            "Tạo tài khoản mới!",
+            style: OneTheme.of(context).header.copyWith(color: OneColors.black, fontSize: 25),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Hãy thực hiện đăng ký tài khoản để có thể bắt đầu hành trình, khám phá, tìm hiểu về vũ trụ bao la rộng lớn!",
+            style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

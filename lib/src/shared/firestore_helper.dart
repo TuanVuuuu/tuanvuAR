@@ -110,3 +110,23 @@ void updateScore(int scoreToAdd) async {
   }
 }
 
+Future<Map<String, dynamic>> getCurrentUser() async {
+  final User? users = FirebaseAuth.instance.currentUser;
+  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+  final QuerySnapshot usersQuerySnapshot = await usersCollection.orderBy('scores', descending: true).get();
+  final userDocSnapshots = usersQuerySnapshot.docs;
+
+  // Tìm vị trí của người dùng hiện tại trong danh sách
+  final currentUserDocSnapshot = userDocSnapshots.firstWhere((docSnapshot) => docSnapshot.get('email') == users?.email);
+  final currentUserIndex = userDocSnapshots.indexOf(currentUserDocSnapshot);
+
+  // Tạo một Map chứa thông tin người dùng và số thứ tự của họ
+  final currentUserData = {
+    'name': currentUserDocSnapshot.get('name'),
+    'scores': currentUserDocSnapshot.get('scores'),
+    'rank': currentUserIndex,
+    'avatarUrl': currentUserDocSnapshot.get("avatarUrl"),
+  };
+
+  return currentUserData;
+}
