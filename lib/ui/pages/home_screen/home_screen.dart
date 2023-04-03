@@ -45,17 +45,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     _newsDataDataList.sort((a, b) => b["date"].compareTo(a["date"]));
     return AppScaffold(
+        backgroundColor: OneColors.background2.withOpacity(0.2),
         body: Scrollbar(
             child: CustomScrollView(
-      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      slivers: <Widget>[
-        _buildTitle(context),
-        _buildListPlanets(context),
-        _buildItems(context),
-        _buildTopNewsCard(context),
-        const SliverToBoxAdapter(child: SizedBox(height: 100)),
-      ],
-    )));
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          slivers: <Widget>[
+            _buildTitle(context),
+            _buildListPlanets(context),
+            _buildItems(context),
+            _buildTopNewsCard(context),
+            const SliverToBoxAdapter(child: SizedBox(height: 100)),
+          ],
+        )));
   }
 
   SliverToBoxAdapter _buildTopNewsCard(BuildContext context) {
@@ -67,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 "Dành cho bạn",
-                style: OneTheme.of(context).header.copyWith(fontSize: 23),
+                style: OneTheme.of(context).header.copyWith(fontSize: 18),
               ),
               const SizedBox(height: 10),
               SizedBox(height: 163, child: _buildNewsCard(context)),
@@ -132,10 +133,10 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 5,
         ),
         Text(
-          "${formatViews(data["views"])} lượt xem",
+          "${formatViews(data["views"])} views",
           style: OneTheme.of(context).body2.copyWith(
                 overflow: TextOverflow.clip,
-                fontSize: 8,
+                fontSize: 10,
                 fontWeight: FontWeight.w300,
                 color: OneColors.white,
               ),
@@ -191,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Text _buildTimeCard(int seconds, OneThemeData theme, String time) {
     return Text(
       time,
-      style: theme.body2.copyWith(overflow: TextOverflow.clip, fontSize: 8, fontWeight: FontWeight.w300, color: OneColors.white),
+      style: theme.body2.copyWith(overflow: TextOverflow.clip, fontSize: 10, fontWeight: FontWeight.w300, color: OneColors.white),
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -242,34 +243,48 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(right: 10.0, left: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            data["title"],
-            style: OneTheme.of(context).title1.copyWith(color: OneColors.white, fontSize: 13),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            data["titleDisplay"],
-            style: OneTheme.of(context).body2.copyWith(color: OneColors.white, fontSize: 9),
-            maxLines: 5,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildAuthorCard(data, context),
-              _buildViewCountCard(formatViews, data, context),
-            ],
-          ),
-        ],
+      padding: const EdgeInsets.only(right: 10.0, left: 10, top: 10, bottom: 10),
+      child: SizedBox(
+        height: 143,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              data["title"],
+              style: OneTheme.of(context).title1.copyWith(color: OneColors.white, fontSize: 15),
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.justify,
+            ),
+            // Text(
+            //   data["titleDisplay"],
+            //   style: OneTheme.of(context).body2.copyWith(color: OneColors.white, fontSize: 9),
+            //   maxLines: 5,
+            //   overflow: TextOverflow.ellipsis,
+            //   textAlign: TextAlign.justify,
+            // ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data["author"],
+                  style: OneTheme.of(context).title1.copyWith(color: OneColors.white, fontSize: 11),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.justify,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildAuthorCard(data, context),
+                    _buildViewCountCard(formatViews, data, context),
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -278,25 +293,29 @@ class _HomeScreenState extends State<HomeScreen> {
     return SliverToBoxAdapter(
       child: Padding(
           padding: const EdgeInsets.only(top: 10, left: 24, right: 24),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildCardItems(context, OneImages.card_solar_system, "Hệ mặt\n trời", null),
-              _buildCardItems(context, OneImages.card_galaxy, "Dải ngân\n hà", null),
-              _buildCardItems(context, OneImages.saturn, "Vệ tinh\n tự nhiên", () {
-                Get.to(
-                  () => const DiscoveryScreen(),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(milliseconds: 200),
-                );
-              }),
-              _buildCardItems(context, OneImages.Rocket, "Công nghệ\n vũ trụ", () {
-                Get.to(
-                  () => const ArtificialScreen(),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(milliseconds: 200),
-                );
-              }),
+              Text(
+                "Lối tắt",
+                style: OneTheme.of(context).header.copyWith(fontSize: 18),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildCardItems(context, OneImages.card_solar_system, "Hệ mặt\n trời", null),
+                    _buildCardItems(context, OneImages.card_galaxy, "Dải ngân\n hà", null),
+                    _buildCardItems(context, OneImages.saturn, "Vệ tinh\n tự nhiên", () {
+                      Get.toNamed(AppRoutes.DISCOVERY_SCREEN.name);
+                    }),
+                    _buildCardItems(context, OneImages.Rocket, "Công nghệ\n vũ trụ", () {
+                      Get.toNamed(AppRoutes.ARTIFICIAL_SCREEN.name);
+                    }),
+                  ],
+                ),
+              ),
             ],
           )),
     );
@@ -382,7 +401,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SizedBox(
             height: 230,
-            width: MediaQuery.of(context).size.width,
+            width: AppContants.sizeWidth,
             child: FutureBuilder<List<DocumentSnapshot>>(
               future: _getPlanetData(),
               builder: (context, snapshot) {
@@ -410,6 +429,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildPlanetCarousel(List<DocumentSnapshot> planets) {
     return ListView.builder(
+      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       shrinkWrap: true,
       padding: EdgeInsets.zero,
       scrollDirection: Axis.horizontal,

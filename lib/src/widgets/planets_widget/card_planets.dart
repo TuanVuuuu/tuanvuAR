@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:get/get.dart';
 
 class CardPlanets extends StatelessWidget {
@@ -10,16 +11,19 @@ class CardPlanets extends StatelessWidget {
     required this.data,
     this.cardLength,
     this.currentPlanets,
+    this.titleColor,
   }) : super(key: key);
 
   final CollectionReference<Object?> data;
   final int? cardLength;
   final String? currentPlanets;
+  final Color? titleColor;
 
   @override
   Widget build(BuildContext context) {
+    AppContants.init(context);
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: AppContants.sizeHeight * 0.25,
       child: Row(
         children: [
           StreamBuilder(
@@ -31,7 +35,7 @@ class CardPlanets extends StatelessWidget {
 
               if (snapshot.hasData) {
                 return SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                  width: AppContants.sizeWidth,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -49,11 +53,16 @@ class CardPlanets extends StatelessWidget {
                           },
                           child: currentPlanets != idname
                               ? Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: (MediaQuery.of(context).size.width - 300) / 10, vertical: 10),
+                                  padding: EdgeInsets.symmetric(horizontal: (AppContants.sizeWidth - 300) / 10, vertical: 10),
                                   child: Column(
                                     children: [
                                       Container(
-                                        decoration: BoxDecoration(color: OneColors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(10)),
+                                        decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(10), boxShadow: const [
+                                          BoxShadow(
+                                            color: OneColors.grey,
+                                            blurRadius: 4,
+                                          )
+                                        ]),
                                         height: 75,
                                         width: 75,
                                         child: Padding(
@@ -66,7 +75,7 @@ class CardPlanets extends StatelessWidget {
                                         child: Text(
                                           records["name"],
                                           maxLines: 2,
-                                          style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
+                                          style: OneTheme.of(context).body1.copyWith(color: titleColor ?? OneColors.white),
                                         ),
                                       ),
                                     ],

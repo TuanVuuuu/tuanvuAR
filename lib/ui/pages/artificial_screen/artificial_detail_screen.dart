@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/widget/one_blur.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
 import 'dart:io' as io;
@@ -31,13 +32,15 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppContants.init(context);
+    
     image2DUrl = widget.argument["images"]["image2DUrl"];
     String model3DUrl = widget.argument["images"]["image3DUrl"];
     name = widget.argument["name"];
     info = widget.argument["info"];
     List idname = widget.argument["idname"];
-    sizeHeight = MediaQuery.of(context).size.height;
-    sizeWidth = MediaQuery.of(context).size.width;
+    sizeHeight = AppContants.sizeHeight;
+    sizeWidth = AppContants.sizeWidth;
     otherInfo = widget.argument["otherInfo"];
     String launch_date = otherInfo["launch_date"];
     String speed = otherInfo["speed"];

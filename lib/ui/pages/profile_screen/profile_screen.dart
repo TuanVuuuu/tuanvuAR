@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,11 +7,13 @@ import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/ui/pages/a_example_2/arscreen3.dart';
 import 'package:flutter_application_1/ui/pages/a_example_3/avatar_screen.dart';
+import 'package:flutter_application_1/ui/pages/a_example_4/example_webview_ar.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/forgot_password_screen.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/sign_out.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/user_detail_info_screen.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/rank_user_screen.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -72,6 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     return AppScaffold(
+      backgroundColor: OneColors.background2.withOpacity(0.2),
         body: Scrollbar(
             child: CustomScrollView(
       physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -90,13 +91,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         children: [
           _buildShotcutItems(context, "Giới thiệu", const Icon(Icons.book), () {
-            Get.to(() => const ProfilePage(), curve: Curves.linear, transition: Transition.rightToLeft);
+            Get.to(
+                () => MyWebView(
+                      url: 'https://mywebar.com/p/Project_4_dgy9hicgin?_ga=2.27408948.987462365.1679278588-412064336.1679278588',
+               
+                    ),
+                curve: Curves.linear,
+                transition: Transition.rightToLeft);
           }),
           _buildShotcutItems(context, "Đổi mật khẩu", const Icon(Icons.lock_clock), () {
-            Get.to(() => const ForgotPasswordScreen(), curve: Curves.linear, transition: Transition.rightToLeft);
+            Get.toNamed(AppRoutes.FORGOT_PASSWORD.name);
           }),
           _buildShotcutItems(context, "Đăng xuất", const Icon(Icons.logout), () {
-            Get.to(() => SignOutScreen(), curve: Curves.linear, transition: Transition.rightToLeft);
+             Get.toNamed(AppRoutes.SIGN_OUT.name);
           }),
         ],
       ),
@@ -112,8 +119,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(33), boxShadow: const [
           BoxShadow(
             color: OneColors.grey,
-            blurRadius: 4,
-            offset: Offset(0, 4),
+            blurRadius: 2,
+            offset: Offset(0, 0),
           )
         ]),
         child: Row(children: [
@@ -144,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   "Tài khoản",
                   const Icon(Icons.person, color: OneColors.blue200),
                   () {
-                    Get.to(() => const UserDetailInfoScreen(), curve: Curves.linear, transition: Transition.rightToLeft);
+                    Get.toNamed(AppRoutes.USER_DETAIL_INFO.name);
                   },
                 ),
                 _buildItemsRow(context, "Yêu thích", const Icon(Icons.favorite, color: OneColors.pink), null),
@@ -185,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(8), boxShadow: const [
               BoxShadow(
                 color: OneColors.grey,
-                blurRadius: 4,
+                blurRadius: 2,
               )
             ]),
             child: Padding(

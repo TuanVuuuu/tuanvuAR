@@ -4,8 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
-// import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'src/components/shared/theme/custom_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +25,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    precacheImage(const AssetImage('assets/images/bg/bg5.png'), context);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -31,13 +35,30 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      // home: SplashScreen(),
+      navigatorKey: AppRouteExt.navigatorKey,
+      key: key,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('vi', 'VI'),
+        Locale.fromSubtags(languageCode: 'vi'),
+      ],
+      theme: CustomTheme.fromContext(context).appTheme,
       initialRoute: AppRoutes.SPLASH_SCREEN.name,
       onGenerateRoute: AppRouteExt.bindingRoute,
+      initialBinding: AppBinding(),
     );
   }
 }
 
-// void downloadCallback(String id, DownloadTaskStatus status, int progress) async {
-//   print('callback: ID = $id || status = $status || progress = $progress');
-// }
+class AppBinding extends Bindings {
+  @override
+  void dependencies() {
+    injectService();
+  }
+
+  void injectService() {}
+}

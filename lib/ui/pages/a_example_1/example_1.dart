@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
 class ImageDetectionPage extends StatefulWidget {
@@ -56,7 +57,7 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
             alignment: Alignment.topLeft,
             child: SizedBox(
               height: 110,
-              width: MediaQuery.of(context).size.width,
+              width: AppContants.sizeWidth,
               child: ListView.builder(
                 itemCount: gifs.length,
                 scrollDirection: Axis.horizontal,

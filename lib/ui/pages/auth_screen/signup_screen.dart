@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/signin_screen.dart';
 import 'package:get/get.dart';
 
@@ -77,6 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               'email': _emailController.text,
                               'name': _nameController.text,
                               'scores': 0,
+                              'avatarUrl': "",
                             });
                             showDialog(
                               context: context,
@@ -135,7 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                       },
                       child: Container(
-                          width: MediaQuery.of(context).size.width,
+                          width: AppContants.sizeWidth,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             image: const DecorationImage(image: AssetImage(OneImages.bg4), fit: BoxFit.fitWidth),
@@ -155,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Spacer(),
                 TextButton(
                     onPressed: () {
-                      Get.to(() => const LoginPage());
+                      Get.toNamed(AppRoutes.LOGIN_SCREEN.name);
                     },
                     child: const Text("Đã có tài khoản? Đăng nhập"))
               ],

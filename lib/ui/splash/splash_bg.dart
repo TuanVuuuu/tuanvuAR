@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 
 class SplashWidget extends StatelessWidget {
   const SplashWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AppContants.init(context);
     // Figma Flutter Generator SplashWidget - FRAME
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      width: AppContants.sizeWidth,
+      height: AppContants.sizeHeight,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment(6.123234262925839e-17, 1),

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/widget/one_blur.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
@@ -48,14 +49,17 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppContants.init(context);
+
     image2DUrl = widget.argument["images"]["image2DUrl"];
     String model3DUrl = widget.argument["images"]["image3DUrl"];
     name = widget.argument["name"];
     info = widget.argument["info"];
     tags = widget.argument["tags"];
     List idname = widget.argument["idname"];
-    sizeHeight = MediaQuery.of(context).size.height;
-    sizeWidth = MediaQuery.of(context).size.width;
+    sizeHeight = AppContants.sizeHeight;
+    sizeWidth = AppContants.sizeWidth;
     otherInfo = widget.argument["otherInfo"];
     String age = otherInfo["age"];
     String radius = otherInfo["radius"];

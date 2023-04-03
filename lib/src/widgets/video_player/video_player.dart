@@ -3,6 +3,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayer extends StatefulWidget {
@@ -45,7 +46,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
       body: Center(
         child: SizedBox(
           height: 230,
-          width: MediaQuery.of(context).size.width - 40,
+          width: AppContants.sizeWidth - 40,
           child: _chewieVideoPlayer(),
         ),
       ),

@@ -42,6 +42,7 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
 
   @override
   Widget build(BuildContext context) {
+    AppContants.init(context);
     return AppScaffold(
       body: Scrollbar(
         child: CustomScrollView(
@@ -50,13 +51,13 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
               child: Stack(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 1,
+                    height: AppContants.sizeHeight * 1,
                     child: ARView(
                       onARViewCreated: onARViewCreated,
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.9),
+                    padding: EdgeInsets.only(top: AppContants.sizeHeight * 0.9),
                     child: Row(
                       children: [
                         // Expanded(
@@ -84,7 +85,7 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
 
   Padding _buildBackButton(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1, left: 15),
+      padding: EdgeInsets.only(top: AppContants.sizeHeight * 0.1, left: 15),
       child: Row(
         children: [
           InkWell(

@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
+import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 
 class RankUserScreen extends StatefulWidget {
   const RankUserScreen({super.key, required this.usersdataDataList});
@@ -29,8 +31,11 @@ class _RankUserScreenState extends State<RankUserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double sizeWidth = MediaQuery.of(context).size.width;
-    double sizeHeight = MediaQuery.of(context).size.height;
+
+    AppContants.init(context);
+
+    double sizeWidth = AppContants.sizeWidth;
+    double sizeHeight = AppContants.sizeHeight;
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -270,17 +275,15 @@ class _RankUserScreenState extends State<RankUserScreen> {
                                 '#${index + 1}',
                                 style: OneTheme.of(context).body1.copyWith(color: OneColors.black),
                               ),
-                              index + 1 == 1
-                                  ? const SizedBox(
-                                      width: 15,
-                                    )
-                                  : const SizedBox(),
                               (avatarUrl != "")
-                                  ? CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                        avatarUrl,
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(left: 15.0),
+                                      child: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                          avatarUrl,
+                                        ),
+                                        radius: 15,
                                       ),
-                                      radius: 15,
                                     )
                                   : Container(
                                       height: 30,
@@ -383,24 +386,5 @@ class _RankUserScreenState extends State<RankUserScreen> {
     setState(() {
       _mapCurrentUser = leaderboard;
     });
-  }
-
-  Future<Map<String, dynamic>> getCurrentUser() async {
-    final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-    final QuerySnapshot usersQuerySnapshot = await usersCollection.orderBy('scores', descending: true).get();
-    final userDocSnapshots = usersQuerySnapshot.docs;
-
-    // Tìm vị trí của người dùng hiện tại trong danh sách
-    final currentUserDocSnapshot = userDocSnapshots.firstWhere((docSnapshot) => docSnapshot.get('email') == currentUser?.email);
-    final currentUserIndex = userDocSnapshots.indexOf(currentUserDocSnapshot);
-
-    // Tạo một Map chứa thông tin người dùng và số thứ tự của họ
-    final currentUserData = {
-      'name': currentUserDocSnapshot.get('name'),
-      'scores': currentUserDocSnapshot.get('scores'),
-      'rank': currentUserIndex,
-    };
-
-    return currentUserData;
   }
 }

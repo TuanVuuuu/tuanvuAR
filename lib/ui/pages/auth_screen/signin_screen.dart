@@ -5,9 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
-import 'package:flutter_application_1/ui/entryPoint/entry_point.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/forgot_password_screen.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/signup_screen.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
@@ -123,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                               onPressed: () {
-                                Get.to(() => const ForgotPasswordScreen());
+                                Get.toNamed(AppRoutes.FORGOT_PASSWORD.name);
                               },
                               child: const Text("Quên mật khẩu?"))),
                       const SizedBox(height: 16.0),
@@ -135,7 +133,8 @@ class _LoginPageState extends State<LoginPage> {
                                 email: _emailController.text,
                                 password: _passwordController.text,
                               );
-                              Get.to(() => const BottomNavigationBarWidget(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                              // Get.to(() => const BottomNavigationBarWidget(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                              Get.offAllNamed(AppRoutes.ENTRY_POINT.name);
                             } on FirebaseAuthException catch (e) {
                               print(e);
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -158,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width,
+                          width: AppContants.sizeWidth,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             image: const DecorationImage(image: AssetImage(OneImages.bg4), fit: BoxFit.fitWidth),
@@ -182,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
           const Spacer(),
           TextButton(
               onPressed: () {
-                Get.to(() => const RegisterPage());
+                Get.toNamed(AppRoutes.REGISTER_PAGE.name);
               },
               child: const Text("Chưa có tài khoản? Đăng ký"))
         ],

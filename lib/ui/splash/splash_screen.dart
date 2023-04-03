@@ -1,6 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, unused_import, avoid_print, unused_local_variable
 
-part of '../../../libary/one_libary.dart';
+part of '../../../../libary/one_libary.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,12 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user = auth.currentUser;
     if (user == null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => const LoginManagerScreen(),
-        ),
-      );
+      Get.offAllNamed(AppRoutes.LOGIN_MANAGER.name);
     } else {
       Navigator.pushReplacement(
         context,
@@ -28,6 +23,16 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       );
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Future.delayed(const Duration(milliseconds: 3000), () {
+        checkLoginStatus();
+      });
+    });
   }
 
   @override
@@ -58,28 +63,27 @@ class _SplashScreenState extends State<SplashScreen> {
   Center _buildLoadAnimation(double sizeHeight, double sizeWidth, int seconds) {
     return Center(
       child: SizedBox(
-        height: sizeHeight * 0.25,
-        width: sizeWidth * 0.9,
-        child: Lottie.network(
-          "https://assets2.lottiefiles.com/packages/lf20_qogkaqmb.json",
-          onLoaded: (p0) {
-            Future.delayed(Duration(seconds: seconds), (() {
-              checkLoginStatus();
-              // Get.offAll(() => const BottomNavigationBarWidget(), curve: Curves.linear, duration: const Duration(seconds: 1));
-            }));
-          },
-          errorBuilder: (context, error, stackTrace) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Text(
-                "Không có kết nối Internet\nVui lòng kiểm tra lại kết nối mạng!",
-                style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                maxLines: 2,
-                textAlign: TextAlign.center,
-              ),
-            );
-          },
-        ),
+        height: sizeHeight * 0.25, width: sizeWidth * 0.9, child: OneLoading.space_loading_larget,
+        // Lottie.network(
+        //   "https://assets2.lottiefiles.com/packages/lf20_qogkaqmb.json",
+        //   onLoaded: (p0) {
+        //     Future.delayed(Duration(seconds: seconds), (() {
+        //       checkLoginStatus();
+        //       // Get.offAll(() => const BottomNavigationBarWidget(), curve: Curves.linear, duration: const Duration(seconds: 1));
+        //     }));
+        //   },
+        //   errorBuilder: (context, error, stackTrace) {
+        //     return Padding(
+        //       padding: const EdgeInsets.symmetric(horizontal: 30),
+        //       child: Text(
+        //         "Không có kết nối Internet\nVui lòng kiểm tra lại kết nối mạng!",
+        //         style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
+        //         maxLines: 2,
+        //         textAlign: TextAlign.center,
+        //       ),
+        //     );
+        //   },
+        // ),
       ),
     );
   }
@@ -87,20 +91,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Center _buildTitle(double sizeHeight, double sizeWidth) {
     return Center(
       child: Container(
-        margin: const EdgeInsets.only(top: 100),
-        height: sizeHeight * 0.2,
-        width: sizeWidth * 0.7,
-        child: Text(
-          "Galaxy AR\n Explorer",
-          style: GoogleFonts.aBeeZee(
-            fontWeight: FontWeight.w400,
-            fontSize: 53,
-            height: 1.5,
-            color: OneColors.white,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
+          margin: const EdgeInsets.only(top: 100),
+          width: sizeWidth,
+          child: Image.asset(
+            OneImages.bg5,
+            fit: BoxFit.fitWidth,
+          )),
     );
   }
 }

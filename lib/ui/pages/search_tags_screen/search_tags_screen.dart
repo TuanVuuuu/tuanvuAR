@@ -17,67 +17,59 @@ class MySearch extends StatelessWidget {
   Widget build(BuildContext context) {
     final CollectionReference homedata = FirebaseFirestore.instance.collection("homedata");
     return AppScaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(OneImages.bg3),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Scrollbar(
-          child: CustomScrollView(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        slivers: <Widget>[
-          SliverPersistentHeader(
-            pinned: false,
-            floating: false,
-            delegate: SliverAppBarDelegate(
-              child: Container(
-                color: OneColors.transparent,
-                margin: EdgeInsets.zero,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 40.0, left: 20, right: 24),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(
-                                Icons.arrow_back_ios,
-                                color: OneColors.blue,
-                              ),
+        body: Scrollbar(
+            child: CustomScrollView(
+      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      slivers: <Widget>[
+        SliverPersistentHeader(
+          pinned: false,
+          floating: false,
+          delegate: SliverAppBarDelegate(
+            child: Container(
+              color: OneColors.transparent,
+              margin: EdgeInsets.zero,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 40.0, left: 20, right: 24),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(
+                              Icons.arrow_back_ios,
+                              color: OneColors.black,
                             ),
-                            const SizedBox(width: 10),
-                            Row(
-                              children: [
-                                Text(
-                                  "Tìm kiếm với từ khoá :  ",
-                                  style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-                                ),
-                                _buildTagsSearch(context),
-                              ],
-                            )
-                          ],
-                        ),
+                          ),
+                          const SizedBox(width: 10),
+                          Row(
+                            children: [
+                              Text(
+                                "Tìm kiếm với từ khoá :  ",
+                                style: OneTheme.of(context).title1.copyWith(color: OneColors.black),
+                              ),
+                              _buildTagsSearch(context),
+                            ],
+                          )
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              minHeight: MediaQuery.of(context).padding.top + 70,
-              maxHeight: MediaQuery.of(context).padding.top + 70,
             ),
+            minHeight: MediaQuery.of(context).padding.top + 70,
+            maxHeight: MediaQuery.of(context).padding.top + 70,
           ),
-          CardNewsWithTags(data: homedata, tagsButton: list[0])
-        ],
-      )),
-    ));
+        ),
+        CardNewsWithTags(data: homedata, tagsButton: list[0])
+      ],
+    )));
   }
 
   Container _buildTagsSearch(BuildContext context) {

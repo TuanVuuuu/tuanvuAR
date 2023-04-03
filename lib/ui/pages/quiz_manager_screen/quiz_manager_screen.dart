@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/sign_out.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/quiz_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,6 +16,8 @@ class QuizManagerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    AppContants.init(context);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -25,16 +28,17 @@ class QuizManagerScreen extends StatelessWidget {
       ),
     );
 
-    double sizeHeight = MediaQuery.of(context).size.height;
+    double sizeHeight = AppContants.sizeHeight;
     return AppScaffold(
+        backgroundColor: OneColors.background2.withOpacity(0.2),
         body: Scrollbar(
             child: CustomScrollView(
-      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      slivers: [
-        _buildHeader(context),
-        _buildBody(context, sizeHeight),
-      ],
-    )));
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          slivers: [
+            _buildHeader(context),
+            _buildBody(context, sizeHeight),
+          ],
+        )));
   }
 
   SliverToBoxAdapter _buildBody(BuildContext context, double sizeHeight) {
@@ -165,11 +169,7 @@ class QuizManagerScreen extends StatelessWidget {
             backgroundColor: OneColors.textOrange,
           ),
           onPressed: () {
-            Get.to(() => SignOutScreen()
-                //const AddNewsData(),
-                //const AddArtificialData()
-                //const AddQuestionsData(),
-                );
+            Get.toNamed(AppRoutes.SIGN_OUT.name);
           },
           child: const Text("Add data question")),
     );
@@ -217,7 +217,7 @@ class QuizManagerScreen extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.height * 0.13,
+      expandedHeight: AppContants.sizeHeight * 0.13,
       leading: const SizedBox(),
       floating: false,
       pinned: true,

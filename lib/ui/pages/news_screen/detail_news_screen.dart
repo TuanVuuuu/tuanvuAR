@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/src/widgets/build_footer.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
@@ -57,6 +58,9 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppContants.init(context);
+
     List contentList = widget.argument["content"];
 
     Timestamp time = widget.argument["date"];
@@ -401,11 +405,9 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
     );
   }
 
-  Widget _buildHeader(
-    BuildContext context,
-  ) {
+  Widget _buildHeader(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.height * 0.08,
+      expandedHeight: AppContants.sizeHeight * 0.08,
       leading: const SizedBox(),
       floating: false,
       pinned: true,
@@ -415,7 +417,7 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
         centerTitle: true,
         background: Padding(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.05,
+            top: AppContants.sizeHeight * 0.05,
             left: 20,
             right: 20,
           ),

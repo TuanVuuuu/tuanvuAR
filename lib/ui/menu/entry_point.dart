@@ -4,14 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/ui/pages/a_example_2/arscreen4.dart';
 // import 'package:flutter_application_1/ui/pages/a_example_3/arscreen5.dart';
 // import 'package:flutter_application_1/ui/pages/a_example_1/example.dart';
-import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_screen.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/forgot_password_screen.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/sign_out.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/user_detail_info_screen.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/profile_screen.dart';
 import 'package:flutter_application_1/ui/pages/quiz_manager_screen/quiz_manager_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -67,6 +64,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
 
   @override
   void dispose() {
+    _loadCurrentUser;
     _pageController.dispose();
     super.dispose();
   }
@@ -88,11 +86,78 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
             alignment: Alignment.bottomCenter,
             child: InkWell(
               onTap: () {
-                Get.to(
-                  () => const MultipleAugmentedImagesPage(),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(milliseconds: 200),
-                );
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    enableDrag: false,
+                    backgroundColor: OneColors.transparent,
+                    elevation: 0,
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: Container(
+                          height: 400,
+                          width: AppContants.sizeWidth - 50,
+                          decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
+                            BoxShadow(
+                              color: OneColors.grey,
+                              blurRadius: 4,
+                            )
+                          ]),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "Lựa chọn chế độ xem!",
+                                    style: OneTheme.of(context).header.copyWith(color: OneColors.black),
+                                  ),
+                                ),
+                                _itemARCatagory(
+                                  context,
+                                  () {
+                                    Get.toNamed(AppRoutes.MULTIPLE_AUGMENTED_IMAGES.name);
+                                  },
+                                  OneImages.icons_ar_scan,
+                                  "Quét hình ảnh trong không gian thực",
+                                ),
+                                _itemARCatagory(
+                                  context,
+                                  () {
+                                    Get.toNamed(AppRoutes.DISCOVERY_SCREEN.name);
+                                  },
+                                  OneImages.icons_ar_launch_arcore,
+                                  "Đặt mô hình trong không gian thực",
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(color: const Color.fromARGB(255, 0, 183, 255), borderRadius: BorderRadius.circular(10), boxShadow: const [
+                                          BoxShadow(color: OneColors.grey, blurRadius: 4),
+                                        ]),
+                                        child: Center(
+                                          child: Text(
+                                            "Đóng",
+                                            style: OneTheme.of(context).body1,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    });
               },
               child: Container(
                 height: 80,
@@ -133,10 +198,44 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
     );
   }
 
+  Widget _itemARCatagory(BuildContext context, var onTap, String imageIcon, String title) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        height: 80,
+        width: AppContants.sizeWidth - 100,
+        decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
+          BoxShadow(color: OneColors.grey, blurRadius: 4),
+        ]),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: 40,
+              child: Image.asset(
+                imageIcon,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Expanded(
+                child: Text(
+              title,
+              style: OneTheme.of(context).body2.copyWith(color: OneColors.black),
+            ))
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildSideBar(BuildContext context, User? user) {
     return Builder(
       builder: (context) => Container(
-        width: MediaQuery.of(context).size.width * 2 / 3,
+        width: AppContants.sizeWidth * 2 / 3,
         decoration: const BoxDecoration(
             color: OneColors.black50,
             borderRadius: BorderRadius.only(
@@ -192,24 +291,24 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       padding: const EdgeInsets.only(top: 20, left: 10, right: 30),
       child: Row(
         children: [
-          (_mapCurrentUser?["avatarUrl"] != null && _mapCurrentUser?["avatarUrl"] != "")
-              ? CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    _mapCurrentUser?["avatarUrl"],
-                  ),
-                  radius: 25,
-                )
-              : Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: OneColors.blue300,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Image.asset(OneImages.avatars),
-                  )),
+          // (_mapCurrentUser?["avatarUrl"] != null && _mapCurrentUser?["avatarUrl"] != "")
+          //     ? CircleAvatar(
+          //         backgroundImage: NetworkImage(
+          //           _mapCurrentUser?["avatarUrl"],
+          //         ),
+          //         radius: 25,
+          //       )
+          //     : Container(
+          //         height: 50,
+          //         width: 50,
+          //         decoration: BoxDecoration(
+          //           color: OneColors.blue300,
+          //           borderRadius: BorderRadius.circular(30),
+          //         ),
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(3.0),
+          //           child: Image.asset(OneImages.avatars),
+          //         )),
           const SizedBox(
             width: 10,
           ),
@@ -220,18 +319,12 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
                 "Xin chào!",
                 style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
               ),
-              Column(
-                children: _usersdataDataList
-                    .where((element) => element["email"] == user.email)
-                    .take(1)
-                    .map(
-                      (e) => Text(
-                        e["name"],
-                        style: OneTheme.of(context).header.copyWith(color: OneColors.white),
-                      ),
+              _mapCurrentUser?["name"] != ""
+                  ? Text(
+                      _mapCurrentUser?["name"],
+                      style: OneTheme.of(context).header.copyWith(color: OneColors.white),
                     )
-                    .toList(),
-              ),
+                  : const Text(""),
             ],
           )
         ],
@@ -265,7 +358,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         }),
         _itemsSideBar(context, "Yêu thích", Icons.favorite, true, () {}),
         _itemsSideBar(context, "Vệ tinh nhân tạo", Icons.satellite_alt, null, () {
-          Get.to(() => const ArtificialScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+          Get.toNamed(AppRoutes.ARTIFICIAL_SCREEN.name);
+          // Get.to(() => const ArtificialScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
         }),
         _itemsSideBar(context, "Chế độ xem thực tế ảo", Icons.view_in_ar, null, () {
           _launchAR(
@@ -281,18 +375,15 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       children: [
         _itemsSideBar(context, "Cài đặt tài khoản", null, null, () {}),
         _itemsSideBar(context, "Thông tin tài khoản", Icons.person, null, () {
-          Get.to(
-            () => const UserDetailInfoScreen(),
-            curve: Curves.linear,
-            transition: Transition.rightToLeft,
-            duration: const Duration(milliseconds: 200),
-          );
+          Get.toNamed(AppRoutes.USER_DETAIL_INFO.name);
         }),
         _itemsSideBar(context, "Quên mật khẩu", Icons.lock_clock, null, () {
-          Get.to(() => const ForgotPasswordScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+          Get.toNamed(AppRoutes.FORGOT_PASSWORD.name);
+          // Get.to(() => const ForgotPasswordScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
         }),
         _itemsSideBar(context, "Đăng xuất", Icons.logout, null, () {
-          Get.to(() => SignOutScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+          Get.toNamed(AppRoutes.SIGN_OUT.name);
+          // Get.to(() => SignOutScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
         }),
         _itemsSideBar(context, "Ar Screen", Icons.logout, null, () {
           //Get.to(() => const MySplashScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
