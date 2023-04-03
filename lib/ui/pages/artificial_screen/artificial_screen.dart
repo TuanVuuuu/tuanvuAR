@@ -7,6 +7,7 @@ import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
 import 'package:flutter_application_1/src/components/widget/one_blur.dart';
 import 'package:flutter_application_1/src/models/one_list_colors.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_detail_screen.dart';
 import 'package:get/get.dart';
@@ -55,8 +56,10 @@ class _ArtificialScreenState extends State<ArtificialScreen> {
       ),
     );
 
-    double sizeHeight = MediaQuery.of(context).size.height;
-    double sizeWidth = MediaQuery.of(context).size.width;
+    AppContants.init(context);
+
+    double sizeHeight = AppContants.sizeHeight;
+    double sizeWidth = AppContants.sizeWidth;
     final ScrollController scrollController = ScrollController();
     Random random = Random();
 

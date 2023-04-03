@@ -55,7 +55,7 @@ class OneCardNewsImage extends StatelessWidget {
     }
 
     return SizedBox(
-      height: (checkimages != false) ? 163 + 7 : 104 + 14,
+      height: (checkimages != false) ? 163 + 7 : 104 + 14 + 30,
       child: Row(
         children: [
           if (checkimages != false) Expanded(flex: 1, child: _buildImages(imageUrl)) else const SizedBox(),
@@ -68,7 +68,7 @@ class OneCardNewsImage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildTitle(title, theme),
-                  _buildTitleDisplay(theme),
+                  checkimages == false ? _buildTitleDisplay(theme) : const SizedBox(),
                   const SizedBox(height: 10),
                   if (author.isNotEmpty)
                     Row(
@@ -122,7 +122,7 @@ class OneCardNewsImage extends StatelessWidget {
           children: [
             Text(
               "$author",
-              style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontSize: 10),
+              style: OneTheme.of(context).body2.copyWith(color: OneColors.black, fontSize: 13),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.justify,
@@ -190,12 +190,12 @@ class OneCardNewsImage extends StatelessWidget {
   Text _buildTitleDisplay(OneThemeData theme) {
     return Text(
       records['titleDisplay'],
-      maxLines: (checkimages != false) ? 5 : 3,
+      maxLines: (checkimages != false) ? 5 : 2,
       textAlign: TextAlign.left,
       style: theme.body2.copyWith(
         overflow: TextOverflow.ellipsis,
         color: OneColors.black,
-        fontSize: 9,
+        fontSize: 13,
       ),
     );
   }
@@ -205,10 +205,10 @@ class OneCardNewsImage extends StatelessWidget {
       title,
       style: theme.title1.copyWith(
         overflow: TextOverflow.ellipsis,
-        fontSize: 13,
+        fontSize: 15,
         color: OneColors.black,
       ),
-      maxLines: checkimages != false ? 2 : 1,
+      maxLines: checkimages != false ? 4 : 2,
       textAlign: TextAlign.left,
     );
   }

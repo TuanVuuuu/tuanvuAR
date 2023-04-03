@@ -51,7 +51,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
       ),
     );
     return AppScaffold(
-        backgroundColor: OneColors.white,
+        backgroundColor: OneColors.background2.withOpacity(0.2),
         body: Scrollbar(
             child: CustomScrollView(
           physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -108,7 +108,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
 
   Widget _buildTitleWelcome(BuildContext context, List<dynamic> result) {
     return SliverAppBar(
-      expandedHeight:tagsButton == "Tất cả" ? 140 + 32 : 150 + 38,
+      expandedHeight: tagsButton == "Tất cả" ? 140 + 32 : 150 + 38,
       leading: const SizedBox(),
       floating: false,
       pinned: true,
@@ -150,7 +150,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
                       child: Padding(
-                        padding: const EdgeInsets.only(top : 10.0),
+                        padding: const EdgeInsets.only(top: 10.0),
                         child: Row(
                           children: [
                             const SizedBox(width: 20),

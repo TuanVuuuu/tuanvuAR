@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/signin_screen.dart';
 import 'package:get/get.dart';
 
@@ -49,13 +50,13 @@ class SignOutScreen extends StatelessWidget {
               onTap: () async {
                 try {
                   await FirebaseAuth.instance.signOut();
-                  Get.to(() => const LoginPage()); // Chuyển tới màn hình đăng nhập
+                  Get.toNamed(AppRoutes.LOGIN_SCREEN.name);
                 } catch (e) {
                   print(e);
                 }
               },
               child: Container(
-                width: MediaQuery.of(context).size.width,
+                width: AppContants.sizeWidth,
                 margin: const EdgeInsets.symmetric(horizontal: 70),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),

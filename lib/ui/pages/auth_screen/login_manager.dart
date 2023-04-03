@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/signin_screen.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/signup_screen.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,9 @@ class LoginManagerScreen extends StatefulWidget {
 class _LoginManagerScreenState extends State<LoginManagerScreen> {
   @override
   Widget build(BuildContext context) {
+
+    AppContants.init(context);
+    
     return Scaffold(
       body: Column(
         children: [
@@ -27,7 +31,7 @@ class _LoginManagerScreenState extends State<LoginManagerScreen> {
                     ),
                     fit: BoxFit.fitWidth)),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: AppContants.sizeHeight * 0.5,
               decoration: BoxDecoration(
                   // color: OneColors.blue200,
                   borderRadius: BorderRadius.circular(15),
@@ -71,7 +75,8 @@ class _LoginManagerScreenState extends State<LoginManagerScreen> {
                               fit: BoxFit.fitWidth)),
                       child: TextButton(
                         onPressed: () {
-                          Get.to(() => const LoginPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                          Get.toNamed(AppRoutes.LOGIN_SCREEN.name);
+                          // Get.to(() => const LoginPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
                         },
                         child: Text(
                           "Đăng nhập",
@@ -90,7 +95,8 @@ class _LoginManagerScreenState extends State<LoginManagerScreen> {
                       ),
                       child: TextButton(
                         onPressed: () {
-                          Get.to(() => const RegisterPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+                          Get.toNamed(AppRoutes.REGISTER_PAGE.name);
+                          // Get.to(() => const RegisterPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
                         },
                         child: Text(
                           "Đăng Ký",

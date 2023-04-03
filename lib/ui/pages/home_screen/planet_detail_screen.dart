@@ -62,8 +62,11 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double sizeHeight = MediaQuery.of(context).size.height;
-    double sizeWidth = MediaQuery.of(context).size.width;
+
+    AppContants.init(context);
+    
+    double sizeHeight = AppContants.sizeHeight;
+    double sizeWidth = AppContants.sizeWidth;
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: OneColors.transparent,
@@ -165,7 +168,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         children: [
           Container(
             height: 1,
-            width: MediaQuery.of(context).size.width * 0.35,
+            width: AppContants.sizeWidth * 0.35,
             color: OneColors.textGrey2,
           ),
           TextButton(
@@ -182,7 +185,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
           ),
           Container(
             height: 1,
-            width: MediaQuery.of(context).size.width * 0.35,
+            width: AppContants.sizeWidth * 0.35,
             color: OneColors.textGrey2,
           ),
         ],
@@ -241,10 +244,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           IconButton(
-                              icon: const Icon(
-                                Icons.view_in_ar,
-                                size: 30
-                              ),
+                              icon: const Icon(Icons.view_in_ar, size: 30),
                               onPressed: () {
                                 Get.to(() => P3DView(argument: widget.argument), curve: Curves.linear, transition: Transition.rightToLeft);
                               }),
@@ -605,7 +605,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.06,
+                              height: AppContants.sizeHeight * 0.06,
                               child: CachedImage(
                                 color: OneColors.grey,
                                 imageUrl: image2DUrl ?? "",
@@ -752,8 +752,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     return _chewieController != null && _videoPlayerController != null
         ? Container(
             margin: const EdgeInsets.only(top: 10),
-            height: MediaQuery.of(context).size.width * 0.45,
-            width: MediaQuery.of(context).size.width * 0.8,
+            height: AppContants.sizeWidth * 0.45,
+            width: AppContants.sizeWidth * 0.8,
             decoration: BoxDecoration(
               color: OneColors.transparent,
               borderRadius: BorderRadius.circular(30),
@@ -765,8 +765,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             child: Center(
               child: Container(
                 margin: const EdgeInsets.only(top: 10),
-                height: MediaQuery.of(context).size.width * 0.45,
-                width: MediaQuery.of(context).size.width * 0.8,
+                height: AppContants.sizeWidth * 0.45,
+                width: AppContants.sizeWidth * 0.8,
                 decoration: BoxDecoration(
                   color: OneColors.white,
                   borderRadius: BorderRadius.circular(30),

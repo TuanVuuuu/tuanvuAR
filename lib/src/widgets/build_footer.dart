@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 
 class BuildFooter extends StatelessWidget {
   const BuildFooter({
@@ -12,7 +13,7 @@ class BuildFooter extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(bottom: 20),
-          width: MediaQuery.of(context).size.width,
+          width: AppContants.sizeWidth,
           height: 1,
           color: OneColors.grey,
         ),
@@ -22,7 +23,7 @@ class BuildFooter extends StatelessWidget {
             // ignore: sized_box_for_whitespace
             Container(
               //color: Colors.amber,
-              width: MediaQuery.of(context).size.width * 0.33,
+              width: AppContants.sizeWidth * 0.33,
               child: const Text(
                 "©TuanVu, 2023",
                 style: TextStyle(color: OneColors.grey),
@@ -30,14 +31,14 @@ class BuildFooter extends StatelessWidget {
               ),
             ),
             SizedBox(
-                width: MediaQuery.of(context).size.width * 0.67,
+                width: AppContants.sizeWidth * 0.67,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     // ignore: sized_box_for_whitespace
                     Container(
                       //color: Colors.green,
-                      width: MediaQuery.of(context).size.width * 0.33,
+                      width: AppContants.sizeWidth * 0.33,
                       child: const Text(
                         "Privacy Policy",
                         style: TextStyle(color: OneColors.grey),
@@ -48,7 +49,7 @@ class BuildFooter extends StatelessWidget {
                     // ignore: sized_box_for_whitespace
                     Container(
                       //color: Colors.blue,
-                      width: MediaQuery.of(context).size.width * 0.33,
+                      width: AppContants.sizeWidth * 0.33,
                       child: const Text(
                         "Terms of Service",
                         style: TextStyle(color: OneColors.grey),

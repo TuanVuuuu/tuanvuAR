@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
-import 'package:flutter_application_1/ui/entryPoint/entry_point.dart';
+import 'package:flutter_application_1/ui/menu/entry_point.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/more_button.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/percentage_circle.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/question_model.dart';
@@ -62,6 +63,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Container _buildQuizCard(BuildContext context) {
+    AppContants.init(context);
     return Container(
       decoration: OneWidget.background_bg3,
       child: AppScaffold(
@@ -76,6 +78,58 @@ class _QuizScreenState extends State<QuizScreen> {
             ),
           ),
           centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            color: OneColors.white,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  content: SizedBox(
+                    height: 120,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Center(
+                          child: Text(
+                            'Chú ý!',
+                            style: OneTheme.of(context).title1.copyWith(color: OneColors.blue200, fontSize: 23),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Chưa hoàn thành trò chơi! Nếu bạn rời khỏi ngay lúc này, thành tích của bạn sẽ bị huỷ bỏ!',
+                          style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Huỷ'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.offAll(() => const BottomNavigationBarWidget(setIndex: 3), curve: Curves.linear, transition: Transition.rightToLeft);
+                      },
+                      child: const Text('Tiếp tục'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
         extendBodyBehindAppBar: true,
         backgroundColor: OneColors.transparent,
@@ -115,7 +169,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           : const SizedBox(),
                       display != false
                           ? SizedBox(
-                              width: MediaQuery.of(context).size.width,
+                              width: AppContants.sizeWidth,
                               child: questionList[currentQuestionIndex].more != ""
                                   ? Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -252,7 +306,7 @@ class _QuizScreenState extends State<QuizScreen> {
     bool isSelected = answer == selectedAnswer;
 
     return Container(
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: AppContants.sizeWidth * 0.8,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -281,7 +335,7 @@ class _QuizScreenState extends State<QuizScreen> {
             const SizedBox(width: 10),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              width: MediaQuery.of(context).size.width * 0.65,
+              width: AppContants.sizeWidth * 0.65,
               child: Text(
                 answer.answerText,
                 maxLines: 2,
@@ -302,7 +356,7 @@ class _QuizScreenState extends State<QuizScreen> {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.4,
+        width: AppContants.sizeWidth * 0.4,
         height: 48,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -317,6 +371,7 @@ class _QuizScreenState extends State<QuizScreen> {
               // showDialog(context: context, builder: (_) => _showScoreDialog());
               showModalBottomSheet(
                 isScrollControlled: true,
+                enableDrag: false,
                 backgroundColor: OneColors.transparent,
                 elevation: 0,
                 context: context,
@@ -361,8 +416,8 @@ class _QuizScreenState extends State<QuizScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.9,
-              width: MediaQuery.of(context).size.width,
+              height: AppContants.sizeHeight * 0.9,
+              width: AppContants.sizeWidth,
               decoration: const BoxDecoration(
                   color: OneColors.buttonGrey,
                   borderRadius: BorderRadius.only(
@@ -384,7 +439,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         ]),
                       )),
                   _buildDialogSuccess(isPassed),
-                  isPassed ? SizedBox(height: MediaQuery.of(context).size.height * 0.15, child: OneLoading.quiz_pass) : OneLoading.quiz_false,
+                  isPassed ? SizedBox(height: AppContants.sizeHeight * 0.15, child: OneLoading.quiz_pass) : OneLoading.quiz_false,
                   _buildScoresPersent(title, isPassed),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -506,7 +561,7 @@ class _QuizScreenState extends State<QuizScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: InkWell(
         onTap: () {
-          Get.to(() => const BottomNavigationBarWidget(setIndex: 3), curve: Curves.linear, transition: Transition.rightToLeft);
+          Get.offAll(() => const BottomNavigationBarWidget(setIndex: 3), curve: Curves.linear, transition: Transition.rightToLeft);
           setState(() {
             currentQuestionIndex = 0;
             score = 0;
@@ -536,7 +591,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                       isPassed
                           ? Text(
-                              score >= questionList.length * 0.8 ? " + ${(200 + randomNumber).toString()} EXP" : " + 100EXP",
+                              score >= questionList.length * 0.8 ? " + ${(200 + randomNumber).toString()} EXP" : " + ${(100 + randomNumber).toString()} EXP",
                               style: OneTheme.of(context).title1.copyWith(color: OneColors.brandVNP),
                             )
                           : const SizedBox()
@@ -599,7 +654,7 @@ class _QuizScreenState extends State<QuizScreen> {
               Text(
                 "Chơi lại nào!",
                 style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-              )
+              ),
             ],
           ),
         ),

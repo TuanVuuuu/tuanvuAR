@@ -12,6 +12,7 @@ class OneColors {
   static const Color transparent = Color.fromARGB(0, 0, 0, 0);
   static const Color amber = Color(0xFFFFC107);
   static const Color bgButton = Color(0xFF273032);
+  
 
   static const Color blue = Color.fromARGB(255, 17, 0, 255);
   static const Color blue100 = Color(0xFFBBDEFB);
@@ -89,6 +90,7 @@ class OneColors {
 
   //Other(backgroud&line)
   static const Color background = Color(0xFFFFFFFF);
+  static const Color background2 = Color.fromARGB(255, 153, 43, 153);
   static const Color bgBangKe = Color(0xFFE6F0FB);
   static const Color greyLight = Color(0xFFF3F3F5);
   static const Color bgHeaderThiCong = Color(0xFFE5E8EF);
