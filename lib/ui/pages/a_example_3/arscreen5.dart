@@ -52,7 +52,6 @@ class _AssetsObjectState extends State<AssetsObject> {
     if (objectSelected != null) {
       //"https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF/Duck.gltf"
       final toucanoNode = ArCoreReferenceNode(name: objectSelected, object3DFileName: objectSelected, position: plane.pose.translation, rotation: plane.pose.rotation);
-
       arCoreController?.addArCoreNodeWithAnchor(toucanoNode);
     } else {
       showDialog<void>(

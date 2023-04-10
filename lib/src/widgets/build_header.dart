@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
 
 class BuildHeader extends StatelessWidget {
@@ -23,7 +24,7 @@ class BuildHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double headerHeight = 68 + MediaQuery.of(context).padding.top;
+    AppContants.init(context);
     return SliverPersistentHeader(
       pinned: true,
       floating: false,
@@ -64,8 +65,8 @@ class BuildHeader extends StatelessWidget {
             ),
           ),
         ),
-        minHeight: MediaQuery.of(context).padding.top + 70,
-        maxHeight: headerHeight,
+        minHeight: 0,
+        maxHeight: AppContants.sizeHeight,
       ),
     );
   }

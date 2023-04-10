@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'src/components/shared/theme/custom_theme.dart';
 
@@ -13,6 +14,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   InitialBinding().dependencies();
   await Firebase.initializeApp();
+  await Permission.camera.request();
+  await Permission.microphone.request();
   // await FlutterDownloader.initialize();
   // FlutterDownloader.registerCallback(downloadCallback);
 
@@ -25,7 +28,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     precacheImage(const AssetImage('assets/images/bg/bg5.png'), context);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

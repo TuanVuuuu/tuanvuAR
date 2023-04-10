@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
+import 'package:flutter_application_1/ui/pages/a_example_1/example_1.dart';
 import 'package:flutter_application_1/ui/pages/a_example_2/arscreen3.dart';
 import 'package:flutter_application_1/ui/pages/a_example_3/avatar_screen.dart';
 import 'package:flutter_application_1/ui/pages/a_example_4/example_webview_ar.dart';
@@ -72,18 +73,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     return AppScaffold(
-      backgroundColor: OneColors.background2.withOpacity(0.2),
+        backgroundColor: OneColors.background2.withOpacity(0.2),
         body: Scrollbar(
             child: CustomScrollView(
-      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      slivers: [
-        _buildHeader(context),
-        _buildTitle(context, "Lối tắt"),
-        _buildGridItems(context),
-        _buildTitle(context, "Khác"),
-        _buildListShotcut(context),
-      ],
-    )));
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          slivers: [
+            _buildHeader(context),
+            _buildTitle(context, "Lối tắt"),
+            _buildGridItems(context),
+            _buildTitle(context, "Khác"),
+            _buildListShotcut(context),
+          ],
+        )));
   }
 
   SliverToBoxAdapter _buildListShotcut(BuildContext context) {
@@ -91,19 +92,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         children: [
           _buildShotcutItems(context, "Giới thiệu", const Icon(Icons.book), () {
-            Get.to(
-                () => MyWebView(
-                      url: 'https://mywebar.com/p/Project_4_dgy9hicgin?_ga=2.27408948.987462365.1679278588-412064336.1679278588',
-               
-                    ),
-                curve: Curves.linear,
-                transition: Transition.rightToLeft);
+            String url =
+                "https://studio.onirix.com/projects/6704270959844d9aaaf6698b9e70cbc2/webar?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MjI3LCJwcm9qZWN0SWQiOjQwNTg3LCJyb2xlIjozLCJpYXQiOjE2ODA0OTUzMzh9.T-56VEGXivdj-2QwCb-hAvtCYQaxYdLXFsYIrBODo1A";
+            // Get.to(
+            //     () => MyWebView(
+            //           url: url,
+            //         ),
+            //     curve: Curves.linear,
+            //     transition: Transition.rightToLeft);
+
+            // Get.to(() => const MyApp(argument: ,));
           }),
           _buildShotcutItems(context, "Đổi mật khẩu", const Icon(Icons.lock_clock), () {
             Get.toNamed(AppRoutes.FORGOT_PASSWORD.name);
           }),
           _buildShotcutItems(context, "Đăng xuất", const Icon(Icons.logout), () {
-             Get.toNamed(AppRoutes.SIGN_OUT.name);
+            Get.toNamed(AppRoutes.SIGN_OUT.name);
           }),
         ],
       ),
@@ -154,7 +158,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Get.toNamed(AppRoutes.USER_DETAIL_INFO.name);
                   },
                 ),
-                _buildItemsRow(context, "Yêu thích", const Icon(Icons.favorite, color: OneColors.pink), null),
+                _buildItemsRow(context, "Tin tức", const Icon(Icons.book, color: OneColors.pink), (){
+                  Get.toNamed(AppRoutes.TOP_NEWS.name);
+                }),
               ],
             ),
             Row(
@@ -334,6 +340,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _mapCurrentUser = leaderboard;
     });
   }
-
-  
 }

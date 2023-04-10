@@ -54,6 +54,7 @@ class OneImages {
   static const String icons_discover = "assets/icons_river/discover.svg";
   static const String icons_game = "assets/icons_river/game.svg";
   static const String icons_home = "assets/icons_river/home.svg";
+  static const String icons_heart = "assets/icons_river/heart.svg";
   static const String icons_personalcard = "assets/icons_river/personalcard.svg";
   static const String icons_ar_view = "assets/icons_river/ar_view.svg";
   static const String icons_rank_no1 = "assets/icons_river/rank_no1.png";

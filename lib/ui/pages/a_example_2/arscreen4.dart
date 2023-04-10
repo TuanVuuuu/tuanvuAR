@@ -39,7 +39,7 @@ class _MultipleAugmentedImagesPageState extends State<MultipleAugmentedImagesPag
   loadMultipleImage() async {
     final ByteData bytes1 = await rootBundle.load('assets/localModel/aug/earthaug.jpg');
     final ByteData bytes2 = await rootBundle.load('assets/localModel/aug/jupiter.png');
-    final ByteData bytes3 = await rootBundle.load('assets/localModel/aug/Mars.png');
+    final ByteData bytes3 = await rootBundle.load('assets/localModel/aug/moon.png');
     bytesMap["earth_augmented_image"] = bytes1.buffer.asUint8List();
     bytesMap["jupiter"] = bytes2.buffer.asUint8List();
     bytesMap["Mars"] = bytes3.buffer.asUint8List();
