@@ -3,8 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/widget/one_blur.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
+import 'package:flutter_application_1/ui/pages/a_example_1/example_1.dart';
+import 'package:get/get.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
 import 'dart:io' as io;
@@ -33,9 +36,10 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
   @override
   Widget build(BuildContext context) {
     AppContants.init(context);
-    
+
     image2DUrl = widget.argument["images"]["image2DUrl"];
     String model3DUrl = widget.argument["images"]["image3DUrl"];
+    String model3DScan = widget.argument["images"]["imageScan3D"];
     name = widget.argument["name"];
     info = widget.argument["info"];
     List idname = widget.argument["idname"];
@@ -58,6 +62,7 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
         statusBarBrightness: Brightness.light, // Dark == white status bar -- for IOS.
       ),
     );
+    print(model3DScan);
     return AppScaffold(
         appBar: AppBar(
           backgroundColor: OneColors.transparent,
@@ -80,7 +85,7 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
             // Build Image
             _buildImage(context),
             // Build name , tags, info
-            _buildInfo(context, idname, model3DUrl),
+            _buildInfo(context, idname, model3DUrl, model3DScan),
             //Build tuổi, bán kính, mật độ, trọng lực, chu kỳ quay,
             _buildGridInfo(launch_date, speed, orbital_altitude, speed_in_orbit, launch_location, manufacturer)
           ],
@@ -145,7 +150,7 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
     );
   }
 
-  SliverToBoxAdapter _buildInfo(BuildContext context, List<dynamic> idname, String model3DUrl) {
+  SliverToBoxAdapter _buildInfo(BuildContext context, List<dynamic> idname, String model3DUrl, String model3DScan) {
     return SliverToBoxAdapter(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -155,7 +160,7 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildName(context),
-              _buildButtonAr(model3DUrl),
+              _buildButtonAr(model3DUrl, model3DScan),
             ],
           ),
           _buildTagsList(idname, context),
@@ -175,16 +180,124 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
     );
   }
 
-  Padding _buildButtonAr(String model3DUrl) {
+  Padding _buildButtonAr(String model3DUrl, String model3DScan) {
     return Padding(
         padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
         child: InkWell(
             onTap: () {
-              setState(() {
-                _launchAR(model3DUrl);
-              });
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  enableDrag: false,
+                  backgroundColor: OneColors.transparent,
+                  elevation: 0,
+                  builder: (BuildContext context) {
+                    return Center(
+                      child: Container(
+                        height: 400,
+                        width: AppContants.sizeWidth - 50,
+                        decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
+                          BoxShadow(
+                            color: OneColors.grey,
+                            blurRadius: 4,
+                          )
+                        ]),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Center(
+                                child: Text(
+                                  "Lựa chọn chế độ xem!",
+                                  style: OneTheme.of(context).header.copyWith(color: OneColors.black),
+                                ),
+                              ),
+                            model3DScan != "" ?  _itemARCatagory(
+                                context,
+                                () {
+                                  Get.to(() => MyApp(
+                                        argumentScan: model3DScan,
+                                      ));
+                                  // Get.toNamed(AppRoutes.MULTIPLE_AUGMENTED_IMAGES.name);
+                                },
+                                OneImages.icons_ar_scan,
+                                "Quét hình ảnh trong không gian thực",
+                              ) : const SizedBox(),
+                              _itemARCatagory(
+                                context,
+                                () {
+                                  setState(() {
+                                    _launchAR(model3DUrl);
+                                  });
+                                },
+                                OneImages.icons_ar_launch_arcore,
+                                "Đặt mô hình trong không gian thực",
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(color: const Color.fromARGB(255, 0, 183, 255), borderRadius: BorderRadius.circular(10), boxShadow: const [
+                                        BoxShadow(color: OneColors.grey, blurRadius: 4),
+                                      ]),
+                                      child: Center(
+                                        child: Text(
+                                          "Đóng",
+                                          style: OneTheme.of(context).body1,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  });
             },
             child: const one_button_ar_view()));
+  }
+
+  Widget _itemARCatagory(BuildContext context, var onTap, String imageIcon, String title) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        height: 80,
+        width: AppContants.sizeWidth - 100,
+        decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
+          BoxShadow(color: OneColors.grey, blurRadius: 4),
+        ]),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: 40,
+              child: Image.asset(
+                imageIcon,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Expanded(
+                child: Text(
+              title,
+              style: OneTheme.of(context).body2.copyWith(color: OneColors.black),
+            ))
+          ],
+        ),
+      ),
+    );
   }
 
   Padding _buildInfoReadMore(BuildContext context) {

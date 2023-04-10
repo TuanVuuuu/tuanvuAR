@@ -4,9 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
+import 'package:flutter_application_1/src/components/shared/add_data_artificial.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/ui/pages/a_example_2/arscreen4.dart';
+import 'package:flutter_application_1/ui/pages/a_example_4/example_webview_ar.dart';
+import 'package:flutter_application_1/ui/pages/favorites_screen/favorites_screen.dart';
 // import 'package:flutter_application_1/ui/pages/a_example_3/arscreen5.dart';
 // import 'package:flutter_application_1/ui/pages/a_example_1/example.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/profile_screen.dart';
@@ -37,7 +40,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   Map<String, dynamic>? _mapCurrentUser;
   final List<Widget> _tabList = [
     const HomeScreen(),
-    const TopNewsScreen(),
+    const FavoritesScreen(),
     const TopNewsScreen(),
     QuizManagerScreen(),
     const ProfileScreen(),
@@ -64,9 +67,9 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
 
   @override
   void dispose() {
+    super.dispose();
     _loadCurrentUser;
     _pageController.dispose();
-    super.dispose();
   }
 
   @override
@@ -117,7 +120,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
                                 _itemARCatagory(
                                   context,
                                   () {
-                                    Get.toNamed(AppRoutes.MULTIPLE_AUGMENTED_IMAGES.name);
+                                    Get.toNamed(AppRoutes.ARTIFICIAL_SCREEN.name);
+                                    // Get.toNamed(AppRoutes.MULTIPLE_AUGMENTED_IMAGES.name);
                                   },
                                   OneImages.icons_ar_scan,
                                   "Quét hình ảnh trong không gian thực",
@@ -385,10 +389,13 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           Get.toNamed(AppRoutes.SIGN_OUT.name);
           // Get.to(() => SignOutScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
         }),
-        _itemsSideBar(context, "Ar Screen", Icons.logout, null, () {
-          //Get.to(() => const MySplashScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
-          Get.to(() => const MultipleAugmentedImagesPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
-        }),
+        // _itemsSideBar(context, "Ar Screen", Icons.logout, null, () {
+        //   // Get.to(() => const MultipleAugmentedImagesPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+        //   // Get.to(() => const MultipleAugmentedImagesPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+        //   // Get.to(() =>
+
+        //   // const MyWebView(url: 'https://shiba-example.app.pictarize.com',));
+        // }),
       ],
     );
   }
@@ -495,8 +502,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
               label: "HOME",
             ),
             BottomNavigationBarItem(
-              icon: SvgPicture.asset(OneImages.icons_discover),
-              label: "DISCOVER",
+              icon: SvgPicture.asset(OneImages.icons_heart),
+              label: "FAVORITE",
             ),
             const BottomNavigationBarItem(
               icon: SizedBox(

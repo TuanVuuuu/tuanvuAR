@@ -91,6 +91,7 @@ class OneColors {
   //Other(backgroud&line)
   static const Color background = Color(0xFFFFFFFF);
   static const Color background2 = Color.fromARGB(255, 153, 43, 153);
+  static const Color background3 = Color.fromARGB(255, 255, 126, 255);
   static const Color bgBangKe = Color(0xFFE6F0FB);
   static const Color greyLight = Color(0xFFF3F3F5);
   static const Color bgHeaderThiCong = Color(0xFFE5E8EF);

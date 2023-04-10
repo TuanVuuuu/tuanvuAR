@@ -14,28 +14,33 @@ class AddArtificialData extends StatelessWidget {
     CollectionReference artificialdata = FirebaseFirestore.instance.collection('artificialdata');
 
     ///////////////////// DISCOVER DATA //////////////////////////
-    String name = "Soyuz"; // Tên vệ tinh / sao chổi
-    String idnew = "soyuz";
-    List idname = ["Vệ tinh nhân tạo", "Trái Đất"]; // Tags có dấu
-    List tags = ["vetinh", "traidat"]; // Tags viết liền không dấu
+    String name = "NASA Curiosity"; // Tên vệ tinh / sao chổi
+    String idnew = "curiosity";
+    List idname = ["Nhân tạo", "Sao Hoả"]; // Tags có dấu
+    List tags = ["vetinh", "saohoa"]; // Tags viết liền không dấu
     // Thông tin của vệ tinh / sao chổi
     String info =
-        "Soyuz là chương trình chở người lên vũ trụ kéo dài nhất lịch sử. Tàu Soyuz đầu tiên phóng vào năm 1967. Kể từ đó, Nga đã phát triển 10 phiên bản khác nhau của mẫu tàu này. Hơn 150 chuyến bay chở người đã được thực hiện bởi tàu Soyuz. Soyuz có nghĩa là 'đoàn kết' trong tiếng Nga. Mọi phiên bản đều tuân theo thiết kế ba phần gồm module hạ cánh, module quỹ đạo và module đẩy. Trong lần phóng Soyuz đầu tiên, phi hành gia Vladimir Komarov thiệt mạng do sự cố của chiếc dù khi trở về Trái Đất.";
+        "Curiosity là một chiếc xe tự hành có kích thước bằng một chiếc ô tô được thiết kế để khám phá miệng núi lửa Gale trên sao Hỏa như một phần của sứ mệnh Phòng thí nghiệm Khoa học sao Hỏa của NASA.";
     // Thông tin khác
     Map otherInfo = {
-      "launch_date": "23 tháng 4 năm 1967", // Ngày phóng
-      "speed": "", // Tốc độ tối đa:
-      "orbital_altitude": "197.0km", // Độ cao quỹ đạo:
+      "launch_date": "26 tháng 11, 2011", // Ngày phóng
+      "speed": "0,14 km/h", // Tốc độ tối đa:
+      "orbital_altitude": "", // Độ cao quỹ đạo:
       "speed_in_orbit": "", // Tốc độ trên quỹ đạo:
-      "launch_location": "Sân bay Baikonur", //Địa điểm phóng:
-      "manufacturer": "Liên bang Xô viết", // Nhà sản xuất:
+      "launch_location": "", //Địa điểm phóng:
+      "manufacturer": "Boeing, Lockheed Martin", // Nhà sản xuất:
     };
     // Ảnh
     Map images = {
       // Ảnh 2D
-      "image2DUrl": "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/2D%20model%20Astronomy%2Fsoyuz-1-satellite.png?alt=media&token=d59879df-a5e8-4fc7-8beb-1b4edf0df6cf",
+      "image2DUrl":
+          "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/2D%20model%20Astronomy%2Fmars-exploration-rover.png?alt=media&token=f6546aec-0324-4a4c-8973-e4bcafafe369",
       // Ảnh 3D
       "image3DUrl": "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/3D%20model%20Astronomy%2Ffobos1.glb?alt=media&token=0b3c6e42-9e06-48fe-a67b-f964718213a0",
+      // Ảnh scan
+      "imageScan2D":
+          "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/2D%20model%20Astronomy%2Fmars-exploration-rover.png?alt=media&token=f6546aec-0324-4a4c-8973-e4bcafafe369",
+      "imageScan3D": "https://studio.onirix.com/projects/68d3c48f4a6940a3bfea953f70ca4a3c/webar?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MjI3LCJwcm9qZWN0SWQiOjQwNjEzLCJyb2xlIjozLCJpYXQiOjE2ODA1NDEyOTl9.bq9hAprwtqDocVrKTLFCDxpmlA1CwHXpcrJjhnfr4Lg",
     };
     /////////////////////////////////////////////////////////////
 

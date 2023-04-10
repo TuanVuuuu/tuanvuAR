@@ -48,12 +48,12 @@ class Planet3DView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8.0, right: 40),
               child: InkWell(
                 onTap: () {
-                  Get.to(
-                      () => LocalAndWebObjectsWidget(
-                            argument: argument,
-                          ),
-                      curve: Curves.linear,
-                      transition: Transition.rightToLeft);
+                  // Get.to(
+                  //     () => LocalAndWebObjectsWidget(
+                  //           // argument: argument,
+                  //         ),
+                  //     curve: Curves.linear,
+                  //     transition: Transition.rightToLeft);
                 },
                 child: const Icon(Icons.add, color: OneColors.transparent, size: 30),
               ),

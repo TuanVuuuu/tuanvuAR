@@ -1,153 +1,148 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api
-
-import 'dart:async';
-
-import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
+import 'package:flutter_application_1/src/components/loading/one_loading.dart';
+import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
-import 'package:vector_math/vector_math_64.dart' as vector;
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class ImageDetectionPage extends StatefulWidget {
-  const ImageDetectionPage({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key, required this.argumentScan}) : super(key: key);
+
+  final String argumentScan;
 
   @override
-  _ImageDetectionPageState createState() => _ImageDetectionPageState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _ImageDetectionPageState extends State<ImageDetectionPage> {
-  late ArCoreController arCoreController;
-  Timer? timer;
-  bool anchorWasFound = false;
+class _MyAppState extends State<MyApp> {
+  final GlobalKey webViewKey = GlobalKey();
+  InAppWebViewController? webViewController;
 
-  List<String> gifs = [
-    "assets/2D_model/earth_1.jpeg",
-    "assets/2D_model/Mars.png",
-    "assets/2D_model/moon.png",
-  ];
+  bool isButtonVisible = true;
+  bool isContainerPressed = false; //Thêm biến flag để theo dõi sự kiện bấm vào container
 
-  List<String> objectsFileName = [
-    'assets/2D_model/earth_1.jpeg',
-    'assets/2D_model/Mars.png',
-    'assets/2D_model/moon.png',
-  ];
-
-  String? selected;
-  String? objectSelected;
+// Sử dụng hàm kiểm tra camera đã được mở hay chưa
 
   @override
-  void dispose() {
-    timer?.cancel();
-    arCoreController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 35), () {
+      setState(() {
+        // Cập nhật trạng thái của widget ở đây
+        isButtonVisible = false;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    AppContants.init(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Image Detection Sample')),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: OneColors.transparent,
+      ),
+      extendBodyBehindAppBar: true,
       body: Stack(
-        children: [
-          ArCoreView(
-            onArCoreViewCreated: onArCoreViewCreated,
-            enableTapRecognizer: true,
-            type: ArCoreViewType.STANDARDVIEW,
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: SizedBox(
-              height: 110,
-              width: AppContants.sizeWidth,
-              child: ListView.builder(
-                itemCount: gifs.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          selected = gifs[index];
-                          objectSelected = objectsFileName[index];
-                        });
-                      },
-                      child: Card(
-                        elevation: 4.0,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
+        children: <Widget>[
+          Positioned(
+            // top: - AppContants.sizeHeight * 0.6,
+            child: GestureDetector(
+              onTap: () {},
+              child: widget.argumentScan != ""
+                  ? SizedBox(
+                      height: AppContants.sizeHeight,
+                      width: AppContants.sizeWidth,
+                      child: InAppWebView(
+                        key: webViewKey,
+                        initialUrlRequest: URLRequest(
+                          url: Uri.parse(widget.argumentScan),
+                        ),
+                        initialOptions: InAppWebViewGroupOptions(
+                          crossPlatform: InAppWebViewOptions(
+                            mediaPlaybackRequiresUserGesture: false,
                           ),
                         ),
-                        child: Container(
-                          color: selected == gifs[index] ? Colors.red : Colors.transparent,
-                          padding: selected == gifs[index] ? const EdgeInsets.all(3) : null,
-                          child: Image.asset(
-                            gifs[index],
-                            fit: BoxFit.cover,
-                          ),
+                        onWebViewCreated: (controller) {
+                          webViewController = controller;
+                        },
+                        androidOnPermissionRequest: (InAppWebViewController controller, String origin, List<String> resources) async {
+                          return PermissionRequestResponse(resources: resources, action: PermissionRequestResponseAction.GRANT);
+                        },
+                      ),
+                    )
+                  : const SizedBox(),
+            ),
+          ),
+
+          isButtonVisible == true
+              ? Container(
+                  height: AppContants.sizeHeight,
+                  width: AppContants.sizeWidth,
+                  decoration: const BoxDecoration(
+                    color: OneColors.white,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        height: 200,
+                        child: Image.asset(
+                          OneImages.icons_ar_scan,
+                          fit: BoxFit.fitHeight,
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          )
+                      //
+                      SizedBox(
+                        height: 200,
+                        child: OneLoading.space_loading,
+                      ),
+                      Text(
+                        "Đang tải dữ liệu! Vui lòng chờ...",
+                        style: OneTheme.of(context).title1.copyWith(color: OneColors.black),
+                      )
+                    ],
+                  ),
+                )
+              : const SizedBox()
+          // Sử dụng GestureDetector để xác định sự kiện bấm vào container
+
+          // Positioned(
+          //   bottom: 140,
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       setState(() {
+          //         isContainerPressed = true; // Cập nhật giá trị của biến flag khi container được bấm
+          //       });
+          //     }, // Gọi hàm _handleContainerTap() khi container được bấm
+          //     child: Container(
+          //       margin: const EdgeInsets.symmetric(horizontal: 50),
+          //       height: 100,
+          //       width: AppContants.sizeWidth - 100,
+          //       decoration: BoxDecoration(
+          //         color: OneColors.amber,
+          //         borderRadius: BorderRadius.circular(50),
+          //         boxShadow: const [
+          //           BoxShadow(color: OneColors.grey, blurRadius: 4),
+          //         ],
+          //       ),
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(10),
+          //         child: Center(
+          //           child: Text(
+          //             "Bắt đầu",
+          //             style: OneTheme.of(context).header.copyWith(color: OneColors.black, fontSize: 30),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
-  }
-
-  void onArCoreViewCreated(ArCoreController arCoreController) async {
-    this.arCoreController = arCoreController;
-    this.arCoreController.onPlaneTap = _handleOnPlaneTap;
-
-    final bytes = await _getAssetBytes('assets/2D_model/Mars.jpg');
-    final material = ArCoreMaterial(
-      color: Colors.blue,
-      textureBytes: bytes,
-      metallic: 1,
-      reflectance: 0.6,
-      roughness: 0.8,
-    );
-    final sphere = ArCoreSphere(
-      materials: [material],
-      radius: 0.1,
-    );
-    final node = ArCoreNode(
-      name: 'earth',
-      shape: sphere,
-      position: vector.Vector3(0, 0, -1),
-    );
-    arCoreController.addArCoreNodeWithAnchor(node);
-  }
-
-  void _handleOnPlaneTap(List<ArCoreHitTestResult> hits) async {
-    final hit = hits.first;
-    final bytes = await _getAssetBytes(objectSelected!);
-    final material = ArCoreMaterial(
-      color: Colors.blue,
-      textureBytes: bytes,
-      metallic: 1,
-      reflectance: 0.6,
-      roughness: 0.8,
-    );
-    final sphere = ArCoreSphere(
-      materials: [material],
-      radius: 0.1,
-    );
-    final node = ArCoreNode(
-      name: 'earth',
-      shape: sphere,
-      position: hit.pose.translation,
-      rotation: hit.pose.rotation,
-    );
-    arCoreController.addArCoreNodeWithAnchor(node);
-  }
-
-  Future<Uint8List> _getAssetBytes(String path) async {
-    final byteData = await rootBundle.load(path);
-    return byteData.buffer.asUint8List();
   }
 }

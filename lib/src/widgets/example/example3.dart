@@ -5,11 +5,11 @@ part of '../../../libary/one_libary.dart';
 class LocalAndWebObjectsWidget extends StatefulWidget {
   const LocalAndWebObjectsWidget({
     Key? key,
-    required this.argument,
+    // required this.argument,
   }) : super(key: key);
 
   // ignore: prefer_typing_uninitialized_variables
-  final argument;
+  // final argument;
   @override
   _LocalAndWebObjectsWidgetState createState() => _LocalAndWebObjectsWidgetState();
 }

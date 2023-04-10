@@ -51,16 +51,15 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
       ),
     );
     return AppScaffold(
-        backgroundColor: OneColors.background2.withOpacity(0.2),
         body: Scrollbar(
             child: CustomScrollView(
-          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          slivers: <Widget>[
-            _buildTitleWelcome(context, result),
-            _addDataToList(data, result, context),
-            tagsButton != "Tất cả" ? CardNewsWithTags(data: data, tagsButton: tagsButton, checktags: true) : CardNewsWithTags(data: data, tagsButton: tagsButton)
-          ],
-        )));
+      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      slivers: <Widget>[
+        _buildTitleWelcome(context, result),
+        _addDataToList(data, result, context),
+        tagsButton != "Tất cả" ? CardNewsWithTags(data: data, tagsButton: tagsButton, checktags: true) : CardNewsWithTags(data: data, tagsButton: tagsButton)
+      ],
+    )));
   }
 
   SliverToBoxAdapter _addDataToList(CollectionReference<Object?> data, List<dynamic> result, BuildContext context) {
@@ -122,25 +121,19 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Column(
-                    children: _usersdataDataList
-                        .where((element) => element["email"] == user?.email)
-                        .take(1)
-                        .map(
-                          (e) => Text(
-                            "Hi, ${e["name"]}",
-                            style: OneTheme.of(context).header.copyWith(fontSize: 19),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Khám phá vũ trụ nào!",
-                    style: OneTheme.of(context).header.copyWith(fontSize: 23),
+                  padding: const EdgeInsets.only(left: 20.0, right: 20),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.arrow_back_ios, color: OneColors.black),
+                        const SizedBox(width: 10),
+                        Text("Trở về", style: OneTheme.of(context).body1.copyWith(color: OneColors.black)),
+                      ],
+                    ),
                   ),
                 ),
                 Column(
