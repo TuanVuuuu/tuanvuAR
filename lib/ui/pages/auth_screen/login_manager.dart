@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/signin_screen.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/signup_screen.dart';
 import 'package:get/get.dart';
 
 class LoginManagerScreen extends StatefulWidget {

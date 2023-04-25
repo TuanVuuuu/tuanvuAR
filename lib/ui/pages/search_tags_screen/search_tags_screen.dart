@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
-import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/widgets/one_news_widget/card_with_tags.dart';
 import 'package:flutter_application_1/ui/views/sliver_appbar_delegate.dart';
 

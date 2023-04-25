@@ -43,12 +43,21 @@ class OneImages {
   static const String bg4 = "assets/images/bg/bg4.png";
   static const String bg5 = "assets/images/bg/bg5.png";
 
+  static const String bg_future_ar = "assets/images/bg_future_ar.jpeg";
+  static const String cracked_ground = "assets/images/cracked_ground.png";
+  static const String ground = "assets/images/ground.png";
+  static const String flying_islands = "assets/images/flying_islands.png";
+  static const String red_islands = "assets/images/red_islands.png";
+
   static const String avatars = "assets/avatars/avatar_monkey.png";
 
   static const String menu_button = "assets/icons_river/menu_button.riv";
   static const String icons = "assets/icons_river/icons.riv";
   static const String icons_ar_scan = "assets/icons/ar_scan.png";
   static const String icons_ar_launch_arcore = "assets/icons/ar_launch_arcore.png";
+  static const String augmented_reality = "assets/icons/augmented-reality.png";
+  static const String logo_quiz_game = "assets/icons/logo_quiz_game.png";
+  static const String icons_person = "assets/icons/icons_person.png";
 
   static const String icons_chart = "assets/icons_river/chart.svg";
   static const String icons_discover = "assets/icons_river/discover.svg";

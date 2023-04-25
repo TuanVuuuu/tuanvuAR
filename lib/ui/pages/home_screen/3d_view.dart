@@ -17,8 +17,8 @@ class P3DView extends StatelessWidget {
   Widget build(BuildContext context) {
     String imageUrl = argument["image3D"]["imageUrl"];
     String idName = argument["idName"];
-    //String imageUrl = "https://webar.cartmagician.com/7979_vũ/p24183c4842/489996/earth.glb";
-    //String imageUrl = url[0];
+    final GlobalKey webViewKey = GlobalKey();
+    InAppWebViewController? webViewController;
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: OneColors.transparent,
@@ -28,7 +28,7 @@ class P3DView extends StatelessWidget {
         statusBarBrightness: Brightness.light, // Dark == white status bar -- for IOS.
       ),
     );
-
+    AppContants.init(context);
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -43,11 +43,42 @@ class P3DView extends StatelessWidget {
       ),
       backgroundColor: OneColors.white,
       body: Stack(
+        clipBehavior: Clip.none,
         children: [
-          BabylonJSViewer(
-            src: imageUrl,
+          // BabylonJSViewer(
+          //   src: imageUrl,
+          // ),
+          Positioned(
+            top: 210,
+            child: SizedBox(
+              height: AppContants.sizeHeight + 210,
+              width: AppContants.sizeWidth,
+              child: InAppWebView(
+                key: webViewKey,
+                initialUrlRequest: URLRequest(
+                  url: Uri.parse(imageUrl),
+                ),
+                initialOptions: InAppWebViewGroupOptions(
+                  crossPlatform: InAppWebViewOptions(
+                    mediaPlaybackRequiresUserGesture: false,
+                  ),
+                ),
+                onWebViewCreated: (controller) {
+                  webViewController = controller;
+                },
+                androidOnPermissionRequest: (InAppWebViewController controller, String origin, List<String> resources) async {
+                  return PermissionRequestResponse(resources: resources, action: PermissionRequestResponseAction.GRANT);
+                },
+              ),
+              // WebView(
+              //   initialUrl: Uri.encodeFull(imageUrl),
+              //   debuggingEnabled: false,
+              //   backgroundColor: OneColors.transparent,
+              //   javascriptMode: JavascriptMode.unrestricted,
+              // ),
+            ),
           ),
-          _buildButtonMore(context, idName)
+          _buildButtonMore(context, idName),
         ],
       ),
     );
@@ -95,11 +126,30 @@ class P3DView extends StatelessWidget {
 
   Container _buildCardMore(BuildContext context, String idName) {
     return Container(
-      height: AppContants.sizeHeight * 0.4,
-      decoration: const BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+      height: AppContants.sizeHeight * 0.42,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+          image: DecorationImage(
+              image: AssetImage(
+                OneImages.bg3,
+              ),
+              fit: BoxFit.cover)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                  height: 5,
+                  width: 60,
+                  margin: const EdgeInsets.only(top: 15),
+                  decoration: BoxDecoration(
+                    color: OneColors.white,
+                    borderRadius: BorderRadius.circular(30),
+                  ))),
           Align(
             alignment: Alignment.topCenter,
             child: Padding(
@@ -117,7 +167,7 @@ class P3DView extends StatelessWidget {
                             alignment: Alignment.bottomLeft,
                             child: Text(
                               "Mọi người cũng\ntìm kiếm",
-                              style: OneTheme.of(context).header.copyWith(color: OneColors.black),
+                              style: OneTheme.of(context).header.copyWith(color: OneColors.white),
                             ),
                           ),
                         ],
@@ -129,7 +179,7 @@ class P3DView extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         child: Text(
                           "Xem thêm hơn 10 mục khác",
-                          style: OneTheme.of(context).caption1.copyWith(color: OneColors.black, fontWeight: FontWeight.w400),
+                          style: OneTheme.of(context).caption1.copyWith(color: OneColors.white, fontWeight: FontWeight.w400),
                         ),
                       ),
                     )
@@ -141,7 +191,7 @@ class P3DView extends StatelessWidget {
           CardPlanets(
             data: modeldata,
             currentPlanets: idName,
-            titleColor: OneColors.black,
+            titleColor: OneColors.white,
           )
         ],
       ),

@@ -8,7 +8,6 @@ import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/sign_out.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -30,6 +29,7 @@ class _UserDetailInfoScreenState extends State<UserDetailInfoScreen> {
   File? _image;
   final picker = ImagePicker();
   bool isPickImage = false;
+  bool notImagePick = false;
 
   @override
   void dispose() {
@@ -286,55 +286,58 @@ class _UserDetailInfoScreenState extends State<UserDetailInfoScreen> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
+                    final pickedFile = await picker.getImage(source: ImageSource.gallery);
                     getImage();
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                        ),
-                        content: SizedBox(
-                          height: 120,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Center(
-                                child: Text(
-                                  'Chú ý!',
-                                  style: OneTheme.of(context).title1.copyWith(color: OneColors.blue200),
-                                  textAlign: TextAlign.center,
+                    pickedFile != null
+                        ? showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50.0),
+                              ),
+                              content: SizedBox(
+                                height: 120,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        'Chú ý!',
+                                        style: OneTheme.of(context).title1.copyWith(color: OneColors.blue200),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      'Ảnh đại diện của bạn sẽ được thay đổi',
+                                      style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'Ảnh đại diện của bạn sẽ được thay đổi',
-                                style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text('Huỷ'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              handleUpload();
-                            },
-                            child: const Text('Tiếp tục'),
-                          ),
-                        ],
-                      ),
-                    );
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Huỷ'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    handleUpload();
+                                  },
+                                  child: const Text('Tiếp tục'),
+                                ),
+                              ],
+                            ),
+                          )
+                        : null;
                   },
                   child: Container(
                     height: AppContants.sizeHeight * 0.1,
@@ -370,12 +373,54 @@ class _UserDetailInfoScreenState extends State<UserDetailInfoScreen> {
   // Function to handle image selection from gallery
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
         print('No image selected.');
+        setState(() {
+          notImagePick = true;
+        });
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            content: SizedBox(
+              height: 160,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Center(
+                    child: Text(
+                      'Đã có lỗi xảy ra!',
+                      style: OneTheme.of(context).title1.copyWith(color: OneColors.blue200),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Chưa có hình ảnh nào được chọn!\nVui lòng thử lại',
+                    style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Đồng ý'),
+              ),
+            ],
+          ),
+        );
       }
     });
   }

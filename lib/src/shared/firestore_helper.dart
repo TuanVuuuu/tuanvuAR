@@ -126,6 +126,7 @@ Future<Map<String, dynamic>> getCurrentUser() async {
     'scores': currentUserDocSnapshot.get('scores'),
     'rank': currentUserIndex,
     'avatarUrl': currentUserDocSnapshot.get("avatarUrl"),
+    'favorites': currentUserDocSnapshot.get("favorites"),
   };
 
   return currentUserData;

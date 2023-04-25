@@ -87,12 +87,12 @@ class Planet3DView extends StatelessWidget {
                   // )
                   ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: WebView(
-                  initialUrl: Uri.encodeFull(argument["image3D"]["imageUrl"]),
-                  debuggingEnabled: false,
-                  backgroundColor: OneColors.transparent,
-                  javascriptMode: JavascriptMode.unrestricted,
-                ),
+                // child: WebView(
+                //   initialUrl: Uri.encodeFull(argument["image3D"]["imageUrl"]),
+                //   debuggingEnabled: false,
+                //   backgroundColor: OneColors.transparent,
+                //   javascriptMode: JavascriptMode.unrestricted,
+                // ),
               ),
             ),
           ],

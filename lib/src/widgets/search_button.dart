@@ -6,10 +6,12 @@ class SearchButton extends StatelessWidget {
     Key? key,
     required this.isSearchBar,
     required this.onPressed,
+    this.color,
   }) : super(key: key);
 
   final bool isSearchBar;
   final VoidCallback onPressed;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +20,16 @@ class SearchButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           "Đóng",
-          style: OneTheme.of(context).title2.copyWith(color: OneColors.black),
+          style: OneTheme.of(context).title2.copyWith(color: color ?? OneColors.black),
         ),
       );
     } else {
       return InkWell(
         onTap: onPressed,
-        child: const Icon(
+        child: Icon(
           Icons.search,
           size: 30,
-          color: OneColors.black,
+          color: color ?? OneColors.black,
         ),
       );
     }

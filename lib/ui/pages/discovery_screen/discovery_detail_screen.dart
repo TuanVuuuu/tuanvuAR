@@ -1,5 +1,7 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
@@ -30,12 +32,15 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
   String? name;
   String? info;
   List<dynamic>? tags;
+  String? idnew;
   // ignore: prefer_typing_uninitialized_variables
   var otherInfo;
 
   List<Map<String, dynamic>> _modelDataList = [];
   bool isLoading = true;
   bool isSearchBar = false;
+  Map<String, dynamic>? _mapCurrentUser;
+  final currentUser = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
@@ -45,11 +50,18 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
         _modelDataList = modelData;
       });
     });
+    _loadCurrentUser();
+  }
+
+  Future<void> _loadCurrentUser() async {
+    final Map<String, dynamic> leaderboard = await getCurrentUser();
+    setState(() {
+      _mapCurrentUser = leaderboard;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     AppContants.init(context);
 
     image2DUrl = widget.argument["images"]["image2DUrl"];
@@ -57,6 +69,7 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
     name = widget.argument["name"];
     info = widget.argument["info"];
     tags = widget.argument["tags"];
+    idnew = widget.argument["idnew"];
     List idname = widget.argument["idname"];
     sizeHeight = AppContants.sizeHeight;
     sizeWidth = AppContants.sizeWidth;
@@ -173,6 +186,10 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
   }
 
   SliverToBoxAdapter _buildInfo(BuildContext context, List<dynamic> idname, String model3DUrl) {
+    final userRef = FirebaseFirestore.instance.collection("users").doc(currentUser?.uid);
+    final modelId = idnew ?? "";
+    final favorites = _mapCurrentUser?["favorites"] as List<dynamic>? ?? [];
+    bool isFavorite = favorites.contains(modelId);
     return SliverToBoxAdapter(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -184,6 +201,40 @@ class _DiscoveryDetailScreenState extends State<DiscoveryDetailScreen> {
               _buildName(context),
               _buildButtonAr(model3DUrl),
             ],
+          ),
+          InkWell(
+            onTap: () async {
+              // Kiểm tra xem idnew đã tồn tại trong danh sách yêu thích hay chưa
+
+              print(_mapCurrentUser?["favorites"]);
+              if (isFavorite) {
+                // Nếu idnew đã tồn tại trong danh sách yêu thích, xoá idnew khỏi danh sách yêu thích
+                favorites.remove(modelId);
+                await userRef.update({"favorites": favorites});
+                print("Remove favorite success!");
+                setState(() {
+                  _loadCurrentUser();
+                });
+              } else {
+                // Nếu idnew chưa tồn tại trong danh sách yêu thích, thêm idnew vào danh sách yêu thích
+                favorites.add(modelId);
+                await userRef.update({"favorites": favorites});
+                print("Add favorite success!");
+                setState(() {
+                  _loadCurrentUser();
+                });
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0, bottom: 10),
+              child: Row(
+                children: [
+                  Icon(isFavorite ? Icons.favorite : Icons.favorite_outline, color: OneColors.pink),
+                  const SizedBox(width: 10),
+                  Text(isFavorite ? "Đã thêm vào mục yêu thích" : "+ Thêm vào yêu thích", style: OneTheme.of(context).body1.copyWith(color: OneColors.pink))
+                ],
+              ),
+            ),
           ),
           _buildListTags(idname, context),
           _buildInfoReadMore(context),

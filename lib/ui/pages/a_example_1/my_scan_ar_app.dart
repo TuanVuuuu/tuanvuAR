@@ -1,22 +1,20 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key, required this.argumentScan}) : super(key: key);
+class MyScanARApp extends StatefulWidget {
+  const MyScanARApp({Key? key, required this.argumentScan}) : super(key: key);
 
   final String argumentScan;
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MyScanARApp> createState() => _MyScanARAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyScanARAppState extends State<MyScanARApp> {
   final GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? webViewController;
 
@@ -108,39 +106,6 @@ class _MyAppState extends State<MyApp> {
                   ),
                 )
               : const SizedBox()
-          // Sử dụng GestureDetector để xác định sự kiện bấm vào container
-
-          // Positioned(
-          //   bottom: 140,
-          //   child: GestureDetector(
-          //     onTap: () {
-          //       setState(() {
-          //         isContainerPressed = true; // Cập nhật giá trị của biến flag khi container được bấm
-          //       });
-          //     }, // Gọi hàm _handleContainerTap() khi container được bấm
-          //     child: Container(
-          //       margin: const EdgeInsets.symmetric(horizontal: 50),
-          //       height: 100,
-          //       width: AppContants.sizeWidth - 100,
-          //       decoration: BoxDecoration(
-          //         color: OneColors.amber,
-          //         borderRadius: BorderRadius.circular(50),
-          //         boxShadow: const [
-          //           BoxShadow(color: OneColors.grey, blurRadius: 4),
-          //         ],
-          //       ),
-          //       child: Padding(
-          //         padding: const EdgeInsets.all(10),
-          //         child: Center(
-          //           child: Text(
-          //             "Bắt đầu",
-          //             style: OneTheme.of(context).header.copyWith(color: OneColors.black, fontSize: 30),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );

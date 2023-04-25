@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_escapes, avoid_print
+// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_escapes, avoid_print, unused_field
 
 part of '../../../libary/one_libary.dart';
 
@@ -26,6 +26,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
   String? idmain;
 
   List<Map<String, dynamic>> _newsDataList = [];
+  Map<String, dynamic>? _mapCurrentUser;
 
   bool checkstate = false;
   bool readmore = false;
@@ -49,6 +50,14 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
         _newsDataList = newsData;
       });
     });
+    _loadCurrentUser();
+  }
+
+  Future<void> _loadCurrentUser() async {
+    final Map<String, dynamic> leaderboard = await getCurrentUser();
+    setState(() {
+      _mapCurrentUser = leaderboard;
+    });
   }
 
   @override
@@ -62,9 +71,8 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     AppContants.init(context);
-    
+
     double sizeHeight = AppContants.sizeHeight;
     double sizeWidth = AppContants.sizeWidth;
     SystemChrome.setSystemUIOverlayStyle(
@@ -86,10 +94,9 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     var colors = widget.argument["image2D"]["colors"];
     String colorModel = colors["colorModel"];
 
+    final currentUser = FirebaseAuth.instance.currentUser;
+
     idmain = idname;
-    // List<Widget> slivers = [
-    //   if (_newsDataList.where((data) => data["tags"].contains(nameModel)).isNotEmpty) _buildNewsCard(nameModel, context),
-    // ];
 
     print(checkstate);
     return AppScaffold(
@@ -101,7 +108,18 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
               slivers: [
-                _buildImage2DDetail(nameModel, context, widget.argument, modelURL, sizeHeight, sizeWidth, image2DUrl, colorModel),
+                _buildImage2DDetail(
+                  nameModel,
+                  context,
+                  widget.argument,
+                  modelURL,
+                  sizeHeight,
+                  sizeWidth,
+                  image2DUrl,
+                  colorModel,
+                  currentUser,
+                  idname,
+                ),
                 // Thông tin về số vệ tinh, tuổi, nhiệt độ
                 _buildInfoExpanded(infoOther, context),
                 // Thông tin chi tiết của hành tinh
@@ -303,196 +321,19 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     );
   }
 
-  SliverToBoxAdapter _buildTitleOtherNews(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(
-            "Kiến thức liên quan : ",
-            style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-          ),
-          const SizedBox(height: 20),
-        ]),
-      ),
-    );
-  }
-
-  SliverToBoxAdapter _buildNewsCard(String nameModel, BuildContext context) {
-    String formatViews(int views) {
-      if (views < 1000) {
-        return '$views';
-      } else if (views >= 1000 && views < 1000000) {
-        double viewsInK = views / 1000;
-        return '${viewsInK.toStringAsFixed(1)}K';
-      } else if (views >= 1000000 && views < 1000000000) {
-        double viewsInM = views / 1000000;
-        return '${viewsInM.toStringAsFixed(1)}M';
-      } else {
-        double viewsInB = views / 1000000000;
-        return '${viewsInB.toStringAsFixed(1)}B';
-      }
-    }
-
-    return SliverToBoxAdapter(
-      child: Column(
-        children: _newsDataList
-            .where((data) => data["tags"].contains(nameModel))
-            .take(3)
-            .map((data) => InkWell(
-                  onTap: (() {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                          return SlideTransition(
-                            position: Tween(begin: const Offset(1.0, 0.0), end: Offset.zero).animate(animation),
-                            child: child,
-                          );
-                        },
-                        pageBuilder: (context, animation, secondaryAnimation) => DetailNewsScreen(argument: data, viewscheck: false),
-                      ),
-                    );
-                  }),
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
-                    decoration: BoxDecoration(
-                      color: OneColors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(7),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [_buildTitleCard(data, context), const SizedBox(width: 10), _buildImageCard(data)],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _buildAuthorCard(data, context),
-                            _buildViewCountCard(formatViews, data, context),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ))
-            .toList(),
-      ),
-    );
-  }
-
-  Row _buildViewCountCard(String Function(int views) formatViews, Map<String, dynamic> data, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        const Icon(
-          Icons.visibility,
-          color: OneColors.grey,
-          size: 20,
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        Text(
-          "${formatViews(data["views"])} lượt xem",
-          style: OneTheme.of(context).caption1.copyWith(
-                overflow: TextOverflow.clip,
-                fontSize: 12,
-                fontWeight: FontWeight.w300,
-                color: OneColors.white,
-              ),
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
-    );
-  }
-
-  Text _buildAuthorCard(Map<String, dynamic> data, BuildContext context) {
-    return Text(
-      data["author"],
-      style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
-      maxLines: 4,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.justify,
-    );
-  }
-
-  Expanded _buildImageCard(Map<String, dynamic> data) {
-    return Expanded(
-      flex: 1,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                  color: OneColors.white,
-                  blurRadius: 3,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(15),
-            ),
-            height: 90,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: data['content'][0]['images']['imageUrl'] != ""
-                  ? Image.network(
-                      data['content'][0]['images']['imageUrl'],
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return OneLoading.space_loading;
-                      },
-                      errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
-                    )
-                  : const SizedBox(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Expanded _buildTitleCard(Map<String, dynamic> data, BuildContext context) {
-    return Expanded(
-      flex: 2,
-      child: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              data["title"],
-              style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.justify,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              data["titleDisplay"],
-              style: OneTheme.of(context).body2.copyWith(color: OneColors.white),
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.justify,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNamePlanets(String nameModel, BuildContext context, String modelURL) {
+  Widget _buildNamePlanets(
+    String nameModel,
+    BuildContext context,
+    String modelURL,
+    var currentUser,
+    String idName,
+  ) {
     return // Tên Hành tinh
-        Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 0, left: 24),
+          padding: EdgeInsets.only(top: (idName != "saotho") ? 20 : 30, left: 24),
           child: Align(
               alignment: Alignment.topLeft,
               child: Text(
@@ -500,14 +341,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                 style: OneTheme.of(context).header.copyWith(color: OneColors.black, letterSpacing: 5, fontSize: 35),
               )),
         ),
-        // InkWell(
-        //   onTap: () {
-        //     setState(() {
-        //       _launchAR(modelURL);
-        //     });
-        //   },
-        //   child: const one_button_ar_view(),
-        // ),
       ],
     );
   }
@@ -777,7 +610,18 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
           );
   }
 
-  SliverToBoxAdapter _buildImage2DDetail(String nameModel, BuildContext context, dynamic widget, String modelURL, double sizeHeight, double sizeWidth, String image2DUrl, String colorModel) {
+  SliverToBoxAdapter _buildImage2DDetail(
+    String nameModel,
+    BuildContext context,
+    dynamic widget,
+    String modelURL,
+    double sizeHeight,
+    double sizeWidth,
+    String image2DUrl,
+    String colorModel,
+    var currentUser,
+    String idName,
+  ) {
     return SliverToBoxAdapter(
       child: Stack(clipBehavior: Clip.none, children: [
         if (checkstate == false)
@@ -860,7 +704,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                 child: Container(
                   height: sizeHeight * 0.25,
                   color: OneColors.transparent,
-                  child: _buildNamePlanets(nameModel, context, modelURL),
+                  child: _buildNamePlanets(nameModel, context, modelURL, currentUser, idName),
                 ),
               )
             : Positioned(
@@ -869,7 +713,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                 child: Container(
                   height: sizeHeight * 0.25,
                   color: OneColors.transparent,
-                  child: _buildNamePlanets(nameModel, context, modelURL),
+                  child: _buildNamePlanets(nameModel, context, modelURL, currentUser, idName),
                 ),
               ),
         SizedBox(height: checkstate == false ? sizeHeight * 0.4 : 140),
