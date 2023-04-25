@@ -16,6 +16,7 @@ enum AppRoutes {
   USER_DETAIL_INFO,
   MULTIPLE_AUGMENTED_IMAGES,
   TOP_NEWS,
+  TOP_NEWS_DETAIL,
 }
 
 extension AppRouteExt on AppRoutes {
@@ -47,6 +48,8 @@ extension AppRouteExt on AppRoutes {
         return '/multipleaugmentedimages';
       case AppRoutes.TOP_NEWS:
         return '/topnewsscreen';
+      case AppRoutes.TOP_NEWS_DETAIL:
+        return '/topnewsdetail';
     }
   }
 
@@ -149,6 +152,16 @@ extension AppRouteExt on AppRoutes {
         return GetPageRoute(
           settings: settings,
           page: () => const TopNewsScreen(),
+          curve: Curves.linear,
+          transition: Transition.rightToLeft,
+        );
+      case AppRoutes.TOP_NEWS_DETAIL:
+        dynamic argument;
+        return GetPageRoute(
+          settings: settings,
+          page: () => DetailNewsScreen(
+            argument: argument,
+          ),
           curve: Curves.linear,
           transition: Transition.rightToLeft,
         );

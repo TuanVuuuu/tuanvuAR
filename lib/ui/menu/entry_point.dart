@@ -4,19 +4,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
-import 'package:flutter_application_1/src/components/shared/add_data_artificial.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
-import 'package:flutter_application_1/ui/pages/a_example_2/arscreen4.dart';
-import 'package:flutter_application_1/ui/pages/a_example_4/example_webview_ar.dart';
+import 'package:flutter_application_1/ui/pages/a_example_1/example.dart';
+import 'package:flutter_application_1/ui/pages/a_example_3/arscreen5.dart';
 import 'package:flutter_application_1/ui/pages/favorites_screen/favorites_screen.dart';
 // import 'package:flutter_application_1/ui/pages/a_example_3/arscreen5.dart';
 // import 'package:flutter_application_1/ui/pages/a_example_1/example.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/profile_screen.dart';
+import 'package:flutter_application_1/ui/pages/profile_screen/rank_user_screen.dart';
 import 'package:flutter_application_1/ui/pages/quiz_manager_screen/quiz_manager_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'dart:io' as io;
 
 import 'package:native_ar_viewer/native_ar_viewer.dart';
@@ -83,158 +82,25 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       body: Stack(
         children: [
           _tabList.elementAt(_pageIndex),
-          _buildBottomBar(),
+          // _buildBottomBar(),
           _buildButtonOpenSideBar(context),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: InkWell(
-              onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    enableDrag: false,
-                    backgroundColor: OneColors.transparent,
-                    elevation: 0,
-                    builder: (BuildContext context) {
-                      return Center(
-                        child: Container(
-                          height: 400,
-                          width: AppContants.sizeWidth - 50,
-                          decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
-                            BoxShadow(
-                              color: OneColors.grey,
-                              blurRadius: 4,
-                            )
-                          ]),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Center(
-                                  child: Text(
-                                    "Lựa chọn chế độ xem!",
-                                    style: OneTheme.of(context).header.copyWith(color: OneColors.black),
-                                  ),
-                                ),
-                                _itemARCatagory(
-                                  context,
-                                  () {
-                                    Get.toNamed(AppRoutes.ARTIFICIAL_SCREEN.name);
-                                    // Get.toNamed(AppRoutes.MULTIPLE_AUGMENTED_IMAGES.name);
-                                  },
-                                  OneImages.icons_ar_scan,
-                                  "Quét hình ảnh trong không gian thực",
-                                ),
-                                _itemARCatagory(
-                                  context,
-                                  () {
-                                    Get.toNamed(AppRoutes.DISCOVERY_SCREEN.name);
-                                  },
-                                  OneImages.icons_ar_launch_arcore,
-                                  "Đặt mô hình trong không gian thực",
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(color: const Color.fromARGB(255, 0, 183, 255), borderRadius: BorderRadius.circular(10), boxShadow: const [
-                                          BoxShadow(color: OneColors.grey, blurRadius: 4),
-                                        ]),
-                                        child: Center(
-                                          child: Text(
-                                            "Đóng",
-                                            style: OneTheme.of(context).body1,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    });
-              },
-              child: Container(
-                height: 80,
-                width: 80,
-                margin: const EdgeInsets.only(bottom: 30),
-                decoration: BoxDecoration(
-                    color: OneColors.bgButton,
-                    shape: BoxShape.circle,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: OneColors.grey,
-                        blurRadius: 5,
-                      ),
-                    ],
-                    border: Border.all(color: OneColors.white, width: 1)),
-                child: SvgPicture.asset(
-                  OneImages.icons_ar_view,
-                  height: 24,
-                  width: 24,
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Text(
-              "AR",
-              style: GoogleFonts.aBeeZee(
-                fontWeight: FontWeight.w400,
-                fontSize: 24,
-                color: OneColors.black,
-              ),
-            ),
-          )
+          // _buildButtonAR(context),
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: Text(
+          //     "AR",
+          //     style: GoogleFonts.aBeeZee(
+          //       fontWeight: FontWeight.w400,
+          //       fontSize: 24,
+          //       color: OneColors.black,
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
   }
 
-  Widget _itemARCatagory(BuildContext context, var onTap, String imageIcon, String title) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        height: 80,
-        width: AppContants.sizeWidth - 100,
-        decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
-          BoxShadow(color: OneColors.grey, blurRadius: 4),
-        ]),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              height: 40,
-              child: Image.asset(
-                imageIcon,
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            Expanded(
-                child: Text(
-              title,
-              style: OneTheme.of(context).body2.copyWith(color: OneColors.black),
-            ))
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _buildSideBar(BuildContext context, User? user) {
     return Builder(
@@ -346,9 +212,9 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
 
           Scaffold.of(context).closeEndDrawer();
         }),
-        _itemsSideBar(context, "Khám phá", Icons.support, null, () {
+        _itemsSideBar(context, "Tin tức cập nhật", Icons.support, null, () {
           setState(() {
-            _pageIndex = 1;
+            Get.toNamed(AppRoutes.TOP_NEWS.name);
           });
 
           Scaffold.of(context).closeEndDrawer();
@@ -360,7 +226,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
 
           Scaffold.of(context).closeEndDrawer();
         }),
-        _itemsSideBar(context, "Yêu thích", Icons.favorite, true, () {}),
         _itemsSideBar(context, "Vệ tinh nhân tạo", Icons.satellite_alt, null, () {
           Get.toNamed(AppRoutes.ARTIFICIAL_SCREEN.name);
           // Get.to(() => const ArtificialScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
@@ -370,6 +235,14 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
             "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/3D%20model%20Astronomy%2Fsolar_system.glb?alt=media&token=19d54abe-1789-4e43-8a62-8e287f10e7a9",
           );
         }),
+        _itemsSideBar(context, "Bảng xếp hạng", Icons.hotel_class, null, () {
+          Get.to(
+              () => RankUserScreen(
+                    usersdataDataList: _usersdataDataList,
+                  ),
+              curve: Curves.linear,
+              transition: Transition.rightToLeft);
+        })
       ],
     );
   }
@@ -386,8 +259,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           // Get.to(() => const ForgotPasswordScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
         }),
         _itemsSideBar(context, "Đăng xuất", Icons.logout, null, () {
-          Get.toNamed(AppRoutes.SIGN_OUT.name);
-          // Get.to(() => SignOutScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+          // Get.toNamed(AppRoutes.SIGN_OUT.name);
+          Get.to(() => AssetsObject(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
         }),
         // _itemsSideBar(context, "Ar Screen", Icons.logout, null, () {
         //   // Get.to(() => const MultipleAugmentedImagesPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
@@ -453,7 +326,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
               child: Container(
                 height: 55,
                 width: 55,
-                margin: const EdgeInsets.only(top: 70, right: 20),
+                margin: const EdgeInsets.only(top: 55, right: 20),
                 decoration: BoxDecoration(
                     color: OneColors.bgButton,
                     shape: BoxShape.circle,
@@ -478,52 +351,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
     );
   }
 
-  Widget _buildBottomBar() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 0.0, left: 0),
-      child: Align(
-        alignment: const Alignment(0.0, 1.0),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          fixedColor: OneColors.black,
-          backgroundColor: Colors.white,
-          unselectedItemColor: Colors.black,
-          currentIndex: _pageIndex,
-          onTap: (int index) {
-            setState(() {
-              _pageIndex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(OneImages.icons_home),
-              label: "HOME",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(OneImages.icons_heart),
-              label: "FAVORITE",
-            ),
-            const BottomNavigationBarItem(
-              icon: SizedBox(
-                height: 30,
-              ),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(OneImages.icons_game),
-              label: "GAME",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(OneImages.icons_personalcard),
-              label: "PROFILE",
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   _launchAR(String modelURL) async {
     if (io.Platform.isAndroid) {

@@ -5,16 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
-import 'package:flutter_application_1/ui/pages/a_example_1/example_1.dart';
-import 'package:flutter_application_1/ui/pages/a_example_2/arscreen3.dart';
-import 'package:flutter_application_1/ui/pages/a_example_3/avatar_screen.dart';
-import 'package:flutter_application_1/ui/pages/a_example_4/example_webview_ar.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/forgot_password_screen.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/sign_out.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/user_detail_info_screen.dart';
+import 'package:flutter_application_1/ui/pages/favorites_screen/favorites_screen.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/rank_user_screen.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -72,19 +65,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
 
-    return AppScaffold(
-        backgroundColor: OneColors.background2.withOpacity(0.2),
-        body: Scrollbar(
-            child: CustomScrollView(
-          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          slivers: [
-            _buildHeader(context),
-            _buildTitle(context, "Lối tắt"),
-            _buildGridItems(context),
-            _buildTitle(context, "Khác"),
-            _buildListShotcut(context),
-          ],
-        )));
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                OneImages.bg3,
+              ),
+              fit: BoxFit.fill)),
+      child: AppScaffold(
+          backgroundColor: OneColors.transparent,
+          body: Scrollbar(
+              child: CustomScrollView(
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            slivers: [
+              _buildHeader(context),
+              _buildTitle(context, "Lối tắt"),
+              _buildGridItems(context),
+              _buildTitle(context, "Khác"),
+              _buildListShotcut(context),
+            ],
+          ))),
+    );
   }
 
   SliverToBoxAdapter _buildListShotcut(BuildContext context) {
@@ -92,8 +93,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         children: [
           _buildShotcutItems(context, "Giới thiệu", const Icon(Icons.book), () {
-            String url =
-                "https://studio.onirix.com/projects/6704270959844d9aaaf6698b9e70cbc2/webar?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MjI3LCJwcm9qZWN0SWQiOjQwNTg3LCJyb2xlIjozLCJpYXQiOjE2ODA0OTUzMzh9.T-56VEGXivdj-2QwCb-hAvtCYQaxYdLXFsYIrBODo1A";
             // Get.to(
             //     () => MyWebView(
             //           url: url,
@@ -158,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Get.toNamed(AppRoutes.USER_DETAIL_INFO.name);
                   },
                 ),
-                _buildItemsRow(context, "Tin tức", const Icon(Icons.book, color: OneColors.pink), (){
+                _buildItemsRow(context, "Tin tức", const Icon(Icons.book, color: OneColors.pink), () {
                   Get.toNamed(AppRoutes.TOP_NEWS.name);
                 }),
               ],
@@ -178,9 +177,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         transition: Transition.rightToLeft);
                   },
                 ),
-                _buildItemsRow(context, "Cài đặt", const Icon(Icons.settings, color: OneColors.bgButton), null),
+                _buildItemsRow(
+                  context,
+                  "Yêu thích",
+                  const Icon(Icons.favorite_border_outlined, color: OneColors.red),
+                  () {
+                    Get.to(
+                        () => const FavoritesScreen(),
+                        curve: Curves.linear,
+                        transition: Transition.rightToLeft);
+                  },
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -224,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Text(
               title,
-              style: OneTheme.of(context).title1.copyWith(color: OneColors.black),
+              style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
             ),
           ],
         ),

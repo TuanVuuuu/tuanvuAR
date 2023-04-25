@@ -2,6 +2,7 @@
 
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 
 class AssetsObject extends StatefulWidget {
   const AssetsObject({super.key});
@@ -20,8 +21,11 @@ class _AssetsObjectState extends State<AssetsObject> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Custom Object on plane detected'),
+          // title: const Text('Image Detection Sample'),
+          backgroundColor: OneColors.transparent,
+          elevation: 0,
         ),
+        extendBodyBehindAppBar: true,
         body: Stack(
           children: <Widget>[
             ArCoreView(
@@ -29,7 +33,7 @@ class _AssetsObjectState extends State<AssetsObject> {
               enableTapRecognizer: true,
             ),
             Align(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.bottomCenter,
               child: ListObjectSelection(
                 onTap: (value) {
                   objectSelected = value;
@@ -138,17 +142,18 @@ class _ListObjectSelectionState extends State<ListObjectSelection> {
                 widget.onTap?.call(objectsFileName[index]);
               });
             },
-            child: Card(
-              elevation: 4.0,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: selected == gifs[index] ? Colors.transparent : Colors.transparent,
+                    shape: BoxShape.circle
+                  ),
+                  padding: selected == gifs[index] ? const EdgeInsets.all(8.0) : null,
+                  child: Image.asset(gifs[index]),
                 ),
-              ),
-              child: Container(
-                color: selected == gifs[index] ? Colors.red : Colors.transparent,
-                padding: selected == gifs[index] ? const EdgeInsets.all(8.0) : null,
-                child: Image.asset(gifs[index]),
               ),
             ),
           );

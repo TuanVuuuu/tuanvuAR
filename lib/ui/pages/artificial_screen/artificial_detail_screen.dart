@@ -6,7 +6,7 @@ import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/widget/one_blur.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
-import 'package:flutter_application_1/ui/pages/a_example_1/example_1.dart';
+import 'package:flutter_application_1/ui/pages/a_example_1/my_scan_ar_app.dart';
 import 'package:get/get.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';
@@ -62,7 +62,6 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
         statusBarBrightness: Brightness.light, // Dark == white status bar -- for IOS.
       ),
     );
-    print(model3DScan);
     return AppScaffold(
         appBar: AppBar(
           backgroundColor: OneColors.transparent,
@@ -213,17 +212,19 @@ class _ArtificialDetailScreenState extends State<ArtificialDetailScreen> {
                                   style: OneTheme.of(context).header.copyWith(color: OneColors.black),
                                 ),
                               ),
-                            model3DScan != "" ?  _itemARCatagory(
-                                context,
-                                () {
-                                  Get.to(() => MyApp(
-                                        argumentScan: model3DScan,
-                                      ));
-                                  // Get.toNamed(AppRoutes.MULTIPLE_AUGMENTED_IMAGES.name);
-                                },
-                                OneImages.icons_ar_scan,
-                                "Quét hình ảnh trong không gian thực",
-                              ) : const SizedBox(),
+                              model3DScan != ""
+                                  ? _itemARCatagory(
+                                      context,
+                                      () {
+                                        Get.to(() => MyScanARApp(
+                                              argumentScan: model3DScan,
+                                            ));
+                                        // Get.toNamed(AppRoutes.MULTIPLE_AUGMENTED_IMAGES.name);
+                                      },
+                                      OneImages.icons_ar_scan,
+                                      "Quét hình ảnh trong không gian thực",
+                                    )
+                                  : const SizedBox(),
                               _itemARCatagory(
                                 context,
                                 () {

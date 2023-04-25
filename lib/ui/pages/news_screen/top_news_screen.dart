@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element
+// ignore_for_file: unused_element, unused_field
 
 part of '../../../libary/one_libary.dart';
 
@@ -173,7 +173,7 @@ class _TopNewsScreenState extends State<TopNewsScreen> {
           child: RichText(
             text: TextSpan(
               text: 'Bạn đang tìm kiếm với từ khoá : ',
-              style: DefaultTextStyle.of(context).style.copyWith(color: OneColors.black),
+              style: OneTheme.of(context).body1.copyWith(color: OneColors.black),
               children: <TextSpan>[
                 TextSpan(text: tagsButton, style: const TextStyle(fontWeight: FontWeight.bold, color: OneColors.textOrange)),
               ],

@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
 class ImageDetectionPage extends StatefulWidget {
@@ -29,7 +30,12 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Image Detection Sample')),
+      appBar: AppBar(
+        // title: const Text('Image Detection Sample'),
+        backgroundColor: OneColors.transparent,
+        elevation: 0,
+      ),
+      extendBodyBehindAppBar: true,
       body: ArCoreView(
         onArCoreViewCreated: onArCoreViewCreated,
         enableTapRecognizer: true,

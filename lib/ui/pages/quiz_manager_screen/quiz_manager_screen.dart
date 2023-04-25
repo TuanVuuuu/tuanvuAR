@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
-import 'package:flutter_application_1/ui/pages/auth_screen/sign_out.dart';
 import 'package:flutter_application_1/ui/pages/quiz_screen/quiz_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -16,7 +15,6 @@ class QuizManagerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     AppContants.init(context);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -29,16 +27,24 @@ class QuizManagerScreen extends StatelessWidget {
     );
 
     double sizeHeight = AppContants.sizeHeight;
-    return AppScaffold(
-        backgroundColor: OneColors.background2.withOpacity(0.2),
-        body: Scrollbar(
-            child: CustomScrollView(
-          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          slivers: [
-            _buildHeader(context),
-            _buildBody(context, sizeHeight),
-          ],
-        )));
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                OneImages.bg3,
+              ),
+              fit: BoxFit.fill)),
+      child: AppScaffold(
+          backgroundColor: OneColors.transparent,
+          body: Scrollbar(
+              child: CustomScrollView(
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            slivers: [
+              _buildHeader(context),
+              _buildBody(context, sizeHeight),
+            ],
+          ))),
+    );
   }
 
   SliverToBoxAdapter _buildBody(BuildContext context, double sizeHeight) {
@@ -227,12 +233,37 @@ class QuizManagerScreen extends StatelessWidget {
         centerTitle: true,
         background: Padding(
           padding: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 20),
-          child: Text(
-            "Đố vui",
-            style: OneTheme.of(context).title1.copyWith(
-                  fontSize: 25,
-                  color: OneColors.black,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      color: OneColors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Text(
+                  "Đố vui",
+                  style: OneTheme.of(context).title1.copyWith(
+                        fontSize: 25,
+                        color: OneColors.white,
+                      ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ],
           ),
         ),
       ),
