@@ -16,12 +16,13 @@ class _SplashScreenState extends State<SplashScreen> {
     if (user == null) {
       Get.offAllNamed(AppRoutes.LOGIN_MANAGER.name);
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => const BottomNavigationBarWidget(),
-        ),
-      );
+      Get.offAllNamed(AppRoutes.ENTRY_POINT.name);
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (BuildContext context) => const BottomNavigationBarWidget(),
+      //   ),
+      // );
     }
   }
 
@@ -64,26 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Center(
       child: SizedBox(
         height: sizeHeight * 0.25, width: sizeWidth * 0.9, child: OneLoading.space_loading_larget,
-        // Lottie.network(
-        //   "https://assets2.lottiefiles.com/packages/lf20_qogkaqmb.json",
-        //   onLoaded: (p0) {
-        //     Future.delayed(Duration(seconds: seconds), (() {
-        //       checkLoginStatus();
-        //       // Get.offAll(() => const BottomNavigationBarWidget(), curve: Curves.linear, duration: const Duration(seconds: 1));
-        //     }));
-        //   },
-        //   errorBuilder: (context, error, stackTrace) {
-        //     return Padding(
-        //       padding: const EdgeInsets.symmetric(horizontal: 30),
-        //       child: Text(
-        //         "Không có kết nối Internet\nVui lòng kiểm tra lại kết nối mạng!",
-        //         style: OneTheme.of(context).title1.copyWith(color: OneColors.white),
-        //         maxLines: 2,
-        //         textAlign: TextAlign.center,
-        //       ),
-        //     );
-        //   },
-        // ),
+        
       ),
     );
   }

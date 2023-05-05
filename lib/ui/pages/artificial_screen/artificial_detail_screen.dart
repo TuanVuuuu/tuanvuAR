@@ -6,7 +6,7 @@ import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/components/widget/one_blur.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
-import 'package:flutter_application_1/ui/pages/a_example_1/my_scan_ar_app.dart';
+import 'package:flutter_application_1/ui/pages/scan_ar_screen.dart/my_scan_ar_app.dart';
 import 'package:get/get.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'package:readmore/readmore.dart';

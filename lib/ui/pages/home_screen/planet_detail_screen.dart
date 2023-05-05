@@ -623,101 +623,104 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     String idName,
   ) {
     return SliverToBoxAdapter(
-      child: Stack(clipBehavior: Clip.none, children: [
-        if (checkstate == false)
-          Positioned(
-              top: 15,
-              right: -sizeWidth * 0.2 + 10,
+      child: Hero(
+        tag: 'planets',
+        child: Stack(clipBehavior: Clip.none, children: [
+          if (checkstate == false)
+            Positioned(
+                top: 15,
+                right: -sizeWidth * 0.2 + 10,
+                child: SizedBox(
+                  height: sizeHeight * 0.35 + 5,
+                  child: BlurFilter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CachedImage(
+                        color: Color(int.parse(colorModel)),
+                        imageUrl: image2DUrl,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                  ),
+                ))
+          else
+            const SizedBox(),
+          if (checkstate == false)
+            Positioned(
+              top: 0,
+              right: -sizeWidth * 0.2,
               child: SizedBox(
-                height: sizeHeight * 0.35 + 5,
-                child: BlurFilter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CachedImage(
-                      color: Color(int.parse(colorModel)),
-                      imageUrl: image2DUrl,
+                  height: sizeHeight * 0.35,
+                  child: CachedImage(
+                    imageUrl: image2DUrl,
+                    fit: BoxFit.fitHeight,
+                  )),
+            )
+          else
+            const SizedBox(),
+          checkstate == false
+              ? Positioned(
+                  top: sizeHeight * 0.25,
+                  right: 0,
+                  child: Container(
+                    height: sizeHeight * 0.25,
+                    color: OneColors.transparent,
+                    child: Image.asset(
+                      OneImages.rocket2,
                       fit: BoxFit.fitHeight,
                     ),
                   ),
-                ),
-              ))
-        else
-          const SizedBox(),
-        if (checkstate == false)
+                )
+              : const SizedBox(),
           Positioned(
-            top: 0,
-            right: -sizeWidth * 0.2,
-            child: SizedBox(
-                height: sizeHeight * 0.35,
-                child: CachedImage(
-                  imageUrl: image2DUrl,
-                  fit: BoxFit.fitHeight,
-                )),
-          )
-        else
-          const SizedBox(),
-        checkstate == false
-            ? Positioned(
-                top: sizeHeight * 0.25,
-                right: 0,
-                child: Container(
-                  height: sizeHeight * 0.25,
-                  color: OneColors.transparent,
-                  child: Image.asset(
-                    OneImages.rocket2,
-                    fit: BoxFit.fitHeight,
-                  ),
+            top: 70,
+            left: 20,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 55,
+                width: 55,
+                decoration: BoxDecoration(
+                    color: OneColors.bgButton,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: OneColors.grey,
+                        blurRadius: 4,
+                      ),
+                    ],
+                    border: Border.all(color: OneColors.white, width: 1),
+                    borderRadius: BorderRadius.circular(30)),
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 5),
+                  child: Icon(Icons.arrow_back_ios, color: OneColors.white),
                 ),
-              )
-            : const SizedBox(),
-        Positioned(
-          top: 70,
-          left: 20,
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              height: 55,
-              width: 55,
-              decoration: BoxDecoration(
-                  color: OneColors.bgButton,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: OneColors.grey,
-                      blurRadius: 4,
-                    ),
-                  ],
-                  border: Border.all(color: OneColors.white, width: 1),
-                  borderRadius: BorderRadius.circular(30)),
-              child: const Padding(
-                padding: EdgeInsets.only(left: 5),
-                child: Icon(Icons.arrow_back_ios, color: OneColors.white),
               ),
             ),
           ),
-        ),
-        checkstate == false
-            ? Positioned(
-                top: sizeHeight * 0.3,
-                left: 0,
-                child: Container(
-                  height: sizeHeight * 0.25,
-                  color: OneColors.transparent,
-                  child: _buildNamePlanets(nameModel, context, modelURL, currentUser, idName),
+          checkstate == false
+              ? Positioned(
+                  top: sizeHeight * 0.3,
+                  left: 0,
+                  child: Container(
+                    height: sizeHeight * 0.25,
+                    color: OneColors.transparent,
+                    child: _buildNamePlanets(nameModel, context, modelURL, currentUser, idName),
+                  ),
+                )
+              : Positioned(
+                  top: 70,
+                  right: 20,
+                  child: Container(
+                    height: sizeHeight * 0.25,
+                    color: OneColors.transparent,
+                    child: _buildNamePlanets(nameModel, context, modelURL, currentUser, idName),
+                  ),
                 ),
-              )
-            : Positioned(
-                top: 70,
-                right: 20,
-                child: Container(
-                  height: sizeHeight * 0.25,
-                  color: OneColors.transparent,
-                  child: _buildNamePlanets(nameModel, context, modelURL, currentUser, idName),
-                ),
-              ),
-        SizedBox(height: checkstate == false ? sizeHeight * 0.4 : 140),
-      ]),
+          SizedBox(height: checkstate == false ? sizeHeight * 0.4 : 140),
+        ]),
+      ),
     );
   }
 

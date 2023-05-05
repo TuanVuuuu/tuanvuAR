@@ -113,7 +113,7 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                       showFeaturePoints: false,
                       showPlanes: true,
                       customPlaneTexturePath: "Images/triangle.png",
-                      showWorldOrigin: false,
+                      showWorldOrigin: true,
                       handleTaps: false,
                     );
                 this.arObjectManager!.onInitialize();
@@ -128,16 +128,16 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                 });
               }),
               planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical),
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildButtonScale(),
-                _buildButtonRotation(),
-              ],
-            ),
-          ]),
-          _buildButtonTrans(),
+          // Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          //   Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       _buildButtonScale(),
+          //       _buildButtonRotation(),
+          //     ],
+          //   ),
+          // ]),
+          // _buildButtonTrans(),
         ]));
   }
 

@@ -6,7 +6,6 @@ import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/contant.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
-import 'package:flutter_application_1/ui/pages/a_example_1/example.dart';
 import 'package:flutter_application_1/ui/pages/a_example_3/arscreen5.dart';
 import 'package:flutter_application_1/ui/pages/favorites_screen/favorites_screen.dart';
 // import 'package:flutter_application_1/ui/pages/a_example_3/arscreen5.dart';
@@ -100,7 +99,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       ),
     );
   }
-
 
   Widget _buildSideBar(BuildContext context, User? user) {
     return Builder(
@@ -206,9 +204,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
     return Column(
       children: [
         _itemsSideBar(context, "Trang chủ", Icons.home_filled, null, () {
-          setState(() {
-            _pageIndex = 0;
-          });
+          Get.toNamed(AppRoutes.ENTRY_POINT.name);
 
           Scaffold.of(context).closeEndDrawer();
         }),
@@ -220,20 +216,19 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           Scaffold.of(context).closeEndDrawer();
         }),
         _itemsSideBar(context, "Trò chơi", Icons.extension, null, () {
-          setState(() {
-            _pageIndex = 3;
-          });
+          Get.toNamed(AppRoutes.QUIZ_GAME.name);
 
           Scaffold.of(context).closeEndDrawer();
         }),
         _itemsSideBar(context, "Vệ tinh nhân tạo", Icons.satellite_alt, null, () {
           Get.toNamed(AppRoutes.ARTIFICIAL_SCREEN.name);
-          // Get.to(() => const ArtificialScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+          Scaffold.of(context).closeEndDrawer();
         }),
         _itemsSideBar(context, "Chế độ xem thực tế ảo", Icons.view_in_ar, null, () {
           _launchAR(
             "https://firebasestorage.googleapis.com/v0/b/flutter-crud-33350.appspot.com/o/3D%20model%20Astronomy%2Fsolar_system.glb?alt=media&token=19d54abe-1789-4e43-8a62-8e287f10e7a9",
           );
+          Scaffold.of(context).closeEndDrawer();
         }),
         _itemsSideBar(context, "Bảng xếp hạng", Icons.hotel_class, null, () {
           Get.to(
@@ -242,6 +237,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
                   ),
               curve: Curves.linear,
               transition: Transition.rightToLeft);
+          Scaffold.of(context).closeEndDrawer();
         })
       ],
     );
@@ -259,8 +255,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           // Get.to(() => const ForgotPasswordScreen(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
         }),
         _itemsSideBar(context, "Đăng xuất", Icons.logout, null, () {
-          // Get.toNamed(AppRoutes.SIGN_OUT.name);
-          Get.to(() => AssetsObject(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
+          Get.toNamed(AppRoutes.SIGN_OUT.name);
+          // Get.to(() => LocalAndWebObjectsWidget(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
         }),
         // _itemsSideBar(context, "Ar Screen", Icons.logout, null, () {
         //   // Get.to(() => const MultipleAugmentedImagesPage(), curve: Curves.linear, transition: Transition.rightToLeft, duration: const Duration(milliseconds: 200));
@@ -350,7 +346,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       ),
     );
   }
-
 
   _launchAR(String modelURL) async {
     if (io.Platform.isAndroid) {

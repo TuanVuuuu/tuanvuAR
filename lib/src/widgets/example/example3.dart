@@ -99,8 +99,8 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                 this.arSessionManager!.onInitialize(
                       showFeaturePoints: false,
                       showPlanes: true,
-                      customPlaneTexturePath: "Images/triangle.png",
-                      showWorldOrigin: showWorldOrigin,
+                      customPlaneTexturePath: "assets/triangle.png",
+                      showWorldOrigin: true,
                       handleTaps: false,
                     );
                 this.arObjectManager!.onInitialize();
@@ -108,22 +108,22 @@ class _LocalAndWebObjectsWidgetState extends State<LocalAndWebObjectsWidget> {
                 httpClient = HttpClient();
                 // _downloadFile("https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb", "LocalDuck.glb");
                 //_downloadFile("https://github.com/TuanVuuuu/tuanvuAR/blob/TuanVu-Assets/assets/3D_model/earth.glb", "LocalDuck.glb");
-                setState(() {
-                  //onFileSystemObjectAtOriginButtonPressed();
-                  onWebButton(imageARUrl);
-                });
+                // setState(() {
+                //   //onFileSystemObjectAtOriginButtonPressed();
+                //   onWebButton(imageARUrl);
+                // });
               }),
               planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical),
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildButtonScale(),
-                _buildButtonRotation(),
-              ],
-            ),
-          ]),
-          _buildButtonTrans(),
+          // Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          //   Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       _buildButtonScale(),
+          //       _buildButtonRotation(),
+          //     ],
+          //   ),
+          // ]),
+          // _buildButtonTrans(),
         ]));
   }
 
