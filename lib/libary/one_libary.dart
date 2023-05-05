@@ -34,6 +34,7 @@ import 'package:flutter_application_1/ui/pages/artificial_screen/artificial_scre
 import 'package:flutter_application_1/ui/pages/auth_screen/login_manager.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/signin_screen.dart';
 import 'package:flutter_application_1/ui/pages/news_screen/detail_news_screen.dart';
+import 'package:flutter_application_1/ui/views/exit_dialog.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/flutter_svg.dart';

@@ -45,27 +45,36 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     AppContants.init(context);
     _newsDataDataList.sort((a, b) => b["date"].compareTo(a["date"]));
-    return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                OneImages.bg3,
-              ),
-              fit: BoxFit.fill)),
-      child: AppScaffold(
-          backgroundColor: OneColors.transparent,
-          body: Scrollbar(
-              child: CustomScrollView(
-            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            slivers: <Widget>[
-              _buildTitle(context),
-              _buildARBanner(context),
-              _buildListPlanets(context),
-              _buildItems(context),
-              _buildTopNewsCard(context),
-              const SliverToBoxAdapter(child: SizedBox(height: 100)),
-            ],
-          ))),
+    return WillPopScope(
+      onWillPop: () async {
+        bool shouldExit = await showDialog(
+          context: context,
+          builder: (context) => const ExitConfirmationDialog(),
+        );
+        return shouldExit;
+      },
+      child: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                  OneImages.bg3,
+                ),
+                fit: BoxFit.fill)),
+        child: AppScaffold(
+            backgroundColor: OneColors.transparent,
+            body: Scrollbar(
+                child: CustomScrollView(
+              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              slivers: <Widget>[
+                _buildTitle(context),
+                _buildARBanner(context),
+                _buildListPlanets(context),
+                _buildItems(context),
+                _buildTopNewsCard(context),
+                const SliverToBoxAdapter(child: SizedBox(height: 100)),
+              ],
+            ))),
+      ),
     );
   }
 
@@ -725,7 +734,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 offset: Offset(0, 4),
               )
             ],
-            image: DecorationImage(image: AssetImage(OneImages.cracked_ground,), fit: BoxFit.cover)),
+            image: DecorationImage(
+                image: AssetImage(
+                  OneImages.cracked_ground,
+                ),
+                fit: BoxFit.cover)),
 
         // Info Planets + "Xem thêm" Button
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -777,7 +790,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           return 120.0;
         })(),
-
+      
         // backgroundColor: OneColors.transparent,
         // radius: (() {
         //   if (idName == "saotho") {

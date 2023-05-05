@@ -49,7 +49,7 @@ class P3DView extends StatelessWidget {
           //   src: imageUrl,
           // ),
           Positioned(
-            top: 210,
+            top: -210,
             child: SizedBox(
               height: AppContants.sizeHeight + 210,
               width: AppContants.sizeWidth,

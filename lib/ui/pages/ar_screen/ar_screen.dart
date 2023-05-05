@@ -7,7 +7,7 @@ import 'package:flutter_application_1/src/components/loading/one_loading.dart';
 import 'package:flutter_application_1/src/components/one_images.dart';
 import 'package:flutter_application_1/src/shared/firestore_helper.dart';
 import 'package:flutter_application_1/src/widgets/search_button.dart';
-import 'package:flutter_application_1/ui/pages/a_example_1/my_scan_ar_app.dart';
+import 'package:flutter_application_1/ui/pages/scan_ar_screen.dart/my_scan_ar_app.dart';
 import 'package:get/get.dart';
 import 'package:native_ar_viewer/native_ar_viewer.dart';
 import 'dart:io' as io;

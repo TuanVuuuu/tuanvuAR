@@ -13,6 +13,7 @@ enum AppRoutes {
   SIGN_OUT,
   ARTIFICIAL_SCREEN,
   DISCOVERY_SCREEN,
+  QUIZ_GAME,
   USER_DETAIL_INFO,
   MULTIPLE_AUGMENTED_IMAGES,
   TOP_NEWS,
@@ -42,6 +43,8 @@ extension AppRouteExt on AppRoutes {
         return '/artificial';
       case AppRoutes.DISCOVERY_SCREEN:
         return '/discovery';
+      case AppRoutes.QUIZ_GAME:
+        return '/quizgame';
       case AppRoutes.USER_DETAIL_INFO:
         return '/userdetailinfo';
       case AppRoutes.MULTIPLE_AUGMENTED_IMAGES:
@@ -131,6 +134,13 @@ extension AppRouteExt on AppRoutes {
         return GetPageRoute(
           settings: settings,
           page: () => const DiscoveryScreen(),
+          curve: Curves.linear,
+          transition: Transition.rightToLeft,
+        );
+      case AppRoutes.QUIZ_GAME:
+        return GetPageRoute(
+          settings: settings,
+          page: () => QuizManagerScreen(),
           curve: Curves.linear,
           transition: Transition.rightToLeft,
         );

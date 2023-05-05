@@ -27,23 +27,28 @@ class QuizManagerScreen extends StatelessWidget {
     );
 
     double sizeHeight = AppContants.sizeHeight;
-    return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                OneImages.bg3,
-              ),
-              fit: BoxFit.fill)),
-      child: AppScaffold(
-          backgroundColor: OneColors.transparent,
-          body: Scrollbar(
-              child: CustomScrollView(
-            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            slivers: [
-              _buildHeader(context),
-              _buildBody(context, sizeHeight),
-            ],
-          ))),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                  OneImages.bg3,
+                ),
+                fit: BoxFit.fill)),
+        child: AppScaffold(
+            backgroundColor: OneColors.transparent,
+            body: Scrollbar(
+                child: CustomScrollView(
+              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              slivers: [
+                _buildHeader(context),
+                _buildBody(context, sizeHeight),
+              ],
+            ))),
+      ),
     );
   }
 
@@ -247,7 +252,7 @@ class QuizManagerScreen extends StatelessWidget {
                       color: OneColors.white,
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Get.offAllNamed(AppRoutes.ENTRY_POINT.name);
                     },
                   ),
                 ),
