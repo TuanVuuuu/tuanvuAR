@@ -19,6 +19,7 @@ import 'package:flutter_application_1/ui/pages/auth_screen/signup_screen.dart';
 import 'package:flutter_application_1/ui/pages/auth_screen/user_detail_info_screen.dart';
 import 'package:flutter_application_1/ui/pages/profile_screen/rank_user_screen.dart';
 import 'package:flutter_application_1/ui/pages/quiz_manager_screen/quiz_manager_screen.dart';
+import 'package:flutter_application_1/ui/pages/scan_ar_screen.dart/my_scan_ar_app.dart';
 import 'package:flutter_application_1/ui/splash/splash_bg.dart';
 import 'package:flutter_application_1/src/components/loading/one_loading.dart';
 import 'dart:async';

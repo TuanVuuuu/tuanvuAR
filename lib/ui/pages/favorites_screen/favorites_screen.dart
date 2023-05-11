@@ -86,7 +86,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           child: CustomScrollView(
         physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         slivers: [
-          buildDiscoverHeader(context),
+          _buildTitleWelcome(context),
           _mapCurrentUser?["favorites"].length != 0
               ? SliverToBoxAdapter(
                   child: SizedBox(
@@ -94,7 +94,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       child: (_mapCurrentUser?["favorites"].length == 0 || _favoriteItem.isEmpty)
                           ? Center(child: OneLoading.space_loading)
                           : ListView.builder(
-                            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                               itemCount: _favoriteItem.length,
                               itemBuilder: (context, index) {
                                 String name = _favoriteItem[index]["name"] ?? "";
@@ -165,19 +165,38 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
-  SliverToBoxAdapter buildDiscoverHeader(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Yêu thích",
-              style: OneTheme.of(context).header.copyWith(color: OneColors.black),
-            ),
-          ],
-        ),
+  Widget _buildTitleWelcome(BuildContext context) {
+    return SliverAppBar(
+      expandedHeight: 70,
+      leading: const SizedBox(),
+      floating: false,
+      pinned: true,
+      backgroundColor: OneColors.transparent,
+      elevation: 0,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        background: Padding(
+            padding: const EdgeInsets.only(top: 60, bottom: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.HOMESCREEN.name);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.arrow_back_ios, color: OneColors.black),
+                        Expanded(child: Center(child: Text("Yêu thích", style: OneTheme.of(context).body1.copyWith(color: OneColors.black, fontSize: 20)))),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }
