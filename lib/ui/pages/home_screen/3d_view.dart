@@ -7,7 +7,7 @@ class P3DView extends StatelessWidget {
     Key? key,
     required this.argument,
   }) : super(key: key);
-
+ 
   final argument;
 
   final CollectionReference modeldata = FirebaseFirestore.instance.collection("modeldata");

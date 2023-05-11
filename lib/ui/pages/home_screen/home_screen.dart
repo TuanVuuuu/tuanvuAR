@@ -37,11 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     AppContants.init(context);
     _newsDataDataList.sort((a, b) => b["date"].compareTo(a["date"]));

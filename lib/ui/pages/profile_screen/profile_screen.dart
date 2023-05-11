@@ -78,6 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: CustomScrollView(
             physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             slivers: [
+              _buildTitleWelcome(context),
               _buildHeader(context),
               _buildTitle(context, "Lối tắt"),
               _buildGridItems(context),
@@ -88,20 +89,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Widget _buildTitleWelcome(BuildContext context) {
+    return SliverAppBar(
+      expandedHeight: 70,
+      leading: const SizedBox(),
+      floating: false,
+      pinned: true,
+      backgroundColor: OneColors.transparent,
+      elevation: 0,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        background: Padding(
+            padding: const EdgeInsets.only(top: 60, bottom: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.HOMESCREEN.name);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.arrow_back_ios, color: OneColors.white),
+                        const SizedBox(width: 10),
+                        Text("Trở về", style: OneTheme.of(context).body1.copyWith(color: OneColors.white)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )),
+      ),
+    );
+  }
+
   SliverToBoxAdapter _buildListShotcut(BuildContext context) {
     return SliverToBoxAdapter(
       child: Column(
         children: [
-          _buildShotcutItems(context, "Giới thiệu", const Icon(Icons.book), () {
-            // Get.to(
-            //     () => MyWebView(
-            //           url: url,
-            //         ),
-            //     curve: Curves.linear,
-            //     transition: Transition.rightToLeft);
+          // _buildShotcutItems(context, "Giới thiệu", const Icon(Icons.book), () {
+          //   // Get.to(
+          //   //     () => MyWebView(
+          //   //           url: url,
+          //   //         ),
+          //   //     curve: Curves.linear,
+          //   //     transition: Transition.rightToLeft);
 
-            // Get.to(() => const MyApp(argument: ,));
-          }),
+          //   // Get.to(() => const MyApp(argument: ,));
+          // }),
           _buildShotcutItems(context, "Đổi mật khẩu", const Icon(Icons.lock_clock), () {
             Get.toNamed(AppRoutes.FORGOT_PASSWORD.name);
           }),
@@ -182,10 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   "Yêu thích",
                   const Icon(Icons.favorite_border_outlined, color: OneColors.red),
                   () {
-                    Get.to(
-                        () => const FavoritesScreen(),
-                        curve: Curves.linear,
-                        transition: Transition.rightToLeft);
+                    Get.to(() => const FavoritesScreen(), curve: Curves.linear, transition: Transition.rightToLeft);
                   },
                 ),
               ],
@@ -227,7 +262,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   SliverToBoxAdapter _buildTitle(BuildContext context, String title) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -91,6 +91,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     String infoModel = widget.argument["info"];
     String satelliteNumber = infoOther["satelliteNumber"];
     String modelURL = widget.argument["image3D"]["imageARUrl"];
+    String model3DScan = widget.argument["image3D"]["imageScan3D"];
     var colors = widget.argument["image2D"]["colors"];
     String colorModel = colors["colorModel"];
 
@@ -171,7 +172,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
               ],
             ),
           ),
-          _buildBottomBar(sizeWidth, context, checkstate, modelURL),
+          _buildBottomBar(sizeWidth, context, checkstate, modelURL, model3DScan),
         ],
       ),
     );
@@ -211,7 +212,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
     ));
   }
 
-  Positioned _buildBottomBar(double sizeWidth, BuildContext context, bool checkState, String modelURL) {
+  Positioned _buildBottomBar(double sizeWidth, BuildContext context, bool checkState, String modelURL, String model3DScan) {
     return Positioned(
       bottom: 10,
       left: sizeWidth * 0.05,
@@ -286,8 +287,89 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      _launchAR(modelURL);
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          enableDrag: false,
+                          backgroundColor: OneColors.transparent,
+                          elevation: 0,
+                          builder: (BuildContext context) {
+                            return Center(
+                              child: Container(
+                                height: 400,
+                                width: AppContants.sizeWidth - 50,
+                                decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
+                                  BoxShadow(
+                                    color: OneColors.grey,
+                                    blurRadius: 4,
+                                  )
+                                ]),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          "Lựa chọn chế độ xem!",
+                                          style: OneTheme.of(context).header.copyWith(color: OneColors.black),
+                                        ),
+                                      ),
+                                      model3DScan != ""
+                                          ? _itemARCatagory(
+                                              context,
+                                              () {
+                                                Get.to(() => MyScanARApp(
+                                                      argumentScan: model3DScan,
+                                                    ));
+                                                // Get.toNamed(AppRoutes.MULTIPLE_AUGMENTED_IMAGES.name);
+                                              },
+                                              OneImages.icons_ar_scan,
+                                              "Quét hình ảnh trong không gian thực",
+                                            )
+                                          : const SizedBox(),
+                                      _itemARCatagory(
+                                        context,
+                                        () {
+                                          setState(() {
+                                            _launchAR(modelURL);
+                                          });
+                                        },
+                                        OneImages.icons_ar_launch_arcore,
+                                        "Đặt mô hình trong không gian thực",
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(color: const Color.fromARGB(255, 0, 183, 255), borderRadius: BorderRadius.circular(10), boxShadow: const [
+                                                BoxShadow(color: OneColors.grey, blurRadius: 4),
+                                              ]),
+                                              child: Center(
+                                                child: Text(
+                                                  "Đóng",
+                                                  style: OneTheme.of(context).body1,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
                     },
+                    // onTap: () {
+                    //   _launchAR(modelURL);
+                    // },
                     child: Container(
                       height: 81,
                       width: 81,
@@ -315,6 +397,40 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen> {
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _itemARCatagory(BuildContext context, var onTap, String imageIcon, String title) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        height: 80,
+        width: AppContants.sizeWidth - 100,
+        decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
+          BoxShadow(color: OneColors.grey, blurRadius: 4),
+        ]),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: 40,
+              child: Image.asset(
+                imageIcon,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Expanded(
+                child: Text(
+              title,
+              style: OneTheme.of(context).body2.copyWith(color: OneColors.black),
+            ))
           ],
         ),
       ),

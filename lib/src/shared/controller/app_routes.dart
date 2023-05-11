@@ -84,7 +84,7 @@ extension AppRouteExt on AppRoutes {
       case AppRoutes.HOMESCREEN:
         return GetPageRoute(
           settings: settings,
-          page: () => const HomeScreen(),
+          page: () => const BottomNavigationBarWidget(setIndex: 0,),
           curve: Curves.linear,
           transition: Transition.rightToLeft,
         );
