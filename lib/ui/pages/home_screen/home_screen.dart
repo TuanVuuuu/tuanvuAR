@@ -12,7 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final CollectionReference data = FirebaseFirestore.instance.collection("modeldata");
+  final CollectionReference data =
+      FirebaseFirestore.instance.collection("modeldata");
   final User? user = FirebaseAuth.instance.currentUser;
   List<Map<String, dynamic>> _usersdataDataList = [];
 
@@ -55,22 +56,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   OneImages.bg3,
                 ),
                 fit: BoxFit.fill)),
-        child: AppScaffold(
-            backgroundColor: OneColors.transparent,
-            body: Scrollbar(
-                child: CustomScrollView(
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              slivers: <Widget>[
-                _buildTitle(context),
-                _buildARBanner(context),
-                _buildListPlanets(context),
-                _buildItems(context),
-                _buildTopNewsCard(context),
-                const SliverToBoxAdapter(child: SizedBox(height: 100)),
-              ],
-            ))),
+        child: _buildBody(context),
       ),
     );
+  }
+
+  AppScaffold _buildBody(BuildContext context) {
+    return AppScaffold(
+        backgroundColor: OneColors.transparent,
+        body: Scrollbar(
+            child: CustomScrollView(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+          slivers: <Widget>[
+            _buildTitle(context),
+            _buildARBanner(context),
+            _buildListPlanets(context),
+            _buildItems(context),
+            _buildTopNewsCard(context),
+            const SliverToBoxAdapter(child: SizedBox(height: 100)),
+          ],
+        )));
   }
 
   SliverToBoxAdapter _buildARBanner(BuildContext context) {
@@ -82,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(15),
             boxShadow: const [BoxShadow(color: OneColors.grey, blurRadius: 4)],
             color: OneColors.white,
-            image: const DecorationImage(image: AssetImage(OneImages.bg_future_ar), fit: BoxFit.cover)),
+            image: const DecorationImage(
+                image: AssetImage(OneImages.bg_future_ar), fit: BoxFit.cover)),
         child: Stack(
           children: [
             Container(
@@ -113,12 +120,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Container(
                           height: 400,
                           width: AppContants.sizeWidth - 50,
-                          decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
-                            BoxShadow(
-                              color: OneColors.grey,
-                              blurRadius: 4,
-                            )
-                          ]),
+                          decoration: BoxDecoration(
+                              color: OneColors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: OneColors.grey,
+                                  blurRadius: 4,
+                                )
+                              ]),
                           child: Padding(
                             padding: const EdgeInsets.all(20),
                             child: Column(
@@ -127,7 +137,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Center(
                                   child: Text(
                                     "Lựa chọn chế độ xem!",
-                                    style: OneTheme.of(context).header.copyWith(color: OneColors.black),
+                                    style: OneTheme.of(context)
+                                        .header
+                                        .copyWith(color: OneColors.black),
                                   ),
                                 ),
                                 _itemARCatagory(
@@ -162,9 +174,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(color: const Color.fromARGB(255, 0, 183, 255), borderRadius: BorderRadius.circular(10), boxShadow: const [
-                                          BoxShadow(color: OneColors.grey, blurRadius: 4),
-                                        ]),
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 0, 183, 255),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                  color: OneColors.grey,
+                                                  blurRadius: 4),
+                                            ]),
                                         child: Center(
                                           child: Text(
                                             "Đóng",
@@ -189,10 +208,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.center,
                   height: 30,
                   width: 100,
-                  decoration: BoxDecoration(color: OneColors.black.withOpacity(1), borderRadius: BorderRadius.circular(15)),
+                  decoration: BoxDecoration(
+                      color: OneColors.black.withOpacity(1),
+                      borderRadius: BorderRadius.circular(15)),
                   child: Text(
                     "Khám Phá",
-                    style: OneTheme.of(context).header.copyWith(fontSize: 13, color: OneColors.white),
+                    style: OneTheme.of(context)
+                        .header
+                        .copyWith(fontSize: 13, color: OneColors.white),
                   ),
                 ),
               ),
@@ -203,16 +226,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _itemARCatagory(BuildContext context, var onTap, String imageIcon, String title) {
+  Widget _itemARCatagory(
+      BuildContext context, var onTap, String imageIcon, String title) {
     return InkWell(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(8),
         height: 80,
         width: AppContants.sizeWidth - 100,
-        decoration: BoxDecoration(color: OneColors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
-          BoxShadow(color: OneColors.grey, blurRadius: 4),
-        ]),
+        decoration: BoxDecoration(
+            color: OneColors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(color: OneColors.grey, blurRadius: 4),
+            ]),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -229,7 +256,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
                 child: Text(
               title,
-              style: OneTheme.of(context).body2.copyWith(color: OneColors.black),
+              style:
+                  OneTheme.of(context).body2.copyWith(color: OneColors.black),
             ))
           ],
         ),
@@ -240,13 +268,16 @@ class _HomeScreenState extends State<HomeScreen> {
   SliverToBoxAdapter _buildTopNewsCard(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-          padding: const EdgeInsets.only(top: 15, left: 20, right: 20, bottom: 20),
+          padding:
+              const EdgeInsets.only(top: 15, left: 20, right: 20, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 "Dành cho bạn",
-                style: OneTheme.of(context).header.copyWith(fontSize: 18, color: OneColors.white),
+                style: OneTheme.of(context)
+                    .header
+                    .copyWith(fontSize: 18, color: OneColors.white),
               ),
               const SizedBox(height: 10),
               SizedBox(height: 163, child: _buildNewsCard(context)),
@@ -265,23 +296,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     context,
                     PageRouteBuilder(
                       transitionDuration: const Duration(milliseconds: 500),
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
                         return SlideTransition(
-                          position: Tween(begin: const Offset(1.0, 0.0), end: Offset.zero).animate(animation),
+                          position: Tween(
+                                  begin: const Offset(1.0, 0.0),
+                                  end: Offset.zero)
+                              .animate(animation),
                           child: child,
                         );
                       },
-                      pageBuilder: (context, animation, secondaryAnimation) => DetailNewsScreen(argument: data, viewscheck: false),
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          DetailNewsScreen(argument: data, viewscheck: false),
                     ),
                   );
                 }),
                 child: Container(
-                  decoration: BoxDecoration(color: OneColors.bgButton, borderRadius: BorderRadius.circular(14), boxShadow: const [
-                    BoxShadow(
-                      color: OneColors.grey,
-                      blurRadius: 4,
-                    )
-                  ]),
+                  decoration: BoxDecoration(
+                      color: OneColors.bgButton,
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: OneColors.grey,
+                          blurRadius: 4,
+                        )
+                      ]),
                   child: Row(
                     children: [
                       Expanded(flex: 1, child: _buildImageCard(data)),
@@ -298,7 +337,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Row _buildViewCountCard(String Function(int views) formatViews, Map<String, dynamic> data, BuildContext context) {
+  Row _buildViewCountCard(String Function(int views) formatViews,
+      Map<String, dynamic> data, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -327,7 +367,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Row _buildAuthorCard(Map<String, dynamic> data, BuildContext context) {
     DateTime now = DateTime.now();
     Timestamp time = data["date"];
-    DateTime otherDateTime = DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch);
+    DateTime otherDateTime =
+        DateTime.fromMillisecondsSinceEpoch(time.millisecondsSinceEpoch);
     Duration difference = now.difference(otherDateTime);
     int seconds = difference.inSeconds;
     int minutes = difference.inMinutes;
@@ -360,7 +401,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? _buildTimeCard(seconds, theme, '$minutes phút trước')
                     : (hours < 24
                         ? _buildTimeCard(seconds, theme, '$hours giờ trước')
-                        : (days < 7 ? _buildTimeCard(seconds, theme, '$days ngày trước') : _buildTimeCard(seconds, theme, '$weeks tuần trước'))))
+                        : (days < 7
+                            ? _buildTimeCard(seconds, theme, '$days ngày trước')
+                            : _buildTimeCard(
+                                seconds, theme, '$weeks tuần trước'))))
           ],
         ),
       ],
@@ -370,7 +414,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Text _buildTimeCard(int seconds, OneThemeData theme, String time) {
     return Text(
       time,
-      style: theme.body2.copyWith(overflow: TextOverflow.clip, fontSize: 10, fontWeight: FontWeight.w300, color: OneColors.white),
+      style: theme.body2.copyWith(
+          overflow: TextOverflow.clip,
+          fontSize: 10,
+          fontWeight: FontWeight.w300,
+          color: OneColors.white),
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -393,11 +441,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ? Image.network(
                 data['content'][0]['images']['imageUrl'],
                 fit: BoxFit.cover,
-                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) return child;
                   return OneLoading.space_loading;
                 },
-                errorBuilder: (context, error, stackTrace) => Image.asset(OneImages.not_found),
+                errorBuilder: (context, error, stackTrace) =>
+                    Image.asset(OneImages.not_found),
               )
             : const SizedBox(),
       ),
@@ -421,7 +471,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(right: 10.0, left: 10, top: 10, bottom: 10),
+      padding:
+          const EdgeInsets.only(right: 10.0, left: 10, top: 10, bottom: 10),
       child: SizedBox(
         height: 143,
         child: Column(
@@ -430,7 +481,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Text(
               data["title"],
-              style: OneTheme.of(context).title1.copyWith(color: OneColors.white, fontSize: 15),
+              style: OneTheme.of(context)
+                  .title1
+                  .copyWith(color: OneColors.white, fontSize: 15),
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.justify,
@@ -447,7 +500,9 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(
                   data["author"],
-                  style: OneTheme.of(context).title1.copyWith(color: OneColors.white, fontSize: 11),
+                  style: OneTheme.of(context)
+                      .title1
+                      .copyWith(color: OneColors.white, fontSize: 11),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.justify,
@@ -476,7 +531,9 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 "Lối tắt",
-                style: OneTheme.of(context).header.copyWith(fontSize: 18, color: OneColors.white),
+                style: OneTheme.of(context)
+                    .header
+                    .copyWith(fontSize: 18, color: OneColors.white),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
@@ -485,10 +542,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     // _buildCardItems(context, OneImages.card_solar_system, "Hệ mặt\n trời", null),
                     // _buildCardItems(context, OneImages.card_galaxy, "Dải ngân\n hà", null),
-                    _buildCardItems(context, OneImages.saturn, "Vệ tinh\n tự nhiên", () {
+                    _buildCardItems(
+                        context, OneImages.saturn, "Vệ tinh\n tự nhiên", () {
                       Get.toNamed(AppRoutes.DISCOVERY_SCREEN.name);
                     }),
-                    _buildCardItems(context, OneImages.Rocket, "Công nghệ\n vũ trụ", () {
+                    _buildCardItems(
+                        context, OneImages.Rocket, "Công nghệ\n vũ trụ", () {
                       Get.toNamed(AppRoutes.ARTIFICIAL_SCREEN.name);
                     }),
                   ],
@@ -502,11 +561,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   // _buildCardItems(context, OneImages.card_solar_system, "Hệ mặt\n trời", null),
                   // _buildCardItems(context, OneImages.card_galaxy, "Dải ngân\n hà", null),
-                  _buildCardItems(context, OneImages.logo_quiz_game, "Trò chơi", () {
-                    Get.to(() => const BottomNavigationBarWidget(setIndex: 3), curve: Curves.linear, transition: Transition.rightToLeft);
+                  _buildCardItems(context, OneImages.logo_quiz_game, "Trò chơi",
+                      () {
+                    Get.to(() => const BottomNavigationBarWidget(setIndex: 3),
+                        curve: Curves.linear,
+                        transition: Transition.rightToLeft);
                   }),
-                  _buildCardItems(context, OneImages.icons_person, "Tài khoản", () {
-                    Get.to(() => const BottomNavigationBarWidget(setIndex: 4), curve: Curves.linear, transition: Transition.rightToLeft);
+                  _buildCardItems(context, OneImages.icons_person, "Tài khoản",
+                      () {
+                    Get.to(() => const BottomNavigationBarWidget(setIndex: 4),
+                        curve: Curves.linear,
+                        transition: Transition.rightToLeft);
                   }),
                 ],
               ),
@@ -515,7 +580,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  InkWell _buildCardItems(BuildContext context, String images, String label, dynamic ontap) {
+  InkWell _buildCardItems(
+      BuildContext context, String images, String label, dynamic ontap) {
     AppContants.init(context);
     return InkWell(
       onTap: ontap,
@@ -548,7 +614,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   label,
-                  style: OneTheme.of(context).header.copyWith(fontSize: 12, fontWeight: FontWeight.w700),
+                  style: OneTheme.of(context)
+                      .header
+                      .copyWith(fontSize: 12, fontWeight: FontWeight.w700),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -570,7 +638,8 @@ class _HomeScreenState extends State<HomeScreen> {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         background: Padding(
-            padding: const EdgeInsets.only(top: 60, left: 20, right: 20, bottom: 20),
+            padding:
+                const EdgeInsets.only(top: 60, left: 20, right: 20, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -602,7 +671,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(width: 15),
                             Text(
                               "Hi, ${e["name"]}",
-                              style: OneTheme.of(context).header.copyWith(fontSize: 19, color: OneColors.white),
+                              style: OneTheme.of(context).header.copyWith(
+                                  fontSize: 19, color: OneColors.white),
                             ),
                           ],
                         ),
@@ -629,7 +699,9 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(top: 10, left: 24, right: 24),
             child: Text(
               "Các hành tinh",
-              style: OneTheme.of(context).header.copyWith(fontSize: 18, color: OneColors.white),
+              style: OneTheme.of(context)
+                  .header
+                  .copyWith(fontSize: 18, color: OneColors.white),
             ),
           ),
           SizedBox(
@@ -662,8 +734,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildPlanetCarousel(List<DocumentSnapshot> planets) {
     return CarouselSlider.builder(
-      options:
-          CarouselOptions(height: 230, enlargeCenterPage: true, enlargeStrategy: CenterPageEnlargeStrategy.height, autoPlay: true, viewportFraction: 0.7, autoPlayInterval: const Duration(seconds: 5)),
+      options: CarouselOptions(
+          height: 230,
+          enlargeCenterPage: true,
+          enlargeStrategy: CenterPageEnlargeStrategy.height,
+          autoPlay: true,
+          viewportFraction: 0.7,
+          autoPlayInterval: const Duration(seconds: 5)),
       // physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       // shrinkWrap: true,
       // padding: EdgeInsets.zero,
@@ -679,7 +756,8 @@ class _HomeScreenState extends State<HomeScreen> {
         String colorGradientBottom = colors["colorGradient"]["bottom"];
 
         return Padding(
-          padding: const EdgeInsets.only(top: 10.0, right: 10, left: 10, bottom: 10),
+          padding:
+              const EdgeInsets.only(top: 10.0, right: 10, left: 10, bottom: 10),
           child: InkWell(
             onTap: (() {
               Get.to(
@@ -696,11 +774,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 45.0, left: 17),
                     // INFO IMAGE
-                    child: _buildPlanetInfoCard(colorGradientBottom, colorGradientTop, records, context),
+                    child: _buildPlanetInfoCard(colorGradientBottom,
+                        colorGradientTop, records, context),
                   ),
 
                   // IMAGE 2D của các hành tinh
-                  Align(alignment: Alignment.topCenter, child: _buildImagePlanets2D(colorModel, records, records["image2D"]["imageUrl"]))
+                  Align(
+                      alignment: Alignment.topCenter,
+                      child: _buildImagePlanets2D(
+                          colorModel, records, records["image2D"]["imageUrl"]))
                 ],
               ),
             ),
@@ -710,7 +792,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  SizedBox _buildPlanetInfoCard(String colorGradientBottom, String colorGradientTop, DocumentSnapshot<Object?> records, BuildContext context) {
+  SizedBox _buildPlanetInfoCard(
+      String colorGradientBottom,
+      String colorGradientTop,
+      DocumentSnapshot<Object?> records,
+      BuildContext context) {
     String name = records["name"];
     return SizedBox(
       height: 170,
@@ -741,7 +827,9 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: Alignment.bottomCenter,
             child: Text(
               name.toUpperCase(),
-              style: OneTheme.of(context).header.copyWith(fontSize: 19, color: OneColors.white),
+              style: OneTheme.of(context)
+                  .header
+                  .copyWith(fontSize: 19, color: OneColors.white),
             ),
           ),
           // Text(
@@ -756,7 +844,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Container _buildImagePlanets2D(String colorModel, DocumentSnapshot<Object?> records, String imageUrl) {
+  Container _buildImagePlanets2D(
+      String colorModel, DocumentSnapshot<Object?> records, String imageUrl) {
     String idName = records["idName"];
     return Container(
       decoration: BoxDecoration(
@@ -785,7 +874,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           return 120.0;
         })(),
-      
+
         // backgroundColor: OneColors.transparent,
         // radius: (() {
         //   if (idName == "saotho") {

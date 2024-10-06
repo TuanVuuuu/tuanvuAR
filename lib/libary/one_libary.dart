@@ -41,7 +41,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:flutter_application_1/src/components/shared/constant.dart';
 import 'package:flutter_application_1/libary/one_libary.dart';
 import 'package:tuple/tuple.dart';
