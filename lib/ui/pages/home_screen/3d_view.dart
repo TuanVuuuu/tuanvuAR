@@ -111,8 +111,7 @@ class P3DView extends StatelessWidget {
               ],
               border: Border.all(color: OneColors.white, width: 1),
               borderRadius: BorderRadius.circular(30)),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 5),
+          child: Center(
             child: Text(
               "Xem thêm",
               style: OneTheme.of(context).body1.copyWith(color: OneColors.white),
@@ -126,7 +125,7 @@ class P3DView extends StatelessWidget {
 
   Container _buildCardMore(BuildContext context, String idName) {
     return Container(
-      height: AppContants.sizeHeight * 0.42,
+      height: AppContants.sizeHeight * 0.45,
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25),
